@@ -1,3 +1,6 @@
+\.settings/
+\.project
+\.classpath
 
 cova/target/
 cova/\.project
