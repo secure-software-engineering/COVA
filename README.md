@@ -1,4 +1,4 @@
-COVA - Constraint Analysis with VASCO 
+COVA - Constraint Analysis with [VASCO](https://github.com/rohanpadhye/vasco) 
 
 ## Obtaining The Tool 
 You can either build COVA on your own with Maven or [download a release](...) from this repository.
