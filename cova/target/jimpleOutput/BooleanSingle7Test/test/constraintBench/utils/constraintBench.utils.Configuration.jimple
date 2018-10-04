@@ -1,0 +1,144 @@
+public class constraintBench.utils.Configuration extends java.lang.Object
+{
+    public static java.lang.String fieldA;
+    public static java.lang.String fieldB;
+    public static java.lang.String fieldC;
+    public static double k;
+    public static float h;
+
+    static void <clinit>()
+    {
+        <constraintBench.utils.Configuration: java.lang.String fieldA> = "FA";
+
+        <constraintBench.utils.Configuration: java.lang.String fieldB> = "FB";
+
+        <constraintBench.utils.Configuration: java.lang.String fieldC> = "FC";
+
+        return;
+    }
+
+    public void <init>()
+    {
+        constraintBench.utils.Configuration this;
+
+        this := @this: constraintBench.utils.Configuration;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*11*/
+
+        return;
+/*11*/
+    }
+
+    public static boolean featureA()
+    {
+        boolean var;
+
+        var = 1;
+
+        return var;
+    }
+
+    public static boolean featureB()
+    {
+        return 0;
+/*23*/
+    }
+
+    public static boolean featureC()
+    {
+        return 0;
+/*27*/
+    }
+
+    public static int featureD()
+    {
+        return 1;
+/*31*/
+    }
+
+    public static boolean featureE()
+    {
+        return 0;
+/*36*/
+    }
+
+    public static int featureF()
+    {
+        return 2;
+/*40*/
+    }
+
+    public static double featureK()
+    {
+        double $d0;
+
+        $d0 = <constraintBench.utils.Configuration: double k>;
+/*44*/
+
+        return $d0;
+/*44*/
+    }
+
+    public static float featureH()
+    {
+        float $f0;
+
+        $f0 = <constraintBench.utils.Configuration: float h>;
+/*49*/
+
+        return $f0;
+/*49*/
+    }
+
+    public constraintBench.utils.Property featureP()
+    {
+        constraintBench.utils.Configuration this;
+        constraintBench.utils.Property $r0;
+
+        this := @this: constraintBench.utils.Configuration;
+
+        $r0 = new constraintBench.utils.Property;
+/*53*/
+
+        specialinvoke $r0.<constraintBench.utils.Property: void <init>()>();
+/*53*/
+
+        return $r0;
+/*53*/
+    }
+
+    public constraintBench.utils.Property featureQ()
+    {
+        constraintBench.utils.Configuration this;
+        constraintBench.utils.Property $r0;
+
+        this := @this: constraintBench.utils.Configuration;
+
+        $r0 = new constraintBench.utils.Property;
+/*57*/
+
+        specialinvoke $r0.<constraintBench.utils.Property: void <init>()>();
+/*57*/
+
+        return $r0;
+/*57*/
+    }
+
+    public constraintBench.utils.SuperProperty featureX()
+    {
+        constraintBench.utils.Configuration this;
+        constraintBench.utils.Property $r0;
+
+        this := @this: constraintBench.utils.Configuration;
+
+        $r0 = new constraintBench.utils.Property;
+/*61*/
+
+        specialinvoke $r0.<constraintBench.utils.Property: void <init>()>();
+/*61*/
+
+        return $r0;
+/*61*/
+    }
+}

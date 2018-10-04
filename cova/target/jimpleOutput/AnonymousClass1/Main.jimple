@@ -1,0 +1,159 @@
+public class Main extends java.lang.Object
+{
+    private boolean field;
+
+    public void <init>()
+    {
+        Main r0;
+
+        r0 := @this: Main;
+/*
+ *		-1.
+true
+*/
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+/*
+ *		9.
+true
+*/
+
+        return;
+/*
+ *		9.
+true
+*/
+    }
+
+    public boolean getField()
+    {
+        Main r0;
+        boolean $z0;
+
+        r0 := @this: Main;
+
+        $z0 = r0.<Main: boolean field>;
+/*14*/
+
+        return $z0;
+/*14*/
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+        Main$1 r1, $r3;
+        Main r2, $r4;
+        boolean $z0;
+        java.io.PrintStream $r5;
+
+        r0 := @parameter0: java.lang.String[];
+/*
+ *		-1.
+true
+*/
+
+        $r3 = new Main$1;
+/*
+ *		18.
+true
+*/
+
+        specialinvoke $r3.<Main$1: void <init>()>();
+/*
+ *		18.
+true
+*/
+
+        r1 = $r3;
+/*
+ *		18.
+true
+*/
+
+        $r4 = new Main;
+/*
+ *		24.
+true
+*/
+
+        specialinvoke $r4.<Main: void <init>()>();
+/*
+ *		24.
+true
+*/
+
+        r2 = $r4;
+/*
+ *		24.
+true
+*/
+
+        interfaceinvoke r1.<InterfaceFoo: void set(Main)>(r2);
+/*
+ *		25.
+true
+*/
+
+        $z0 = r2.<Main: boolean field>;
+/*
+ *		26.
+true
+*/
+
+        if $z0 == 0 goto label1;
+/*
+ *		26.
+true
+*/
+
+        $r5 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		27.
+true
+*/
+
+        virtualinvoke $r5.<java.io.PrintStream: void println(java.lang.String)>("A");
+/*
+ *		27.
+true
+*/
+
+     label1:
+        return;
+/*
+ *		29.
+true
+*/
+    }
+
+    static void access$0(Main, boolean)
+    {
+        Main r0;
+        boolean z0;
+
+        r0 := @parameter0: Main;
+/*
+ *		-1.
+true
+*/
+
+        z0 := @parameter1: boolean;
+/*
+ *		-1.
+true
+*/
+
+        r0.<Main: boolean field> = z0;
+/*
+ *		11.
+true
+*/
+
+        return;
+/*
+ *		11.
+true
+*/
+    }
+}

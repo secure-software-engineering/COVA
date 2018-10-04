@@ -1,0 +1,110 @@
+public class constraintBench.test.imprecise.ImpreciseMultiple7 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.imprecise.ImpreciseMultiple7 this;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseMultiple7;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.imprecise.ImpreciseMultiple7 this;
+        java.lang.String $r0, $r2;
+        boolean $z0, $z1;
+        java.io.PrintStream $r1, $r3, $r4;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseMultiple7;
+/*
+ *		-1.
+true
+*/
+
+        $r0 = <constraintBench.utils.Configuration: java.lang.String fieldA>;
+/*
+ *		12.
+true
+*/
+
+        $z0 = virtualinvoke $r0.<java.lang.String: boolean startsWith(java.lang.String)>("FA");
+/*
+ *		12.
+true
+*/
+
+        if $z0 == 0 goto label2;
+/*
+ *		12.
+true
+*/
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		13.
+im(C1007)_0
+*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println()>();
+/*
+ *		13.
+im(C1007)_0
+*/
+
+        $r2 = <constraintBench.utils.Configuration: java.lang.String fieldB>;
+/*
+ *		14.
+im(C1007)_0
+*/
+
+        $z1 = virtualinvoke $r2.<java.lang.String: boolean startsWith(java.lang.String)>("FB");
+/*
+ *		14.
+im(C1007)_0
+*/
+
+        if $z1 == 0 goto label1;
+/*
+ *		14.
+im(C1007)_0
+*/
+
+        $r4 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		15.
+(and im(C1007)_0 im(C1008)_0)
+*/
+
+        virtualinvoke $r4.<java.io.PrintStream: void println()>();
+/*
+ *		15.
+(and im(C1007)_0 im(C1008)_0)
+*/
+
+     label1:
+        $r3 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		17.
+im(C1007)_0
+*/
+
+        virtualinvoke $r3.<java.io.PrintStream: void println()>();
+/*
+ *		17.
+im(C1007)_0
+*/
+
+     label2:
+        return;
+/*
+ *		19.
+true
+*/
+    }
+}

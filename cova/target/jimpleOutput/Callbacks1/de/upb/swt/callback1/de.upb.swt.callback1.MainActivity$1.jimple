@@ -1,0 +1,68 @@
+class de.upb.swt.callback1.MainActivity$1 extends java.lang.Object implements android.view.View$OnClickListener
+{
+    final de.upb.swt.callback1.MainActivity this$0;
+
+    void <init>(de.upb.swt.callback1.MainActivity)
+    {
+        de.upb.swt.callback1.MainActivity$1 $r0;
+        de.upb.swt.callback1.MainActivity $r1;
+
+        $r0 := @this: de.upb.swt.callback1.MainActivity$1;
+
+        $r1 := @parameter0: de.upb.swt.callback1.MainActivity;
+
+        $r0.<de.upb.swt.callback1.MainActivity$1: de.upb.swt.callback1.MainActivity this$0> = $r1;
+/*23*/
+/*23*/
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+/*23*/
+/*23*/
+
+        return;
+/*23*/
+/*23*/
+    }
+
+    public void onClick(android.view.View)
+    {
+        de.upb.swt.callback1.MainActivity$1 $r0;
+        android.view.View $r1;
+        java.lang.String $r2;
+        java.lang.Object $r3;
+        de.upb.swt.callback1.MainActivity $r4;
+        android.telephony.TelephonyManager $r5;
+
+        $r0 := @this: de.upb.swt.callback1.MainActivity$1;
+
+        $r1 := @parameter0: android.view.View;
+
+        $r4 = $r0.<de.upb.swt.callback1.MainActivity$1: de.upb.swt.callback1.MainActivity this$0>;
+/*26*/
+/*26*/
+
+        $r3 = virtualinvoke $r4.<de.upb.swt.callback1.MainActivity: java.lang.Object getSystemService(java.lang.String)>("phone");
+/*26*/
+/*26*/
+
+        $r5 = (android.telephony.TelephonyManager) $r3;
+/*26*/
+/*26*/
+
+        $r2 = <android.os.Build: java.lang.String MODEL>;
+/*28*/
+/*28*/
+
+        $r4 = $r0.<de.upb.swt.callback1.MainActivity$1: de.upb.swt.callback1.MainActivity this$0>;
+/*29*/
+/*29*/
+
+        virtualinvoke $r4.<de.upb.swt.callback1.MainActivity: void send(java.lang.String)>("");
+/*29*/
+/*29*/
+
+        return;
+/*29*/
+/*29*/
+    }
+}

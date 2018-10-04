@@ -1,0 +1,155 @@
+public class de.upb.swt.singleifbranch1.MainActivity extends android.support.v7.app.AppCompatActivity
+{
+    private java.lang.String deviceId;
+
+    public void <init>()
+    {
+        de.upb.swt.singleifbranch1.MainActivity $r0;
+
+        $r0 := @this: de.upb.swt.singleifbranch1.MainActivity;
+/*
+ *		-1.
+true
+*/
+
+        specialinvoke $r0.<android.support.v7.app.AppCompatActivity: void <init>()>();
+/*
+ *		10.
+true
+*/
+
+        return;
+/*
+ *		10.
+true
+*/
+    }
+
+    protected void onCreate(android.os.Bundle)
+    {
+        de.upb.swt.singleifbranch1.MainActivity $r0;
+        android.os.Bundle $r1;
+        java.lang.String $r2, $r5, $r7;
+        int $i0;
+        java.lang.Object $r3;
+        android.telephony.TelephonyManager $r4;
+        boolean $z0;
+        android.telephony.SmsManager $r6, $r8, $r9;
+
+        $r0 := @this: de.upb.swt.singleifbranch1.MainActivity;
+/*
+ *		-1.
+true
+*/
+
+        $r1 := @parameter0: android.os.Bundle;
+/*
+ *		-1.
+true
+*/
+
+        specialinvoke $r0.<android.support.v7.app.AppCompatActivity: void onCreate(android.os.Bundle)>($r1);
+/*
+ *		15.
+true
+*/
+
+        virtualinvoke $r0.<de.upb.swt.singleifbranch1.MainActivity: void setContentView(int)>(2130968604);
+/*
+ *		16.
+true
+*/
+
+        $r3 = virtualinvoke $r0.<de.upb.swt.singleifbranch1.MainActivity: java.lang.Object getSystemService(java.lang.String)>("phone");
+/*
+ *		17.
+true
+*/
+
+        $r4 = (android.telephony.TelephonyManager) $r3;
+/*
+ *		17.
+true
+*/
+
+        $r7 = "";
+/*
+ *		18.
+true
+*/
+
+        $r2 = <android.os.Build: java.lang.String MODEL>;
+/*
+ *		19.
+true
+*/
+
+        $z0 = virtualinvoke $r2.<java.lang.String: boolean equals(java.lang.Object)>("HTC");
+/*
+ *		20.
+true
+*/
+
+        if $z0 == 0 goto label1;
+/*
+ *		20.
+true
+*/
+
+        $r7 = virtualinvoke $r4.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>();
+/*
+ *		22.
+im(C13)_0
+*/
+
+     label1:
+        $i0 = <android.os.Build$VERSION: int SDK_INT>;
+/*
+ *		24.
+true
+*/
+
+        if $i0 >= 15 goto label2;
+/*
+ *		25.
+true
+*/
+
+        $r8 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
+/*
+ *		26.
+(not (>= C24 15))
+*/
+
+        virtualinvoke $r8.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49", null, $r7, null, null);
+/*
+ *		27.
+(not (>= C24 15))
+*/
+
+        return;
+/*
+ *		34.
+(not (>= C24 15))
+*/
+
+     label2:
+        $r9 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
+/*
+ *		31.
+(>= C24 15)
+*/
+
+        virtualinvoke $r9.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49", null, $r7, null, null);
+/*
+ *		32.
+(>= C24 15)
+*/
+
+        return;
+/*
+ *		32.
+(>= C24 15)
+*/
+    }
+}

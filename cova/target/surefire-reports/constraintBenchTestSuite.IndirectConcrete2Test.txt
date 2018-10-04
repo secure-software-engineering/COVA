@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: constraintBenchTestSuite.IndirectConcrete2Test
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.459 s - in constraintBenchTestSuite.IndirectConcrete2Test

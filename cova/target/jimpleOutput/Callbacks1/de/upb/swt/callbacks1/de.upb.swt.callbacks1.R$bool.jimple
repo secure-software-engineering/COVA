@@ -1,0 +1,23 @@
+public final class de.upb.swt.callbacks1.R$bool extends java.lang.Object
+{
+    public static final int abc_action_bar_embed_tabs;
+    public static final int abc_allow_stacked_button_bar;
+    public static final int abc_config_actionMenuItemAllCaps;
+    public static final int abc_config_closeDialogWhenTouchOutside;
+    public static final int abc_config_showMenuShortcutsWhenKeyboardPresent;
+
+    public void <init>()
+    {
+        de.upb.swt.callbacks1.R$bool $r0;
+
+        $r0 := @this: de.upb.swt.callbacks1.R$bool;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+/*2011*/
+/*2011*/
+
+        return;
+/*2011*/
+/*2011*/
+    }
+}

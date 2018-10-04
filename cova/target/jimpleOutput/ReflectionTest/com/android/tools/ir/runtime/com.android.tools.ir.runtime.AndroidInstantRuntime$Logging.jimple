@@ -1,0 +1,9 @@
+public interface  com.android.tools.ir.runtime.AndroidInstantRuntime$Logging extends java.lang.Object
+{
+
+    public abstract boolean isLoggable(java.util.logging.Level);
+
+    public abstract void log(java.util.logging.Level, java.lang.String);
+
+    public abstract void log(java.util.logging.Level, java.lang.String, java.lang.Throwable);
+}

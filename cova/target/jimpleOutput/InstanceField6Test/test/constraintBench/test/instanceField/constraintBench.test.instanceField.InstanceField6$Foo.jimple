@@ -1,0 +1,60 @@
+class constraintBench.test.instanceField.InstanceField6$Foo extends java.lang.Object
+{
+    public constraintBench.test.instanceField.InstanceField6$Bar bar;
+    final constraintBench.test.instanceField.InstanceField6 this$0;
+
+    public void <init>(constraintBench.test.instanceField.InstanceField6)
+    {
+        constraintBench.test.instanceField.InstanceField6$Foo this;
+        constraintBench.test.instanceField.InstanceField6 l1;
+        constraintBench.test.instanceField.InstanceField6$Bar $r0;
+
+        this := @this: constraintBench.test.instanceField.InstanceField6$Foo;
+/*
+ *		-1.
+true
+*/
+
+        l1 := @parameter0: constraintBench.test.instanceField.InstanceField6;
+/*
+ *		-1.
+true
+*/
+
+        this.<constraintBench.test.instanceField.InstanceField6$Foo: constraintBench.test.instanceField.InstanceField6 this$0> = l1;
+/*
+ *		21.
+true
+*/
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*
+ *		21.
+true
+*/
+
+        $r0 = new constraintBench.test.instanceField.InstanceField6$Bar;
+/*
+ *		22.
+true
+*/
+
+        specialinvoke $r0.<constraintBench.test.instanceField.InstanceField6$Bar: void <init>(constraintBench.test.instanceField.InstanceField6,constraintBench.test.instanceField.InstanceField6$Bar)>(l1, null);
+/*
+ *		22.
+true
+*/
+
+        this.<constraintBench.test.instanceField.InstanceField6$Foo: constraintBench.test.instanceField.InstanceField6$Bar bar> = $r0;
+/*
+ *		22.
+true
+*/
+
+        return;
+/*
+ *		23.
+true
+*/
+    }
+}

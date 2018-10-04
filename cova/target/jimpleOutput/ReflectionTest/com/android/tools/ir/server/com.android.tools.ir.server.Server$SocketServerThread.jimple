@@ -1,0 +1,184 @@
+class com.android.tools.ir.server.Server$SocketServerThread extends java.lang.Thread
+{
+    final com.android.tools.ir.server.Server this$0;
+
+    private void <init>(com.android.tools.ir.server.Server)
+    {
+        com.android.tools.ir.server.Server$SocketServerThread $r0;
+        com.android.tools.ir.server.Server $r1;
+
+        $r0 := @this: com.android.tools.ir.server.Server$SocketServerThread;
+
+        $r1 := @parameter0: com.android.tools.ir.server.Server;
+
+        $r0.<com.android.tools.ir.server.Server$SocketServerThread: com.android.tools.ir.server.Server this$0> = $r1;
+/*134*/
+/*134*/
+
+        specialinvoke $r0.<java.lang.Thread: void <init>()>();
+/*134*/
+/*134*/
+
+        return;
+/*134*/
+/*134*/
+    }
+
+    void <init>(com.android.tools.ir.server.Server, com.android.tools.ir.server.Server$1)
+    {
+        com.android.tools.ir.server.Server$SocketServerThread $r0;
+        com.android.tools.ir.server.Server $r1;
+        com.android.tools.ir.server.Server$1 $r2;
+
+        $r0 := @this: com.android.tools.ir.server.Server$SocketServerThread;
+
+        $r1 := @parameter0: com.android.tools.ir.server.Server;
+
+        $r2 := @parameter1: com.android.tools.ir.server.Server$1;
+
+        specialinvoke $r0.<com.android.tools.ir.server.Server$SocketServerThread: void <init>(com.android.tools.ir.server.Server)>($r1);
+/*134*/
+/*134*/
+
+        return;
+/*134*/
+/*134*/
+    }
+
+    public void run()
+    {
+        com.android.tools.ir.server.Server$SocketServerThread $r0;
+        java.lang.Throwable $r1;
+        com.android.tools.ir.server.Server$SocketServerReplyThread $r2;
+        com.android.tools.ir.server.Server $r3;
+        android.net.LocalServerSocket $r4;
+        android.net.LocalSocket $r5;
+        boolean $z0;
+        int $i0;
+
+        $r0 := @this: com.android.tools.ir.server.Server$SocketServerThread;
+
+     label01:
+        $r3 = $r0.<com.android.tools.ir.server.Server$SocketServerThread: com.android.tools.ir.server.Server this$0>;
+/*161*/
+/*161*/
+
+        $r4 = staticinvoke <com.android.tools.ir.server.Server: android.net.LocalServerSocket access$100(com.android.tools.ir.server.Server)>($r3);
+/*161*/
+/*161*/
+
+     label02:
+        if $r4 != null goto label03;
+/*161*/
+/*161*/
+
+        return;
+/*161*/
+/*161*/
+
+     label03:
+        $r5 = virtualinvoke $r4.<android.net.LocalServerSocket: android.net.LocalSocket accept()>();
+/*165*/
+/*165*/
+
+        $z0 = staticinvoke <android.util.Log: boolean isLoggable(java.lang.String,int)>("InstantRun", 2);
+/*167*/
+/*167*/
+
+     label04:
+        if $z0 == 0 goto label06;
+/*167*/
+/*167*/
+
+     label05:
+        staticinvoke <android.util.Log: int v(java.lang.String,java.lang.String)>("InstantRun", "Received connection from IDE: spawning connection thread");
+/*168*/
+/*168*/
+
+     label06:
+        $r2 = new com.android.tools.ir.server.Server$SocketServerReplyThread;
+/*173*/
+/*173*/
+
+        $r3 = $r0.<com.android.tools.ir.server.Server$SocketServerThread: com.android.tools.ir.server.Server this$0>;
+/*173*/
+/*173*/
+
+        specialinvoke $r2.<com.android.tools.ir.server.Server$SocketServerReplyThread: void <init>(com.android.tools.ir.server.Server,android.net.LocalSocket)>($r3, $r5);
+/*173*/
+/*173*/
+
+        virtualinvoke $r2.<com.android.tools.ir.server.Server$SocketServerReplyThread: void run()>();
+/*175*/
+/*175*/
+
+        $i0 = staticinvoke <com.android.tools.ir.server.Server: int access$200()>();
+/*177*/
+/*177*/
+
+     label07:
+        if $i0 <= 50 goto label01;
+/*177*/
+/*177*/
+
+     label08:
+        $z0 = staticinvoke <android.util.Log: boolean isLoggable(java.lang.String,int)>("InstantRun", 2);
+/*178*/
+/*178*/
+
+     label09:
+        if $z0 == 0 goto label11;
+/*178*/
+/*178*/
+
+     label10:
+        staticinvoke <android.util.Log: int v(java.lang.String,java.lang.String)>("InstantRun", "Stopping server: too many wrong token connections");
+/*179*/
+/*179*/
+
+     label11:
+        $r3 = $r0.<com.android.tools.ir.server.Server$SocketServerThread: com.android.tools.ir.server.Server this$0>;
+/*183*/
+/*183*/
+
+        $r4 = staticinvoke <com.android.tools.ir.server.Server: android.net.LocalServerSocket access$100(com.android.tools.ir.server.Server)>($r3);
+/*183*/
+/*183*/
+
+        virtualinvoke $r4.<android.net.LocalServerSocket: void close()>();
+/*183*/
+/*183*/
+
+     label12:
+        return;
+/*183*/
+/*183*/
+
+     label13:
+        $r1 := @caughtexception;
+/*186*/
+/*186*/
+
+        $z0 = staticinvoke <android.util.Log: boolean isLoggable(java.lang.String,int)>("InstantRun", 2);
+/*187*/
+/*187*/
+
+        if $z0 == 0 goto label01;
+/*187*/
+/*187*/
+
+        staticinvoke <android.util.Log: int v(java.lang.String,java.lang.String,java.lang.Throwable)>("InstantRun", "Fatal error accepting connection on local socket", $r1);
+/*188*/
+/*188*/
+
+        goto label01;
+/*188*/
+/*188*/
+
+        catch java.lang.Throwable from label01 to label02 with label13;
+        catch java.lang.Throwable from label03 to label04 with label13;
+        catch java.lang.Throwable from label05 to label07 with label13;
+        catch java.lang.Throwable from label08 to label09 with label13;
+        catch java.lang.Throwable from label10 to label12 with label13;
+    }
+}

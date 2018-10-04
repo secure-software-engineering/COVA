@@ -1,0 +1,130 @@
+public final class com.android.tools.ir.runtime.Paths extends java.lang.Object
+{
+    public static final java.lang.String BUILD_ID_TXT;
+    public static final java.lang.String DEVICE_TEMP_DIR;
+    public static final java.lang.String RELOAD_DEX_FILE_NAME;
+    public static final java.lang.String RESOURCE_FILE_NAME;
+
+    public void <init>()
+    {
+        com.android.tools.ir.runtime.Paths $r0;
+
+        $r0 := @this: com.android.tools.ir.runtime.Paths;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+/*24*/
+/*24*/
+
+        return;
+/*24*/
+/*24*/
+    }
+
+    public static java.lang.String getDataDirectory(java.lang.String)
+    {
+        java.lang.String $r0;
+        java.lang.StringBuilder $r1;
+
+        $r0 := @parameter0: java.lang.String;
+
+        $r1 = new java.lang.StringBuilder;
+/*44*/
+/*44*/
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+/*44*/
+/*44*/
+
+        $r1 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("/data/data/");
+/*44*/
+/*44*/
+
+        $r1 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r0);
+/*44*/
+/*44*/
+
+        $r1 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("/files/instant-run");
+/*44*/
+/*44*/
+
+        $r0 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.String toString()>();
+/*44*/
+/*44*/
+
+        return $r0;
+/*44*/
+/*44*/
+    }
+
+    public static java.lang.String getDeviceIdFolder(java.lang.String)
+    {
+        java.lang.String $r0;
+        java.lang.StringBuilder $r1;
+
+        $r0 := @parameter0: java.lang.String;
+
+        $r1 = new java.lang.StringBuilder;
+/*49*/
+/*49*/
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+/*49*/
+/*49*/
+
+        $r1 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("/data/local/tmp/");
+/*49*/
+/*49*/
+
+        $r1 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r0);
+/*49*/
+/*49*/
+
+        $r1 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("-");
+/*49*/
+/*49*/
+
+        $r1 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("build-id.txt");
+/*49*/
+/*49*/
+
+        $r0 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.String toString()>();
+/*49*/
+/*49*/
+
+        return $r0;
+/*49*/
+/*49*/
+    }
+
+    public static java.lang.String getMainApkDataDirectory(java.lang.String)
+    {
+        java.lang.String $r0;
+        java.lang.StringBuilder $r1;
+
+        $r0 := @parameter0: java.lang.String;
+
+        $r1 = new java.lang.StringBuilder;
+/*39*/
+/*39*/
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+/*39*/
+/*39*/
+
+        $r1 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("/data/data/");
+/*39*/
+/*39*/
+
+        $r1 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r0);
+/*39*/
+/*39*/
+
+        $r0 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.String toString()>();
+/*39*/
+/*39*/
+
+        return $r0;
+/*39*/
+/*39*/
+    }
+}

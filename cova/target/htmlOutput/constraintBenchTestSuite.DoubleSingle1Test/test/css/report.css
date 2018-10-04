@@ -1,0 +1,92 @@
+.navigation{
+	border: 1px solid black;
+}
+
+main {
+	height : 100vh;
+}
+
+body {
+	margin: 0;
+}
+
+.navLink {
+	width: 100%;
+}
+
+.lineNo {
+	color: gray;
+}
+
+.srcLine {
+	color: black;
+}
+.constraint .srcLine {
+	background-color: rgba(0,81,255,0.21);
+}
+
+td.constraint {
+	color: green;
+	float: right;
+	font-weight: bold;
+}
+
+.keyword {
+	color: rgb(128,49,20);
+	font-weight: bold;
+}
+
+.annotation {
+	color: gray;
+}
+
+.comment {
+	color: green;
+}
+
+.string {
+	color: blue;
+}
+
+.fa-question {
+	color: red;
+}
+  
+  .gutter {
+    background-color: #eee;
+
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+ .split {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+    overflow-y: auto;
+    overflow-x: auto;
+  }
+
+ .split.split-horizontal, .gutter.gutter-horizontal {
+    height: 100%;
+    float: left;
+  }
+
+.gutter.gutter-horizontal {
+    background-image: url('grips/vertical.png');
+    cursor: ew-resize;
+}
+
+.gutter.gutter-vertical {
+    background-image: url('grips/horizontal.png');
+    cursor: ns-resize;
+}
+
+.gutter.gutter-vertical {
+    background-image:  url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=')
+}
+
+.gutter.gutter-horizontal {
+    background-image:  url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')
+}

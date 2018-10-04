@@ -1,0 +1,91 @@
+public class constraintBench.test.array.Array1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.array.Array1 this;
+
+        this := @this: constraintBench.test.array.Array1;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*8*/
+
+        return;
+/*8*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.array.Array1 this;
+        int d, f, $i0;
+        int[] arr;
+        java.io.PrintStream $r0;
+
+        this := @this: constraintBench.test.array.Array1;
+/*
+ *		-1.
+true
+*/
+
+        d = staticinvoke <constraintBench.utils.Configuration: int featureD()>();
+/*
+ *		11.
+true
+*/
+
+        f = staticinvoke <constraintBench.utils.Configuration: int featureF()>();
+/*
+ *		12.
+true
+*/
+
+        arr = newarray (int)[2];
+/*
+ *		13.
+true
+*/
+
+        arr[0] = d;
+/*
+ *		14.
+true
+*/
+
+        arr[1] = f;
+/*
+ *		15.
+true
+*/
+
+        $i0 = arr[0];
+/*
+ *		16.
+true
+*/
+
+        if $i0 <= 0 goto label1;
+/*
+ *		16.
+true
+*/
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		17.
+true
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		17.
+true
+*/
+
+     label1:
+        return;
+/*
+ *		19.
+true
+*/
+    }
+}

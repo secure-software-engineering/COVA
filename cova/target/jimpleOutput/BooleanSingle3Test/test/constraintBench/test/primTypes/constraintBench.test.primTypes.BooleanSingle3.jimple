@@ -1,0 +1,91 @@
+public class constraintBench.test.primTypes.BooleanSingle3 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.primTypes.BooleanSingle3 this;
+
+        this := @this: constraintBench.test.primTypes.BooleanSingle3;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.primTypes.BooleanSingle3 this;
+        boolean $z0;
+        java.io.PrintStream $r0, $r1, $r2;
+
+        this := @this: constraintBench.test.primTypes.BooleanSingle3;
+/*
+ *		-1.
+true
+*/
+
+        $z0 = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		12.
+true
+*/
+
+        if $z0 == 0 goto label1;
+/*
+ *		12.
+true
+*/
+
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		13.
+C1001
+*/
+
+        virtualinvoke $r2.<java.io.PrintStream: void println()>();
+/*
+ *		13.
+C1001
+*/
+
+        goto label2;
+/*
+ *		14.
+C1001
+*/
+
+     label1:
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		15.
+(not C1001)
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		15.
+(not C1001)
+*/
+
+     label2:
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		17.
+true
+*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println()>();
+/*
+ *		17.
+true
+*/
+
+        return;
+/*
+ *		18.
+true
+*/
+    }
+}

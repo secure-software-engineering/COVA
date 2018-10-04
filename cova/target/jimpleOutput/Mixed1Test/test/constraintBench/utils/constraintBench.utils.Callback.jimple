@@ -1,0 +1,7 @@
+public interface  constraintBench.utils.Callback extends java.lang.Object
+{
+
+    public abstract void onClick();
+
+    public abstract void onScroll();
+}

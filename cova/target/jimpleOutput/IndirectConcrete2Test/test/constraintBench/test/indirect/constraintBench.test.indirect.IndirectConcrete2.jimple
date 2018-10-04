@@ -1,0 +1,225 @@
+public class constraintBench.test.indirect.IndirectConcrete2 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.indirect.IndirectConcrete2 this;
+
+        this := @this: constraintBench.test.indirect.IndirectConcrete2;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.indirect.IndirectConcrete2 this;
+        boolean v1, v2, k, a, b, x, $z0, $z1, $z2, $z3, $z4, $z5;
+        java.io.PrintStream $r0, $r1;
+
+        this := @this: constraintBench.test.indirect.IndirectConcrete2;
+/*
+ *		-1.
+true
+*/
+
+        $z0 = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		12.
+true
+*/
+
+        if $z0 == 0 goto label01;
+/*
+ *		12.
+true
+*/
+
+        $z2 = 1;
+/*
+ *		14.
+C1001
+*/
+
+        goto label02;
+/*
+ *		14.
+C1001
+*/
+
+     label01:
+        $z2 = 0;
+/*
+ *		14.
+(not C1001)
+*/
+
+     label02:
+        v1 = $z2;
+/*
+ *		12.
+true
+*/
+
+        $z1 = staticinvoke <constraintBench.utils.Configuration: boolean featureB()>();
+/*
+ *		13.
+true
+*/
+
+        if $z1 == 0 goto label03;
+/*
+ *		13.
+true
+*/
+
+        $z3 = 1;
+/*
+ *		15.
+C1002
+*/
+
+        goto label04;
+/*
+ *		15.
+C1002
+*/
+
+     label03:
+        $z3 = 0;
+/*
+ *		15.
+(not C1002)
+*/
+
+     label04:
+        v2 = $z3;
+/*
+ *		13.
+true
+*/
+
+        if v1 != v2 goto label05;
+/*
+ *		14.
+true
+*/
+
+        $z4 = 1;
+/*
+ *		20.
+(or (and (not C1001) (not C1002)) (and C1001 C1002))
+*/
+
+        goto label06;
+/*
+ *		20.
+(or (and (not C1001) (not C1002)) (and C1001 C1002))
+*/
+
+     label05:
+        $z4 = 0;
+/*
+ *		20.
+(or (and (not C1001) C1002) (and C1001 (not C1002)))
+*/
+
+     label06:
+        k = $z4;
+/*
+ *		14.
+true
+*/
+
+        if k == 0 goto label07;
+/*
+ *		15.
+true
+*/
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		16.
+(or (and (not C1001) (not C1002)) (and C1001 C1002))
+*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println()>();
+/*
+ *		16.
+(or (and (not C1001) (not C1002)) (and C1001 C1002))
+*/
+
+     label07:
+        a = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		18.
+true
+*/
+
+        b = staticinvoke <constraintBench.utils.Configuration: boolean featureB()>();
+/*
+ *		19.
+true
+*/
+
+        if a != b goto label08;
+/*
+ *		20.
+true
+*/
+
+        $z5 = 1;
+/*
+ *		24.
+(= C1001 C1002)
+*/
+
+        goto label09;
+/*
+ *		24.
+(= C1001 C1002)
+*/
+
+     label08:
+        $z5 = 0;
+/*
+ *		24.
+(not (= C1001 C1002))
+*/
+
+     label09:
+        x = $z5;
+/*
+ *		20.
+true
+*/
+
+        if x == 0 goto label10;
+/*
+ *		21.
+true
+*/
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		22.
+(= C1001 C1002)
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		22.
+(= C1001 C1002)
+*/
+
+     label10:
+        return;
+/*
+ *		24.
+true
+*/
+    }
+}

@@ -1,0 +1,28 @@
+public final class de.upb.swt.singleifbranch1.R$anim extends java.lang.Object
+{
+    public static final int abc_fade_in;
+    public static final int abc_fade_out;
+    public static final int abc_grow_fade_in_from_bottom;
+    public static final int abc_popup_enter;
+    public static final int abc_popup_exit;
+    public static final int abc_shrink_fade_out_from_bottom;
+    public static final int abc_slide_in_bottom;
+    public static final int abc_slide_in_top;
+    public static final int abc_slide_out_bottom;
+    public static final int abc_slide_out_top;
+
+    public void <init>()
+    {
+        de.upb.swt.singleifbranch1.R$anim $r0;
+
+        $r0 := @this: de.upb.swt.singleifbranch1.R$anim;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+/*11*/
+/*11*/
+
+        return;
+/*11*/
+/*11*/
+    }
+}

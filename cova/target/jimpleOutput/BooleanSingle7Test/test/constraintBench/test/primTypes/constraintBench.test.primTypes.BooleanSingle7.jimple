@@ -1,0 +1,66 @@
+public class constraintBench.test.primTypes.BooleanSingle7 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.primTypes.BooleanSingle7 this;
+
+        this := @this: constraintBench.test.primTypes.BooleanSingle7;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.primTypes.BooleanSingle7 this;
+        boolean a, b;
+        java.io.PrintStream $r0;
+
+        this := @this: constraintBench.test.primTypes.BooleanSingle7;
+/*
+ *		-1.
+true
+*/
+
+        a = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		12.
+true
+*/
+
+        b = 0;
+/*
+ *		13.
+true
+*/
+
+        if b != a goto label1;
+/*
+ *		14.
+true
+*/
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		15.
+(not im(C1001))
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		15.
+(not im(C1001))
+*/
+
+     label1:
+        return;
+/*
+ *		17.
+true
+*/
+    }
+}

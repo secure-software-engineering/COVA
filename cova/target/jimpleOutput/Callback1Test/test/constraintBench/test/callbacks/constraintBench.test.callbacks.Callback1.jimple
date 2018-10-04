@@ -1,0 +1,91 @@
+public class constraintBench.test.callbacks.Callback1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.callbacks.Callback1 this;
+
+        this := @this: constraintBench.test.callbacks.Callback1;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.callbacks.Callback1 this;
+        constraintBench.test.callbacks.Callback1$TestClass testClass, $r0;
+        int flag;
+
+        this := @this: constraintBench.test.callbacks.Callback1;
+/*
+ *		-1.
+true
+*/
+
+        flag = -50;
+/*
+ *		24.
+true
+*/
+
+        goto label2;
+/*
+ *		25.
+true
+*/
+
+     label1:
+        $r0 = new constraintBench.test.callbacks.Callback1$TestClass;
+/*
+ *		26.
+true
+*/
+
+        specialinvoke $r0.<constraintBench.test.callbacks.Callback1$TestClass: void <init>(constraintBench.test.callbacks.Callback1,constraintBench.test.callbacks.Callback1$TestClass)>(this, null);
+/*
+ *		26.
+true
+*/
+
+        testClass = $r0;
+/*
+ *		26.
+true
+*/
+
+        virtualinvoke testClass.<constraintBench.test.callbacks.Callback1$TestClass: void onScroll()>();
+/*
+ *		27.
+true
+*/
+
+        virtualinvoke testClass.<constraintBench.test.callbacks.Callback1$TestClass: void onClick()>();
+/*
+ *		28.
+U1002_0
+*/
+
+        flag = flag + 1;
+/*
+ *		29.
+(and U1002_0 U1001_0)
+*/
+
+     label2:
+        if flag < 0 goto label1;
+/*
+ *		25.
+true
+*/
+
+        return;
+/*
+ *		31.
+true
+*/
+    }
+}

@@ -1,0 +1,41 @@
+public final class de.upb.swt.callbacks1.BuildConfig extends java.lang.Object
+{
+    public static final java.lang.String APPLICATION_ID;
+    public static final java.lang.String BUILD_TYPE;
+    public static final boolean DEBUG;
+    public static final java.lang.String FLAVOR;
+    public static final int VERSION_CODE;
+    public static final java.lang.String VERSION_NAME;
+
+    static void <clinit>()
+    {
+        boolean $z0;
+
+        $z0 = staticinvoke <java.lang.Boolean: boolean parseBoolean(java.lang.String)>("true");
+/*7*/
+/*7*/
+
+        <de.upb.swt.callbacks1.BuildConfig: boolean DEBUG> = $z0;
+/*7*/
+/*7*/
+
+        return;
+/*7*/
+/*7*/
+    }
+
+    public void <init>()
+    {
+        de.upb.swt.callbacks1.BuildConfig $r0;
+
+        $r0 := @this: de.upb.swt.callbacks1.BuildConfig;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+/*6*/
+/*6*/
+
+        return;
+/*6*/
+/*6*/
+    }
+}

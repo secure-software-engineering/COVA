@@ -1,0 +1,27 @@
+class dummyMainClass
+{
+
+    public static void main(java.lang.String[])
+    {
+        constraintBench.test.imprecise.ImpreciseSingle4 dummyObj;
+        java.lang.String[] $r0;
+
+        $r0 := @parameter0: java.lang.String[];
+/*
+ *		-1.
+true
+*/
+
+        dummyObj = new constraintBench.test.imprecise.ImpreciseSingle4;
+/*
+ *		-1.
+true
+*/
+
+        virtualinvoke dummyObj.<constraintBench.test.imprecise.ImpreciseSingle4: void test()>();
+/*
+ *		-1.
+true
+*/
+    }
+}

@@ -1,0 +1,159 @@
+public class constraintBench.test.instanceField.PrimitiveFieldRef1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.instanceField.PrimitiveFieldRef1 this;
+
+        this := @this: constraintBench.test.instanceField.PrimitiveFieldRef1;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.instanceField.PrimitiveFieldRef1 this;
+        constraintBench.test.instanceField.PrimitiveFieldRef1$First first, first2, $r0, $r2, $r3;
+        constraintBench.test.instanceField.PrimitiveFieldRef1$Second second, $r1;
+        boolean $z0, $z1, $z2;
+        java.io.PrintStream $r4, $r5;
+
+        this := @this: constraintBench.test.instanceField.PrimitiveFieldRef1;
+/*
+ *		-1.
+true
+*/
+
+        $r0 = new constraintBench.test.instanceField.PrimitiveFieldRef1$First;
+/*
+ *		24.
+true
+*/
+
+        specialinvoke $r0.<constraintBench.test.instanceField.PrimitiveFieldRef1$First: void <init>(constraintBench.test.instanceField.PrimitiveFieldRef1)>(this);
+/*
+ *		24.
+true
+*/
+
+        first = $r0;
+/*
+ *		24.
+true
+*/
+
+        $z0 = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		25.
+true
+*/
+
+        first.<constraintBench.test.instanceField.PrimitiveFieldRef1$First: boolean f1> = $z0;
+/*
+ *		25.
+true
+*/
+
+        $r1 = new constraintBench.test.instanceField.PrimitiveFieldRef1$Second;
+/*
+ *		26.
+true
+*/
+
+        specialinvoke $r1.<constraintBench.test.instanceField.PrimitiveFieldRef1$Second: void <init>(constraintBench.test.instanceField.PrimitiveFieldRef1,constraintBench.test.instanceField.PrimitiveFieldRef1$First)>(this, first);
+/*
+ *		26.
+true
+*/
+
+        second = $r1;
+/*
+ *		26.
+true
+*/
+
+        $r2 = second.<constraintBench.test.instanceField.PrimitiveFieldRef1$Second: constraintBench.test.instanceField.PrimitiveFieldRef1$First f2>;
+/*
+ *		27.
+true
+*/
+
+        $z1 = $r2.<constraintBench.test.instanceField.PrimitiveFieldRef1$First: boolean f1>;
+/*
+ *		27.
+true
+*/
+
+        if $z1 == 0 goto label1;
+/*
+ *		27.
+true
+*/
+
+        $r5 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		28.
+C1001
+*/
+
+        virtualinvoke $r5.<java.io.PrintStream: void println()>();
+/*
+ *		28.
+C1001
+*/
+
+     label1:
+        first2 = second.<constraintBench.test.instanceField.PrimitiveFieldRef1$Second: constraintBench.test.instanceField.PrimitiveFieldRef1$First f2>;
+/*
+ *		30.
+true
+*/
+
+        first2.<constraintBench.test.instanceField.PrimitiveFieldRef1$First: boolean f1> = 1;
+/*
+ *		31.
+true
+*/
+
+        $r3 = second.<constraintBench.test.instanceField.PrimitiveFieldRef1$Second: constraintBench.test.instanceField.PrimitiveFieldRef1$First f2>;
+/*
+ *		32.
+true
+*/
+
+        $z2 = $r3.<constraintBench.test.instanceField.PrimitiveFieldRef1$First: boolean f1>;
+/*
+ *		32.
+true
+*/
+
+        if $z2 == 0 goto label2;
+/*
+ *		32.
+true
+*/
+
+        $r4 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		33.
+true
+*/
+
+        virtualinvoke $r4.<java.io.PrintStream: void println()>();
+/*
+ *		33.
+true
+*/
+
+     label2:
+        return;
+/*
+ *		35.
+true
+*/
+    }
+}

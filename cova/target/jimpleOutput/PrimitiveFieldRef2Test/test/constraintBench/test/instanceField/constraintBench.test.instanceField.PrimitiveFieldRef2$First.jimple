@@ -1,0 +1,41 @@
+class constraintBench.test.instanceField.PrimitiveFieldRef2$First extends java.lang.Object
+{
+    public boolean f1;
+    final constraintBench.test.instanceField.PrimitiveFieldRef2 this$0;
+
+    void <init>(constraintBench.test.instanceField.PrimitiveFieldRef2)
+    {
+        constraintBench.test.instanceField.PrimitiveFieldRef2$First this;
+        constraintBench.test.instanceField.PrimitiveFieldRef2 l1;
+
+        this := @this: constraintBench.test.instanceField.PrimitiveFieldRef2$First;
+/*
+ *		-1.
+true
+*/
+
+        l1 := @parameter0: constraintBench.test.instanceField.PrimitiveFieldRef2;
+/*
+ *		-1.
+true
+*/
+
+        this.<constraintBench.test.instanceField.PrimitiveFieldRef2$First: constraintBench.test.instanceField.PrimitiveFieldRef2 this$0> = l1;
+/*
+ *		11.
+true
+*/
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*
+ *		11.
+true
+*/
+
+        return;
+/*
+ *		11.
+true
+*/
+    }
+}

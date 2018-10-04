@@ -1,0 +1,72 @@
+public class constraintBench.test.imprecise.ImpreciseSingle2 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.imprecise.ImpreciseSingle2 this;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseSingle2;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.imprecise.ImpreciseSingle2 this;
+        int d, f;
+        java.io.PrintStream $r0;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseSingle2;
+/*
+ *		-1.
+true
+*/
+
+        d = staticinvoke <constraintBench.utils.Configuration: int featureD()>();
+/*
+ *		12.
+true
+*/
+
+        f = staticinvoke <constraintBench.utils.Configuration: int featureF()>();
+/*
+ *		13.
+true
+*/
+
+        f = f + 1;
+/*
+ *		14.
+true
+*/
+
+        if d != f goto label1;
+/*
+ *		15.
+true
+*/
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		16.
+(= C1004 im(C1006)_0)
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		16.
+(= C1004 im(C1006)_0)
+*/
+
+     label1:
+        return;
+/*
+ *		18.
+true
+*/
+    }
+}

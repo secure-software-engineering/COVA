@@ -1,0 +1,147 @@
+public class constraintBench.test.instanceField.InstanceField6 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.instanceField.InstanceField6 this;
+
+        this := @this: constraintBench.test.instanceField.InstanceField6;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*12*/
+
+        return;
+/*12*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.instanceField.InstanceField6 this;
+        constraintBench.test.instanceField.InstanceField6$Foo foo, $r0;
+        constraintBench.test.instanceField.InstanceField6$Bar $r1, $r2;
+        boolean $z0, $z1;
+        java.io.PrintStream $r3;
+
+        this := @this: constraintBench.test.instanceField.InstanceField6;
+/*
+ *		-1.
+true
+*/
+
+        $r0 = new constraintBench.test.instanceField.InstanceField6$Foo;
+/*
+ *		27.
+true
+*/
+
+        specialinvoke $r0.<constraintBench.test.instanceField.InstanceField6$Foo: void <init>(constraintBench.test.instanceField.InstanceField6)>(this);
+/*
+ *		27.
+true
+*/
+
+        foo = $r0;
+/*
+ *		27.
+true
+*/
+
+        $r1 = foo.<constraintBench.test.instanceField.InstanceField6$Foo: constraintBench.test.instanceField.InstanceField6$Bar bar>;
+/*
+ *		28.
+true
+*/
+
+        $z0 = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		28.
+true
+*/
+
+        $r1.<constraintBench.test.instanceField.InstanceField6$Bar: boolean a> = $z0;
+/*
+ *		28.
+true
+*/
+
+        specialinvoke this.<constraintBench.test.instanceField.InstanceField6: void callee(constraintBench.test.instanceField.InstanceField6$Foo)>(foo);
+/*
+ *		29.
+true
+*/
+
+        $r2 = foo.<constraintBench.test.instanceField.InstanceField6$Foo: constraintBench.test.instanceField.InstanceField6$Bar bar>;
+/*
+ *		30.
+true
+*/
+
+        $z1 = $r2.<constraintBench.test.instanceField.InstanceField6$Bar: boolean a>;
+/*
+ *		30.
+true
+*/
+
+        if $z1 == 0 goto label1;
+/*
+ *		30.
+true
+*/
+
+        $r3 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		31.
+true
+*/
+
+        virtualinvoke $r3.<java.io.PrintStream: void println(java.lang.String)>("No Constraint");
+/*
+ *		31.
+true
+*/
+
+     label1:
+        return;
+/*
+ *		33.
+true
+*/
+    }
+
+    private void callee(constraintBench.test.instanceField.InstanceField6$Foo)
+    {
+        constraintBench.test.instanceField.InstanceField6 this;
+        constraintBench.test.instanceField.InstanceField6$Foo foo;
+        constraintBench.test.instanceField.InstanceField6$Bar $r0;
+
+        this := @this: constraintBench.test.instanceField.InstanceField6;
+/*
+ *		-1.
+true
+*/
+
+        foo := @parameter0: constraintBench.test.instanceField.InstanceField6$Foo;
+/*
+ *		-1.
+true
+*/
+
+        $r0 = foo.<constraintBench.test.instanceField.InstanceField6$Foo: constraintBench.test.instanceField.InstanceField6$Bar bar>;
+/*
+ *		36.
+true
+*/
+
+        $r0.<constraintBench.test.instanceField.InstanceField6$Bar: boolean a> = 0;
+/*
+ *		36.
+true
+*/
+
+        return;
+/*
+ *		37.
+true
+*/
+    }
+}

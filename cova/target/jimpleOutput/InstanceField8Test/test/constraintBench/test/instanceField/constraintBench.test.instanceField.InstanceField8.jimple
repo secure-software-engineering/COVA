@@ -1,0 +1,145 @@
+public class constraintBench.test.instanceField.InstanceField8 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.instanceField.InstanceField8 this;
+
+        this := @this: constraintBench.test.instanceField.InstanceField8;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*12*/
+
+        staticinvoke <java.lang.System: java.lang.String setProperty(java.lang.String,java.lang.String)>("org.slf4j.simpleLogger.defaultLogLevel", "info");
+/*13*/
+
+        return;
+/*14*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.instanceField.InstanceField8 this;
+        constraintBench.test.instanceField.InstanceField8$Foo foo, $r0;
+        java.lang.String $r1;
+        constraintBench.test.instanceField.InstanceField8$Bar $r2;
+
+        this := @this: constraintBench.test.instanceField.InstanceField8;
+/*
+ *		-1.
+true
+*/
+
+        $r0 = new constraintBench.test.instanceField.InstanceField8$Foo;
+/*
+ *		29.
+true
+*/
+
+        specialinvoke $r0.<constraintBench.test.instanceField.InstanceField8$Foo: void <init>(constraintBench.test.instanceField.InstanceField8)>(this);
+/*
+ *		29.
+true
+*/
+
+        foo = $r0;
+/*
+ *		29.
+true
+*/
+
+        $r2 = foo.<constraintBench.test.instanceField.InstanceField8$Foo: constraintBench.test.instanceField.InstanceField8$Bar bar>;
+/*
+ *		30.
+true
+*/
+
+        $r1 = <constraintBench.utils.Configuration: java.lang.String fieldA>;
+/*
+ *		30.
+true
+*/
+
+        $r2.<constraintBench.test.instanceField.InstanceField8$Bar: java.lang.String a> = $r1;
+/*
+ *		30.
+true
+*/
+
+        specialinvoke this.<constraintBench.test.instanceField.InstanceField8: void callee(constraintBench.test.instanceField.InstanceField8$Foo)>(foo);
+/*
+ *		31.
+true
+*/
+
+        return;
+/*
+ *		32.
+true
+*/
+    }
+
+    private void callee(constraintBench.test.instanceField.InstanceField8$Foo)
+    {
+        constraintBench.test.instanceField.InstanceField8 this;
+        constraintBench.test.instanceField.InstanceField8$Foo c;
+        java.lang.String b, $r1;
+        constraintBench.test.instanceField.InstanceField8$Bar $r0;
+        java.io.PrintStream $r2;
+
+        this := @this: constraintBench.test.instanceField.InstanceField8;
+/*
+ *		-1.
+true
+*/
+
+        c := @parameter0: constraintBench.test.instanceField.InstanceField8$Foo;
+/*
+ *		-1.
+true
+*/
+
+        b = <constraintBench.utils.Configuration: java.lang.String fieldB>;
+/*
+ *		35.
+true
+*/
+
+        $r0 = c.<constraintBench.test.instanceField.InstanceField8$Foo: constraintBench.test.instanceField.InstanceField8$Bar bar>;
+/*
+ *		36.
+true
+*/
+
+        $r1 = $r0.<constraintBench.test.instanceField.InstanceField8$Bar: java.lang.String a>;
+/*
+ *		36.
+true
+*/
+
+        if $r1 != b goto label1;
+/*
+ *		36.
+true
+*/
+
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		37.
+(= C1007 C1008)
+*/
+
+        virtualinvoke $r2.<java.io.PrintStream: void println(java.lang.String)>("FA == FB");
+/*
+ *		37.
+(= C1007 C1008)
+*/
+
+     label1:
+        return;
+/*
+ *		39.
+true
+*/
+    }
+}

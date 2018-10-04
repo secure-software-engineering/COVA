@@ -1,0 +1,79 @@
+public class constraintBench.test.imprecise.ImpreciseSingle1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.imprecise.ImpreciseSingle1 this;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseSingle1;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.imprecise.ImpreciseSingle1 this;
+        java.lang.String $r0;
+        boolean $z0;
+        java.io.PrintStream $r1, $r2;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseSingle1;
+/*
+ *		-1.
+true
+*/
+
+        $r0 = <constraintBench.utils.Configuration: java.lang.String fieldA>;
+/*
+ *		12.
+true
+*/
+
+        $z0 = virtualinvoke $r0.<java.lang.String: boolean startsWith(java.lang.String)>("FA");
+/*
+ *		12.
+true
+*/
+
+        if $z0 == 0 goto label1;
+/*
+ *		12.
+true
+*/
+
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		13.
+im(C1007)_0
+*/
+
+        virtualinvoke $r2.<java.io.PrintStream: void println()>();
+/*
+ *		13.
+im(C1007)_0
+*/
+
+     label1:
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		15.
+true
+*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println()>();
+/*
+ *		15.
+true
+*/
+
+        return;
+/*
+ *		16.
+true
+*/
+    }
+}

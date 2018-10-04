@@ -1,0 +1,168 @@
+public class constraintBench.test.switchStmts.LookUpSwitchStmt1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.switchStmts.LookUpSwitchStmt1 this;
+
+        this := @this: constraintBench.test.switchStmts.LookUpSwitchStmt1;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.switchStmts.LookUpSwitchStmt1 this;
+        java.lang.String fa, l2;
+        int $i0;
+        boolean $z0, $z1;
+        java.io.PrintStream $r0, $r1, $r2, $r3;
+
+        this := @this: constraintBench.test.switchStmts.LookUpSwitchStmt1;
+/*
+ *		-1.
+true
+*/
+
+        fa = <constraintBench.utils.Configuration: java.lang.String fieldA>;
+/*
+ *		12.
+true
+*/
+
+        l2 = fa;
+/*
+ *		13.
+true
+*/
+
+        $i0 = virtualinvoke fa.<java.lang.String: int hashCode()>();
+/*
+ *		13.
+true
+*/
+
+        lookupswitch($i0)
+        {
+            case 65: goto label1;
+            case 66: goto label2;
+            default: goto label5;
+        };
+/*
+ *		13.
+true
+*/
+
+     label1:
+        $z1 = virtualinvoke l2.<java.lang.String: boolean equals(java.lang.Object)>("A");
+/*
+ *		25.
+true
+*/
+
+        if $z1 != 0 goto label3;
+/*
+ *		25.
+true
+*/
+
+        goto label5;
+/*
+ *		25.
+(not (= C1007 "A"))
+*/
+
+     label2:
+        $z0 = virtualinvoke l2.<java.lang.String: boolean equals(java.lang.Object)>("B");
+/*
+ *		13.
+true
+*/
+
+        if $z0 != 0 goto label4;
+/*
+ *		13.
+true
+*/
+
+        goto label5;
+/*
+ *		25.
+(not (= C1007 "B"))
+*/
+
+     label3:
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		15.
+(= C1007 "A")
+*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println()>();
+/*
+ *		15.
+(= C1007 "A")
+*/
+
+        goto label6;
+/*
+ *		16.
+(= C1007 "A")
+*/
+
+     label4:
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		18.
+(= C1007 "B")
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		18.
+(= C1007 "B")
+*/
+
+        goto label6;
+/*
+ *		19.
+(= C1007 "B")
+*/
+
+     label5:
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		21.
+true
+*/
+
+        virtualinvoke $r2.<java.io.PrintStream: void println(java.lang.String)>("default");
+/*
+ *		21.
+(and (not (= C1007 "B")) (not (= C1007 "A")))
+*/
+
+     label6:
+        $r3 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		24.
+true
+*/
+
+        virtualinvoke $r3.<java.io.PrintStream: void println()>();
+/*
+ *		24.
+true
+*/
+
+        return;
+/*
+ *		25.
+true
+*/
+    }
+}

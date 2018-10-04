@@ -1,0 +1,147 @@
+public class de.upb.swt.callbacks1.MainActivity extends android.support.v7.app.AppCompatActivity
+{
+    java.lang.String msg;
+
+    public void <init>()
+    {
+        de.upb.swt.callbacks1.MainActivity $r0;
+
+        $r0 := @this: de.upb.swt.callbacks1.MainActivity;
+/*
+ *		-1.
+true
+*/
+
+        specialinvoke $r0.<android.support.v7.app.AppCompatActivity: void <init>()>();
+/*
+ *		12.
+true
+*/
+
+        return;
+/*
+ *		12.
+true
+*/
+    }
+
+    protected void onCreate(android.os.Bundle)
+    {
+        de.upb.swt.callbacks1.MainActivity $r0;
+        android.os.Bundle $r1;
+        android.view.View $r2;
+        android.widget.Button $r3;
+        de.upb.swt.callbacks1.MainActivity$1 $r4;
+
+        $r0 := @this: de.upb.swt.callbacks1.MainActivity;
+/*
+ *		-1.
+true
+*/
+
+        $r1 := @parameter0: android.os.Bundle;
+/*
+ *		-1.
+true
+*/
+
+        specialinvoke $r0.<android.support.v7.app.AppCompatActivity: void onCreate(android.os.Bundle)>($r1);
+/*
+ *		17.
+true
+*/
+
+        virtualinvoke $r0.<de.upb.swt.callbacks1.MainActivity: void setContentView(int)>(2130968603);
+/*
+ *		18.
+true
+*/
+
+        $r2 = virtualinvoke $r0.<de.upb.swt.callbacks1.MainActivity: android.view.View findViewById(int)>(2131427422);
+/*
+ *		19.
+true
+*/
+
+        $r3 = (android.widget.Button) $r2;
+/*
+ *		19.
+true
+*/
+
+        $r4 = new de.upb.swt.callbacks1.MainActivity$1;
+/*
+ *		20.
+true
+*/
+
+        specialinvoke $r4.<de.upb.swt.callbacks1.MainActivity$1: void <init>(de.upb.swt.callbacks1.MainActivity)>($r0);
+/*
+ *		20.
+true
+*/
+
+        virtualinvoke $r3.<android.widget.Button: void setOnClickListener(android.view.View$OnClickListener)>($r4);
+/*
+ *		20.
+true
+*/
+
+        return;
+/*
+ *		34.
+true
+*/
+    }
+
+    void send(java.lang.String)
+    {
+        de.upb.swt.callbacks1.MainActivity $r0;
+        java.lang.String $r1;
+        int $i0;
+        android.telephony.SmsManager $r2;
+
+        $r0 := @this: de.upb.swt.callbacks1.MainActivity;
+/*
+ *		-1.
+(and U8_0 im(C13)_0)
+*/
+
+        $r1 := @parameter0: java.lang.String;
+/*
+ *		-1.
+(and U8_0 im(C13)_0)
+*/
+
+        $i0 = <android.os.Build$VERSION: int SDK_INT>;
+/*
+ *		38.
+(and U8_0 im(C13)_0)
+*/
+
+        if $i0 >= 15 goto label1;
+/*
+ *		39.
+(and U8_0 im(C13)_0)
+*/
+
+        $r2 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
+/*
+ *		40.
+(and U8_0 im(C13)_0 (not (>= C24 15)))
+*/
+
+        virtualinvoke $r2.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49", null, $r1, null, null);
+/*
+ *		41.
+(and U8_0 im(C13)_0 (not (>= C24 15)))
+*/
+
+     label1:
+        return;
+/*
+ *		43.
+(and U8_0 im(C13)_0)
+*/
+    }
+}

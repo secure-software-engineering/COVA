@@ -1,0 +1,18 @@
+public final class de.upb.swt.singleifbranch1.R extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        de.upb.swt.singleifbranch1.R $r0;
+
+        $r0 := @this: de.upb.swt.singleifbranch1.R;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+/*10*/
+/*10*/
+
+        return;
+/*10*/
+/*10*/
+    }
+}

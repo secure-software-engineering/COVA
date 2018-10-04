@@ -1,0 +1,173 @@
+public class constraintBench.utils.Property extends constraintBench.utils.SuperProperty
+{
+    private int v;
+    private int w;
+    private int y;
+    private boolean on;
+
+    public void <init>()
+    {
+        constraintBench.utils.Property this;
+
+        this := @this: constraintBench.utils.Property;
+
+        specialinvoke this.<constraintBench.utils.SuperProperty: void <init>()>();
+
+        this.<constraintBench.utils.Property: int v> = 1;
+
+        this.<constraintBench.utils.Property: int w> = 2;
+
+        this.<constraintBench.utils.Property: int y> = 3;
+
+        return;
+    }
+
+    public boolean isFeatureEnable()
+    {
+        constraintBench.utils.Property this;
+        boolean $z0;
+
+        this := @this: constraintBench.utils.Property;
+/*
+ *		-1.
+true
+*/
+
+        $z0 = this.<constraintBench.utils.Property: boolean on>;
+/*
+ *		22.
+true
+*/
+
+        return $z0;
+/*
+ *		22.
+true
+*/
+    }
+
+    public int moreThanCompare(constraintBench.utils.Property)
+    {
+        constraintBench.utils.Property this, q;
+        boolean $z0;
+        int $i0, $i1, $i2, $i3;
+
+        this := @this: constraintBench.utils.Property;
+
+        q := @parameter0: constraintBench.utils.Property;
+
+        $z0 = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*26*/
+
+        q.<constraintBench.utils.Property: boolean on> = $z0;
+/*26*/
+
+        $i1 = this.<constraintBench.utils.Property: int w>;
+/*27*/
+
+        $i0 = q.<constraintBench.utils.Property: int w>;
+/*27*/
+
+        if $i1 <= $i0 goto label1;
+/*27*/
+
+        $i3 = this.<constraintBench.utils.Property: int y>;
+/*28*/
+
+        return $i3;
+/*28*/
+
+     label1:
+        $i2 = this.<constraintBench.utils.Property: int v>;
+/*30*/
+
+        return $i2;
+/*30*/
+    }
+
+    public void setOn()
+    {
+        constraintBench.utils.Property this;
+        boolean $z0;
+
+        this := @this: constraintBench.utils.Property;
+/*
+ *		-1.
+true
+*/
+
+        $z0 = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		35.
+true
+*/
+
+        this.<constraintBench.utils.Property: boolean on> = $z0;
+/*
+ *		35.
+true
+*/
+
+        return;
+/*
+ *		36.
+true
+*/
+    }
+
+    public int callee(constraintBench.utils.Property)
+    {
+        constraintBench.utils.Property this, q;
+        boolean $z0;
+        int $i0, $i1;
+
+        this := @this: constraintBench.utils.Property;
+/*
+ *		-1.
+true
+*/
+
+        q := @parameter0: constraintBench.utils.Property;
+/*
+ *		-1.
+true
+*/
+
+        $z0 = q.<constraintBench.utils.Property: boolean on>;
+/*
+ *		40.
+true
+*/
+
+        if $z0 == 0 goto label1;
+/*
+ *		40.
+true
+*/
+
+        $i1 = this.<constraintBench.utils.Property: int y>;
+/*
+ *		41.
+C1001
+*/
+
+        return $i1;
+/*
+ *		41.
+C1001
+*/
+
+     label1:
+        $i0 = this.<constraintBench.utils.Property: int v>;
+/*
+ *		43.
+(not C1001)
+*/
+
+        return $i0;
+/*
+ *		43.
+(not C1001)
+*/
+    }
+}

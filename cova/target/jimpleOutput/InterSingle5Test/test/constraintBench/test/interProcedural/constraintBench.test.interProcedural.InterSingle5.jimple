@@ -1,0 +1,89 @@
+public class constraintBench.test.interProcedural.InterSingle5 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.interProcedural.InterSingle5 this;
+
+        this := @this: constraintBench.test.interProcedural.InterSingle5;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.interProcedural.InterSingle5 this;
+        boolean $z0;
+
+        this := @this: constraintBench.test.interProcedural.InterSingle5;
+/*
+ *		-1.
+true
+*/
+
+        $z0 = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		12.
+true
+*/
+
+        if $z0 == 0 goto label1;
+/*
+ *		12.
+true
+*/
+
+        specialinvoke this.<constraintBench.test.interProcedural.InterSingle5: void callee()>();
+/*
+ *		13.
+C1001
+*/
+
+     label1:
+        specialinvoke this.<constraintBench.test.interProcedural.InterSingle5: void callee()>();
+/*
+ *		15.
+true
+*/
+
+        return;
+/*
+ *		16.
+true
+*/
+    }
+
+    private void callee()
+    {
+        constraintBench.test.interProcedural.InterSingle5 this;
+        java.io.PrintStream $r0;
+
+        this := @this: constraintBench.test.interProcedural.InterSingle5;
+/*
+ *		-1.
+true
+*/
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		19.
+true
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		19.
+true
+*/
+
+        return;
+/*
+ *		20.
+true
+*/
+    }
+}

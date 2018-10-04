@@ -1,0 +1,1759 @@
+public final class de.upb.swt.singleifbranch1.R$styleable extends java.lang.Object
+{
+    public static final int[] ActionBar;
+    public static final int[] ActionBarLayout;
+    public static final int ActionBarLayout_android_layout_gravity;
+    public static final int ActionBar_background;
+    public static final int ActionBar_backgroundSplit;
+    public static final int ActionBar_backgroundStacked;
+    public static final int ActionBar_contentInsetEnd;
+    public static final int ActionBar_contentInsetEndWithActions;
+    public static final int ActionBar_contentInsetLeft;
+    public static final int ActionBar_contentInsetRight;
+    public static final int ActionBar_contentInsetStart;
+    public static final int ActionBar_contentInsetStartWithNavigation;
+    public static final int ActionBar_customNavigationLayout;
+    public static final int ActionBar_displayOptions;
+    public static final int ActionBar_divider;
+    public static final int ActionBar_elevation;
+    public static final int ActionBar_height;
+    public static final int ActionBar_hideOnContentScroll;
+    public static final int ActionBar_homeAsUpIndicator;
+    public static final int ActionBar_homeLayout;
+    public static final int ActionBar_icon;
+    public static final int ActionBar_indeterminateProgressStyle;
+    public static final int ActionBar_itemPadding;
+    public static final int ActionBar_logo;
+    public static final int ActionBar_navigationMode;
+    public static final int ActionBar_popupTheme;
+    public static final int ActionBar_progressBarPadding;
+    public static final int ActionBar_progressBarStyle;
+    public static final int ActionBar_subtitle;
+    public static final int ActionBar_subtitleTextStyle;
+    public static final int ActionBar_title;
+    public static final int ActionBar_titleTextStyle;
+    public static final int[] ActionMenuItemView;
+    public static final int ActionMenuItemView_android_minWidth;
+    public static final int[] ActionMenuView;
+    public static final int[] ActionMode;
+    public static final int ActionMode_background;
+    public static final int ActionMode_backgroundSplit;
+    public static final int ActionMode_closeItemLayout;
+    public static final int ActionMode_height;
+    public static final int ActionMode_subtitleTextStyle;
+    public static final int ActionMode_titleTextStyle;
+    public static final int[] ActivityChooserView;
+    public static final int ActivityChooserView_expandActivityOverflowButtonDrawable;
+    public static final int ActivityChooserView_initialActivityCount;
+    public static final int[] AlertDialog;
+    public static final int AlertDialog_android_layout;
+    public static final int AlertDialog_buttonPanelSideLayout;
+    public static final int AlertDialog_listItemLayout;
+    public static final int AlertDialog_listLayout;
+    public static final int AlertDialog_multiChoiceItemLayout;
+    public static final int AlertDialog_showTitle;
+    public static final int AlertDialog_singleChoiceItemLayout;
+    public static final int[] AppCompatImageView;
+    public static final int AppCompatImageView_android_src;
+    public static final int AppCompatImageView_srcCompat;
+    public static final int[] AppCompatSeekBar;
+    public static final int AppCompatSeekBar_android_thumb;
+    public static final int AppCompatSeekBar_tickMark;
+    public static final int AppCompatSeekBar_tickMarkTint;
+    public static final int AppCompatSeekBar_tickMarkTintMode;
+    public static final int[] AppCompatTextHelper;
+    public static final int AppCompatTextHelper_android_drawableBottom;
+    public static final int AppCompatTextHelper_android_drawableEnd;
+    public static final int AppCompatTextHelper_android_drawableLeft;
+    public static final int AppCompatTextHelper_android_drawableRight;
+    public static final int AppCompatTextHelper_android_drawableStart;
+    public static final int AppCompatTextHelper_android_drawableTop;
+    public static final int AppCompatTextHelper_android_textAppearance;
+    public static final int[] AppCompatTextView;
+    public static final int AppCompatTextView_android_textAppearance;
+    public static final int AppCompatTextView_textAllCaps;
+    public static final int[] AppCompatTheme;
+    public static final int AppCompatTheme_actionBarDivider;
+    public static final int AppCompatTheme_actionBarItemBackground;
+    public static final int AppCompatTheme_actionBarPopupTheme;
+    public static final int AppCompatTheme_actionBarSize;
+    public static final int AppCompatTheme_actionBarSplitStyle;
+    public static final int AppCompatTheme_actionBarStyle;
+    public static final int AppCompatTheme_actionBarTabBarStyle;
+    public static final int AppCompatTheme_actionBarTabStyle;
+    public static final int AppCompatTheme_actionBarTabTextStyle;
+    public static final int AppCompatTheme_actionBarTheme;
+    public static final int AppCompatTheme_actionBarWidgetTheme;
+    public static final int AppCompatTheme_actionButtonStyle;
+    public static final int AppCompatTheme_actionDropDownStyle;
+    public static final int AppCompatTheme_actionMenuTextAppearance;
+    public static final int AppCompatTheme_actionMenuTextColor;
+    public static final int AppCompatTheme_actionModeBackground;
+    public static final int AppCompatTheme_actionModeCloseButtonStyle;
+    public static final int AppCompatTheme_actionModeCloseDrawable;
+    public static final int AppCompatTheme_actionModeCopyDrawable;
+    public static final int AppCompatTheme_actionModeCutDrawable;
+    public static final int AppCompatTheme_actionModeFindDrawable;
+    public static final int AppCompatTheme_actionModePasteDrawable;
+    public static final int AppCompatTheme_actionModePopupWindowStyle;
+    public static final int AppCompatTheme_actionModeSelectAllDrawable;
+    public static final int AppCompatTheme_actionModeShareDrawable;
+    public static final int AppCompatTheme_actionModeSplitBackground;
+    public static final int AppCompatTheme_actionModeStyle;
+    public static final int AppCompatTheme_actionModeWebSearchDrawable;
+    public static final int AppCompatTheme_actionOverflowButtonStyle;
+    public static final int AppCompatTheme_actionOverflowMenuStyle;
+    public static final int AppCompatTheme_activityChooserViewStyle;
+    public static final int AppCompatTheme_alertDialogButtonGroupStyle;
+    public static final int AppCompatTheme_alertDialogCenterButtons;
+    public static final int AppCompatTheme_alertDialogStyle;
+    public static final int AppCompatTheme_alertDialogTheme;
+    public static final int AppCompatTheme_android_windowAnimationStyle;
+    public static final int AppCompatTheme_android_windowIsFloating;
+    public static final int AppCompatTheme_autoCompleteTextViewStyle;
+    public static final int AppCompatTheme_borderlessButtonStyle;
+    public static final int AppCompatTheme_buttonBarButtonStyle;
+    public static final int AppCompatTheme_buttonBarNegativeButtonStyle;
+    public static final int AppCompatTheme_buttonBarNeutralButtonStyle;
+    public static final int AppCompatTheme_buttonBarPositiveButtonStyle;
+    public static final int AppCompatTheme_buttonBarStyle;
+    public static final int AppCompatTheme_buttonStyle;
+    public static final int AppCompatTheme_buttonStyleSmall;
+    public static final int AppCompatTheme_checkboxStyle;
+    public static final int AppCompatTheme_checkedTextViewStyle;
+    public static final int AppCompatTheme_colorAccent;
+    public static final int AppCompatTheme_colorBackgroundFloating;
+    public static final int AppCompatTheme_colorButtonNormal;
+    public static final int AppCompatTheme_colorControlActivated;
+    public static final int AppCompatTheme_colorControlHighlight;
+    public static final int AppCompatTheme_colorControlNormal;
+    public static final int AppCompatTheme_colorPrimary;
+    public static final int AppCompatTheme_colorPrimaryDark;
+    public static final int AppCompatTheme_colorSwitchThumbNormal;
+    public static final int AppCompatTheme_controlBackground;
+    public static final int AppCompatTheme_dialogPreferredPadding;
+    public static final int AppCompatTheme_dialogTheme;
+    public static final int AppCompatTheme_dividerHorizontal;
+    public static final int AppCompatTheme_dividerVertical;
+    public static final int AppCompatTheme_dropDownListViewStyle;
+    public static final int AppCompatTheme_dropdownListPreferredItemHeight;
+    public static final int AppCompatTheme_editTextBackground;
+    public static final int AppCompatTheme_editTextColor;
+    public static final int AppCompatTheme_editTextStyle;
+    public static final int AppCompatTheme_homeAsUpIndicator;
+    public static final int AppCompatTheme_imageButtonStyle;
+    public static final int AppCompatTheme_listChoiceBackgroundIndicator;
+    public static final int AppCompatTheme_listDividerAlertDialog;
+    public static final int AppCompatTheme_listMenuViewStyle;
+    public static final int AppCompatTheme_listPopupWindowStyle;
+    public static final int AppCompatTheme_listPreferredItemHeight;
+    public static final int AppCompatTheme_listPreferredItemHeightLarge;
+    public static final int AppCompatTheme_listPreferredItemHeightSmall;
+    public static final int AppCompatTheme_listPreferredItemPaddingLeft;
+    public static final int AppCompatTheme_listPreferredItemPaddingRight;
+    public static final int AppCompatTheme_panelBackground;
+    public static final int AppCompatTheme_panelMenuListTheme;
+    public static final int AppCompatTheme_panelMenuListWidth;
+    public static final int AppCompatTheme_popupMenuStyle;
+    public static final int AppCompatTheme_popupWindowStyle;
+    public static final int AppCompatTheme_radioButtonStyle;
+    public static final int AppCompatTheme_ratingBarStyle;
+    public static final int AppCompatTheme_ratingBarStyleIndicator;
+    public static final int AppCompatTheme_ratingBarStyleSmall;
+    public static final int AppCompatTheme_searchViewStyle;
+    public static final int AppCompatTheme_seekBarStyle;
+    public static final int AppCompatTheme_selectableItemBackground;
+    public static final int AppCompatTheme_selectableItemBackgroundBorderless;
+    public static final int AppCompatTheme_spinnerDropDownItemStyle;
+    public static final int AppCompatTheme_spinnerStyle;
+    public static final int AppCompatTheme_switchStyle;
+    public static final int AppCompatTheme_textAppearanceLargePopupMenu;
+    public static final int AppCompatTheme_textAppearanceListItem;
+    public static final int AppCompatTheme_textAppearanceListItemSmall;
+    public static final int AppCompatTheme_textAppearancePopupMenuHeader;
+    public static final int AppCompatTheme_textAppearanceSearchResultSubtitle;
+    public static final int AppCompatTheme_textAppearanceSearchResultTitle;
+    public static final int AppCompatTheme_textAppearanceSmallPopupMenu;
+    public static final int AppCompatTheme_textColorAlertDialogListItem;
+    public static final int AppCompatTheme_textColorSearchUrl;
+    public static final int AppCompatTheme_toolbarNavigationButtonStyle;
+    public static final int AppCompatTheme_toolbarStyle;
+    public static final int AppCompatTheme_windowActionBar;
+    public static final int AppCompatTheme_windowActionBarOverlay;
+    public static final int AppCompatTheme_windowActionModeOverlay;
+    public static final int AppCompatTheme_windowFixedHeightMajor;
+    public static final int AppCompatTheme_windowFixedHeightMinor;
+    public static final int AppCompatTheme_windowFixedWidthMajor;
+    public static final int AppCompatTheme_windowFixedWidthMinor;
+    public static final int AppCompatTheme_windowMinWidthMajor;
+    public static final int AppCompatTheme_windowMinWidthMinor;
+    public static final int AppCompatTheme_windowNoTitle;
+    public static final int[] ButtonBarLayout;
+    public static final int ButtonBarLayout_allowStacking;
+    public static final int[] ColorStateListItem;
+    public static final int ColorStateListItem_alpha;
+    public static final int ColorStateListItem_android_alpha;
+    public static final int ColorStateListItem_android_color;
+    public static final int[] CompoundButton;
+    public static final int CompoundButton_android_button;
+    public static final int CompoundButton_buttonTint;
+    public static final int CompoundButton_buttonTintMode;
+    public static final int[] ConstraintLayout_Layout;
+    public static final int ConstraintLayout_Layout_android_maxHeight;
+    public static final int ConstraintLayout_Layout_android_maxWidth;
+    public static final int ConstraintLayout_Layout_android_minHeight;
+    public static final int ConstraintLayout_Layout_android_minWidth;
+    public static final int ConstraintLayout_Layout_android_orientation;
+    public static final int ConstraintLayout_Layout_constraintSet;
+    public static final int ConstraintLayout_Layout_layout_constraintBaseline_creator;
+    public static final int ConstraintLayout_Layout_layout_constraintBaseline_toBaselineOf;
+    public static final int ConstraintLayout_Layout_layout_constraintBottom_creator;
+    public static final int ConstraintLayout_Layout_layout_constraintBottom_toBottomOf;
+    public static final int ConstraintLayout_Layout_layout_constraintBottom_toTopOf;
+    public static final int ConstraintLayout_Layout_layout_constraintDimensionRatio;
+    public static final int ConstraintLayout_Layout_layout_constraintEnd_toEndOf;
+    public static final int ConstraintLayout_Layout_layout_constraintEnd_toStartOf;
+    public static final int ConstraintLayout_Layout_layout_constraintGuide_begin;
+    public static final int ConstraintLayout_Layout_layout_constraintGuide_end;
+    public static final int ConstraintLayout_Layout_layout_constraintGuide_percent;
+    public static final int ConstraintLayout_Layout_layout_constraintHeight_default;
+    public static final int ConstraintLayout_Layout_layout_constraintHeight_max;
+    public static final int ConstraintLayout_Layout_layout_constraintHeight_min;
+    public static final int ConstraintLayout_Layout_layout_constraintHorizontal_bias;
+    public static final int ConstraintLayout_Layout_layout_constraintHorizontal_chainStyle;
+    public static final int ConstraintLayout_Layout_layout_constraintHorizontal_weight;
+    public static final int ConstraintLayout_Layout_layout_constraintLeft_creator;
+    public static final int ConstraintLayout_Layout_layout_constraintLeft_toLeftOf;
+    public static final int ConstraintLayout_Layout_layout_constraintLeft_toRightOf;
+    public static final int ConstraintLayout_Layout_layout_constraintRight_creator;
+    public static final int ConstraintLayout_Layout_layout_constraintRight_toLeftOf;
+    public static final int ConstraintLayout_Layout_layout_constraintRight_toRightOf;
+    public static final int ConstraintLayout_Layout_layout_constraintStart_toEndOf;
+    public static final int ConstraintLayout_Layout_layout_constraintStart_toStartOf;
+    public static final int ConstraintLayout_Layout_layout_constraintTop_creator;
+    public static final int ConstraintLayout_Layout_layout_constraintTop_toBottomOf;
+    public static final int ConstraintLayout_Layout_layout_constraintTop_toTopOf;
+    public static final int ConstraintLayout_Layout_layout_constraintVertical_bias;
+    public static final int ConstraintLayout_Layout_layout_constraintVertical_chainStyle;
+    public static final int ConstraintLayout_Layout_layout_constraintVertical_weight;
+    public static final int ConstraintLayout_Layout_layout_constraintWidth_default;
+    public static final int ConstraintLayout_Layout_layout_constraintWidth_max;
+    public static final int ConstraintLayout_Layout_layout_constraintWidth_min;
+    public static final int ConstraintLayout_Layout_layout_editor_absoluteX;
+    public static final int ConstraintLayout_Layout_layout_editor_absoluteY;
+    public static final int ConstraintLayout_Layout_layout_goneMarginBottom;
+    public static final int ConstraintLayout_Layout_layout_goneMarginEnd;
+    public static final int ConstraintLayout_Layout_layout_goneMarginLeft;
+    public static final int ConstraintLayout_Layout_layout_goneMarginRight;
+    public static final int ConstraintLayout_Layout_layout_goneMarginStart;
+    public static final int ConstraintLayout_Layout_layout_goneMarginTop;
+    public static final int ConstraintLayout_Layout_layout_optimizationLevel;
+    public static final int[] ConstraintSet;
+    public static final int ConstraintSet_android_alpha;
+    public static final int ConstraintSet_android_elevation;
+    public static final int ConstraintSet_android_id;
+    public static final int ConstraintSet_android_layout_height;
+    public static final int ConstraintSet_android_layout_marginBottom;
+    public static final int ConstraintSet_android_layout_marginEnd;
+    public static final int ConstraintSet_android_layout_marginLeft;
+    public static final int ConstraintSet_android_layout_marginRight;
+    public static final int ConstraintSet_android_layout_marginStart;
+    public static final int ConstraintSet_android_layout_marginTop;
+    public static final int ConstraintSet_android_layout_width;
+    public static final int ConstraintSet_android_orientation;
+    public static final int ConstraintSet_android_rotationX;
+    public static final int ConstraintSet_android_rotationY;
+    public static final int ConstraintSet_android_scaleX;
+    public static final int ConstraintSet_android_scaleY;
+    public static final int ConstraintSet_android_transformPivotX;
+    public static final int ConstraintSet_android_transformPivotY;
+    public static final int ConstraintSet_android_translationX;
+    public static final int ConstraintSet_android_translationY;
+    public static final int ConstraintSet_android_translationZ;
+    public static final int ConstraintSet_android_visibility;
+    public static final int ConstraintSet_layout_constraintBaseline_creator;
+    public static final int ConstraintSet_layout_constraintBaseline_toBaselineOf;
+    public static final int ConstraintSet_layout_constraintBottom_creator;
+    public static final int ConstraintSet_layout_constraintBottom_toBottomOf;
+    public static final int ConstraintSet_layout_constraintBottom_toTopOf;
+    public static final int ConstraintSet_layout_constraintDimensionRatio;
+    public static final int ConstraintSet_layout_constraintEnd_toEndOf;
+    public static final int ConstraintSet_layout_constraintEnd_toStartOf;
+    public static final int ConstraintSet_layout_constraintGuide_begin;
+    public static final int ConstraintSet_layout_constraintGuide_end;
+    public static final int ConstraintSet_layout_constraintGuide_percent;
+    public static final int ConstraintSet_layout_constraintHeight_default;
+    public static final int ConstraintSet_layout_constraintHeight_max;
+    public static final int ConstraintSet_layout_constraintHeight_min;
+    public static final int ConstraintSet_layout_constraintHorizontal_bias;
+    public static final int ConstraintSet_layout_constraintHorizontal_chainStyle;
+    public static final int ConstraintSet_layout_constraintHorizontal_weight;
+    public static final int ConstraintSet_layout_constraintLeft_creator;
+    public static final int ConstraintSet_layout_constraintLeft_toLeftOf;
+    public static final int ConstraintSet_layout_constraintLeft_toRightOf;
+    public static final int ConstraintSet_layout_constraintRight_creator;
+    public static final int ConstraintSet_layout_constraintRight_toLeftOf;
+    public static final int ConstraintSet_layout_constraintRight_toRightOf;
+    public static final int ConstraintSet_layout_constraintStart_toEndOf;
+    public static final int ConstraintSet_layout_constraintStart_toStartOf;
+    public static final int ConstraintSet_layout_constraintTop_creator;
+    public static final int ConstraintSet_layout_constraintTop_toBottomOf;
+    public static final int ConstraintSet_layout_constraintTop_toTopOf;
+    public static final int ConstraintSet_layout_constraintVertical_bias;
+    public static final int ConstraintSet_layout_constraintVertical_chainStyle;
+    public static final int ConstraintSet_layout_constraintVertical_weight;
+    public static final int ConstraintSet_layout_constraintWidth_default;
+    public static final int ConstraintSet_layout_constraintWidth_max;
+    public static final int ConstraintSet_layout_constraintWidth_min;
+    public static final int ConstraintSet_layout_editor_absoluteX;
+    public static final int ConstraintSet_layout_editor_absoluteY;
+    public static final int ConstraintSet_layout_goneMarginBottom;
+    public static final int ConstraintSet_layout_goneMarginEnd;
+    public static final int ConstraintSet_layout_goneMarginLeft;
+    public static final int ConstraintSet_layout_goneMarginRight;
+    public static final int ConstraintSet_layout_goneMarginStart;
+    public static final int ConstraintSet_layout_goneMarginTop;
+    public static final int[] DrawerArrowToggle;
+    public static final int DrawerArrowToggle_arrowHeadLength;
+    public static final int DrawerArrowToggle_arrowShaftLength;
+    public static final int DrawerArrowToggle_barLength;
+    public static final int DrawerArrowToggle_color;
+    public static final int DrawerArrowToggle_drawableSize;
+    public static final int DrawerArrowToggle_gapBetweenBars;
+    public static final int DrawerArrowToggle_spinBars;
+    public static final int DrawerArrowToggle_thickness;
+    public static final int[] LinearConstraintLayout;
+    public static final int LinearConstraintLayout_android_orientation;
+    public static final int[] LinearLayoutCompat;
+    public static final int[] LinearLayoutCompat_Layout;
+    public static final int LinearLayoutCompat_Layout_android_layout_gravity;
+    public static final int LinearLayoutCompat_Layout_android_layout_height;
+    public static final int LinearLayoutCompat_Layout_android_layout_weight;
+    public static final int LinearLayoutCompat_Layout_android_layout_width;
+    public static final int LinearLayoutCompat_android_baselineAligned;
+    public static final int LinearLayoutCompat_android_baselineAlignedChildIndex;
+    public static final int LinearLayoutCompat_android_gravity;
+    public static final int LinearLayoutCompat_android_orientation;
+    public static final int LinearLayoutCompat_android_weightSum;
+    public static final int LinearLayoutCompat_divider;
+    public static final int LinearLayoutCompat_dividerPadding;
+    public static final int LinearLayoutCompat_measureWithLargestChild;
+    public static final int LinearLayoutCompat_showDividers;
+    public static final int[] ListPopupWindow;
+    public static final int ListPopupWindow_android_dropDownHorizontalOffset;
+    public static final int ListPopupWindow_android_dropDownVerticalOffset;
+    public static final int[] MenuGroup;
+    public static final int MenuGroup_android_checkableBehavior;
+    public static final int MenuGroup_android_enabled;
+    public static final int MenuGroup_android_id;
+    public static final int MenuGroup_android_menuCategory;
+    public static final int MenuGroup_android_orderInCategory;
+    public static final int MenuGroup_android_visible;
+    public static final int[] MenuItem;
+    public static final int MenuItem_actionLayout;
+    public static final int MenuItem_actionProviderClass;
+    public static final int MenuItem_actionViewClass;
+    public static final int MenuItem_android_alphabeticShortcut;
+    public static final int MenuItem_android_checkable;
+    public static final int MenuItem_android_checked;
+    public static final int MenuItem_android_enabled;
+    public static final int MenuItem_android_icon;
+    public static final int MenuItem_android_id;
+    public static final int MenuItem_android_menuCategory;
+    public static final int MenuItem_android_numericShortcut;
+    public static final int MenuItem_android_onClick;
+    public static final int MenuItem_android_orderInCategory;
+    public static final int MenuItem_android_title;
+    public static final int MenuItem_android_titleCondensed;
+    public static final int MenuItem_android_visible;
+    public static final int MenuItem_contentDescription;
+    public static final int MenuItem_showAsAction;
+    public static final int MenuItem_tooltipText;
+    public static final int[] MenuView;
+    public static final int MenuView_android_headerBackground;
+    public static final int MenuView_android_horizontalDivider;
+    public static final int MenuView_android_itemBackground;
+    public static final int MenuView_android_itemIconDisabledAlpha;
+    public static final int MenuView_android_itemTextAppearance;
+    public static final int MenuView_android_verticalDivider;
+    public static final int MenuView_android_windowAnimationStyle;
+    public static final int MenuView_preserveIconSpacing;
+    public static final int MenuView_subMenuArrow;
+    public static final int[] PopupWindow;
+    public static final int[] PopupWindowBackgroundState;
+    public static final int PopupWindowBackgroundState_state_above_anchor;
+    public static final int PopupWindow_android_popupAnimationStyle;
+    public static final int PopupWindow_android_popupBackground;
+    public static final int PopupWindow_overlapAnchor;
+    public static final int[] RecycleListView;
+    public static final int RecycleListView_paddingBottomNoButtons;
+    public static final int RecycleListView_paddingTopNoTitle;
+    public static final int[] SearchView;
+    public static final int SearchView_android_focusable;
+    public static final int SearchView_android_imeOptions;
+    public static final int SearchView_android_inputType;
+    public static final int SearchView_android_maxWidth;
+    public static final int SearchView_closeIcon;
+    public static final int SearchView_commitIcon;
+    public static final int SearchView_defaultQueryHint;
+    public static final int SearchView_goIcon;
+    public static final int SearchView_iconifiedByDefault;
+    public static final int SearchView_layout;
+    public static final int SearchView_queryBackground;
+    public static final int SearchView_queryHint;
+    public static final int SearchView_searchHintIcon;
+    public static final int SearchView_searchIcon;
+    public static final int SearchView_submitBackground;
+    public static final int SearchView_suggestionRowLayout;
+    public static final int SearchView_voiceIcon;
+    public static final int[] Spinner;
+    public static final int Spinner_android_dropDownWidth;
+    public static final int Spinner_android_entries;
+    public static final int Spinner_android_popupBackground;
+    public static final int Spinner_android_prompt;
+    public static final int Spinner_popupTheme;
+    public static final int[] SwitchCompat;
+    public static final int SwitchCompat_android_textOff;
+    public static final int SwitchCompat_android_textOn;
+    public static final int SwitchCompat_android_thumb;
+    public static final int SwitchCompat_showText;
+    public static final int SwitchCompat_splitTrack;
+    public static final int SwitchCompat_switchMinWidth;
+    public static final int SwitchCompat_switchPadding;
+    public static final int SwitchCompat_switchTextAppearance;
+    public static final int SwitchCompat_thumbTextPadding;
+    public static final int SwitchCompat_thumbTint;
+    public static final int SwitchCompat_thumbTintMode;
+    public static final int SwitchCompat_track;
+    public static final int SwitchCompat_trackTint;
+    public static final int SwitchCompat_trackTintMode;
+    public static final int[] TextAppearance;
+    public static final int TextAppearance_android_shadowColor;
+    public static final int TextAppearance_android_shadowDx;
+    public static final int TextAppearance_android_shadowDy;
+    public static final int TextAppearance_android_shadowRadius;
+    public static final int TextAppearance_android_textColor;
+    public static final int TextAppearance_android_textColorHint;
+    public static final int TextAppearance_android_textSize;
+    public static final int TextAppearance_android_textStyle;
+    public static final int TextAppearance_android_typeface;
+    public static final int TextAppearance_textAllCaps;
+    public static final int[] Toolbar;
+    public static final int Toolbar_android_gravity;
+    public static final int Toolbar_android_minHeight;
+    public static final int Toolbar_buttonGravity;
+    public static final int Toolbar_collapseContentDescription;
+    public static final int Toolbar_collapseIcon;
+    public static final int Toolbar_contentInsetEnd;
+    public static final int Toolbar_contentInsetEndWithActions;
+    public static final int Toolbar_contentInsetLeft;
+    public static final int Toolbar_contentInsetRight;
+    public static final int Toolbar_contentInsetStart;
+    public static final int Toolbar_contentInsetStartWithNavigation;
+    public static final int Toolbar_logo;
+    public static final int Toolbar_logoDescription;
+    public static final int Toolbar_maxButtonHeight;
+    public static final int Toolbar_navigationContentDescription;
+    public static final int Toolbar_navigationIcon;
+    public static final int Toolbar_popupTheme;
+    public static final int Toolbar_subtitle;
+    public static final int Toolbar_subtitleTextAppearance;
+    public static final int Toolbar_subtitleTextColor;
+    public static final int Toolbar_title;
+    public static final int Toolbar_titleMargin;
+    public static final int Toolbar_titleMarginBottom;
+    public static final int Toolbar_titleMarginEnd;
+    public static final int Toolbar_titleMarginStart;
+    public static final int Toolbar_titleMarginTop;
+    public static final int Toolbar_titleMargins;
+    public static final int Toolbar_titleTextAppearance;
+    public static final int Toolbar_titleTextColor;
+    public static final int[] View;
+    public static final int[] ViewBackgroundHelper;
+    public static final int ViewBackgroundHelper_android_background;
+    public static final int ViewBackgroundHelper_backgroundTint;
+    public static final int ViewBackgroundHelper_backgroundTintMode;
+    public static final int[] ViewStubCompat;
+    public static final int ViewStubCompat_android_id;
+    public static final int ViewStubCompat_android_inflatedId;
+    public static final int ViewStubCompat_android_layout;
+    public static final int View_android_focusable;
+    public static final int View_android_theme;
+    public static final int View_paddingEnd;
+    public static final int View_paddingStart;
+    public static final int View_theme;
+
+    static void <clinit>()
+    {
+        int[] $r0;
+
+        $r0 = newarray (int)[29];
+/*2939*/
+/*2939*/
+
+        $r0[0] = 2130771970;
+/*2939*/
+/*2939*/
+
+        $r0[1] = 2130772015;
+
+        $r0[2] = 2130772016;
+
+        $r0[3] = 2130772017;
+
+        $r0[4] = 2130772018;
+
+        $r0[5] = 2130772019;
+
+        $r0[6] = 2130772020;
+
+        $r0[7] = 2130772021;
+
+        $r0[8] = 2130772022;
+
+        $r0[9] = 2130772023;
+
+        $r0[10] = 2130772024;
+
+        $r0[11] = 2130772025;
+
+        $r0[12] = 2130772026;
+
+        $r0[13] = 2130772027;
+
+        $r0[14] = 2130772028;
+
+        $r0[15] = 2130772029;
+
+        $r0[16] = 2130772030;
+
+        $r0[17] = 2130772031;
+
+        $r0[18] = 2130772032;
+
+        $r0[19] = 2130772033;
+
+        $r0[20] = 2130772034;
+
+        $r0[21] = 2130772035;
+
+        $r0[22] = 2130772036;
+
+        $r0[23] = 2130772037;
+
+        $r0[24] = 2130772038;
+
+        $r0[25] = 2130772039;
+
+        $r0[26] = 2130772040;
+
+        $r0[27] = 2130772041;
+
+        $r0[28] = 2130772103;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ActionBar> = $r0;
+/*2939*/
+/*2939*/
+
+        $r0 = newarray (int)[1];
+/*3345*/
+/*3345*/
+
+        $r0[0] = 16842931;
+/*3345*/
+/*3345*/
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ActionBarLayout> = $r0;
+/*3345*/
+/*3345*/
+
+        $r0 = newarray (int)[1];
+/*3364*/
+/*3364*/
+
+        $r0[0] = 16843071;
+/*3364*/
+/*3364*/
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ActionMenuItemView> = $r0;
+/*3364*/
+/*3364*/
+
+        $r0 = newarray (int)[0];
+/*3375*/
+/*3375*/
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ActionMenuView> = $r0;
+/*3375*/
+/*3375*/
+
+        $r0 = newarray (int)[6];
+/*3398*/
+/*3398*/
+
+        $r0[0] = 2130771970;
+/*3398*/
+/*3398*/
+
+        $r0[1] = 2130772019;
+
+        $r0[2] = 2130772020;
+
+        $r0[3] = 2130772024;
+
+        $r0[4] = 2130772026;
+
+        $r0[5] = 2130772042;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ActionMode> = $r0;
+/*3398*/
+/*3398*/
+
+        $r0 = newarray (int)[2];
+/*3482*/
+/*3482*/
+
+        $r0[0] = 2130772043;
+/*3482*/
+/*3482*/
+
+        $r0[1] = 2130772044;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ActivityChooserView> = $r0;
+/*3482*/
+/*3482*/
+
+        $r0 = newarray (int)[7];
+/*3531*/
+/*3531*/
+
+        $r0[0] = 16842994;
+/*3531*/
+/*3531*/
+
+        $r0[1] = 2130772045;
+
+        $r0[2] = 2130772046;
+
+        $r0[3] = 2130772047;
+
+        $r0[4] = 2130772048;
+
+        $r0[5] = 2130772049;
+
+        $r0[6] = 2130772050;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] AlertDialog> = $r0;
+/*3531*/
+/*3531*/
+
+        $r0 = newarray (int)[2];
+/*3617*/
+/*3617*/
+
+        $r0[0] = 16843033;
+/*3617*/
+/*3617*/
+
+        $r0[1] = 2130772051;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] AppCompatImageView> = $r0;
+/*3617*/
+/*3617*/
+
+        $r0 = newarray (int)[4];
+/*3652*/
+/*3652*/
+
+        $r0[0] = 16843074;
+/*3652*/
+/*3652*/
+
+        $r0[1] = 2130772052;
+
+        $r0[2] = 2130772053;
+
+        $r0[3] = 2130772054;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] AppCompatSeekBar> = $r0;
+/*3652*/
+/*3652*/
+
+        $r0 = newarray (int)[7];
+/*3729*/
+/*3729*/
+
+        $r0[0] = 16842804;
+/*3729*/
+/*3729*/
+
+        $r0[1] = 16843117;
+
+        $r0[2] = 16843118;
+
+        $r0[3] = 16843119;
+
+        $r0[4] = 16843120;
+
+        $r0[5] = 16843666;
+
+        $r0[6] = 16843667;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] AppCompatTextHelper> = $r0;
+/*3729*/
+/*3729*/
+
+        $r0 = newarray (int)[2];
+/*3787*/
+/*3787*/
+
+        $r0[0] = 16842804;
+/*3787*/
+/*3787*/
+
+        $r0[1] = 2130772055;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] AppCompatTextView> = $r0;
+/*3787*/
+/*3787*/
+
+        $r0 = newarray (int)[115];
+/*4045*/
+/*4045*/
+
+        $r0[0] = 16842839;
+/*4045*/
+/*4045*/
+
+        $r0[1] = 16842926;
+
+        $r0[2] = 2130772056;
+
+        $r0[3] = 2130772057;
+
+        $r0[4] = 2130772058;
+
+        $r0[5] = 2130772059;
+
+        $r0[6] = 2130772060;
+
+        $r0[7] = 2130772061;
+
+        $r0[8] = 2130772062;
+
+        $r0[9] = 2130772063;
+
+        $r0[10] = 2130772064;
+
+        $r0[11] = 2130772065;
+
+        $r0[12] = 2130772066;
+
+        $r0[13] = 2130772067;
+
+        $r0[14] = 2130772068;
+
+        $r0[15] = 2130772069;
+
+        $r0[16] = 2130772070;
+
+        $r0[17] = 2130772071;
+
+        $r0[18] = 2130772072;
+
+        $r0[19] = 2130772073;
+
+        $r0[20] = 2130772074;
+
+        $r0[21] = 2130772075;
+
+        $r0[22] = 2130772076;
+
+        $r0[23] = 2130772077;
+
+        $r0[24] = 2130772078;
+
+        $r0[25] = 2130772079;
+
+        $r0[26] = 2130772080;
+
+        $r0[27] = 2130772081;
+
+        $r0[28] = 2130772082;
+
+        $r0[29] = 2130772083;
+
+        $r0[30] = 2130772084;
+
+        $r0[31] = 2130772085;
+
+        $r0[32] = 2130772086;
+
+        $r0[33] = 2130772087;
+
+        $r0[34] = 2130772088;
+
+        $r0[35] = 2130772089;
+
+        $r0[36] = 2130772090;
+
+        $r0[37] = 2130772091;
+
+        $r0[38] = 2130772092;
+
+        $r0[39] = 2130772093;
+
+        $r0[40] = 2130772094;
+
+        $r0[41] = 2130772095;
+
+        $r0[42] = 2130772096;
+
+        $r0[43] = 2130772097;
+
+        $r0[44] = 2130772098;
+
+        $r0[45] = 2130772099;
+
+        $r0[46] = 2130772100;
+
+        $r0[47] = 2130772101;
+
+        $r0[48] = 2130772102;
+
+        $r0[49] = 2130772103;
+
+        $r0[50] = 2130772104;
+
+        $r0[51] = 2130772105;
+
+        $r0[52] = 2130772106;
+
+        $r0[53] = 2130772107;
+
+        $r0[54] = 2130772108;
+
+        $r0[55] = 2130772109;
+
+        $r0[56] = 2130772110;
+
+        $r0[57] = 2130772111;
+
+        $r0[58] = 2130772112;
+
+        $r0[59] = 2130772113;
+
+        $r0[60] = 2130772114;
+
+        $r0[61] = 2130772115;
+
+        $r0[62] = 2130772116;
+
+        $r0[63] = 2130772117;
+
+        $r0[64] = 2130772118;
+
+        $r0[65] = 2130772119;
+
+        $r0[66] = 2130772120;
+
+        $r0[67] = 2130772121;
+
+        $r0[68] = 2130772122;
+
+        $r0[69] = 2130772123;
+
+        $r0[70] = 2130772124;
+
+        $r0[71] = 2130772125;
+
+        $r0[72] = 2130772126;
+
+        $r0[73] = 2130772127;
+
+        $r0[74] = 2130772128;
+
+        $r0[75] = 2130772129;
+
+        $r0[76] = 2130772130;
+
+        $r0[77] = 2130772131;
+
+        $r0[78] = 2130772132;
+
+        $r0[79] = 2130772133;
+
+        $r0[80] = 2130772134;
+
+        $r0[81] = 2130772135;
+
+        $r0[82] = 2130772136;
+
+        $r0[83] = 2130772137;
+
+        $r0[84] = 2130772138;
+
+        $r0[85] = 2130772139;
+
+        $r0[86] = 2130772140;
+
+        $r0[87] = 2130772141;
+
+        $r0[88] = 2130772142;
+
+        $r0[89] = 2130772143;
+
+        $r0[90] = 2130772144;
+
+        $r0[91] = 2130772145;
+
+        $r0[92] = 2130772146;
+
+        $r0[93] = 2130772147;
+
+        $r0[94] = 2130772148;
+
+        $r0[95] = 2130772149;
+
+        $r0[96] = 2130772150;
+
+        $r0[97] = 2130772151;
+
+        $r0[98] = 2130772152;
+
+        $r0[99] = 2130772153;
+
+        $r0[100] = 2130772154;
+
+        $r0[101] = 2130772155;
+
+        $r0[102] = 2130772156;
+
+        $r0[103] = 2130772157;
+
+        $r0[104] = 2130772158;
+
+        $r0[105] = 2130772159;
+
+        $r0[106] = 2130772160;
+
+        $r0[107] = 2130772161;
+
+        $r0[108] = 2130772162;
+
+        $r0[109] = 2130772163;
+
+        $r0[110] = 2130772164;
+
+        $r0[111] = 2130772165;
+
+        $r0[112] = 2130772166;
+
+        $r0[113] = 2130772167;
+
+        $r0[114] = 2130772168;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] AppCompatTheme> = $r0;
+/*4045*/
+/*4045*/
+
+        $r0 = newarray (int)[1];
+/*5417*/
+/*5417*/
+
+        $r0[0] = 2130772169;
+/*5417*/
+/*5417*/
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ButtonBarLayout> = $r0;
+/*5417*/
+/*5417*/
+
+        $r0 = newarray (int)[3];
+/*5448*/
+/*5448*/
+
+        $r0[0] = 16843173;
+/*5448*/
+/*5448*/
+
+        $r0[1] = 16843551;
+
+        $r0[2] = 2130772170;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ColorStateListItem> = $r0;
+/*5448*/
+/*5448*/
+
+        $r0 = newarray (int)[3];
+/*5491*/
+/*5491*/
+
+        $r0[0] = 16843015;
+/*5491*/
+/*5491*/
+
+        $r0[1] = 2130772171;
+
+        $r0[2] = 2130772172;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] CompoundButton> = $r0;
+/*5491*/
+/*5491*/
+
+        $r0 = newarray (int)[49];
+/*5641*/
+/*5641*/
+
+        $r0[0] = 16842948;
+/*5641*/
+/*5641*/
+
+        $r0[1] = 16843039;
+
+        $r0[2] = 16843040;
+
+        $r0[3] = 16843071;
+
+        $r0[4] = 16843072;
+
+        $r0[5] = 2130771968;
+
+        $r0[6] = 2130771972;
+
+        $r0[7] = 2130771973;
+
+        $r0[8] = 2130771974;
+
+        $r0[9] = 2130771975;
+
+        $r0[10] = 2130771976;
+
+        $r0[11] = 2130771977;
+
+        $r0[12] = 2130771978;
+
+        $r0[13] = 2130771979;
+
+        $r0[14] = 2130771980;
+
+        $r0[15] = 2130771981;
+
+        $r0[16] = 2130771982;
+
+        $r0[17] = 2130771983;
+
+        $r0[18] = 2130771984;
+
+        $r0[19] = 2130771985;
+
+        $r0[20] = 2130771986;
+
+        $r0[21] = 2130771987;
+
+        $r0[22] = 2130771988;
+
+        $r0[23] = 2130771989;
+
+        $r0[24] = 2130771990;
+
+        $r0[25] = 2130771991;
+
+        $r0[26] = 2130771992;
+
+        $r0[27] = 2130771993;
+
+        $r0[28] = 2130771994;
+
+        $r0[29] = 2130771995;
+
+        $r0[30] = 2130771996;
+
+        $r0[31] = 2130771997;
+
+        $r0[32] = 2130771998;
+
+        $r0[33] = 2130771999;
+
+        $r0[34] = 2130772000;
+
+        $r0[35] = 2130772001;
+
+        $r0[36] = 2130772002;
+
+        $r0[37] = 2130772003;
+
+        $r0[38] = 2130772004;
+
+        $r0[39] = 2130772005;
+
+        $r0[40] = 2130772006;
+
+        $r0[41] = 2130772007;
+
+        $r0[42] = 2130772008;
+
+        $r0[43] = 2130772009;
+
+        $r0[44] = 2130772010;
+
+        $r0[45] = 2130772011;
+
+        $r0[46] = 2130772012;
+
+        $r0[47] = 2130772013;
+
+        $r0[48] = 2130772014;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ConstraintLayout_Layout> = $r0;
+/*5641*/
+/*5641*/
+
+        $r0 = newarray (int)[64];
+/*6533*/
+/*6533*/
+
+        $r0[0] = 16842948;
+/*6533*/
+/*6533*/
+
+        $r0[1] = 16842960;
+
+        $r0[2] = 16842972;
+
+        $r0[3] = 16842996;
+
+        $r0[4] = 16842997;
+
+        $r0[5] = 16842999;
+
+        $r0[6] = 16843000;
+
+        $r0[7] = 16843001;
+
+        $r0[8] = 16843002;
+
+        $r0[9] = 16843551;
+
+        $r0[10] = 16843552;
+
+        $r0[11] = 16843553;
+
+        $r0[12] = 16843554;
+
+        $r0[13] = 16843555;
+
+        $r0[14] = 16843556;
+
+        $r0[15] = 16843557;
+
+        $r0[16] = 16843559;
+
+        $r0[17] = 16843560;
+
+        $r0[18] = 16843701;
+
+        $r0[19] = 16843702;
+
+        $r0[20] = 16843770;
+
+        $r0[21] = 16843840;
+
+        $r0[22] = 2130771972;
+
+        $r0[23] = 2130771973;
+
+        $r0[24] = 2130771974;
+
+        $r0[25] = 2130771975;
+
+        $r0[26] = 2130771976;
+
+        $r0[27] = 2130771977;
+
+        $r0[28] = 2130771978;
+
+        $r0[29] = 2130771979;
+
+        $r0[30] = 2130771980;
+
+        $r0[31] = 2130771981;
+
+        $r0[32] = 2130771982;
+
+        $r0[33] = 2130771983;
+
+        $r0[34] = 2130771984;
+
+        $r0[35] = 2130771985;
+
+        $r0[36] = 2130771986;
+
+        $r0[37] = 2130771987;
+
+        $r0[38] = 2130771988;
+
+        $r0[39] = 2130771989;
+
+        $r0[40] = 2130771990;
+
+        $r0[41] = 2130771991;
+
+        $r0[42] = 2130771992;
+
+        $r0[43] = 2130771993;
+
+        $r0[44] = 2130771994;
+
+        $r0[45] = 2130771995;
+
+        $r0[46] = 2130771996;
+
+        $r0[47] = 2130771997;
+
+        $r0[48] = 2130771998;
+
+        $r0[49] = 2130771999;
+
+        $r0[50] = 2130772000;
+
+        $r0[51] = 2130772001;
+
+        $r0[52] = 2130772002;
+
+        $r0[53] = 2130772003;
+
+        $r0[54] = 2130772004;
+
+        $r0[55] = 2130772005;
+
+        $r0[56] = 2130772006;
+
+        $r0[57] = 2130772007;
+
+        $r0[58] = 2130772008;
+
+        $r0[59] = 2130772009;
+
+        $r0[60] = 2130772010;
+
+        $r0[61] = 2130772011;
+
+        $r0[62] = 2130772012;
+
+        $r0[63] = 2130772013;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ConstraintSet> = $r0;
+/*6533*/
+/*6533*/
+
+        $r0 = newarray (int)[8];
+/*7389*/
+/*7389*/
+
+        $r0[0] = 2130772173;
+/*7389*/
+/*7389*/
+
+        $r0[1] = 2130772174;
+
+        $r0[2] = 2130772175;
+
+        $r0[3] = 2130772176;
+
+        $r0[4] = 2130772177;
+
+        $r0[5] = 2130772178;
+
+        $r0[6] = 2130772179;
+
+        $r0[7] = 2130772180;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] DrawerArrowToggle> = $r0;
+/*7389*/
+/*7389*/
+
+        $r0 = newarray (int)[1];
+/*7528*/
+/*7528*/
+
+        $r0[0] = 16842948;
+/*7528*/
+/*7528*/
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] LinearConstraintLayout> = $r0;
+/*7528*/
+/*7528*/
+
+        $r0 = newarray (int)[9];
+/*7563*/
+/*7563*/
+
+        $r0[0] = 16842927;
+/*7563*/
+/*7563*/
+
+        $r0[1] = 16842948;
+
+        $r0[2] = 16843046;
+
+        $r0[3] = 16843047;
+
+        $r0[4] = 16843048;
+
+        $r0[5] = 2130772023;
+
+        $r0[6] = 2130772181;
+
+        $r0[7] = 2130772182;
+
+        $r0[8] = 2130772183;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] LinearLayoutCompat> = $r0;
+/*7563*/
+/*7563*/
+
+        $r0 = newarray (int)[4];
+/*7673*/
+/*7673*/
+
+        $r0[0] = 16842931;
+/*7673*/
+/*7673*/
+
+        $r0[1] = 16842996;
+
+        $r0[2] = 16842997;
+
+        $r0[3] = 16843137;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] LinearLayoutCompat_Layout> = $r0;
+/*7673*/
+/*7673*/
+
+        $r0 = newarray (int)[2];
+/*7712*/
+/*7712*/
+
+        $r0[0] = 16843436;
+/*7712*/
+/*7712*/
+
+        $r0[1] = 16843437;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ListPopupWindow> = $r0;
+/*7712*/
+/*7712*/
+
+        $r0 = newarray (int)[6];
+/*7747*/
+/*7747*/
+
+        $r0[0] = 16842766;
+/*7747*/
+/*7747*/
+
+        $r0[1] = 16842960;
+
+        $r0[2] = 16843156;
+
+        $r0[3] = 16843230;
+
+        $r0[4] = 16843231;
+
+        $r0[5] = 16843232;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] MenuGroup> = $r0;
+/*7747*/
+/*7747*/
+
+        $r0 = newarray (int)[19];
+/*7833*/
+/*7833*/
+
+        $r0[0] = 16842754;
+/*7833*/
+/*7833*/
+
+        $r0[1] = 16842766;
+
+        $r0[2] = 16842960;
+
+        $r0[3] = 16843014;
+
+        $r0[4] = 16843156;
+
+        $r0[5] = 16843230;
+
+        $r0[6] = 16843231;
+
+        $r0[7] = 16843233;
+
+        $r0[8] = 16843234;
+
+        $r0[9] = 16843235;
+
+        $r0[10] = 16843236;
+
+        $r0[11] = 16843237;
+
+        $r0[12] = 16843375;
+
+        $r0[13] = 2130772184;
+
+        $r0[14] = 2130772185;
+
+        $r0[15] = 2130772186;
+
+        $r0[16] = 2130772187;
+
+        $r0[17] = 2130772188;
+
+        $r0[18] = 2130772189;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] MenuItem> = $r0;
+/*7833*/
+/*7833*/
+
+        $r0 = newarray (int)[9];
+/*8030*/
+/*8030*/
+
+        $r0[0] = 16842926;
+/*8030*/
+/*8030*/
+
+        $r0[1] = 16843052;
+
+        $r0[2] = 16843053;
+
+        $r0[3] = 16843054;
+
+        $r0[4] = 16843055;
+
+        $r0[5] = 16843056;
+
+        $r0[6] = 16843057;
+
+        $r0[7] = 2130772190;
+
+        $r0[8] = 2130772191;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] MenuView> = $r0;
+/*8030*/
+/*8030*/
+
+        $r0 = newarray (int)[3];
+/*8115*/
+/*8115*/
+
+        $r0[0] = 16843126;
+/*8115*/
+/*8115*/
+
+        $r0[1] = 16843465;
+
+        $r0[2] = 2130772192;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] PopupWindow> = $r0;
+/*8115*/
+/*8115*/
+
+        $r0 = newarray (int)[1];
+/*8154*/
+/*8154*/
+
+        $r0[0] = 2130772193;
+/*8154*/
+/*8154*/
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] PopupWindowBackgroundState> = $r0;
+/*8154*/
+/*8154*/
+
+        $r0 = newarray (int)[2];
+/*8183*/
+/*8183*/
+
+        $r0[0] = 2130772194;
+/*8183*/
+/*8183*/
+
+        $r0[1] = 2130772195;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] RecycleListView> = $r0;
+/*8183*/
+/*8183*/
+
+        $r0 = newarray (int)[17];
+/*8260*/
+/*8260*/
+
+        $r0[0] = 16842970;
+/*8260*/
+/*8260*/
+
+        $r0[1] = 16843039;
+
+        $r0[2] = 16843296;
+
+        $r0[3] = 16843364;
+
+        $r0[4] = 2130772196;
+
+        $r0[5] = 2130772197;
+
+        $r0[6] = 2130772198;
+
+        $r0[7] = 2130772199;
+
+        $r0[8] = 2130772200;
+
+        $r0[9] = 2130772201;
+
+        $r0[10] = 2130772202;
+
+        $r0[11] = 2130772203;
+
+        $r0[12] = 2130772204;
+
+        $r0[13] = 2130772205;
+
+        $r0[14] = 2130772206;
+
+        $r0[15] = 2130772207;
+
+        $r0[16] = 2130772208;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] SearchView> = $r0;
+/*8260*/
+/*8260*/
+
+        $r0 = newarray (int)[5];
+/*8451*/
+/*8451*/
+
+        $r0[0] = 16842930;
+/*8451*/
+/*8451*/
+
+        $r0[1] = 16843126;
+
+        $r0[2] = 16843131;
+
+        $r0[3] = 16843362;
+
+        $r0[4] = 2130772041;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] Spinner> = $r0;
+/*8451*/
+/*8451*/
+
+        $r0 = newarray (int)[14];
+/*8525*/
+/*8525*/
+
+        $r0[0] = 16843044;
+/*8525*/
+/*8525*/
+
+        $r0[1] = 16843045;
+
+        $r0[2] = 16843074;
+
+        $r0[3] = 2130772209;
+
+        $r0[4] = 2130772210;
+
+        $r0[5] = 2130772211;
+
+        $r0[6] = 2130772212;
+
+        $r0[7] = 2130772213;
+
+        $r0[8] = 2130772214;
+
+        $r0[9] = 2130772215;
+
+        $r0[10] = 2130772216;
+
+        $r0[11] = 2130772217;
+
+        $r0[12] = 2130772218;
+
+        $r0[13] = 2130772219;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] SwitchCompat> = $r0;
+/*8525*/
+/*8525*/
+
+        $r0 = newarray (int)[10];
+/*8745*/
+/*8745*/
+
+        $r0[0] = 16842901;
+/*8745*/
+/*8745*/
+
+        $r0[1] = 16842902;
+
+        $r0[2] = 16842903;
+
+        $r0[3] = 16842904;
+
+        $r0[4] = 16842906;
+
+        $r0[5] = 16843105;
+
+        $r0[6] = 16843106;
+
+        $r0[7] = 16843107;
+
+        $r0[8] = 16843108;
+
+        $r0[9] = 2130772055;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] TextAppearance> = $r0;
+/*8745*/
+/*8745*/
+
+        $r0 = newarray (int)[29];
+/*8881*/
+/*8881*/
+
+        $r0[0] = 16842927;
+/*8881*/
+/*8881*/
+
+        $r0[1] = 16843072;
+
+        $r0[2] = 2130772015;
+
+        $r0[3] = 2130772018;
+
+        $r0[4] = 2130772022;
+
+        $r0[5] = 2130772034;
+
+        $r0[6] = 2130772035;
+
+        $r0[7] = 2130772036;
+
+        $r0[8] = 2130772037;
+
+        $r0[9] = 2130772038;
+
+        $r0[10] = 2130772039;
+
+        $r0[11] = 2130772041;
+
+        $r0[12] = 2130772220;
+
+        $r0[13] = 2130772221;
+
+        $r0[14] = 2130772222;
+
+        $r0[15] = 2130772223;
+
+        $r0[16] = 2130772224;
+
+        $r0[17] = 2130772225;
+
+        $r0[18] = 2130772226;
+
+        $r0[19] = 2130772227;
+
+        $r0[20] = 2130772228;
+
+        $r0[21] = 2130772229;
+
+        $r0[22] = 2130772230;
+
+        $r0[23] = 2130772231;
+
+        $r0[24] = 2130772232;
+
+        $r0[25] = 2130772233;
+
+        $r0[26] = 2130772234;
+
+        $r0[27] = 2130772235;
+
+        $r0[28] = 2130772236;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] Toolbar> = $r0;
+/*8881*/
+/*8881*/
+
+        $r0 = newarray (int)[5];
+/*9306*/
+/*9306*/
+
+        $r0[0] = 16842752;
+/*9306*/
+/*9306*/
+
+        $r0[1] = 16842970;
+
+        $r0[2] = 2130772237;
+
+        $r0[3] = 2130772238;
+
+        $r0[4] = 2130772239;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] View> = $r0;
+/*9306*/
+/*9306*/
+
+        $r0 = newarray (int)[3];
+/*9378*/
+/*9378*/
+
+        $r0[0] = 16842964;
+/*9378*/
+/*9378*/
+
+        $r0[1] = 2130772240;
+
+        $r0[2] = 2130772241;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ViewBackgroundHelper> = $r0;
+/*9378*/
+/*9378*/
+
+        $r0 = newarray (int)[3];
+/*9436*/
+/*9436*/
+
+        $r0[0] = 16842960;
+/*9436*/
+/*9436*/
+
+        $r0[1] = 16842994;
+
+        $r0[2] = 16842995;
+
+        <de.upb.swt.singleifbranch1.R$styleable: int[] ViewStubCompat> = $r0;
+/*9436*/
+/*9436*/
+
+        return;
+/*9436*/
+/*9436*/
+    }
+
+    public void <init>()
+    {
+        de.upb.swt.singleifbranch1.R$styleable $r0;
+
+        $r0 := @this: de.upb.swt.singleifbranch1.R$styleable;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+/*2872*/
+/*2872*/
+
+        return;
+/*2872*/
+/*2872*/
+    }
+}

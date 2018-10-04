@@ -1,0 +1,104 @@
+public class constraintBench.test.imprecise.ImpreciseSingle3 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.imprecise.ImpreciseSingle3 this;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseSingle3;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.imprecise.ImpreciseSingle3 this;
+        java.lang.String $r0, $r2;
+        java.io.PrintStream $r1, $r3;
+        boolean $z0;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseSingle3;
+/*
+ *		-1.
+true
+*/
+
+        $r0 = <constraintBench.utils.Configuration: java.lang.String fieldA>;
+/*
+ *		12.
+true
+*/
+
+        if $r0 == null goto label2;
+/*
+ *		12.
+true
+*/
+
+        $r2 = <constraintBench.utils.Configuration: java.lang.String fieldA>;
+/*
+ *		13.
+(not (= C1007 null))
+*/
+
+        $z0 = virtualinvoke $r2.<java.lang.String: boolean startsWith(java.lang.String)>("test");
+/*
+ *		13.
+(not (= C1007 null))
+*/
+
+        if $z0 == 0 goto label1;
+/*
+ *		13.
+(not (= C1007 null))
+*/
+
+        $r3 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		14.
+(and (not (= C1007 null)) im(C1007)_0)
+*/
+
+        virtualinvoke $r3.<java.io.PrintStream: void println()>();
+/*
+ *		14.
+(and (not (= C1007 null)) im(C1007)_0)
+*/
+
+        goto label2;
+/*
+ *		15.
+(and (not (= C1007 null)) im(C1007)_0)
+*/
+
+     label1:
+        return;
+/*
+ *		16.
+(and (not (= C1007 null)) (not im(C1007)_0))
+*/
+
+     label2:
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		19.
+(or (= C1007 null) im(C1007)_0)
+*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println()>();
+/*
+ *		19.
+(or (= C1007 null) im(C1007)_0)
+*/
+
+        return;
+/*
+ *		20.
+(or (= C1007 null) im(C1007)_0)
+*/
+    }
+}

@@ -1,0 +1,17 @@
+class constraintBench.test.staticField.StaticField1$TestClass extends java.lang.Object
+{
+    public static boolean f;
+
+    private void <init>()
+    {
+        constraintBench.test.staticField.StaticField1$TestClass this;
+
+        this := @this: constraintBench.test.staticField.StaticField1$TestClass;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*11*/
+
+        return;
+/*11*/
+    }
+}

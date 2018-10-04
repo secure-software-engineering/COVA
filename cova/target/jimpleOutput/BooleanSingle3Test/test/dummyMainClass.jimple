@@ -1,0 +1,27 @@
+class dummyMainClass
+{
+
+    public static void main(java.lang.String[])
+    {
+        constraintBench.test.primTypes.BooleanSingle3 dummyObj;
+        java.lang.String[] $r0;
+
+        $r0 := @parameter0: java.lang.String[];
+/*
+ *		-1.
+true
+*/
+
+        dummyObj = new constraintBench.test.primTypes.BooleanSingle3;
+/*
+ *		-1.
+true
+*/
+
+        virtualinvoke dummyObj.<constraintBench.test.primTypes.BooleanSingle3: void test()>();
+/*
+ *		-1.
+true
+*/
+    }
+}

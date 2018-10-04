@@ -1,0 +1,114 @@
+class constraintBench.test.staticField.StaticField7$Foo extends java.lang.Object
+{
+    public static boolean field;
+
+    static void <clinit>()
+    {
+        <constraintBench.test.staticField.StaticField7$Foo: boolean field> = 0;
+
+        return;
+    }
+
+    void <init>()
+    {
+        constraintBench.test.staticField.StaticField7$Foo this;
+
+        this := @this: constraintBench.test.staticField.StaticField7$Foo;
+/*
+ *		-1.
+true
+*/
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*
+ *		11.
+true
+*/
+
+        return;
+/*
+ *		11.
+true
+*/
+    }
+
+    public void main()
+    {
+        constraintBench.test.staticField.StaticField7$Foo this;
+        boolean $z0;
+
+        this := @this: constraintBench.test.staticField.StaticField7$Foo;
+/*
+ *		-1.
+true
+*/
+
+        $z0 = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		15.
+true
+*/
+
+        <constraintBench.test.staticField.StaticField7$Foo: boolean field> = $z0;
+/*
+ *		15.
+true
+*/
+
+        specialinvoke this.<constraintBench.test.staticField.StaticField7$Foo: void callee()>();
+/*
+ *		16.
+true
+*/
+
+        return;
+/*
+ *		17.
+true
+*/
+    }
+
+    private void callee()
+    {
+        constraintBench.test.staticField.StaticField7$Foo this;
+        boolean $z0;
+        java.io.PrintStream $r0;
+
+        this := @this: constraintBench.test.staticField.StaticField7$Foo;
+/*
+ *		-1.
+true
+*/
+
+        $z0 = <constraintBench.test.staticField.StaticField7$Foo: boolean field>;
+/*
+ *		20.
+true
+*/
+
+        if $z0 == 0 goto label1;
+/*
+ *		20.
+true
+*/
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		21.
+C1001
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		21.
+C1001
+*/
+
+     label1:
+        return;
+/*
+ *		23.
+true
+*/
+    }
+}

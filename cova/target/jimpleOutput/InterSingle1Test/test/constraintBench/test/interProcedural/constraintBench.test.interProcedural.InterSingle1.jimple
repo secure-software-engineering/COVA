@@ -1,0 +1,142 @@
+public class constraintBench.test.interProcedural.InterSingle1 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.interProcedural.InterSingle1 this;
+
+        this := @this: constraintBench.test.interProcedural.InterSingle1;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.interProcedural.InterSingle1 this;
+        java.io.PrintStream $r0;
+        boolean featureA;
+        byte flag;
+
+        this := @this: constraintBench.test.interProcedural.InterSingle1;
+/*
+ *		-1.
+true
+*/
+
+        featureA = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		12.
+true
+*/
+
+        flag = 0;
+/*
+ *		13.
+true
+*/
+
+        if featureA == 0 goto label1;
+/*
+ *		14.
+true
+*/
+
+        flag = 1;
+/*
+ *		15.
+C1001
+*/
+
+     label1:
+        featureA = specialinvoke this.<constraintBench.test.interProcedural.InterSingle1: boolean negate(boolean)>(featureA);
+/*
+ *		17.
+true
+*/
+
+        if featureA == 0 goto label2;
+/*
+ *		18.
+true
+*/
+
+        flag = 2;
+/*
+ *		19.
+(not C1001)
+*/
+
+     label2:
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		21.
+true
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println(int)>(flag);
+/*
+ *		21.
+true
+*/
+
+        return;
+/*
+ *		22.
+true
+*/
+    }
+
+    private boolean negate(boolean)
+    {
+        constraintBench.test.interProcedural.InterSingle1 this;
+        boolean in, $z0;
+
+        this := @this: constraintBench.test.interProcedural.InterSingle1;
+/*
+ *		-1.
+true
+*/
+
+        in := @parameter0: boolean;
+/*
+ *		-1.
+true
+*/
+
+        if in == 0 goto label1;
+/*
+ *		25.
+true
+*/
+
+        $z0 = 0;
+/*
+ *		25.
+C1001
+*/
+
+        goto label2;
+/*
+ *		25.
+C1001
+*/
+
+     label1:
+        $z0 = 1;
+/*
+ *		25.
+(not C1001)
+*/
+
+     label2:
+        return $z0;
+/*
+ *		25.
+true
+*/
+    }
+}

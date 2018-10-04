@@ -1,0 +1,54 @@
+class constraintBench.test.instanceField.InstanceField4$Bar extends java.lang.Object
+{
+    public boolean field1;
+    public boolean field2;
+    final constraintBench.test.instanceField.InstanceField4 this$0;
+
+    public void <init>(constraintBench.test.instanceField.InstanceField4)
+    {
+        constraintBench.test.instanceField.InstanceField4$Bar this;
+        constraintBench.test.instanceField.InstanceField4 l1;
+
+        this := @this: constraintBench.test.instanceField.InstanceField4$Bar;
+/*
+ *		-1.
+true
+*/
+
+        l1 := @parameter0: constraintBench.test.instanceField.InstanceField4;
+/*
+ *		-1.
+true
+*/
+
+        this.<constraintBench.test.instanceField.InstanceField4$Bar: constraintBench.test.instanceField.InstanceField4 this$0> = l1;
+/*
+ *		24.
+true
+*/
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*
+ *		24.
+true
+*/
+
+        this.<constraintBench.test.instanceField.InstanceField4$Bar: boolean field1> = 0;
+/*
+ *		25.
+true
+*/
+
+        this.<constraintBench.test.instanceField.InstanceField4$Bar: boolean field2> = 0;
+/*
+ *		26.
+true
+*/
+
+        return;
+/*
+ *		27.
+true
+*/
+    }
+}

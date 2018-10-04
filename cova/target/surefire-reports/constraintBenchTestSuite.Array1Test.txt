@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: constraintBenchTestSuite.Array1Test
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.036 s <<< FAILURE! - in constraintBenchTestSuite.Array1Test
+test(constraintBenchTestSuite.Array1Test)  Time elapsed: 0.036 s  <<< ERROR!
+java.lang.NullPointerException
+	at constraintBenchTestSuite.Array1Test.test(Array1Test.java:29)
+

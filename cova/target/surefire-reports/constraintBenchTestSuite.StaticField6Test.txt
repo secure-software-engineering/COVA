@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: constraintBenchTestSuite.StaticField6Test
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.054 s <<< FAILURE! - in constraintBenchTestSuite.StaticField6Test
+test(constraintBenchTestSuite.StaticField6Test)  Time elapsed: 0.052 s  <<< FAILURE!
+java.lang.AssertionError
+	at constraintBenchTestSuite.StaticField6Test.test(StaticField6Test.java:19)
+

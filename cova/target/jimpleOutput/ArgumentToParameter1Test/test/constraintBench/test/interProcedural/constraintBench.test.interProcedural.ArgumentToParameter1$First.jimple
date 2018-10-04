@@ -1,0 +1,122 @@
+class constraintBench.test.interProcedural.ArgumentToParameter1$First extends java.lang.Object
+{
+    private constraintBench.test.interProcedural.ArgumentToParameter1$Second second;
+    final constraintBench.test.interProcedural.ArgumentToParameter1 this$0;
+
+    public void <init>(constraintBench.test.interProcedural.ArgumentToParameter1, constraintBench.test.interProcedural.ArgumentToParameter1$Second)
+    {
+        constraintBench.test.interProcedural.ArgumentToParameter1$First this;
+        constraintBench.test.interProcedural.ArgumentToParameter1 l1;
+        constraintBench.test.interProcedural.ArgumentToParameter1$Second s;
+
+        this := @this: constraintBench.test.interProcedural.ArgumentToParameter1$First;
+/*
+ *		-1.
+true
+*/
+
+        l1 := @parameter0: constraintBench.test.interProcedural.ArgumentToParameter1;
+/*
+ *		-1.
+true
+*/
+
+        s := @parameter1: constraintBench.test.interProcedural.ArgumentToParameter1$Second;
+/*
+ *		-1.
+true
+*/
+
+        this.<constraintBench.test.interProcedural.ArgumentToParameter1$First: constraintBench.test.interProcedural.ArgumentToParameter1 this$0> = l1;
+/*
+ *		14.
+true
+*/
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*
+ *		14.
+true
+*/
+
+        this.<constraintBench.test.interProcedural.ArgumentToParameter1$First: constraintBench.test.interProcedural.ArgumentToParameter1$Second second> = s;
+/*
+ *		15.
+true
+*/
+
+        return;
+/*
+ *		16.
+true
+*/
+    }
+
+    public int getField()
+    {
+        constraintBench.test.interProcedural.ArgumentToParameter1$First this;
+        constraintBench.test.interProcedural.ArgumentToParameter1$Second $r0;
+        int $i0;
+
+        this := @this: constraintBench.test.interProcedural.ArgumentToParameter1$First;
+/*
+ *		-1.
+true
+*/
+
+        $r0 = this.<constraintBench.test.interProcedural.ArgumentToParameter1$First: constraintBench.test.interProcedural.ArgumentToParameter1$Second second>;
+/*
+ *		19.
+true
+*/
+
+        $i0 = virtualinvoke $r0.<constraintBench.test.interProcedural.ArgumentToParameter1$Second: int getField()>();
+/*
+ *		19.
+true
+*/
+
+        return $i0;
+/*
+ *		19.
+true
+*/
+    }
+
+    public void setField(int)
+    {
+        constraintBench.test.interProcedural.ArgumentToParameter1$First this;
+        int f;
+        constraintBench.test.interProcedural.ArgumentToParameter1$Second $r0;
+
+        this := @this: constraintBench.test.interProcedural.ArgumentToParameter1$First;
+/*
+ *		-1.
+true
+*/
+
+        f := @parameter0: int;
+/*
+ *		-1.
+true
+*/
+
+        $r0 = this.<constraintBench.test.interProcedural.ArgumentToParameter1$First: constraintBench.test.interProcedural.ArgumentToParameter1$Second second>;
+/*
+ *		23.
+true
+*/
+
+        virtualinvoke $r0.<constraintBench.test.interProcedural.ArgumentToParameter1$Second: void setField(int)>(f);
+/*
+ *		23.
+true
+*/
+
+        return;
+/*
+ *		24.
+true
+*/
+    }
+}

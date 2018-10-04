@@ -1,0 +1,103 @@
+public class constraintBench.test.imprecise.ImpreciseSingle4 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.imprecise.ImpreciseSingle4 this;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseSingle4;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.imprecise.ImpreciseSingle4 this;
+        int d, r;
+        java.io.PrintStream $r0;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseSingle4;
+/*
+ *		-1.
+true
+*/
+
+        d = staticinvoke <constraintBench.utils.Configuration: int featureD()>();
+/*
+ *		12.
+true
+*/
+
+        r = virtualinvoke this.<constraintBench.test.imprecise.ImpreciseSingle4: int callee()>();
+/*
+ *		13.
+true
+*/
+
+        if d <= r goto label1;
+/*
+ *		14.
+true
+*/
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		15.
+(not im(C1004))
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		15.
+(not im(C1004))
+*/
+
+     label1:
+        return;
+/*
+ *		17.
+true
+*/
+    }
+
+    public int callee()
+    {
+        constraintBench.test.imprecise.ImpreciseSingle4 this;
+        int $i0, f#2;
+        byte f;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseSingle4;
+/*
+ *		-1.
+true
+*/
+
+        f = 0;
+/*
+ *		20.
+true
+*/
+
+        $i0 = f * 5;
+/*
+ *		21.
+true
+*/
+
+        f#2 = $i0 + 10;
+/*
+ *		21.
+true
+*/
+
+        return f#2;
+/*
+ *		22.
+true
+*/
+    }
+}

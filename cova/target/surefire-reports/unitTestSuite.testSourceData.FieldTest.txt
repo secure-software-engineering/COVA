@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: unitTestSuite.testSourceData.FieldTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in unitTestSuite.testSourceData.FieldTest

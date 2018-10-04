@@ -1,0 +1,136 @@
+class constraintBench.test.callbacks.Callback1$TestClass extends java.lang.Object implements constraintBench.utils.Callback
+{
+    final constraintBench.test.callbacks.Callback1 this$0;
+
+    private void <init>(constraintBench.test.callbacks.Callback1)
+    {
+        constraintBench.test.callbacks.Callback1$TestClass this;
+        constraintBench.test.callbacks.Callback1 l1;
+
+        this := @this: constraintBench.test.callbacks.Callback1$TestClass;
+/*
+ *		-1.
+true
+*/
+
+        l1 := @parameter0: constraintBench.test.callbacks.Callback1;
+/*
+ *		-1.
+true
+*/
+
+        this.<constraintBench.test.callbacks.Callback1$TestClass: constraintBench.test.callbacks.Callback1 this$0> = l1;
+/*
+ *		10.
+true
+*/
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*
+ *		10.
+true
+*/
+
+        return;
+/*
+ *		10.
+true
+*/
+    }
+
+    public void onClick()
+    {
+        constraintBench.test.callbacks.Callback1$TestClass this;
+        java.io.PrintStream $r0;
+
+        this := @this: constraintBench.test.callbacks.Callback1$TestClass;
+/*
+ *		-1.
+(and U1002_0 U1001_0)
+*/
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		14.
+(and U1002_0 U1001_0)
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		14.
+(and U1002_0 U1001_0)
+*/
+
+        return;
+/*
+ *		15.
+(and U1002_0 U1001_0)
+*/
+    }
+
+    public void onScroll()
+    {
+        constraintBench.test.callbacks.Callback1$TestClass this;
+        java.io.PrintStream $r0;
+
+        this := @this: constraintBench.test.callbacks.Callback1$TestClass;
+/*
+ *		-1.
+U1002_0
+*/
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		19.
+U1002_0
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		19.
+U1002_0
+*/
+
+        return;
+/*
+ *		20.
+U1002_0
+*/
+    }
+
+    void <init>(constraintBench.test.callbacks.Callback1, constraintBench.test.callbacks.Callback1$TestClass)
+    {
+        constraintBench.test.callbacks.Callback1$TestClass l0, l2;
+        constraintBench.test.callbacks.Callback1 l1;
+
+        l0 := @this: constraintBench.test.callbacks.Callback1$TestClass;
+/*
+ *		-1.
+true
+*/
+
+        l1 := @parameter0: constraintBench.test.callbacks.Callback1;
+/*
+ *		-1.
+true
+*/
+
+        l2 := @parameter1: constraintBench.test.callbacks.Callback1$TestClass;
+/*
+ *		-1.
+true
+*/
+
+        specialinvoke l0.<constraintBench.test.callbacks.Callback1$TestClass: void <init>(constraintBench.test.callbacks.Callback1)>(l1);
+/*
+ *		10.
+true
+*/
+
+        return;
+/*
+ *		10.
+true
+*/
+    }
+}

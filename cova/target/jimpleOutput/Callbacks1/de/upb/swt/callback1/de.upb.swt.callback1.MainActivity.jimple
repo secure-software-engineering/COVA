@@ -1,0 +1,97 @@
+public class de.upb.swt.callback1.MainActivity extends android.support.v7.app.AppCompatActivity
+{
+    java.lang.String msg;
+
+    public void <init>()
+    {
+        de.upb.swt.callback1.MainActivity $r0;
+
+        $r0 := @this: de.upb.swt.callback1.MainActivity;
+
+        specialinvoke $r0.<android.support.v7.app.AppCompatActivity: void <init>()>();
+/*14*/
+/*14*/
+
+        return;
+/*14*/
+/*14*/
+    }
+
+    protected void onCreate(android.os.Bundle)
+    {
+        de.upb.swt.callback1.MainActivity $r0;
+        android.os.Bundle $r1;
+        android.view.View $r2;
+        android.widget.Button $r3;
+        de.upb.swt.callback1.MainActivity$1 $r4;
+
+        $r0 := @this: de.upb.swt.callback1.MainActivity;
+
+        $r1 := @parameter0: android.os.Bundle;
+
+        specialinvoke $r0.<android.support.v7.app.AppCompatActivity: void onCreate(android.os.Bundle)>($r1);
+/*19*/
+/*19*/
+
+        virtualinvoke $r0.<de.upb.swt.callback1.MainActivity: void setContentView(int)>(2130968603);
+/*20*/
+/*20*/
+
+        $r2 = virtualinvoke $r0.<de.upb.swt.callback1.MainActivity: android.view.View findViewById(int)>(2131427422);
+/*21*/
+/*21*/
+
+        $r3 = (android.widget.Button) $r2;
+/*21*/
+/*21*/
+
+        $r4 = new de.upb.swt.callback1.MainActivity$1;
+/*22*/
+/*22*/
+
+        specialinvoke $r4.<de.upb.swt.callback1.MainActivity$1: void <init>(de.upb.swt.callback1.MainActivity)>($r0);
+/*22*/
+/*22*/
+
+        virtualinvoke $r3.<android.widget.Button: void setOnClickListener(android.view.View$OnClickListener)>($r4);
+/*22*/
+/*22*/
+
+        return;
+/*22*/
+/*22*/
+    }
+
+    void send(java.lang.String)
+    {
+        de.upb.swt.callback1.MainActivity $r0;
+        java.lang.String $r1;
+        int $i0;
+        android.telephony.SmsManager $r2;
+
+        $r0 := @this: de.upb.swt.callback1.MainActivity;
+
+        $r1 := @parameter0: java.lang.String;
+
+        $i0 = <android.os.Build$VERSION: int SDK_INT>;
+/*37*/
+/*37*/
+
+        if $i0 >= 15 goto label1;
+/*38*/
+/*38*/
+
+        $r2 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
+/*39*/
+/*39*/
+
+        virtualinvoke $r2.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49", null, $r1, null, null);
+/*40*/
+/*40*/
+
+     label1:
+        return;
+/*40*/
+/*40*/
+    }
+}

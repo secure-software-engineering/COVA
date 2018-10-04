@@ -1,0 +1,22 @@
+public final class de.upb.swt.callbacks1.R$integer extends java.lang.Object
+{
+    public static final int abc_config_activityDefaultDur;
+    public static final int abc_config_activityShortDur;
+    public static final int cancel_button_image_alpha;
+    public static final int status_bar_notification_info_maxnum;
+
+    public void <init>()
+    {
+        de.upb.swt.callbacks1.R$integer $r0;
+
+        $r0 := @this: de.upb.swt.callbacks1.R$integer;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+/*2422*/
+/*2422*/
+
+        return;
+/*2422*/
+/*2422*/
+    }
+}

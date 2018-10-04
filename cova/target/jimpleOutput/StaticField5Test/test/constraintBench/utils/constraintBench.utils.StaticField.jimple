@@ -1,0 +1,104 @@
+public class constraintBench.utils.StaticField extends java.lang.Object
+{
+    public static boolean f;
+    public static boolean a;
+    public static boolean b;
+    private static java.lang.String fieldA;
+    private static java.lang.String fieldB;
+
+    public void <init>()
+    {
+        constraintBench.utils.StaticField this;
+
+        this := @this: constraintBench.utils.StaticField;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*7*/
+
+        return;
+/*7*/
+    }
+
+    public static void setFeature()
+    {
+        boolean $z0, $z1;
+
+        $z0 = staticinvoke <constraintBench.utils.Configuration: boolean featureB()>();
+/*15*/
+
+        if $z0 == 0 goto label1;
+/*15*/
+
+        $z1 = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*16*/
+
+        <constraintBench.utils.StaticField: boolean f> = $z1;
+/*16*/
+
+     label1:
+        return;
+/*18*/
+    }
+
+    public static void setFieldA()
+    {
+        java.lang.String $r0;
+
+        $r0 = <constraintBench.utils.Configuration: java.lang.String fieldA>;
+/*21*/
+
+        <constraintBench.utils.StaticField: java.lang.String fieldA> = $r0;
+/*21*/
+
+        return;
+/*22*/
+    }
+
+    public static void reset()
+    {
+        <constraintBench.utils.StaticField: java.lang.String fieldA> = null;
+/*25*/
+
+        <constraintBench.utils.StaticField: java.lang.String fieldB> = null;
+/*26*/
+
+        return;
+/*27*/
+    }
+
+    public static void setFieldB()
+    {
+        java.lang.String $r0;
+
+        $r0 = <constraintBench.utils.Configuration: java.lang.String fieldB>;
+/*30*/
+
+        <constraintBench.utils.StaticField: java.lang.String fieldB> = $r0;
+/*30*/
+
+        return;
+/*31*/
+    }
+
+    public static java.lang.String getFieldA()
+    {
+        java.lang.String $r0;
+
+        $r0 = <constraintBench.utils.StaticField: java.lang.String fieldA>;
+/*34*/
+
+        return $r0;
+/*34*/
+    }
+
+    public static java.lang.String getFieldB()
+    {
+        java.lang.String $r0;
+
+        $r0 = <constraintBench.utils.StaticField: java.lang.String fieldB>;
+/*38*/
+
+        return $r0;
+/*38*/
+    }
+}

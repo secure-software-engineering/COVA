@@ -1,0 +1,21 @@
+public class com.android.tools.ir.runtime.InstantReloadException extends java.lang.Exception
+{
+
+    public void <init>(java.lang.String)
+    {
+        com.android.tools.ir.runtime.InstantReloadException $r0;
+        java.lang.String $r1;
+
+        $r0 := @this: com.android.tools.ir.runtime.InstantReloadException;
+
+        $r1 := @parameter0: java.lang.String;
+
+        specialinvoke $r0.<java.lang.Exception: void <init>(java.lang.String)>($r1);
+/*30*/
+/*30*/
+
+        return;
+/*30*/
+/*30*/
+    }
+}

@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: constraintBenchTestSuite.javaApp.AnonymousClass1Test
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.542 s <<< FAILURE! - in constraintBenchTestSuite.javaApp.AnonymousClass1Test
+test(constraintBenchTestSuite.javaApp.AnonymousClass1Test)  Time elapsed: 0.541 s  <<< FAILURE!
+java.lang.AssertionError
+	at constraintBenchTestSuite.javaApp.AnonymousClass1Test.test(AnonymousClass1Test.java:32)
+

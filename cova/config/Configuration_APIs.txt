@@ -1,0 +1,451 @@
+%Configuration Android API 27
+%fieldRefs
+<android.os.Build: java.lang.String BOARD> -> C: BOARD ID: 1
+<android.os.Build: java.lang.String BOOTLOADER> -> C: BOOTLOADER ID: 2
+<android.os.Build: java.lang.String BRAND> -> C: BRAND ID: 3
+<android.os.Build: java.lang.String CPU_ABI> -> C: CPU_ABI ID: 4
+<android.os.Build: java.lang.String CPU_ABI2> -> C: CPU_ABI2 ID: 5
+<android.os.Build: java.lang.String DEVICE> -> C: DEVICE ID: 6
+<android.os.Build: java.lang.String DISPLAY> -> C: DISPLAY ID: 7
+<android.os.Build: java.lang.String FINGERPRINT> -> C: FINGERPRINT ID: 8
+<android.os.Build: java.lang.String HARDWARE> -> C: HARDWARE ID: 9
+<android.os.Build: java.lang.String HOST> -> C: HOST ID: 10
+<android.os.Build: java.lang.String ID> -> C: ID ID: 11
+<android.os.Build: java.lang.String MANUFACTURER> -> C: MANUFACTURER ID: 12
+<android.os.Build: java.lang.String MODEL> -> C: MODEL ID: 13
+<android.os.Build: java.lang.String PRODUCT> -> C: PRODUCT ID: 14
+<android.os.Build: java.lang.String RADIO> -> C: RADIO ID: 15
+<android.os.Build: java.lang.String SERIAL> -> C: SERIAL ID: 16
+<android.os.Build: java.lang.String[] SUPPORTED_32_BIT_ABIS> -> C: CPU_32B_ABI ID: 17
+<android.os.Build: java.lang.String[] SUPPORTED_64_BIT_ABIS> -> C: CPU_64B_ABI ID: 18
+<android.os.Build: java.lang.String TAGS> -> C: TAGS ID: 19
+<android.os.Build: java.lang.String TYPE> -> C: TYPE ID: 20
+<android.os.Build: java.lang.String USER> -> C: USER ID: 21
+<android.os.Build$VERSION: java.lang.String BASE_OS> -> C: BASE_OS ID: 22
+<android.os.Build$VERSION: int PREVIEW_SDK_INT> -> C: PREVIEW_SDK ID: 23
+<android.os.Build$VERSION: int SDK_INT> -> C: SDK ID: 24
+<android.os.Build$VERSION: java.lang.String SDK> -> C: SDK ID: 25
+<android.content.res.Configuration: int colorMode> -> C: COLORMODE ID: 26
+<android.content.res.Configuration: int densityDpi> -> C: DPI ID: 27
+<android.content.res.Configuration: int keyboard> -> C: KEYBOARD ID: 28
+<android.content.res.Configuration: java.util.Locale locale> -> C: LOCALE ID: 29
+<android.content.res.Configuration: int mcc> -> C: MCC ID: 30
+<android.content.res.Configuration: int mnc> -> C: MNC ID: 31
+<android.content.res.Configuration: int navigation> -> C: NAVIGATION ID: 32
+<android.content.res.Configuration: int orientation> -> C: ORIENTATION ID: 33
+<android.content.res.Configuration: int screenLayout> -> C: SCREENLAYOUT ID: 34
+<android.content.res.Configuration: int touchscreen> -> C: TOUCHSCREEN ID: 35
+<android.content.res.Configuration: int uiMode> -> C: UIMODE ID: 36
+%methods
+<android.os.Build: java.lang.String getRadioVersion()> -> C: RADIO ID: 37
+<android.os.Build: java.lang.String getSerial()> -> C: HARDWARE_SERIAL ID: 38
+<android.content.res.Configuration: int getLayoutDirection()> -> C: LAYOUT_DIRECTION ID: 39
+<android.content.res.Configuration: android.os.LocaleList getLocales()> -> C: LOCALE ID: 40
+<android.os.Environment: java.lang.String getExternalStorageState()> -> C: STORAGE ID: 41
+<android.bluetooth.BluetoothAdapte: android.bluetooth.BluetoothAdapter getDefaultAdapter()> -> C: BLUETOOTH ID: 42
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"accessibility\") -> C: ACCESSIBILITY ID: 43
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"account\") -> C: ACCOUNT ID: 44
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"activity\") -> C: ACTIVITY ID: 45
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"alarm\") -> C: ALARM ID: 46
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"appwidget\") -> C: APPWIDGET ID: 47
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"appops\") -> C: APP_OPS ID: 48
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"audio\") -> C: AUDIO ID: 49
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"batterymanager\") -> C: BATTERY ID: 50
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"bluetooth\") -> C: BLUETOOTH ID: 51
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"camera\") -> C: CAMERA ID: 52
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"captioning\") -> C: CAPTIONING ID: 53
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"carrier_config\") -> C: CARRIER_CONFIG ID: 54
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"clipboard\") -> C: CLIPBOARD ID: 55
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"companiondevice\") -> C: COMPANION_DEVICE ID: 56
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"connectivity\") -> C: CONNECTIVITY ID: 57
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"consumer_ir\") -> C: CONSUMER_IR ID: 58
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"device_policy\") -> C: DEVICE_POLICY ID: 59
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"display\") -> C: DISPLAY ID: 60
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"download\") -> C: DOWNLOAD ID: 61
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"dropbox\") -> C: DROPBOX ID: 62
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"fingerprint\") -> C: FINGERPRINT ID: 63
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"hardware_properties\") -> C: HARDWARE ID: 64
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"input_method\") -> C: INPUT_METHOD ID: 65
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"input\") -> C: INPUT ID: 66
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"jobscheduler\") -> C: JOB_SCHEDULER ID: 67
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"keyguard\") -> C: KEYGUARD ID: 68
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"launcherapps\") -> C: LAUNCHER ID: 69
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"layout_inflater\") -> C: LAYOUT_INFLATER ID: 70
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"location\") -> C: LOCATION ID: 71
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"media_projection\") -> C: MEDIA_PROJECTION ID: 72
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"media_router\") -> C: MEDIA_ROUTER ID: 73
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"media_session\") -> C: MEDIA_SESSION ID: 74
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"midi\") -> C: MIDI ID: 75
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"netstats\") -> C: NETWORK_STATS ID: 76
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"nfc\") -> C: NFC ID: 77
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"notification\") -> C: NOTIFICATION ID: 78
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"servicediscovery\") -> C: NSD ID: 79
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"power\") -> C: POWER ID: 80
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"print\") -> C: PRINT ID: 81
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"restrictions\") -> C: RESTRICTIONS ID: 82
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"search\") -> C: SEARCH ID: 83
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"sensor\") -> C: SENSOR ID: 84
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"shortcut\") -> C: SHORTCUT ID: 85
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"storage\") -> C: STORAGE ID: 86
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"storagestats\") -> C: STORAGE_STATS ID: 87
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"systemhealth\") -> C: SYSTEM_HEALTH ID: 88
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"telecom\") -> C: TELECOM ID: 89
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"phone\") -> C: TELEPHONY ID: 90
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"telephony_subscription_service\") -> C: TELEPHONY_SUBSCRIPTION ID: 91
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"textclassification\") -> C: TEXT_CLASSIFICATION ID: 92
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"textservices\") -> C: TEXT_SERVICES ID: 93
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"tv_input\") -> C: TV_INPUT ID: 94
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"uimode\") -> C: UI_MODE ID: 95
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"usagestats\") -> C: USAGE_STATS ID: 96
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"usb\") -> C: USB ID: 97
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"user\") -> C: USER ID: 98
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"vibrator\") -> C: VIBRATOR ID: 99
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"wallpaper\") -> C: WALLPAPER ID: 100
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"wifiaware\") -> C: WIFI_AWARE ID: 101
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"wifip2p\") -> C: WIFI_P2P ID: 102
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"wifi\") -> C: WIFI ID: 103
+<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"window\") -> C: WINDOW ID: 104
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"accessibility\") -> C: ACCESSIBILITY ID: 105
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"account\") -> C: ACCOUNT ID: 106
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"activity\") -> C: ACTIVITY ID: 107
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"alarm\") -> C: ALARM ID: 108
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"appwidget\") -> C: APPWIDGET ID: 109
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"appops\") -> C: APP_OPS ID: 110
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"audio\") -> C: AUDIO ID: 111
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"batterymanager\") -> C: BATTERY ID: 112
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"bluetooth\") -> C: BLUETOOTH ID: 113
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"camera\") -> C: CAMERA ID: 114
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"captioning\") -> C: CAPTIONING ID: 115
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"carrier_config\") -> C: CARRIER_CONFIG ID: 116
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"clipboard\") -> C: CLIPBOARD ID: 117
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"companiondevice\") -> C: COMPANION_DEVICE ID: 118
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"connectivity\") -> C: CONNECTIVITY ID: 119
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"consumer_ir\") -> C: CONSUMER_IR ID: 120
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"device_policy\") -> C: DEVICE_POLICY ID: 121
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"display\") -> C: DISPLAY ID: 122
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"download\") -> C: DOWNLOAD ID: 123
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"dropbox\") -> C: DROPBOX ID: 124
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"fingerprint\") -> C: FINGERPRINT ID: 125
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"hardware_properties\") -> C: HARDWARE ID: 126
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"input_method\") -> C: INPUT_METHOD ID: 127
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"input\") -> C: INPUT ID: 128
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"jobscheduler\") -> C: JOB_SCHEDULER ID: 129
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"keyguard\") -> C: KEYGUARD ID: 130
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"launcherapps\") -> C: LAUNCHER ID: 131
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"layout_inflater\") -> C: LAYOUT_INFLATER ID: 132
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"location\") -> C: LOCATION ID: 133
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"media_projection\") -> C: MEDIA_PROJECTION ID: 134
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"media_router\") -> C: MEDIA_ROUTER ID: 135
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"media_session\") -> C: MEDIA_SESSION ID: 136
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"midi\") -> C: MIDI ID: 137
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"netstats\") -> C: NETWORK_STATS ID: 138
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"nfc\") -> C: NFC ID: 139
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"notification\") -> C: NOTIFICATION ID: 140
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"servicediscovery\") -> C: NSD ID: 141
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"power\") -> C: POWER ID: 142
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"print\") -> C: PRINT ID: 143
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"restrictions\") -> C: RESTRICTIONS ID: 144
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"search\") -> C: SEARCH ID: 145
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"sensor\") -> C: SENSOR ID: 146
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"shortcut\") -> C: SHORTCUT ID: 147
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"storage\") -> C: STORAGE ID: 148
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"storagestats\") -> C: STORAGE_STATS ID: 149
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"systemhealth\") -> C: SYSTEM_HEALTH ID: 150
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"telecom\") -> C: TELECOM ID: 151
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"phone\") -> C: TELEPHONY ID: 152
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"telephony_subscription_service\") -> C: TELEPHONY_SUBSCRIPTION ID: 153
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"textclassification\") -> C: TEXT_CLASSIFICATION ID: 154
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"textservices\") -> C: TEXT_SERVICES ID: 155
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"tv_input\") -> C: TV_INPUT ID: 156
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"uimode\") -> C: UI_MODE ID: 157
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"usagestats\") -> C: USAGE_STATS ID: 158
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"usb\") -> C: USB ID: 159
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"user\") -> C: USER ID: 160
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"vibrator\") -> C: VIBRATOR ID: 161
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"wallpaper\") -> C: WALLPAPER ID: 162
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"wifiaware\") -> C: WIFI_AWARE ID: 163
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"wifip2p\") -> C: WIFI_P2P ID: 164
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"wifi\") -> C: WIFI ID: 165
+<.+: java.lang.Object getSystemService(java.lang.String)>(\"window\") -> C: WINDOW ID: 166
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.activities_on_secondary_displays\") -> C: FEATURE_ACTIVITIES_ON_SECONDARY_DISPLAYS ID: 167
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.app_widgets\") -> C: FEATURE_APP_WIDGETS ID: 168
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.audio.low_latency\") -> C: FEATURE_AUDIO_LOW_LATENCY ID: 169
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.audio.output\") -> C: FEATURE_AUDIO_OUTPUT ID: 170
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.audio.pro\") -> C: FEATURE_AUDIO_PRO ID: 171
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.autofill\") -> C: FEATURE_AUTOFILL ID: 172
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.type.automotive\") -> C: FEATURE_AUTOMOTIVE ID: 173
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.backup\") -> C: FEATURE_BACKUP ID: 174
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.bluetooth\") -> C: FEATURE_BLUETOOTH ID: 175
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.bluetooth_le\") -> C: FEATURE_BLUETOOTH_LE ID: 176
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.camera\") -> C: FEATURE_CAMERA ID: 177
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.camera.any\") -> C: FEATURE_CAMERA_ANY ID: 178
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.camera.autofocus\") -> C: FEATURE_CAMERA_AUTOFOCUS ID: 179
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.camera.capability.manual_post_processing\") -> C: FEATURE_CAMERA_CAPABILITY_MANUAL_POST_PROCESSING ID: 180
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.camera.capability.manual_sensor\") -> C: FEATURE_CAMERA_CAPABILITY_MANUAL_SENSOR ID: 181
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.camera.capability.raw\") -> C: FEATURE_CAMERA_CAPABILITY_RAW ID: 182
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.camera.external\") -> C:	FEATURE_CAMERA_EXTERNAL ID: 183
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.camera.flash\") -> C: FEATURE_CAMERA_FLASH ID: 184
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.camera.front\") -> C: FEATURE_CAMERA_FRONT ID: 185
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.camera.level.full\") -> C: FEATURE_CAMERA_LEVEL_FULL ID: 186
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.companion_device_setup\") -> C: FEATURE_COMPANION_DEVICE_SETUP ID: 187
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.connectionservice\") -> C: FEATURE_CONNECTION_SERVICE ID: 188
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.consumerir\") -> C: FEATURE_CONSUMER_IR ID: 189
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.device_admin\") -> C: FEATURE_DEVICE_ADMIN ID: 190
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.type.embedded\") -> C: FEATURE_EMBEDDED ID: 191
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.ethernet\") -> C: FEATURE_ETHERNET ID: 192
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.faketouch\") -> C: FEATURE_FAKETOUCH ID: 193
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.faketouch.multitouch.distinct\") -> C: FEATURE_FAKETOUCH_MULTITOUCH_DISTINCT ID: 194
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.faketouch.multitouch.jazzhand\") -> C: FEATURE_FAKETOUCH_MULTITOUCH_JAZZHAND ID: 195
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.fingerprint\") -> C: FEATURE_FINGERPRINT ID: 196
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.freeform_window_management\") -> C: FEATURE_FREEFORM_WINDOW_MANAGEMENT ID: 197
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.gamepad\") -> C: FEATURE_GAMEPAD ID: 198
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.hifi_sensors\") -> C: FEATURE_HIFI_SENSORS ID: 199
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.home_screen\") -> C: FEATURE_HOME_SCREEN ID: 200
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.input_methods\") -> C: FEATURE_INPUT_METHODS ID: 201
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.leanback\") -> C: FEATURE_LEANBACK ID: 202
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.leanback_only\") -> C: FEATURE_LEANBACK_ONLY ID: 203
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.live_tv\") -> C: FEATURE_LIVE_TV ID: 204
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.live_wallpaper\") -> C: FEATURE_LIVE_WALLPAPER ID: 205
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.location\") -> C: FEATURE_LOCATION ID: 206
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.location.gps\") -> C: FEATURE_LOCATION_GPS ID: 207
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.location.network\") -> C: FEATURE_LOCATION_NETWORK ID: 208
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.managed_users\") -> C: FEATURE_MANAGED_USERS ID: 209
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.microphone\") -> C: FEATURE_MICROPHONE ID: 210
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.midi\") -> C: FEATURE_MIDI ID: 211
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.nfc\") -> C: FATURE_NFC ID: 212
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.nfc.hce\") -> C: FEATURE_NFC_HOST_CARD_EMULATION ID: 213
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.nfc.hcef\") -> C: FEATURE_NFC_HOST_CARD_EMULATION_NFCF ID: 214
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.opengles.aep\") -> C: FEATURE_OPENGLES_EXTENSION_PACK ID: 215
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.type.pc\") -> C: FEATURE_PC ID: 216
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.picture_in_picture\") -> C: FEATURE_PICTURE_IN_PICTURE ID: 217
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.print\") -> C: FEATURE_PRINTING ID: 218
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.ram.low\") -> C: FEATURE_RAM_LOW ID: 219
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.ram.normal\") -> C: FEATURE_RAM_NORMAL ID: 220
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.screen.landscape\") -> C: FEATURE_SCREEN_LANDSCAPE ID: 221
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.screen.portrait\") -> C: FEATURE_SCREEN_PORTRAIT ID: 222
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.securely_removes_users\") -> C: FEATURE_SECURELY_REMOVES_USERS ID: 223
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.accelerometer\") -> C: FEATURE_SENSOR_ACCELEROMETER ID: 224
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.ambient_temperature\") -> C: FEATURE_SENSOR_AMBIENT_TEMPERATURE ID: 225
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.barometer\") -> C: FEATURE_SENSOR_BAROMETER ID: 226
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.compass\") -> C: FEATURE_SENSOR_COMPASS ID: 227
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.gyroscope\") -> C: FEATURE_SENSOR_GYROSCOPE ID: 228
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.heartrate\") -> C: FEATURE_SENSOR_HEART_RATE ID: 229
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.heartrate.ecg\") -> C: FEATURE_SENSOR_HEART_RATE_ECG ID: 230
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.light\") -> C: FEATURE_SENSOR_LIGHT ID: 231
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.proximity\") -> C: FEATURE_SENSOR_PROXIMITY ID: 232
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.relative_humidity\") -> C: FEATURE_SENSOR_RELATIVE_HUMIDITY ID: 233
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.stepcounter\") -> C: FEATURE_SENSOR_STEP_COUNTER ID: 234
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.sensor.stepdetector\") -> C: FEATURE_SENSOR_STEP_DETECTOR ID: 235
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.sip\") -> C: FEATURE_SIP ID: 236
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.sip.voip\") -> C: FEATURE_SIP_VOIP ID: 237
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.telephony\") -> C: FEATURE_TELEPHONY ID: 238
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.telephony.cdma\") -> C: FEATURE_TELEPHONY_CDMA ID: 239
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.telephony.gsm\") -> C: FEATURE_TELEPHONY_GSM ID: 240
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.type.television\") -> C: FEATURE_TELEVISION ID: 241
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.touchscreen\") -> C: FEATURE_TOUCHSCREEN ID: 242
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.touchscreen.multitouch\") -> C: FEATURE_TOUCHSCREEN_MULTITOUCH ID: 243
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.touchscreen.multitouch.distinct\") -> C: FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT ID: 244
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.touchscreen.multitouch.jazzhand\") -> C: FEATURE_TOUCHSCREEN_MULTITOUCH_JAZZHAND ID: 245
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.usb.accessory\") -> C: FEATURE_USB_ACCESSORY ID: 246
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.usb.host\") -> C: FEATURE_USB_HOST ID: 247
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.verified_boot\") -> C: FEATURE_VERIFIED_BOOT ID: 248
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.vr.headtracking\") -> C: FEATURE_VR_HEADTRACKING ID: 249
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.vr.mode\") -> C: FEATURE_VR_MODE ID: 250
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.vr.high_performance\") -> C: FEATURE_VR_MODE_HIGH_PERFORMANCE ID: 251
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.vulkan.compute\") -> C: FEATURE_VULKAN_HARDWARE_COMPUTE ID: 252
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.vulkan.level\") -> C: FEATURE_VULKAN_HARDWARE_LEVEL ID: 253
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String,int)>(\"android.hardware.vulkan.version\", .+) -> C: FEATURE_VULKAN_HARDWARE_VERSION ID: 254
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.type.watch\") -> C: FEATURE_WATCH ID: 255
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.software.webview\") -> C: FEATURE_WEBVIEW ID: 256
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.wifi\") -> C: FEATURE_WIFI ID: 257
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.wifi.aware\") -> C: FEATURE_WIFI_AWARE ID: 258
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.wifi.direct\") -> C: FEATURE_WIFI_DIRECT ID: 259
+<android.content.pm.PackageManager: boolean hasSystemFeature(java.lang.String)>(\"android.hardware.wifi.passpoint\") -> C: FEATURE_WIFI_PASSPOINT ID: 260
+<android.provider.Settings$Secure: boolean isLocationProviderEnabled(android.content.ContentResolver,java.lang.String)>(.+, \\s+) -> C: LOCATION ID: 261
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"accessibility_enabled\".*) -> C: ACCESSIBILITY ID: 262
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"speak_password\":*) -> C: ACCESSIBILITY_SPEAK_PASSWORD ID: 263
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"adb_enabled\".*) -> C: ADB ID: 264
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"allowed_geolocation_origins\".*) -> C: ALLOWED_GEOLOCATION_ORIGINS ID: 265
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"mock_location\".*) -> C: ALLOW_MOCK_LOCATION ID: 266
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"android_id\".*) -> C: ANDROID_ID ID: 267
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"background_data\".*) -> C: BACKGROUND_DATA ID: 268
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"bluetooth_on\".*) -> C: BLUETOOTH_ON ID: 269
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"data_roaming\".*) -> C: DATA_ROAMING ID: 270
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"default_input_method\".*) -> C: DEFAULT_INPUT_METHOD ID: 271
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"development_settings_enabled\".*) -> C: DEVELOPMENT_SETTINGS_ENABLED ID: 272
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"device_provisioned\".*) -> C: DEVICE_PROVISIONED ID: 273
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"enabled_accessibility_services\".*) -> C: ENABLED_ACCESSIBILITY_SERVICES ID: 274
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"enabled_input_methods\".*) -> C: ENABLED_INPUT_METHODS ID: 275
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"http_proxy\".*) -> C: HTTP_PROXY ID: 276
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"input_method_selector_visibility\".*) -> C: INPUT_METHOD_SELECTOR_VISIBILITY ID: 277
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"install_non_market_apps\".*) -> C: INSTALL_NON_MARKET_APPS ID: 278
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"location_mode\".*) -> C: LOCATION_MODE ID: 279
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"lock_pattern_autolock\".*) -> C: LOCK_PATTERN_ENABLED ID: 280
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"lock_pattern_tactile_feedback_enabled\".*) -> C: LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED ID: 281
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"lock_pattern_visible_pattern\".*) -> C: LOCK_PATTERN_VISIBLE ID: 282
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"network_preference\".*) -> C: NETWORK_PREFERENCE ID: 283
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"parental_control_enabled\".*) -> C: PARENTAL_CONTROL_ENABLED ID: 284
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"parental_control_last_update\".*) -> C: PARENTAL_CONTROL_LAST_UPDATE ID: 285
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"parental_control_redirect_url\".*) -> C: PARENTAL_CONTROL_REDIRECT_URL ID: 286
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"selected_input_method_subtype\".*) -> C: SELECTED_INPUT_METHOD_SUBTYPE ID: 287
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"settings_classname\".*) -> C: SETTINGS_CLASSNAME ID: 288
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"skip_first_use_hints\".*) -> C: SKIP_FIRST_USE_HINTS ID: 289
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"touch_exploration_enabled\".*) -> C: TOUCH_EXPLORATION_ENABLED ID: 290
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"tts_default_country\".*) -> C: TTS_DEFAULT_COUNTRY ID: 291
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"tts_default_lang\".*) -> C: TTS_DEFAULT_LANG ID: 292
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"tts_default_pitch\".*) -> C: TTS_DEFAULT_PITCH ID: 293
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"tts_default_rate\".*) -> C: TTS_DEFAULT_RATE ID: 294
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"tts_default_synth\".*) -> C: TTS_DEFAULT_SYNTH ID: 295
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"tts_default_variant\".*) -> C: TTS_DEFAULT_VARIANT ID: 296
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"tts_enabled_plugins\".*) -> C: TTS_ENABLED_PLUGINS ID: 297
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"tts_use_defaults\".*) -> C: TTS_USE_DEFAULTS ID: 298
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"usb_mass_storage_enabled\".*) -> C: USB_MASS_STORAGE_ENABLED ID: 299
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"use_google_mail\".*) -> C: USE_GOOGLE_MAIL ID: 300
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_max_dhcp_retry_count\".*) -> C: WIFI_MAX_DHCP_RETRY_COUNT ID: 301
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_mobile_data_transition_wakelock_timeout_ms\".*) -> C: WIFI_MOBILE_DATA_TRANSITION_WAKELOCK_TIMEOUT_MS ID: 302
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_networks_available_notification_on\".*) -> C: WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON ID: 303
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_networks_available_repeat_delay\".*) -> C: WIFI_NETWORKS_AVAILABLE_REPEAT_DELAY ID: 304
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_num_open_networks_kept\".*) -> C: WIFI_NUM_OPEN_NETWORKS_KEPT ID: 305
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_on\".*) -> C: WIFI_ON ID: 306
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_acceptable_packet_loss_percentage\".*) -> C: WIFI_WATCHDOG_ACCEPTABLE_PACKET_LOSS_PERCENTAGE  ID: 307
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_ap_count\".*) -> C: WIFI_WATCHDOG_AP_COUNT ID: 308
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_background_check_delay_ms\".*) -> C: WIFI_WATCHDOG_BACKGROUND_CHECK_DELAY_MS ID: 309
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_background_check_enabled\".*) -> C: WIFI_WATCHDOG_BACKGROUND_CHECK_ENABLED ID: 310
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_background_check_timeout_ms\".*) -> C: WIFI_WATCHDOG_BACKGROUND_CHECK_TIMEOUT_MS ID: 311
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_initial_ignored_ping_count\".*) -> C: WIFI_WATCHDOG_INITIAL_IGNORED_PING_COUNT ID: 312
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_max_ap_checks\".*) -> C: WIFI_WATCHDOG_MAX_AP_CHECKS ID: 313
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_on\".*) -> C: WIFI_WATCHDOG_ON ID: 314
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_ping_count\".*) -> C: WIFI_WATCHDOG_PING_COUNT ID: 315
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_ping_delay_ms\".*) -> C: WIFI_WATCHDOG_PING_DELAY_MS ID: 316
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_ping_timeout_ms\".*) -> C: WIFI_WATCHDOG_PING_TIMEOUT_MS ID: 317
+<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_watch_list\".*) -> C: WIFI_WATCHDOG_WATCH_LIST ID: 318
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"adb_enabled\".*) -> C: ADB_ENABLED ID: 319
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"airplane_mode_on\".*) -> C: AIRPLANE_MODE_ON ID: 320
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"airplane_mode_radios\".*) -> C: AIRPLANE_MODE_RADIOS ID: 321
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"always_finish_activities\".*) -> C: ALWAYS_FINISH_ACTIVITIES ID: 322
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"animator_duration_scale\".*) -> C: ANIMATOR_DURATION_SCALE ID: 323
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"auto_time\".*) -> C: AUTO_TIME ID: 324
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"auto_time_zone\".*) -> C: AUTO_TIME_ZONE ID: 325
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"bluetooth_on\".*) -> C: BLUETOOTH_ON ID: 326
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"boot_count\".*) -> C: BOOT_COUNT ID: 327
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"contact_metadata_sync_enabled\".*) -> C: CONTACT_METADATA_SYNC_ENABLED ID: 328
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"data_roaming\".*) -> C: DATA_ROAMING ID: 329
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"debug_app\".*) -> C: DEBUG_APP ID: 330
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"development_settings_enabled\".*) -> C: DEVELOPMENT_SETTINGS_ENABLED ID: 331
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"device_name\".*) -> C: DEVICE_NAME ID: 332
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"device_provisioned\".*) -> C: DEVICE_PROVISIONED ID: 333
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"http_proxy\".*) -> C: HTTP_PROXY ID: 334
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"install_non_market_apps\".*) -> C: INSTALL_NON_MARKET_APPS ID: 335
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"mode_ringer\".*) -> C: MODE_RINGER ID: 336
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"network_preference\".*) -> C: NETWORK_PREFERENCE ID: 337
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"bluetooth\".*) -> C: RADIO_BLUETOOTH ID: 338
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"cell\".*) -> C: RADIO_CELL ID: 339
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"nfc\".*) -> C: RADIO_NFC ID: 340
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi\".*) -> C: RADIO_WIFI ID: 341
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"show_processes\".*) -> C: SHOW_PROCESSES ID: 342
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"stay_on_while_plugged_in\".*) -> C: STAY_ON_WHILE_PLUGGED_IN ID: 343
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"transition_animation_scale\".*) -> C: TRANSITION_ANIMATION_SCALE ID: 344
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"usb_mass_storage_enabled\".*) -> C: USB_MASS_STORAGE_ENABLED ID: 345
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"use_google_mail\".*) -> C: USE_GOOGLE_MAIL ID: 346
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wait_for_debugger\".*) -> C: WAIT_FOR_DEBUGGER ID: 347
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_device_owner_configs_lockdown\".*) -> C: WIFI_DEVICE_OWNER_CONFIGS_LOCKDOWN ID: 348
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_max_dhcp_retry_count\".*) -> C: WIFI_MAX_DHCP_RETRY_COUNT ID: 349
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_mobile_data_transition_wakelock_timeout_ms\".*) -> C: WIFI_MOBILE_DATA_TRANSITION_WAKELOCK_TIMEOUT_MS ID: 350
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_networks_available_notification_on\".*) -> C: WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON ID: 351
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_networks_available_repeat_delay\".*) -> C: WIFI_NETWORKS_AVAILABLE_REPEAT_DELAY ID: 352
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_num_open_networks_kept\".*) -> C: WIFI_NUM_OPEN_NETWORKS_KEPT ID: 353
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_on\".*) -> C: WIFI_ON ID: 354
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_sleep_policy\".*) -> C: WIFI_SLEEP_POLICY ID: 355
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_on\".*) -> C: WIFI_WATCHDOG_ON ID: 356
+<android.provider.Settings$Global: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"window_animation_scale\".*) -> C: WINDOW_ANIMATION_SCALE ID: 357
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"accelerometer_rotation\".*) -> C: ACCELEROMETER_ROTATION ID: 358
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"adb_enabled\".*) -> C: ADB_ENABLED ID: 359
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"airplane_mode_on\".*) -> C: AIRPLANE_MODE_ON ID: 360
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"airplane_mode_radios\".*) -> C: AIRPLANE_MODE_RADIOS ID: 361
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"alarm_alert\".*) -> C: ALARM_ALERT ID: 362
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"always_finish_activities\".*) -> C: ALWAYS_FINISH_ACTIVITIES ID: 363
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"android_id\".*) -> C: ANDROID_ID ID: 364
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"animator_duration_scale\".*) -> C: ANIMATOR_DURATION_SCALE ID: 365
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"auto_time\".*) -> C: AUTO_TIME ID: 366
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"auto_time_zone\".*) -> C: AUTO_TIME_ZONE ID: 367
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"bluetooth_discoverability\".*) -> C: BLUETOOTH_DISCOVERABILITY ID: 368
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"bluetooth_discoverability_timeout\".*) -> C: BLUETOOTH_DISCOVERABILITY_TIMEOUT ID: 369
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"bluetooth_on\".*) -> C: BLUETOOTH_DISCOVERABILITY_TIMEOUT ID: 370
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"data_roaming\".*) -> C: DATA_ROAMING ID: 371
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"date_format\".*) -> C: DATE_FORMAT ID: 372
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"debug_app\".*) -> C: DEBUG_APP ID: 373
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"device_provisioned\".*) -> C: DEVICE_PROVISIONED ID: 374
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"dim_screen\".*) -> C: DIM_SCREEN ID: 375
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"dtmf_tone_type\".*) -> C: DTMF_TONE_TYPE_WHEN_DIALING ID: 376
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"dtmf_tone\".*) -> C: DTMF_TONE_WHEN_DIALING ID: 377
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"end_button_behavior\".*) -> C: END_BUTTON_BEHAVIOR ID: 378
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"font_scale\".*) -> C: FONT_SCALE ID: 379
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"haptic_feedback_enabled\".*) -> C: HAPTIC_FEEDBACK_ENABLED ID: 380
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"http_proxy\".*) -> C: HTTP_PROXY ID: 381
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"install_non_market_apps\".*) -> C: INSTALL_NON_MARKET_APPS ID: 382
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"location_providers_allowed\".*) -> C: LOCATION_PROVIDERS_ALLOWED ID: 383
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"lock_pattern_autolock\".*) -> C: LOCK_PATTERN_ENABLED ID: 384
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"lock_pattern_tactile_feedback_enabled\".*) -> C: LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED ID: 385
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"lock_pattern_visible_pattern\".*) -> C: LOCK_PATTERN_VISIBLE ID: 386
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"logging_id\".*) -> C: LOGGING_ID ID: 387
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"mode_ringer\".*) -> C: MODE_RINGER  ID: 388
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"mode_ringer_streams_affected\".*) -> C: MODE_RINGER_STREAMS_AFFECTED ID: 389
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"mute_streams_affected\".*) -> C: MUTE_STREAMS_AFFECTED ID: 390
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"network_preference\".*) -> C: NETWORK_PREFERENCE ID: 391
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"next_alarm_formatted\".*) -> C: NEXT_ALARM_FORMATTED ID: 392
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"notification_sound\".*) -> C: NOTIFICATION_SOUND ID: 393
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"parental_control_enabled\".*) -> C: PARENTAL_CONTROL_ENABLED ID: 394
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"parental_control_last_update\".*) -> C: PARENTAL_CONTROL_LAST_UPDATE ID: 395
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"parental_control_redirect_url\".*) -> C: PARENTAL_CONTROL_REDIRECT_URL ID: 396
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"bluetooth\".*) -> C: RADIO_BLUETOOTH ID: 397
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"cell\".*) -> C: RADIO_CELL ID: 398
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"nfc\".*) -> C: RADIO_NFC ID: 399
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi\".*) -> C: RADIO_WIFI ID: 400
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"ringtone\".*) -> C: RINGTONE ID: 401
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"screen_brightness\".*) -> C: SCREEN_BRIGHTNESS ID: 402
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"screen_brightness_mode\".*) -> C: SCREEN_BRIGHTNESS_MODE ID: 403
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"screen_off_timeout\".*) -> C: SCREEN_OFF_TIMEOUT ID: 404
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"settings_classname\".*) -> C: SETTINGS_CLASSNAME ID: 405
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"setup_wizard_has_run\".*) -> C: SETUP_WIZARD_HAS_RUN ID: 406
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"show_processes\".*) -> C: SHOW_PROCESSES ID: 407
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"show_web_suggestions\".*) -> C: SHOW_WEB_SUGGESTIONS ID: 408
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"sound_effects_enabled\".*) -> C: SOUND_EFFECTS_ENABLED ID: 409
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"stay_on_while_plugged_in\".*) -> C: STAY_ON_WHILE_PLUGGED_IN ID: 410
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"auto_caps\".*) -> C: TEXT_AUTO_CAPS ID: 411
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"auto_punctuate\".*) -> C: TEXT_AUTO_PUNCTUATE ID: 412
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"auto_replace\".*) -> C: TEXT_AUTO_REPLACE ID: 413
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"show_password\".*) -> C: TEXT_SHOW_PASSWORD ID: 414
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"time_12_24\".*) -> C: TIME_12_24 ID: 415
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"transition_animation_scale\".*) -> C: TRANSITION_ANIMATION_SCALE ID: 416
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"usb_mass_storage_enabled\".*) -> C: USB_MASS_STORAGE_ENABLED ID: 417
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"user_rotation\".*) -> C: USER_ROTATION ID: 418
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"use_google_mail\".*) -> C: USE_GOOGLE_MAIL ID: 419
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"vibrate_on\".*) -> C: VIBRATE_ON ID: 420
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"vibrate_when_ringing\".*) -> C: VIBRATE_WHEN_RINGING ID: 421
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wait_for_debugger\".*) -> C: WAIT_FOR_DEBUGGER ID: 422
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wallpaper_activity\".*) -> C: WALLPAPER_ACTIVITY ID: 423
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_max_dhcp_retry_count\".*) -> C: WIFI_MAX_DHCP_RETRY_COUNT ID: 424
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_mobile_data_transition_wakelock_timeout_ms\".*) -> C: WIFI_MOBILE_DATA_TRANSITION_WAKELOCK_TIMEOUT_MS ID: 425
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_networks_available_notification_on\".*) -> C: WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON ID: 426
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_networks_available_repeat_delay\".*) -> C: WIFI_NETWORKS_AVAILABLE_REPEAT_DELAY ID: 427
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_num_open_networks_kept\".*) -> C: WIFI_NUM_OPEN_NETWORKS_KEPT ID: 428
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_on\".*) -> C: WIFI_ON ID: 429
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_sleep_policy\".*) -> C: WIFI_SLEEP_POLICY ID: 430
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_static_dns1\".*) -> C: WIFI_STATIC_DNS1 ID: 431
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_static_dns2\".*) -> C: WIFI_STATIC_DNS2 ID: 432
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_static_gateway\".*) -> C: WIFI_STATIC_GATEWAY ID: 433
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_static_ip\".*) -> C: WIFI_STATIC_IP ID: 434
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_static_netmask\".*) -> C: WIFI_STATIC_NETMASK ID: 435
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_use_static_ip\".*) -> C: WIFI_USE_STATIC_IP ID: 436
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_acceptable_packet_loss_percentage\".*) -> C: WIFI_WATCHDOG_ACCEPTABLE_PACKET_LOSS_PERCENTAGE ID: 437
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_ap_count\".*) -> C: WIFI_WATCHDOG_AP_COUNT ID: 438
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_background_check_delay_ms\".*) -> C: WIFI_WATCHDOG_BACKGROUND_CHECK_DELAY_MS ID: 439
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_background_check_enabled\".*) -> C: WIFI_WATCHDOG_BACKGROUND_CHECK_ENABLED ID: 440
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_background_check_timeout_ms\".*) -> C: WIFI_WATCHDOG_BACKGROUND_CHECK_TIMEOUT_MS ID: 441
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_initial_ignored_ping_count\".*) -> C: WIFI_WATCHDOG_INITIAL_IGNORED_PING_COUNT ID: 442
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_max_ap_checks\".*) -> C: WIFI_WATCHDOG_MAX_AP_CHECKS ID: 443
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_on\".*) -> C: WIFI_WATCHDOG_ON ID: 444
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_ping_count\".*) -> C: WIFI_WATCHDOG_PING_COUNT ID: 445
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_ping_delay_ms\".*) -> C: WIFI_WATCHDOG_PING_DELAY_MS ID: 446
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"wifi_watchdog_ping_timeout_ms\".*) -> C: WIFI_WATCHDOG_PING_TIMEOUT_MS ID: 447
+<android.provider.Settings$System: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \"window_animation_scale\".*) -> C: WINDOW_ANIMATION_SCALE ID: 448

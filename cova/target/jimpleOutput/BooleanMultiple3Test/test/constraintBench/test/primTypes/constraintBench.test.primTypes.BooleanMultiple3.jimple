@@ -1,0 +1,110 @@
+public class constraintBench.test.primTypes.BooleanMultiple3 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.primTypes.BooleanMultiple3 this;
+
+        this := @this: constraintBench.test.primTypes.BooleanMultiple3;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.primTypes.BooleanMultiple3 this;
+        boolean $z0, b;
+        java.io.PrintStream $r0, $r1, $r2;
+
+        this := @this: constraintBench.test.primTypes.BooleanMultiple3;
+/*
+ *		-1.
+true
+*/
+
+        b = 0;
+/*
+ *		12.
+true
+*/
+
+        $z0 = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		13.
+true
+*/
+
+        if $z0 == 0 goto label1;
+/*
+ *		13.
+true
+*/
+
+        b = staticinvoke <constraintBench.utils.Configuration: boolean featureB()>();
+/*
+ *		14.
+C1001
+*/
+
+     label1:
+        if b == 0 goto label2;
+/*
+ *		16.
+true
+*/
+
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		17.
+(or (and C1001 C1002) (not C1001))
+*/
+
+        virtualinvoke $r2.<java.io.PrintStream: void println()>();
+/*
+ *		17.
+(or (and C1001 C1002) (not C1001))
+*/
+
+        goto label3;
+/*
+ *		18.
+(or (and C1001 C1002) (not C1001))
+*/
+
+     label2:
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		19.
+(or (and C1001 (not C1002)) (not C1001))
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		19.
+(or (and C1001 (not C1002)) (not C1001))
+*/
+
+     label3:
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		21.
+true
+*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println()>();
+/*
+ *		21.
+true
+*/
+
+        return;
+/*
+ *		22.
+true
+*/
+    }
+}

@@ -1,0 +1,18 @@
+public interface  com.android.tools.ir.common.ProtocolConstants extends java.lang.Object
+{
+    public static final int MESSAGE_EOF;
+    public static final int MESSAGE_PATCHES;
+    public static final int MESSAGE_PATH_CHECKSUM;
+    public static final int MESSAGE_PATH_EXISTS;
+    public static final int MESSAGE_PING;
+    public static final int MESSAGE_RESTART_ACTIVITY;
+    public static final int MESSAGE_SEND_FILE;
+    public static final int MESSAGE_SHELL_COMMAND;
+    public static final int MESSAGE_SHOW_TOAST;
+    public static final long PROTOCOL_IDENTIFIER;
+    public static final int PROTOCOL_VERSION;
+    public static final int UPDATE_MODE_COLD_SWAP;
+    public static final int UPDATE_MODE_HOT_SWAP;
+    public static final int UPDATE_MODE_NONE;
+    public static final int UPDATE_MODE_WARM_SWAP;
+}

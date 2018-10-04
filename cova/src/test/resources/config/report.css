@@ -1,0 +1,41 @@
+.navigation{
+	border: 1px solid black;
+}
+
+.navLink {
+	width: 100%;
+}
+
+.lineNo {
+	color: gray;
+}
+
+.srcLine {
+	color: black;
+}
+.constraint .srcLine {
+	background-color: rgba(0,81,255,0.21);
+}
+
+td.constraint {
+	color: green;
+	float: right;
+	font-weight: bold;
+}
+
+.keyword {
+	color: rgb(128,49,20);
+	font-weight: bold;
+}
+
+.annotation {
+	color: gray;
+}
+
+.comment {
+	color: green;
+}
+
+.string {
+	color: blue;
+}

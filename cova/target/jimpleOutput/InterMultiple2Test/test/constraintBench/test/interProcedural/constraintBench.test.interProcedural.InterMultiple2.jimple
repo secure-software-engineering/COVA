@@ -1,0 +1,149 @@
+public class constraintBench.test.interProcedural.InterMultiple2 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.interProcedural.InterMultiple2 this;
+
+        this := @this: constraintBench.test.interProcedural.InterMultiple2;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*11*/
+
+        staticinvoke <java.lang.System: java.lang.String setProperty(java.lang.String,java.lang.String)>("org.slf4j.simpleLogger.defaultLogLevel", "info");
+/*12*/
+
+        return;
+/*13*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.interProcedural.InterMultiple2 this;
+        boolean newConfig, config;
+        java.io.PrintStream $r0, $r1, $r2;
+
+        this := @this: constraintBench.test.interProcedural.InterMultiple2;
+/*
+ *		-1.
+true
+*/
+
+        config = staticinvoke <constraintBench.utils.Configuration: boolean featureA()>();
+/*
+ *		16.
+true
+*/
+
+        if config == 0 goto label1;
+/*
+ *		17.
+true
+*/
+
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		18.
+C1001
+*/
+
+        virtualinvoke $r2.<java.io.PrintStream: void println()>();
+/*
+ *		18.
+C1001
+*/
+
+     label1:
+        config = staticinvoke <constraintBench.utils.Configuration: boolean featureB()>();
+/*
+ *		20.
+true
+*/
+
+        newConfig = specialinvoke this.<constraintBench.test.interProcedural.InterMultiple2: boolean callee(boolean)>(config);
+/*
+ *		21.
+true
+*/
+
+        if newConfig == 0 goto label2;
+/*
+ *		22.
+true
+*/
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		23.
+(and C1002 C1003)
+*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println()>();
+/*
+ *		23.
+(and C1002 C1003)
+*/
+
+     label2:
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		25.
+true
+*/
+
+        virtualinvoke $r0.<java.io.PrintStream: void println()>();
+/*
+ *		25.
+true
+*/
+
+        return;
+/*
+ *		26.
+true
+*/
+    }
+
+    private boolean callee(boolean)
+    {
+        constraintBench.test.interProcedural.InterMultiple2 this;
+        boolean in, 'ret';
+
+        this := @this: constraintBench.test.interProcedural.InterMultiple2;
+/*
+ *		-1.
+true
+*/
+
+        in := @parameter0: boolean;
+/*
+ *		-1.
+true
+*/
+
+        'ret' = in;
+/*
+ *		29.
+true
+*/
+
+        if 'ret' == 0 goto label1;
+/*
+ *		30.
+true
+*/
+
+        'ret' = staticinvoke <constraintBench.utils.Configuration: boolean featureC()>();
+/*
+ *		31.
+C1002
+*/
+
+     label1:
+        return 'ret';
+/*
+ *		33.
+true
+*/
+    }
+}

@@ -1,0 +1,27 @@
+class dummyMainClass
+{
+
+    public static void main(java.lang.String[])
+    {
+        constraintBench.test.staticField.StaticField5 dummyObj;
+        java.lang.String[] $r0;
+
+        $r0 := @parameter0: java.lang.String[];
+/*
+ *		-1.
+true
+*/
+
+        dummyObj = new constraintBench.test.staticField.StaticField5;
+/*
+ *		-1.
+true
+*/
+
+        virtualinvoke dummyObj.<constraintBench.test.staticField.StaticField5: void test()>();
+/*
+ *		-1.
+true
+*/
+    }
+}

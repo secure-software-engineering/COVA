@@ -1,0 +1,3 @@
+%Faked callback for test cases
+<constraintBench.utils.Callback: void onClick()>  ID: 1001
+<constraintBench.utils.Callback: void onScroll()>  ID: 1002

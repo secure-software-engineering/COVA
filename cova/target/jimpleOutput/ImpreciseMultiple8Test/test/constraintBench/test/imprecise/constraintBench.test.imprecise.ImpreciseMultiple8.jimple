@@ -1,0 +1,142 @@
+public class constraintBench.test.imprecise.ImpreciseMultiple8 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        constraintBench.test.imprecise.ImpreciseMultiple8 this;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseMultiple8;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*9*/
+
+        return;
+/*9*/
+    }
+
+    public void test()
+    {
+        constraintBench.test.imprecise.ImpreciseMultiple8 this;
+        java.lang.String $r0, $r1, $r2, $r3;
+        boolean $z0, $z1, $z2, $z3;
+        byte flag;
+        java.io.PrintStream $r4;
+
+        this := @this: constraintBench.test.imprecise.ImpreciseMultiple8;
+/*
+ *		-1.
+true
+*/
+
+        flag = 0;
+/*
+ *		12.
+true
+*/
+
+        $r0 = <constraintBench.utils.Configuration: java.lang.String fieldA>;
+/*
+ *		13.
+true
+*/
+
+        $z0 = virtualinvoke $r0.<java.lang.String: boolean startsWith(java.lang.String)>("FA");
+/*
+ *		13.
+true
+*/
+
+        if $z0 == 0 goto label1;
+/*
+ *		13.
+true
+*/
+
+        $r2 = <constraintBench.utils.Configuration: java.lang.String fieldB>;
+/*
+ *		20.
+im(C1007)_0
+*/
+
+        $z2 = virtualinvoke $r2.<java.lang.String: boolean endsWith(java.lang.String)>("FB");
+/*
+ *		20.
+im(C1007)_0
+*/
+
+        if $z2 == 0 goto label1;
+/*
+ *		20.
+im(C1007)_0
+*/
+
+        flag = 1;
+/*
+ *		14.
+(and im(C1007)_0 im(C1008)_0)
+*/
+
+     label1:
+        $r3 = <constraintBench.utils.Configuration: java.lang.String fieldA>;
+/*
+ *		16.
+true
+*/
+
+        $z3 = virtualinvoke $r3.<java.lang.String: boolean endsWith(java.lang.String)>("FA");
+/*
+ *		16.
+true
+*/
+
+        if $z3 != 0 goto label2;
+/*
+ *		16.
+true
+*/
+
+        $r1 = <constraintBench.utils.Configuration: java.lang.String fieldB>;
+/*
+ *		20.
+(not im(C1007)_1)
+*/
+
+        $z1 = virtualinvoke $r1.<java.lang.String: boolean startsWith(java.lang.String)>("FB");
+/*
+ *		20.
+(not im(C1007)_1)
+*/
+
+        if $z1 == 0 goto label3;
+/*
+ *		20.
+(not im(C1007)_1)
+*/
+
+     label2:
+        flag = 2;
+/*
+ *		17.
+(or im(C1007)_1 im(C1008)_1)
+*/
+
+     label3:
+        $r4 = <java.lang.System: java.io.PrintStream out>;
+/*
+ *		19.
+true
+*/
+
+        virtualinvoke $r4.<java.io.PrintStream: void println(int)>(flag);
+/*
+ *		19.
+true
+*/
+
+        return;
+/*
+ *		20.
+true
+*/
+    }
+}

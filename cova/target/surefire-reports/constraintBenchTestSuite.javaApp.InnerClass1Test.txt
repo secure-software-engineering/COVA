@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: constraintBenchTestSuite.javaApp.InnerClass1Test
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.586 s <<< FAILURE! - in constraintBenchTestSuite.javaApp.InnerClass1Test
+test(constraintBenchTestSuite.javaApp.InnerClass1Test)  Time elapsed: 0.581 s  <<< FAILURE!
+java.lang.AssertionError
+	at constraintBenchTestSuite.javaApp.InnerClass1Test.test(InnerClass1Test.java:32)
+
