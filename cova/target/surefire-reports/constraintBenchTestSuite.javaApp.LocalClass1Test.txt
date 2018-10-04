@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: constraintBenchTestSuite.javaApp.LocalClass1Test
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.448 s <<< FAILURE! - in constraintBenchTestSuite.javaApp.LocalClass1Test
-test(constraintBenchTestSuite.javaApp.LocalClass1Test)  Time elapsed: 0.448 s  <<< FAILURE!
-java.lang.AssertionError
-	at constraintBenchTestSuite.javaApp.LocalClass1Test.test(LocalClass1Test.java:32)
-

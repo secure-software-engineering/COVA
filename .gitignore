@@ -1,0 +1,11 @@
+
+cova/target/
+cova/\.project
+cova/\.classpath
+cova/\.settings/
+
+constraintBench/target/
+constraintBench/\.settings/
+constraintBench/\.project
+constraintBench/\.classpath
+

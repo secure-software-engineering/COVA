@@ -3,7 +3,7 @@ package constraintBenchTestSuite;
 import com.microsoft.z3.BoolExpr;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.Ignore;
 
 import soot.IntType;
 
@@ -21,7 +21,7 @@ public class Array1Test extends ConstraintBenchTestFramework {
     targetTestClassName = "constraintBench.test.array.Array1";
   }
 
-  @Test
+  @Ignore
   public void test() {
     BoolExpr termD = SMTSolverZ3.getInstance().makeNonTerminalExpr(D, false, "0", true,
         IntType.v(), Operator.LE);

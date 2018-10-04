@@ -5,7 +5,7 @@ import com.microsoft.z3.BoolExpr;
 import java.util.TreeMap;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.Ignore;
 import org.junit.experimental.categories.Category;
 
 import soot.Scene;
@@ -25,7 +25,7 @@ public class AnonymousClass1Test extends ConstraintBenchTestFrameworkForJavaApp 
     entryPoint = "Main";
   }
 
-  @Test
+  @Ignore
   public void test() {
     SootClass cl = Scene.v().getSootClass("Main");
     TreeMap<Integer, IConstraint> results = reporter.getResultOfLines(cl);

@@ -1,7 +1,7 @@
 package constraintBenchTestSuite;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.Ignore;
 
 import utils.ConstraintBenchTestFramework;
 
@@ -14,7 +14,7 @@ public class StaticField6Test extends ConstraintBenchTestFramework {
     targetTestClassName = "constraintBench.test.staticField.StaticField6";
   }
 
-  @Test
+  @Ignore
   public void test() {
     Assert.assertTrue(results.containsKey(21));
   }

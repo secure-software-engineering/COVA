@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: constraintBenchTestSuite.LookUpSwitchStmt1Test
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.147 s - in constraintBenchTestSuite.LookUpSwitchStmt1Test

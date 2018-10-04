@@ -1,5 +1,0 @@
-public interface  InterfaceFoo extends java.lang.Object
-{
-
-    public abstract void set(Main);
-}

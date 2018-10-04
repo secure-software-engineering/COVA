@@ -40,7 +40,7 @@ public class UICallbackParserTest extends UnitTestFramework {
       int size = uiCallbackParser.getAllCallbacks().size();
 
       // ASSUMPTION: UICallbacks.txt does not get new lines
-      assertEquals(337, size);
+      assertEquals(335, size);
 
       // multiple calls should clear the data container for parsing; add new parsed data to sources
       // set

@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: constraintBenchTestSuite.ImpreciseSingle5Test
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.682 s - in constraintBenchTestSuite.ImpreciseSingle5Test

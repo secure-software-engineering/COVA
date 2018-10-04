@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: constraintBenchTestSuite.StaticField3Test
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.355 s - in constraintBenchTestSuite.StaticField3Test
