@@ -6,14 +6,15 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.upb.swt.cova.core.ConstraintFactory;
+import de.upb.swt.cova.core.SMTSolverZ3;
+import de.upb.swt.cova.data.ConstraintZ3;
+import de.upb.swt.cova.data.Operator;
+import de.upb.swt.cova.data.WrappedAccessPath;
+import de.upb.swt.cova.data.taints.SourceTaint;
+
 import com.microsoft.z3.BoolExpr;
 
-import core.ConstraintFactory;
-import core.SMTSolverZ3;
-import data.ConstraintZ3;
-import data.Operator;
-import data.WrappedAccessPath;
-import data.taints.SourceTaint;
 import soot.BooleanType;
 import soot.FloatType;
 import soot.IntType;

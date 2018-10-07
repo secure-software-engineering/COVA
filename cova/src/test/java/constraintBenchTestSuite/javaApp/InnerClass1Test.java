@@ -1,5 +1,9 @@
 package constraintBenchTestSuite.javaApp;
 
+import de.upb.swt.cova.core.SMTSolverZ3;
+import de.upb.swt.cova.data.ConstraintZ3;
+import de.upb.swt.cova.data.IConstraint;
+
 import com.microsoft.z3.BoolExpr;
 
 import java.util.TreeMap;
@@ -12,9 +16,6 @@ import soot.Scene;
 import soot.SootClass;
 
 import categories.BenchmarkTestSuite;
-import core.SMTSolverZ3;
-import data.ConstraintZ3;
-import data.IConstraint;
 import utils.ConstraintBenchTestFrameworkForJavaApp;
 
 @Category(BenchmarkTestSuite.class)

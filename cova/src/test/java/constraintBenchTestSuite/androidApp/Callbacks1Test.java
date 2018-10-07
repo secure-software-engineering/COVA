@@ -1,5 +1,9 @@
 package constraintBenchTestSuite.androidApp;
 
+import de.upb.swt.cova.core.SMTSolverZ3;
+import de.upb.swt.cova.data.ConstraintZ3;
+import de.upb.swt.cova.data.Operator;
+
 import com.microsoft.z3.BoolExpr;
 
 import org.junit.Assert;
@@ -7,9 +11,6 @@ import org.junit.Test;
 
 import soot.IntType;
 
-import core.SMTSolverZ3;
-import data.ConstraintZ3;
-import data.Operator;
 import utils.ConstraintBenchTestFrameworkForAndroidApp;
 
 public class Callbacks1Test extends ConstraintBenchTestFrameworkForAndroidApp {

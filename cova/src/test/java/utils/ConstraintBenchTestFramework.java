@@ -1,5 +1,11 @@
 package utils;
 
+import de.upb.swt.cova.core.SceneTransformerFactory;
+import de.upb.swt.cova.data.IConstraint;
+import de.upb.swt.cova.reporter.ConstraintReporter;
+import de.upb.swt.cova.setup.config.Config;
+import de.upb.swt.cova.setup.config.DefaultConfigForTestCase;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -31,10 +37,6 @@ import soot.jimple.JimpleBody;
 import soot.options.Options;
 
 import categories.BenchmarkTestSuite;
-import core.SceneTransformerFactory;
-import data.IConstraint;
-import reporter.ConstraintReporter;
-import setup.config.DefaultConfigForTestCase;
 
 @Category(BenchmarkTestSuite.class)
 public class ConstraintBenchTestFramework {
@@ -74,10 +76,12 @@ public class ConstraintBenchTestFramework {
     try {
       results = new TreeMap<>();
       String className = this.getClass().getName();
-      SceneTransformerFactory transformerFactory = new SceneTransformerFactory(new DefaultConfigForTestCase());
+      Config config = new DefaultConfigForTestCase();
+      SceneTransformerFactory transformerFactory = new SceneTransformerFactory(config);
       String[] names = className.split("\\.");
       ConstraintReporter reporter
-          = new ConstraintReporter(names[names.length - 1] + File.separator + testMethodName.getMethodName());
+          = new ConstraintReporter(names[names.length - 1] + File.separator + testMethodName.getMethodName(),
+              config.isWriteJimpleOutput(), true);
       SceneTransformer transformer
           = transformerFactory.createAnalysisTransformerForTestCase(className, testMethodName.getMethodName(), reporter,
               covaRootDir);

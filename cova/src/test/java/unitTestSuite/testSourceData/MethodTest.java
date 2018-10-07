@@ -4,11 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import de.upb.swt.cova.source.data.Method;
+
 import java.util.Arrays;
 
 import org.junit.Test;
 
-import source.data.Method;
 import utils.UnitTestFramework;
 
 

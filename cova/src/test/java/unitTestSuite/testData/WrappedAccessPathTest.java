@@ -6,6 +6,8 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import de.upb.swt.cova.data.WrappedAccessPath;
+
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +37,6 @@ import soot.jimple.StaticFieldRef;
 import soot.jimple.internal.JimpleLocal;
 import soot.util.Chain;
 
-import data.WrappedAccessPath;
 import utils.UnitTestFramework;
 
 public class WrappedAccessPathTest extends UnitTestFramework {

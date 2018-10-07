@@ -62,12 +62,12 @@
 		<testOutputDirectory>${testOutputDir}</testOutputDirectory>
 		<plugins>
 			<plugin>
-				<!-- Create an executable jar with dependencies  -->
+				<!-- Create an executable jar with dependencies -->
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>Main</mainClass>
+							<mainClass>de.upb.swt.cova.Main</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
@@ -91,7 +91,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>Main</mainClass>
+							<mainClass>de.upb.swt.cova.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -223,6 +223,16 @@
 			<version>1.0.0</version>
 			<scope>system</scope>
 			<systemPath>${dependencyDir}/boomerang/boomerang.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.7</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -3,6 +3,8 @@ package j2html.tags;
 import j2html.attributes.Attr;
 import j2html.attributes.Attr.ShortForm;
 import j2html.attributes.Attribute;
+import j2html.tags.ContainerTag;
+import j2html.tags.DomContent;
 
 /**
  * Custom {@code 
@@ -30,8 +32,8 @@ public class MyLi extends ContainerTag {
      * @param name  the attribute
      * @param value the attribute value
      */
-    @Override
-    boolean setAttribute(String name, String value) {
+  @Override
+  boolean setAttribute(String name, String value) {
         if (value == null) {
             return getAttributes().add(new Attribute(name));
         }

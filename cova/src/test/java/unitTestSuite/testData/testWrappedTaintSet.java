@@ -2,6 +2,15 @@ package unitTestSuite.testData;
 
 import static org.junit.Assert.assertEquals;
 
+import de.upb.swt.cova.core.SMTSolverZ3;
+import de.upb.swt.cova.data.ConstraintZ3;
+import de.upb.swt.cova.data.WrappedAccessPath;
+import de.upb.swt.cova.data.WrappedTaintSet;
+import de.upb.swt.cova.data.taints.ConcreteTaint;
+import de.upb.swt.cova.data.taints.ImpreciseTaint;
+import de.upb.swt.cova.data.taints.SourceTaint;
+import de.upb.swt.cova.data.taints.SymbolicTaint;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +18,6 @@ import org.junit.Test;
 
 import com.microsoft.z3.BoolExpr;
 
-import core.SMTSolverZ3;
-import data.ConstraintZ3;
-import data.WrappedAccessPath;
-import data.WrappedTaintSet;
-import data.taints.ConcreteTaint;
-import data.taints.ImpreciseTaint;
-import data.taints.SourceTaint;
-import data.taints.SymbolicTaint;
 import soot.IntType;
 import soot.Local;
 import soot.jimple.IntConstant;

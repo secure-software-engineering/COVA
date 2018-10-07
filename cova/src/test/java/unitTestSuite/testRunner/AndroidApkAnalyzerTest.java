@@ -5,12 +5,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import de.upb.swt.cova.runner.AndroidApkAnalyzer;
+import de.upb.swt.cova.setup.config.Config;
+import de.upb.swt.cova.setup.config.DefaultConfigForAndroid;
+
 import org.apache.commons.cli.ParseException;
 import org.junit.Test;
 
-import runner.AndroidApkAnalyzer;
-import setup.config.Config;
-import setup.config.DefaultConfigForAndroid;
 import utils.UnitTestFramework;
 
 public class AndroidApkAnalyzerTest extends UnitTestFramework {

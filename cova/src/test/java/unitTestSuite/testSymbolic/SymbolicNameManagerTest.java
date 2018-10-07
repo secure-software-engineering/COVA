@@ -4,6 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
+import de.upb.swt.cova.source.data.Method;
+import de.upb.swt.cova.source.data.SourceMethod;
+import de.upb.swt.cova.source.data.SourceType;
+import de.upb.swt.cova.source.data.SourceUICallback;
+import de.upb.swt.cova.source.symbolic.SymbolicNameManager;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,11 +30,7 @@ import soot.jimple.Jimple;
 import soot.jimple.JimpleBody;
 import soot.jimple.infoflow.data.SootMethodAndClass;
 import soot.util.Chain;
-import source.data.Method;
-import source.data.SourceMethod;
-import source.data.SourceType;
-import source.data.SourceUICallback;
-import source.symbolic.SymbolicNameManager;
+
 import utils.UnitTestFramework;
 
 public class SymbolicNameManagerTest extends UnitTestFramework {
