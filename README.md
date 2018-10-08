@@ -48,16 +48,16 @@ You need to add Z3 to `DYLD_LIBRARY_PATH` (untested)
 
 ## Running The Command-Line Tool 
 ### - Analyze Android Application
-- **List Of Command-Line Options**
+- **List Of Command-Line Options**(todo)
 - **Example Step By Step**
--- **Together with FlowDroid**
+-- **Together with FlowDroid**(todo)
 -- **Standalone**
     - Make sure you have Java installed.   
     - Download a released tool from [hier](/release1.0.0.zip) and unzip it.  
     - You will find an executable .jar file `cova.jar` and a folder `config` containing a few of .txt files in the unzipped folder. 
     - Navigate in your command prompt to the unzipped folder.
     - Run the following command:
-```java -jar cova.jar -android -jar "<android platform path>" -apk "<apk path>" -output_html "<srouce code path>"```
+```java -jar cova.jar -android -jar "<android platform path>" -apk "<apk path>" -output_html "<srouce code path>" -s "true"```
     - A new folder `covaOutput` is generated in your working directory, navigate to  `htmlOutput\`.
         - Open `index.html` with your browser, you will see a list of classes like this. 
             ![Example1](/pics/Example1.PNG)
@@ -66,7 +66,7 @@ You need to add Z3 to `DYLD_LIBRARY_PATH` (untested)
 
    
 ### - Analyze Java Application
-- **List Of Command-Line Options**
+- **List Of Command-Line Options**(todo)
 - **Example Stey By Step**
     -  Make sure you have Java installed.   
     - Download a released tool from [hier](/release1.0.0.zip) and unzip it.  
