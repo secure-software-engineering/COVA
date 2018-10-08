@@ -53,4 +53,9 @@ public class SourceMethod extends Source {
   public Pattern getPattern() {
     return pattern;
   }
+
+  @Override
+  public String getSignature() {
+    return method.getSignature();
+  }
 }

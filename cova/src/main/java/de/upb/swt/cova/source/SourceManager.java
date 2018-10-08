@@ -1,5 +1,6 @@
 package de.upb.swt.cova.source;
 
+import de.upb.swt.cova.source.data.Source;
 import de.upb.swt.cova.source.symbolic.SymbolicNameManager;
 
 import java.util.Set;
@@ -64,5 +65,14 @@ public class SourceManager {
    */
   public String searchFieldOrMethod(SootMethod parent, Unit unit) {
     return this.fieldOrMethodMatcher.searchFieldOrMethod(parent, unit);
+  }
+
+  public Set<Source> getSources()
+  {
+    Set<Source> sources = fieldOrMethodMatcher.getSources();
+    for (Source s : callbackMatcher.getSources()) {
+      sources.add(s);
+    }
+    return sources;
   }
 }

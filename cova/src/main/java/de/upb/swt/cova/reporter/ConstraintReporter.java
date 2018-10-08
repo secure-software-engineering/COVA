@@ -7,6 +7,7 @@ package de.upb.swt.cova.reporter;
 import de.upb.swt.cova.core.ConstraintAnalysis;
 import de.upb.swt.cova.core.InterproceduralCFG;
 import de.upb.swt.cova.data.IConstraint;
+import de.upb.swt.cova.source.data.Source;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,6 +17,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
@@ -62,6 +64,8 @@ public class ConstraintReporter {
   /** The analysis. */
   private ConstraintAnalysis analysis;
 
+  private Set<Source> sources;
+
   /**
    * Instantiates a new reporter.
    *
@@ -86,6 +90,7 @@ public class ConstraintReporter {
    */
   public void setAnalysisResults(ConstraintAnalysis analysis, boolean computeForAllClasses) {
     this.analysis = analysis;
+    this.sources = analysis.getSources();
     setReachableMethods(this.analysis.getReachableMethods());
     setTimeout(this.analysis.isTimeout());
     // only compute results for all classes if we want to output jimple or html files
@@ -313,6 +318,24 @@ public class ConstraintReporter {
    */
   public SootMethod getMethodOf(Unit unit) {
     return icfg.getMethodOf(unit);
+  }
+
+  /**
+   * Return the signature of the source API.
+   * 
+   * @param symbolicName
+   * @return
+   */
+  public String getSourceSignature(String symbolicName) {
+    String s = "unknown";
+    for (Source source : sources) {
+      String uniqueName = symbolicName.split("_")[0];
+      if (uniqueName.equals(source.getUniqueName())) {
+        s = source.getSignature();
+        break;
+      }
+    }
+    return s;
   }
 
 }

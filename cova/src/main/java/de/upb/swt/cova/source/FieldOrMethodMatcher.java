@@ -126,4 +126,8 @@ public class FieldOrMethodMatcher {
     }
     return methods;
   }
+
+  Set<Source> getSources() {
+    return sources;
+  }
 }

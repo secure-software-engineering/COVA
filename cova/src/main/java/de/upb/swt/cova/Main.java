@@ -35,7 +35,7 @@ public class Main {
     options.addOption("jar", true, "Java: The location of rt.jar");
     options.addOption("cp", true, "Java: The class path of the Java application.");
     options.addOption("config", true,
-        "Java: The path of config files specified for your application: at least one of ConfigurationSources.txt, InputSources.txt and UICallbacks.txt.");
+        "The path of config files specified for your application: at least one of Configuration_APIs.txt, IO_APIs.txt and UICallback_APIs.txt.");
 
     // options for analysis
     options.addOption("ITaint", "impreciseTaintCreation", true,

@@ -29,9 +29,6 @@ public class CovaSetupForAndroid extends SetupApplication {
   /** The source code path. */
   private final String sourceCodePath;
 
-  /** The configuration file path. */
-  private final String configFilePath;
-
   /** The apk name. */
   private final String apkName;
 
@@ -62,7 +59,6 @@ public class CovaSetupForAndroid extends SetupApplication {
   public CovaSetupForAndroid(String androidJarPath, String apkFilePath, String sourceCodePath,
       Config configuration) {
     super(androidJarPath, apkFilePath);
-    configFilePath = "." + File.separator + "config" + File.separator;
     this.sourceCodePath = sourceCodePath;
     config = configuration;
     apkName = Files.getNameWithoutExtension(apkFilePath);
@@ -89,7 +85,7 @@ public class CovaSetupForAndroid extends SetupApplication {
     // add aditional soot options
     setSootConfig(SootSetupForAndroid.getSootConfig());
     // add additional configurations
-    setCallbackFile(configFilePath + "AndroidCallbacks.txt");
+    setCallbackFile(config.getConfigDir() + File.separator + "AndroidCallbacks.txt");
     // construct call graph
     constructCallgraph();
     // absort infoflow, since we just use flowdroid to generate the call graph
@@ -130,7 +126,7 @@ public class CovaSetupForAndroid extends SetupApplication {
   public void run(Set<CallbackDefinition> callbacks) {
     SceneTransformerFactory transformerFactory = new SceneTransformerFactory(config);
     SceneTransformer transformer = transformerFactory.createAnalysisTransformerForAndroidApk(
-        apkName, callbacks, sourceCodePath, configFilePath, reporter);
+        apkName, callbacks, sourceCodePath, config.getConfigDir(), reporter);
     analyze(transformer);
   }
 }

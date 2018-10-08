@@ -5,6 +5,8 @@ package de.upb.swt.cova.setup.config;
 
 import de.upb.swt.cova.rules.ConcreteTaintCreationRule;
 
+import java.io.File;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Configuration.
@@ -56,6 +58,9 @@ public class Config {
   /** True, if print html output. */
   private boolean writeHtmlOutput;
 
+  /** The location for configuration files. */
+  private String configDir;
+
   /**
    * Instantiates a new configuration with nothing enabled.
    */
@@ -74,6 +79,7 @@ public class Config {
     timeOutDuration = 0;
     writeJimpleOutput = false;
     writeHtmlOutput = false;
+    this.configDir = System.getProperty("user.dir") + File.separator + "config";
   }
 
   /**
@@ -492,5 +498,13 @@ public class Config {
     setImprecisePropagationRuleOn(true);
     setConcreteTaintCreationRuleOn(true, true, true, true);
     setStaticFieldPropagationRuleOn(true);
+  }
+
+  public String getConfigDir() {
+    return this.configDir;
+  }
+
+  public void setConfigDir(String configDir) {
+    this.configDir = configDir;
   }
 }

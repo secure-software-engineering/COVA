@@ -16,7 +16,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<dependencyDir>${project.basedir}/src/main/resources</dependencyDir>
+		<dependencyDir>${project.basedir}/localLibs</dependencyDir>
 		<jacoco.skip.instrument>true</jacoco.skip.instrument>
 		<buildDir>target</buildDir>
 		<testOutputDir>target/test-classes</testOutputDir>
@@ -62,44 +62,25 @@
 		<testOutputDirectory>${testOutputDir}</testOutputDirectory>
 		<plugins>
 			<plugin>
-				<!-- Create an executable jar with dependencies -->
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>de.upb.swt.cova.Main</mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id> <!-- this is used for inheritance merges -->
-						<phase>package</phase> <!-- bind to the packaging phase -->
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>de.upb.swt.cova.Main</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
 				<executions>
+					<!-- Run shade goal on package phase -->
 					<execution>
+						<phase>package</phase>
 						<goals>
-							<goal>test-jar</goal>
+							<goal>shade</goal>
 						</goals>
+						<configuration>
+							<transformers>
+								<!-- add Main-Class to manifest file -->
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>de.upb.swt.cova.Main</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -193,36 +174,26 @@
 			<groupId>z3Prover</groupId>
 			<artifactId>z3</artifactId>
 			<version>4.5.0</version>
-			<scope>system</scope>
-			<systemPath>${dependencyDir}/${z3proverDir}/bin/com.microsoft.z3.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>de.tud.sse</groupId>
 			<artifactId>soot-infoflow</artifactId>
 			<version>2.5.1</version>
-			<scope>system</scope>
-			<systemPath>${dependencyDir}/flowdroid/soot-infoflow.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>de.tud.sse</groupId>
 			<artifactId>soot-infoflow-android</artifactId>
 			<version>2.5.1</version>
-			<scope>system</scope>
-			<systemPath>${dependencyDir}/flowdroid/soot-infoflow-android.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>ca.mcgill.sable</groupId>
 			<artifactId>soot</artifactId>
 			<version>3.0.0-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${dependencyDir}/soot/sootclasses-trunk-jar-with-dependencies.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>de.fraunhofer.iem</groupId>
 			<artifactId>boomerangPDS</artifactId>
 			<version>1.0.0</version>
-			<scope>system</scope>
-			<systemPath>${dependencyDir}/boomerang/boomerang.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -235,4 +206,11 @@
 			<version>2.9.7</version>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>soot-snapshot</id>
+			<name>soot snapshots</name>
+			<url>https://soot-build.cs.uni-paderborn.de/nexus/repository/soot-snapshot/</url>
+		</repository>
+	</repositories>
 </project>

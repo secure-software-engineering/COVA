@@ -45,7 +45,7 @@ public class JavaAppAnalyzer {
     options.addOption("jar", true, "The location of rt.jar");
     options.addOption("cp", true, "The class path of the Java application.");
     options.addOption("config", true,
-        "The path of config files specified for your application: at least one of ConfigurationSources.txt, InputSources.txt and UICallbacks.txt.");
+        "The path of config files specified for your application: at least one of Configuration_APIs.txt, IO_APIs.txt and UICallback_APIs.txt.");
     options.addOption("t", "timeout", true, "Timout duration in minutes.");
 
     // options for analysis
@@ -149,6 +149,9 @@ public class JavaAppAnalyzer {
         boolean value = Boolean.parseBoolean(cmd.getOptionValue("ITP"));
         config.setImprecisePropagationRuleOn(value);
       }
+    }
+    if (cmd.hasOption("config")) {
+      config.setConfigDir(cmd.getOptionValue("config"));
     }
     if (cmd.hasOption("output_html")) {
       config.setWriteHtmlOutput(true);

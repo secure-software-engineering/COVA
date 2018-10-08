@@ -83,4 +83,5 @@ public abstract class Source {
     return uniqueName;
   }
 
+  public abstract String getSignature();
 }

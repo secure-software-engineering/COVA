@@ -89,4 +89,9 @@ public class SourceUICallback extends Source {
     }
     return callbackPattern;
   }
+
+  @Override
+  public String getSignature() {
+    return this.callback.getSignature();
+  }
 }

@@ -162,4 +162,8 @@ public class CallbackMatcher {
       e.printStackTrace();
     }
   }
+
+  Set<SourceUICallback> getSources() {
+    return uiCallbacks;
+  }
 }

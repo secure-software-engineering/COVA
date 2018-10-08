@@ -49,4 +49,9 @@ public class SourceField extends Source {
   public Pattern getPattern() {
     return pattern;
   }
+
+  @Override
+  public String getSignature() {
+    return field.getSignature();
+  }
 }

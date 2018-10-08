@@ -6,6 +6,7 @@ package de.upb.swt.cova.core;
 
 import de.upb.swt.cova.data.Abstraction;
 import de.upb.swt.cova.data.IConstraint;
+import de.upb.swt.cova.source.data.Source;
 import de.upb.swt.cova.vasco.Context;
 import de.upb.swt.cova.vasco.ForwardInterProceduralAnalysis;
 import de.upb.swt.cova.vasco.ProgramRepresentation;
@@ -13,6 +14,7 @@ import de.upb.swt.cova.vasco.ProgramRepresentation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import soot.SootMethod;
 import soot.Unit;
@@ -292,5 +294,9 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
     }
     logger.info("Constraint map is computed.");
     return constraintMapForMethod;
+  }
+  
+  public Set<Source> getSources() {
+    return this.ruleManager.getSourceAndCallbackManager().getSources();
   }
 }

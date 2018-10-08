@@ -108,6 +108,8 @@ public class AndroidApkAnalyzer {
     options.addOption("STP", "staticFieldPropagation", true, "<arg> = true, if enables StaticFieldPropagationRule.");
     options.addOption("all", "all", false,
         "Enables all rules. When this is enabled, options to turn on single rule will be ignored. This is the most precise configuration of the analysis.");
+    options.addOption("config", true,
+        "The path of config files specified for your application: at least one of Configuration_APIs.txt, IO_APIs.txt and UICallback_APIs.txt.");
 
     // options for output files
     options.addOption("output_html", true,
@@ -183,6 +185,9 @@ public class AndroidApkAnalyzer {
         boolean value = Boolean.parseBoolean(cmd.getOptionValue("ITP"));
         config.setImprecisePropagationRuleOn(value);
       }
+    }
+    if (cmd.hasOption("config")) {
+      config.setConfigDir(cmd.getOptionValue("config"));
     }
     if (cmd.hasOption("output_html")) {
       config.setWriteHtmlOutput(true);
@@ -272,7 +277,7 @@ public class AndroidApkAnalyzer {
         if (!standalone) {
           if (!outputCSV) {
             // run flowdroid
-            RunFlowDroid.run(apkFilePath, androidJarPath);
+            RunFlowDroid.run(apkFilePath, androidJarPath, config.getConfigDir());
             InfoflowResults infoFlowResults = RunFlowDroid.getInfoFlowResults();
             // run cova
             reporter = RunCova.runForAndroid(apkFilePath, androidJarPath, sourceCodePath, standalone,
@@ -288,7 +293,7 @@ public class AndroidApkAnalyzer {
           } else {
             // run flowdroid
             long startTime = System.currentTimeMillis();
-            RunFlowDroid.run(apkFilePath, androidJarPath);
+            RunFlowDroid.run(apkFilePath, androidJarPath, config.getConfigDir());
             long endTime = System.currentTimeMillis();
             double ftime = (double) (endTime - startTime) / 1000;
             InfoflowResults infoFlowResults = RunFlowDroid.getInfoFlowResults();

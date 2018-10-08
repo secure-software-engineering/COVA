@@ -59,14 +59,16 @@ public class RunFlowDroid {
    * @throws XmlPullParserException
    * @throws Exception
    */
-  public static void run(String apkFilePath, String androidJarPath)
+  public static void run(String apkFilePath, String androidJarPath, String configDir)
       throws IOException, XmlPullParserException {
     logger.info("Run FlowDroid...");
     SootConfigForAndroid sootConfigForAndroid = SootSetupForAndroid.getSootConfig();
-    String configPath = "." + File.separator + "config" + File.separator;
-    String sourceSinksFilePath = configPath + "SourcesAndSinks.txt";
-    String callbacksFilePath = configPath + "AndroidCallbacks.txt";
-    String easyTaintWrapperSoucePath = configPath + "EasyTaintWrapperSource.txt";
+    if (!configDir.endsWith(File.separator)) {
+      configDir += File.separator;
+    }
+    String sourceSinksFilePath = configDir + "SourcesAndSinks.txt";
+    String callbacksFilePath = configDir + "AndroidCallbacks.txt";
+    String easyTaintWrapperSoucePath = configDir + "EasyTaintWrapperSource.txt";
     SetupApplication flowDroid = new SetupApplication(androidJarPath, apkFilePath);
     flowDroid.setSootConfig(sootConfigForAndroid);
     flowDroid.setCallbackFile(callbacksFilePath);

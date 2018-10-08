@@ -22,6 +22,7 @@ import soot.jimple.infoflow.results.ResultSourceInfo;
 import soot.util.MultiMap;
 
 public class CombinedResult implements Iterable<LeakConstraint> {
+  private ConstraintReporter reporter;
   private ArrayList<LeakConstraint> results;
   private MetaData apkMetaData;
 
@@ -89,11 +90,12 @@ public class CombinedResult implements Iterable<LeakConstraint> {
   public CombinedResult(MetaData apkMetaData, MultiMap<ResultSinkInfo, ResultSourceInfo> sinksSources,
       ConstraintReporter reporter) {
     this.apkMetaData = apkMetaData;
+    this.reporter = reporter;
     results = new ArrayList<>();
     if (sinksSources != null) {
       for (ResultSinkInfo sink : sinksSources.keySet()) {
         Unit sinkStmt = sink.getStmt();
-        SootMethod sinkMethod = reporter.getMethodOf(sinkStmt);
+        SootMethod sinkMethod = this.reporter.getMethodOf(sinkStmt);
         // get the constraint map of sink method
         Map<Unit, IConstraint> constraintsOfSinkMethod = reporter.getConstraintMap(sinkMethod);
         IConstraint constraintAtSink = ConstraintZ3.getTrue();// default constraint true
@@ -103,7 +105,7 @@ public class CombinedResult implements Iterable<LeakConstraint> {
         }
         for (ResultSourceInfo source : sinksSources.get(sink)) {
           Unit sourceStmt = source.getStmt();
-          SootMethod sourceMethod = reporter.getMethodOf(sourceStmt);
+          SootMethod sourceMethod = this.reporter.getMethodOf(sourceStmt);
           // get the constraint map of source method
           Map<Unit, IConstraint> constraintsOfSourceMethod = reporter.getConstraintMap(sourceMethod);
           IConstraint constraintAtSource = ConstraintZ3.getTrue();// default constraint true
@@ -133,12 +135,28 @@ public class CombinedResult implements Iterable<LeakConstraint> {
     return apkMetaData;
   }
 
+  /**
+   * Serialize the results.
+   */
   public void serialize() {
     ObjectMapper mapper = new ObjectMapper();
     ArrayNode leaksArray = mapper.createArrayNode();
     for (LeakConstraint leakConstraint : results) {
       ObjectNode leakNode = mapper.createObjectNode();
       leakNode.put("LeakConstraint", leakConstraint.getConstraint().toReadableString());
+      leakNode.put("Encoded", leakConstraint.getConstraint().toString());
+
+      ArrayNode constraintAPIs = mapper.createArrayNode();
+      ConstraintZ3 constraint = (ConstraintZ3) leakConstraint.getConstraint();
+      for (String symbolicName : constraint.getSymbolicNames()) {
+        if (constraint.toString().contains(symbolicName)) {
+          ObjectNode apiNode = mapper.createObjectNode();
+          apiNode.put(symbolicName, this.reporter.getSourceSignature(symbolicName));
+          constraintAPIs.add(apiNode);
+        }
+      }
+
+      leakNode.putPOJO("Constraint APIs", constraintAPIs);
 
       ObjectNode sourceNode = mapper.createObjectNode();
       sourceNode.put("Constraint", leakConstraint.constraintAtSource.toReadableString());
