@@ -4,7 +4,8 @@ COVA - Constraint Analysis with [VASCO](https://github.com/rohanpadhye/vasco)
 You can either build COVA on your own with Maven or [download a release](...) from this repository.
 
 ## Bind Z3 Library
-COVA uses Z3 for STM-Solving and you need to bind Z3 for running the tool. You can find Z3-4.5.0 in the local directory `$REPO_LOCATION/cova/localLibs/` or downloand it from [the GitHub repostiory of Z3](https://github.com/Z3Prover/z3).  
+COVA uses Z3 for STM-Solving and you need at first to bind Z3 for running the tool or use a [docker image](https://hub.docker.com/r/linghui2016/z3maven/) (tested on Linux). 
+You can find Z3-4.5.0 in the local directory `$REPO_LOCATION/cova/localLibs/` or downloand it from [the GitHub repostiory of Z3](https://github.com/Z3Prover/z3).  
 ### - Windows
 Currently, the repository only includes Z3 for Windows 64bit.
 There are two choices for you to bind z3:
@@ -37,57 +38,42 @@ Value: `$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-ubuntu/bin`
 You need to add Z3 to `DYLD_LIBRARY_PATH` (untested)
 
 ## Build The Tool With Maven
-- Install required local dependencies into your local maven repository with the script in ''$REPO_LOCATION/cova/localLibs''([Windows](https://github.com/secure-software-engineering/COVA/tree/master/cova/localLibs/install_local_libs.bat) or [Linux](https://github.com/secure-software-engineering/COVA/tree/master/cova/localLibs/install_local_libs.sh)). 
-
+- Install required local dependencies into your local maven repository with the script ``install_local_libs.*`` in ''$REPO_LOCATION/cova/localLibs''([Windows](https://github.com/secure-software-engineering/COVA/tree/master/cova/localLibs/install_local_libs.bat) or [Linux](https://github.com/secure-software-engineering/COVA/tree/master/cova/localLibs/install_local_libs.sh)). 
 - run `mvn install` to build the tool and run all tests.
 
 ## Build The Tool with Eclipse
-- Install required local dependencies into your local maven repository with the script in ''$REPO_LOCATION/cova/localLibs''([Windows](https://github.com/secure-software-engineering/COVA/tree/master/cova/localLibs/install_local_libs.bat) or [Linux](https://github.com/secure-software-engineering/COVA/tree/master/cova/localLibs/install_local_libs.sh)). 
-
+- Install required local dependencies into your local maven repository with the script ``install_local_libs.*`` in ''$REPO_LOCATION/cova/localLibs''([Windows](https://github.com/secure-software-engineering/COVA/tree/master/cova/localLibs/install_local_libs.bat) or [Linux](https://github.com/secure-software-engineering/COVA/tree/master/cova/localLibs/install_local_libs.sh)). 
 - Simply import the project as maven project. Maven should take care of all reqired dependences.
 > Eclipse> File> Import > Maven > Existing Maven Projects > *Enter the path to your local repository*  > Finish
 
-## Running The Command-Line Tool (TODO)
+## Running The Command-Line Tool 
 ### - Analyze Android Application
-- **Standalone**
-```
--android -jar <android platform jar> -apk <apk file>
-```
-- **List Of Command-Line Options(todo)**
+- **List Of Command-Line Options**
 - **Example Step By Step**
+-- **Together with FlowDroid**
+-- **Standalone**
     - Make sure you have Java installed.   
     - Download a released tool from [hier](/release1.0.0.zip) and unzip it.  
     - You will find an executable .jar file `cova.jar` and a folder `config` containing a few of .txt files in the unzipped folder. 
     - Navigate in your command prompt to the unzipped folder.
     - Run the following command:
-```
-java -jar cova.jar -android -jar ".\androidPlatform" -apk ".\androidExample\androidExample.apk" -output_html ".\androidExample\app\src" -all
-```
- - A new folder `target` is generated in the unzipped folder, navigate to  `htmlOutput\androidExample`.
-    - Open `index.html` with your browser, you will see a list of classes like this. 
-        ![Example1](/pics/Example1.PNG)
-    - Click MainActivity.java, you will see the following computed constraint map for this class.
-        ![Example2](/pics/Example2.PNG)
-- **Together with FlowDroid**
-```
--android -jar <android platform jar> -apk <apk file> -s false
-```
+```java -jar cova.jar -android -jar "<android platform path>" -apk "<apk path>" -output_html "<srouce code path>"```
+    - A new folder `covaOutput` is generated in your working directory, navigate to  `htmlOutput\`.
+        - Open `index.html` with your browser, you will see a list of classes like this. 
+            ![Example1](/pics/Example1.PNG)
+        - Click MainActivity.java, you will see the following computed constraint map for this class.
+            ![Example2](/pics/Example2.PNG)
 
+   
 ### - Analyze Java Application
-- **Standalone**
-```
--java -app <app name> -cp <class path> -config <config files path>
-```
-- **List Of Command-Line Options(todo)**
+- **List Of Command-Line Options**
 - **Example Stey By Step**
     -  Make sure you have Java installed.   
     - Download a released tool from [hier](/release1.0.0.zip) and unzip it.  
     - You will find an executable .jar file `cova.jar` and a folder `config` containing a few of .txt files in the unzipped folder. 
     - Navigate in your command prompt to the unzipped folder.
     - Run the following command:
-```
-java -jar cova.jar -java -app javaExample -cp ".\javaExample\bin" -config ".\javaExample\config" -output_html ".\javaExample\src" -all
-```
+```java -jar cova.jar -java -app javaExample -cp ".\javaExample\bin" -config ".\javaExample\config" -output_html ".\javaExample\src" -all```
    - Navigate to `target\htmlOutput\javaExample`
    - Open `index.html` with your browser, you will see a list of classes. 
    - Click Main.java, you will see the following computed constraint map for this class.
