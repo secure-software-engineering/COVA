@@ -55,15 +55,15 @@ You can run COVA with the option ``-android`` to get all options for analyzing a
 - **An Example Step By Step**
 1. **Together with FlowDroid** (Default):<br>
 You can use COVA combined with FLowDroid to get the constraints under which a leak reported by FlowDroid may happen. 
-
 Run cova with the following options:
+
 ``-android -config <config files path> -p <android platform path> -apk <apk file>``
 
-you can find: 
-- config files:``$REPO_LOCATION\cova\config``
-- android platforms (API 26-27): ``$REPO_LOCATION\cova\src\test\resources\androidPlatforms``
-- an example apk:``$REPO_LOCATION\constraintBench\androidApps\apks\Callbacks1.apk``
-<br>
+   you can find: 
+   - config files:``$REPO_LOCATION\cova\config``
+   - android platforms (API 26-27): ``$REPO_LOCATION\cova\src\test\resources\androidPlatforms``
+   - an example apk:``$REPO_LOCATION\constraintBench\androidApps\apks\Callbacks1.apk``
+
 The results are in JSON files located in ``$WORKING_DIRECTORY\covaOutput``
 
 2. **Standalone**:<br>
