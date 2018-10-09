@@ -47,7 +47,7 @@ You need to add Z3 to `DYLD_LIBRARY_PATH` (untested)
 > Eclipse> File> Import > Maven > Existing Maven Projects > *Enter the path to your local repository*  > Finish
 
 ## Running The Command-Line Tool 
-- Make sure you have JAVA 8 installed. 
+- Make sure you have JAVA 8 installed and bound Z3. 
 - Run the executabl jar with JAVA: ``java -jar cova.jar``. 
 ### - Analyze Android Application
 
