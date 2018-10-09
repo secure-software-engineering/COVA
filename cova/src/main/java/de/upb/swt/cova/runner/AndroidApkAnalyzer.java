@@ -87,12 +87,12 @@ public class AndroidApkAnalyzer {
     // standard options
     options.addOption("h", "help", false, "Print this message.");
     options.addOption("android", false, "Analyze Android APK");
-    options.addOption("jar", "jarPath", true, "The location of the android platform jars.");
+    options.addOption("p", "platform", true, "The location of the android platform jars.");
     options.addOption("apk", "apkLocation", true,
         "The location of the APK file. It can be a single Apk file or a directory.");
     options.addOption("s", "standalone", true,
-        "<arg> = true (default), to run cova in standalone mode. <arg> = false, to run flowdroid and cova afterwards.");
-    options.addOption("t", "timeout", true, "Timout duration in minutes.");
+        "<arg> = true, to run cova in standalone mode. <arg> = false (default ), to run flowdroid and cova afterwards.");
+    options.addOption("t", "timeout", true, "COVA analysis timout duration in minutes.");
     options.addOption("expr", false, "Enable experimentation mode");
 
     // options for analysis
@@ -121,15 +121,15 @@ public class AndroidApkAnalyzer {
     CommandLine cmd = parser.parse(options, args);
 
     HelpFormatter helper = new HelpFormatter();
-    String cmdLineSyntax = "-jar <android platform jar> -apk <apk file>";
+    String cmdLineSyntax = "-android -config <config files path> -p <android platform jar> -apk <apk file>";
     if (cmd.hasOption("h")) {
       helper.printHelp(cmdLineSyntax, options);
       return false;
     }
-    if (cmd.hasOption("jar")) {
-      androidJarPath = cmd.getOptionValue("jar");
+    if (cmd.hasOption("p")) {
+      androidJarPath = cmd.getOptionValue("p");
     } else {
-      System.err.println("Option -jar is required");
+      System.err.println("Option -p is required");
       helper.printHelp(cmdLineSyntax, options);
       return false;
     }

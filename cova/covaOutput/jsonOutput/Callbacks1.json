@@ -1,0 +1,23 @@
+[ {
+  "LeakConstraint" : "((onClick_0 ∧ im(MODEL)_0) ∧ !(SDK>=15))",
+  "Encoded" : "(and U8_0 im(C13)_0 (not (>= C24 15)))",
+  "Constraint APIs" : [ {
+    "U8_0" : "<android.view.View$OnClickListener: void onClick(android.view.View)>"
+  }, {
+    "C13" : "<android.os.Build: java.lang.String MODEL>"
+  }, {
+    "C24" : "<android.os.Build$VERSION: int SDK_INT>"
+  } ],
+  "Source" : {
+    "Constraint" : "(onClick_0 ∧ im(MODEL)_0)",
+    "Statement" : "$r8 = virtualinvoke $r5.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>()",
+    "Method" : "<de.upb.swt.callbacks1.MainActivity$1: void onClick(android.view.View)>",
+    "Line No." : 28
+  },
+  "Sink" : {
+    "Constraint" : "(onClick_0 ∧ im(MODEL)_0 ∧ !(SDK>=15))",
+    "Statement" : "virtualinvoke $r2.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>(\"+49\", null, $r1, null, null)",
+    "Method" : "<de.upb.swt.callbacks1.MainActivity: void send(java.lang.String)>",
+    "Line No." : 41
+  }
+} ]

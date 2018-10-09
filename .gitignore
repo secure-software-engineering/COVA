@@ -12,3 +12,5 @@ constraintBench/\.settings/
 constraintBench/\.project
 constraintBench/\.classpath
 
+
+cova/covaOutput/

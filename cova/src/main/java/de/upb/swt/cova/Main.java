@@ -16,23 +16,23 @@ public class Main {
   public static void main(String[] args) throws ParseException, IOException {
     Options options = new Options();
     options.addOption("h", "help", false, "Print this mesage");
-    options.addOption("t", "timeout", true, "Analysis timout duration in minutes.");
+    options.addOption("t", "timeout", true, "COVA analysis timout duration in minutes.");
 
     options.addOption("android", false, "Analyze Android APK");
-    options.addOption("jar", "jarPath", true,
+    options.addOption("p", "platform", true,
         "Android: The location of the android platform jars.");
     options.addOption("apk", "apkLocation", true,
         "Android:  The location of the APK file and it can an be a single Apk file or a directory.");
     options.addOption("s", "standalone", true,
-        "Android: <arg> = true, if runs cova in standalone mode. <arg> = false, if runs flowdroid and cova afterwards. The default value is true");
+        "Android: <arg> = true, if runs cova in standalone mode. <arg> = false, if runs flowdroid and cova afterwards. The default value is false");
     options.addOption("expr", false,
-        "Enable experimentation mode");
+        "Enable experimentation mode.");
     options.addOption("output_csv", false, "Android: Print results in CSV files.");
 
     options.addOption("java", false, "Analyze Java application");
     options.addOption("app", true, "Java: The name of the Java application.");
     options.addOption("main", true, "Java: The main class of the Java application.");
-    options.addOption("jar", true, "Java: The location of rt.jar");
+    options.addOption("lib", true, "Java: The location of rt.jar");
     options.addOption("cp", true, "Java: The class path of the Java application.");
     options.addOption("config", true,
         "The path of config files specified for your application: at least one of Configuration_APIs.txt, IO_APIs.txt and UICallback_APIs.txt.");
@@ -63,7 +63,7 @@ public class Main {
     CommandLine cmd = parser.parse(options, args);
     HelpFormatter helper = new HelpFormatter();
     String cmdLineSyntax
-        = "\nAnalyze Android APK: -android -config <config files path> -jar <android platform jar> -apk <apk file>\n"
+        = "\nAnalyze Android APK: -android -config <config files path> -p <android platform jar> -apk <apk file>\n"
             + "\nAnalyze Java Application: -java -config <config files path> -app <app name> -cp <class path>"
         + "\n_________________________________________________________________________\n";
     if (cmd.hasOption('h')) {
@@ -79,7 +79,7 @@ public class Main {
           helper.printHelp(cmdLineSyntax, options);
           return;
         } else {
-          AndroidApkAnalyzer.main(args);
+            AndroidApkAnalyzer.main(args);
         }
       }
       if (cmd.hasOption("java")) {

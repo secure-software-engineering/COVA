@@ -42,11 +42,11 @@ public class JavaAppAnalyzer {
     options.addOption("java", false, "Analyze Java application");
     options.addOption("app", true, "The name of the Java application.");
     options.addOption("main", true, "The main class of the Java application.");
-    options.addOption("jar", true, "The location of rt.jar");
+    options.addOption("lib", true, "The location of rt.jar");
     options.addOption("cp", true, "The class path of the Java application.");
     options.addOption("config", true,
         "The path of config files specified for your application: at least one of Configuration_APIs.txt, IO_APIs.txt and UICallback_APIs.txt.");
-    options.addOption("t", "timeout", true, "Timout duration in minutes.");
+    options.addOption("t", "timeout", true, "COVA analysis timout duration in minutes.");
 
     // options for analysis
     options.addOption("ITaint", "impreciseTaintCreation", true,
@@ -74,7 +74,7 @@ public class JavaAppAnalyzer {
     CommandLineParser parser = new DefaultParser();
     CommandLine cmd = parser.parse(options, args);
     HelpFormatter helper = new HelpFormatter();
-    String cmdLineSyntax = "-app <app name> -cp <class path> -config <config files path>";
+    String cmdLineSyntax = "-java -config <config files path> -app <app name> -cp <class path>";
     if (cmd.hasOption('h')) {
       helper.printHelp(cmdLineSyntax, options);
       return false;
@@ -89,8 +89,8 @@ public class JavaAppAnalyzer {
     if (cmd.hasOption("main")) {
       mainClass = cmd.getOptionValue("main");
     }
-    if (cmd.hasOption("jar")) {
-      javaLibPath = cmd.getOptionValue("jar");
+    if (cmd.hasOption("lib")) {
+      javaLibPath = cmd.getOptionValue("lib");
     } else {
       javaLibPath = System.getProperty("java.home") + File.separator + "lib" + File.separator
           + "rt.jar";
