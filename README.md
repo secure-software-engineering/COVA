@@ -52,6 +52,7 @@ You need to add Z3 to `DYLD_LIBRARY_PATH` (untested)
 ### - Analyze Android Application
 
 You can run COVA with the option ``-android`` to get all options for analyzing an Android application.
+
 **An Example Step By Step**
 1. **Together with FlowDroid** (Default):
 
@@ -83,6 +84,7 @@ You can run COVA in standalone mode with the option ``s``. In this mode a constr
 ### - Analyze Java Application
 
 You can run COVA with the option ``-java`` to get all options for analyzing a Java application.
+
 **An Example Stey By Step**
 
 Run cova with the following options:
