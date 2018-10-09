@@ -50,9 +50,9 @@ You need to add Z3 to `DYLD_LIBRARY_PATH` (untested)
 - Make sure you have JAVA 8 installed. 
 - Run the executabl jar with JAVA: ``java -jar cova.jar``. 
 ### - Analyze Android Application
-- **List Of Command-Line Options**
+
 You can run COVA with the option ``-android`` to get all options for analyzing an Android application.
-- **An Example Step By Step**
+**An Example Step By Step**
 1. **Together with FlowDroid** (Default):
 
 You can use COVA combined with FLowDroid to get the constraints under which a leak reported by FlowDroid may happen. 
@@ -81,9 +81,10 @@ You can run COVA in standalone mode with the option ``s``. In this mode a constr
    The results are in HTML files located in ``$WORKING_DIRECTORY\htmlOutput``
    
 ### - Analyze Java Application
-- **List Of Command-Line Options**:
+
 You can run COVA with the option ``-java`` to get all options for analyzing a Java application.
-- **An Example Stey By Step**
+**An Example Stey By Step**
+
 Run cova with the following options:
 
 ``-java -config <config files path> -app <app name> -cp <app class path> -output_html <source code path>`` 
