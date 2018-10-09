@@ -47,34 +47,35 @@ You need to add Z3 to `DYLD_LIBRARY_PATH` (untested)
 > Eclipse> File> Import > Maven > Existing Maven Projects > *Enter the path to your local repository*  > Finish
 
 ## Running The Command-Line Tool 
+- Make sure you have JAVA 8 installed. 
+- Run the executabl jar with JAVA: ``java -jar cova.jar``. 
 ### - Analyze Android Application
-- **List Of Command-Line Options**(todo)
-- **Example Step By Step**
--- **Together with FlowDroid**(todo)
--- **Standalone**
-    - Make sure you have Java installed.   
-    - Download a released tool from [hier](/release1.0.0.zip) and unzip it.  
-    - You will find an executable .jar file `cova.jar` and a folder `config` containing a few of .txt files in the unzipped folder. 
-    - Navigate in your command prompt to the unzipped folder.
-    - Run the following command:
-```java -jar cova.jar -android -jar "<android platform path>" -apk "<apk path>" -output_html "<srouce code path>" -s "true"```
-    - A new folder `covaOutput` is generated in your working directory, navigate to  `htmlOutput\`.
-        - Open `index.html` with your browser, you will see a list of classes like this. 
-            ![Example1](/pics/Example1.PNG)
-        - Click MainActivity.java, you will see the following computed constraint map for this class.
-            ![Example2](/pics/Example2.PNG)
-
+- **List Of Command-Line Options**
+You can run COVA with the option ``-android`` to get all options for analyzing an Android application.
+- **An Example Step By Step**
+1. **Together with FlowDroid** (Default)
+    You can use COVA combined with FLowDroid to get the constraints under which a leak reported by FlowDroid may happen. 
+    - Run cova with the following options:
+``-android -config <config files path> -p <android platform path> -apk <apk file>``
+you can find: 
+    -- config files:``$REPO_LOCATION\cova\config``
+    -- android platforms (API 26-27): ``$REPO_LOCATION\cova\src\test\resources\androidPlatforms``
+    -- an example apk:``$REPO_LOCATION\constraintBench\androidApps\apks\Callbacks1.apk``
+    - The results are in JSON files located in ``$WORKING_DIRECTORY\covaOutput``
+2. **Standalone**
+You can run COVA in standalone mode with the option ``s``. In this mode a constraint map will be computed. If you have the java source code of your application, you can get the constraint map printed next to each line of code in HTML sites with the option ``òutput_html`` .   
+    - Run cova with the following options:
+``-android -config <config files path> -p <android platform path> -apk <apk file> -s "true" -output_html <source code path>``
+you can find: 
+    -- config files:``$REPO_LOCATION\cova\config``
+    -- android platforms (API 26-27): ``$REPO_LOCATION\cova\src\test\resources\androidPlatforms``
+    -- an example apk:``$REPO_LOCATION\constraintBench\androidApps\apks\Callbacks1.apk``
+    -- source code of this apk: ``$REPO_LOCATION\constraintBench\androidApps\sourceCode\Callbacks1``
+    - The results are in HTML files located in ``$WORKING_DIRECTORY\htmlOutput``
    
 ### - Analyze Java Application
-- **List Of Command-Line Options**(todo)
-- **Example Stey By Step**
-    -  Make sure you have Java installed.   
-    - Download a released tool from [hier](/release1.0.0.zip) and unzip it.  
-    - You will find an executable .jar file `cova.jar` and a folder `config` containing a few of .txt files in the unzipped folder. 
-    - Navigate in your command prompt to the unzipped folder.
-    - Run the following command:
-```java -jar cova.jar -java -app javaExample -cp ".\javaExample\bin" -config ".\javaExample\config" -output_html ".\javaExample\src" -all```
-   - Navigate to `target\htmlOutput\javaExample`
-   - Open `index.html` with your browser, you will see a list of classes. 
-   - Click Main.java, you will see the following computed constraint map for this class.
-    ![Example2](/pics/Example3.PNG)
+- **List Of Command-Line Options**
+You can run COVA with the option ``-java`` to get all options for analyzing a Java application.
+- **An Example Stey By Step**
+    - Run cova with the following options: 
+``-java -config <config files path> -app <app name> -cp <app class path> -output_html <source code path>`` 
