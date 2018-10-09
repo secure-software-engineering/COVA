@@ -66,7 +66,7 @@ Run cova with the following options:
    - android platforms (API 26-27): ``$REPO_LOCATION\cova\src\test\resources\androidPlatforms``
    - an example apk:``$REPO_LOCATION\constraintBench\androidApps\apks\Callbacks1.apk``
 
-   The results are in JSON files located in ``$WORKING_DIRECTORY\covaOutput``
+   The results are in JSON files located in ``$WORKING_DIRECTORY\covaOutput\jsonOutput``
 
 2. **Standalone**:
 
@@ -79,7 +79,7 @@ You can run COVA in standalone mode with the option ``s``. In this mode a constr
    - an example apk:``$REPO_LOCATION\constraintBench\androidApps\apks\Callbacks1.apk``
    - source code of this apk: ``$REPO_LOCATION\constraintBench\androidApps\sourceCode\Callbacks1``
 
-   The results are in HTML files located in ``$WORKING_DIRECTORY\htmlOutput``
+   The results are in HTML files located in ``$WORKING_DIRECTORY\covaOutput\htmlOutput``
    
 ### - Analyze Java Application
 
