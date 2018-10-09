@@ -57,21 +57,26 @@ You can run COVA with the option ``-android`` to get all options for analyzing a
     You can use COVA combined with FLowDroid to get the constraints under which a leak reported by FlowDroid may happen. 
     - Run cova with the following options:
 ``-android -config <config files path> -p <android platform path> -apk <apk file>``
+
 you can find: 
-    -- config files:``$REPO_LOCATION\cova\config``
-    -- android platforms (API 26-27): ``$REPO_LOCATION\cova\src\test\resources\androidPlatforms``
-    -- an example apk:``$REPO_LOCATION\constraintBench\androidApps\apks\Callbacks1.apk``
-    - The results are in JSON files located in ``$WORKING_DIRECTORY\covaOutput``
+    - config files:``$REPO_LOCATION\cova\config``
+    - android platforms (API 26-27): ``$REPO_LOCATION\cova\src\test\resources\androidPlatforms``
+    - an example apk:``$REPO_LOCATION\constraintBench\androidApps\apks\Callbacks1.apk``
+
+The results are in JSON files located in ``$WORKING_DIRECTORY\covaOutput``
+
 2. **Standalone**:
 You can run COVA in standalone mode with the option ``s``. In this mode a constraint map will be computed. If you have the java source code of your application, you can get the constraint map printed next to each line of code in HTML sites with the option ``òutput_html`` .   
     - Run cova with the following options:
 ``-android -config <config files path> -p <android platform path> -apk <apk file> -s "true" -output_html <source code path>``
+
 you can find: 
-    -- config files:``$REPO_LOCATION\cova\config``
-    -- android platforms (API 26-27): ``$REPO_LOCATION\cova\src\test\resources\androidPlatforms``
-    -- an example apk:``$REPO_LOCATION\constraintBench\androidApps\apks\Callbacks1.apk``
-    -- source code of this apk: ``$REPO_LOCATION\constraintBench\androidApps\sourceCode\Callbacks1``
-    - The results are in HTML files located in ``$WORKING_DIRECTORY\htmlOutput``
+    - config files:``$REPO_LOCATION\cova\config``
+    - android platforms (API 26-27): ``$REPO_LOCATION\cova\src\test\resources\androidPlatforms``
+    - an example apk:``$REPO_LOCATION\constraintBench\androidApps\apks\Callbacks1.apk``
+    - source code of this apk: ``$REPO_LOCATION\constraintBench\androidApps\sourceCode\Callbacks1``
+
+The results are in HTML files located in ``$WORKING_DIRECTORY\htmlOutput``
    
 ### - Analyze Java Application
 - **List Of Command-Line Options**:
