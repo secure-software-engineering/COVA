@@ -1,4 +1,4 @@
-COVA - Constraint Analysis with VASCO.
+COVA - Constraint Analysis with VASCO
 
 - The directory "cova" contains the source code of COVA.
 - The directory "constraintBench" contains the micro-benchmark used for COVA.
