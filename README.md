@@ -1,7 +1,10 @@
-COVA - Constraint Analysis with [VASCO](https://github.com/rohanpadhye/vasco) 
+COVA - Constraint Analysis with VASCO.
 
-## Obtaining The Tool 
-You can either build COVA on your own with Maven or [download a release](...) from this repository.
+- The directory "cova" contains the source code of COVA.
+- The directory "constraintBench" contains the micro-benchmark used for COVA.
+- The lists of constraint-APIs can be found in directory "cova/config/": Configuration_APIs.txt, UICallback_APIs.txt and IO_APIs.txt
+
+## How to Build COVA?
 
 ## Bind Z3 Library
 COVA uses Z3 for STM-Solving and you need at first to bind Z3 for running the tool or use a [docker image](https://hub.docker.com/r/linghui2016/z3maven/) (tested on Linux). 
@@ -85,12 +88,4 @@ Run cova with the following options:
 
    The results are in HTML files located in ``$WORKING_DIRECTORY\covaOutput\htmlOutput``
    
-### - Analyze Java Application
 
-You can run COVA with the option ``-java`` to get all options for analyzing a Java application.
-
-**An Example Stey By Step**
-
-Run cova with the following options:
-
-``-java -config <config files path> -app <app name> -cp <app class path> -output_html <source code path>`` 
