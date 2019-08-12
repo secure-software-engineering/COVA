@@ -5,10 +5,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import de.upb.swt.cova.source.data.Source;
-import de.upb.swt.cova.source.data.SourceUICallback;
-import de.upb.swt.cova.source.parser.UICallbackParser;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +20,9 @@ import org.junit.Test;
 
 import soot.jimple.infoflow.data.SootMethodAndClass;
 
+import cova.source.data.Source;
+import cova.source.data.SourceUICallback;
+import cova.source.parser.UICallbackParser;
 import utils.TestPrivateFields;
 import utils.UnitTestFramework;
 

@@ -1,13 +1,12 @@
 package constraintBenchTestSuite;
-import de.upb.swt.cova.core.SMTSolverZ3;
-import de.upb.swt.cova.data.ConstraintZ3;
-import de.upb.swt.cova.data.Operator;
-
 import com.microsoft.z3.BoolExpr;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import cova.core.SMTSolverZ3;
+import cova.data.ConstraintZ3;
+import cova.data.Operator;
 import utils.ConstraintBenchTestFramework;
 
 /**

@@ -6,13 +6,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.upb.swt.cova.core.ConstraintFactory;
-import de.upb.swt.cova.core.SMTSolverZ3;
-import de.upb.swt.cova.data.ConstraintZ3;
-import de.upb.swt.cova.data.Operator;
-import de.upb.swt.cova.data.WrappedAccessPath;
-import de.upb.swt.cova.data.taints.SourceTaint;
-
 import com.microsoft.z3.BoolExpr;
 
 import soot.BooleanType;
@@ -27,6 +20,13 @@ import soot.jimple.internal.JEqExpr;
 import soot.jimple.internal.JGeExpr;
 import soot.jimple.internal.JLeExpr;
 import soot.jimple.internal.JNeExpr;
+
+import cova.core.ConstraintFactory;
+import cova.core.SMTSolverZ3;
+import cova.data.ConstraintZ3;
+import cova.data.Operator;
+import cova.data.WrappedAccessPath;
+import cova.data.taints.SourceTaint;
 import utils.UnitTestFramework;
 
 public class ConstraintFactoryTest extends UnitTestFramework {

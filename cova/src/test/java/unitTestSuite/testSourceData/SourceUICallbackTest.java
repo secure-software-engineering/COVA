@@ -3,15 +3,14 @@ package unitTestSuite.testSourceData;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import de.upb.swt.cova.source.data.SourceType;
-import de.upb.swt.cova.source.data.SourceUICallback;
-
 import java.util.Arrays;
 
 import org.junit.Test;
 
 import soot.jimple.infoflow.data.SootMethodAndClass;
 
+import cova.source.data.SourceType;
+import cova.source.data.SourceUICallback;
 import utils.UnitTestFramework;
 
 public class SourceUICallbackTest extends UnitTestFramework {

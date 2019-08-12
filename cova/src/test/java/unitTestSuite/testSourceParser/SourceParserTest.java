@@ -5,14 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import de.upb.swt.cova.source.data.Field;
-import de.upb.swt.cova.source.data.Method;
-import de.upb.swt.cova.source.data.Source;
-import de.upb.swt.cova.source.data.SourceField;
-import de.upb.swt.cova.source.data.SourceMethod;
-import de.upb.swt.cova.source.data.SourceType;
-import de.upb.swt.cova.source.parser.SourceParser;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +17,13 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+import cova.source.data.Field;
+import cova.source.data.Method;
+import cova.source.data.Source;
+import cova.source.data.SourceField;
+import cova.source.data.SourceMethod;
+import cova.source.data.SourceType;
+import cova.source.parser.SourceParser;
 import utils.TestPrivateFields;
 import utils.UnitTestFramework;
 

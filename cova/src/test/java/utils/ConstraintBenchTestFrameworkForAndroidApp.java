@@ -1,16 +1,15 @@
 package utils;
 
-import de.upb.swt.cova.data.CombinedResult;
-import de.upb.swt.cova.runner.AndroidApkAnalyzer;
-import de.upb.swt.cova.setup.config.Config;
-import de.upb.swt.cova.setup.config.DefaultConfigForTestCase;
-
 import java.io.File;
 
 import org.junit.Before;
 import org.junit.experimental.categories.Category;
 
 import categories.BenchmarkTestSuite;
+import cova.data.CombinedResult;
+import cova.runner.AndroidApkAnalyzer;
+import cova.setup.config.Config;
+import cova.setup.config.DefaultConfigForTestCase;
 
 @Category(BenchmarkTestSuite.class)
 public class ConstraintBenchTestFrameworkForAndroidApp {

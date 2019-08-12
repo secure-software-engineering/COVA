@@ -1,5 +1,4 @@
-%User input sources
-%Methods
+%Inputs
 <java.io.BufferedInputStream: int read()> -> I: BUFFERED_INPUT_STREAM ID: 1
 <java.io.BufferedInputStream: int read(byte[], int, int)> -> I: BUFFERED_INPUT_STREAM ID: 2
 <java.io.BufferedReader: int read()> -> I: BUFFERED_READER ID: 3

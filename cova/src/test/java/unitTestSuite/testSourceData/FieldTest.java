@@ -5,10 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import de.upb.swt.cova.source.data.Field;
-
 import org.junit.Test;
 
+import cova.source.data.Field;
 import utils.UnitTestFramework;
 
 public class FieldTest extends UnitTestFramework {

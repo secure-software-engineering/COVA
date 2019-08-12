@@ -1,0 +1,22 @@
+language: java
+jdk: openjdk11
+
+cache:
+  directories:
+  - $HOME/.m2
+
+branches:
+    - master
+
+# commands that need to be run before installing the dependencies
+before_install:
+  - REPO_LOCATION=$("pwd")
+  - sudo chmod +x ./cova/localLibs/install_local_libs.sh
+  - ./cova/localLibs/install_local_libs.sh
+  - export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-ubuntu/bin"
+  - echo LD_LIBRARY_PATH
+
+install: true
+script: mvn clean install -DskipTests
+
+

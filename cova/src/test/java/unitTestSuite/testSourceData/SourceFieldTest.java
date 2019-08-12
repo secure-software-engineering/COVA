@@ -3,12 +3,11 @@ package unitTestSuite.testSourceData;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import de.upb.swt.cova.source.data.Field;
-import de.upb.swt.cova.source.data.SourceField;
-import de.upb.swt.cova.source.data.SourceType;
-
 import org.junit.Test;
 
+import cova.source.data.Field;
+import cova.source.data.SourceField;
+import cova.source.data.SourceType;
 import utils.UnitTestFramework;
 
 public class SourceFieldTest extends UnitTestFramework {

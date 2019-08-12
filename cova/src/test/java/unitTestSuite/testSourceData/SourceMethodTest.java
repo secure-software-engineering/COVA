@@ -3,14 +3,13 @@ package unitTestSuite.testSourceData;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import de.upb.swt.cova.source.data.Method;
-import de.upb.swt.cova.source.data.SourceMethod;
-import de.upb.swt.cova.source.data.SourceType;
-
 import java.util.Arrays;
 
 import org.junit.Test;
 
+import cova.source.data.Method;
+import cova.source.data.SourceMethod;
+import cova.source.data.SourceType;
 import utils.UnitTestFramework;
 
 public class SourceMethodTest extends UnitTestFramework {

@@ -1,16 +1,15 @@
 package utils;
 
-import de.upb.swt.cova.reporter.ConstraintReporter;
-import de.upb.swt.cova.runner.JavaAppAnalyzer;
-import de.upb.swt.cova.setup.config.Config;
-import de.upb.swt.cova.setup.config.DefaultConfigForTestCase;
-
 import java.io.File;
 
 import org.junit.Before;
 import org.junit.experimental.categories.Category;
 
 import categories.BenchmarkTestSuite;
+import cova.reporter.ConstraintReporter;
+import cova.runner.JavaAppAnalyzer;
+import cova.setup.config.Config;
+import cova.setup.config.DefaultConfigForTestCase;
 
 @Category(BenchmarkTestSuite.class)
 public class ConstraintBenchTestFrameworkForJavaApp {

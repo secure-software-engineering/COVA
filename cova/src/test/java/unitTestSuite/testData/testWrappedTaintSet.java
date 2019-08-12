@@ -2,15 +2,6 @@ package unitTestSuite.testData;
 
 import static org.junit.Assert.assertEquals;
 
-import de.upb.swt.cova.core.SMTSolverZ3;
-import de.upb.swt.cova.data.ConstraintZ3;
-import de.upb.swt.cova.data.WrappedAccessPath;
-import de.upb.swt.cova.data.WrappedTaintSet;
-import de.upb.swt.cova.data.taints.ConcreteTaint;
-import de.upb.swt.cova.data.taints.ImpreciseTaint;
-import de.upb.swt.cova.data.taints.SourceTaint;
-import de.upb.swt.cova.data.taints.SymbolicTaint;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +13,15 @@ import soot.IntType;
 import soot.Local;
 import soot.jimple.IntConstant;
 import soot.jimple.Jimple;
+
+import cova.core.SMTSolverZ3;
+import cova.data.ConstraintZ3;
+import cova.data.WrappedAccessPath;
+import cova.data.WrappedTaintSet;
+import cova.data.taints.ConcreteTaint;
+import cova.data.taints.ImpreciseTaint;
+import cova.data.taints.SourceTaint;
+import cova.data.taints.SymbolicTaint;
 import utils.UnitTestFramework;
 
 public class testWrappedTaintSet extends UnitTestFramework {

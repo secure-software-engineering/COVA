@@ -4,13 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import de.upb.swt.cova.runner.JavaAppAnalyzer;
-import de.upb.swt.cova.setup.config.Config;
-import de.upb.swt.cova.setup.config.DefaultConfigForJava;
-
 import org.apache.commons.cli.ParseException;
 import org.junit.Test;
 
+import cova.runner.JavaAppAnalyzer;
+import cova.setup.config.Config;
+import cova.setup.config.DefaultConfigForJava;
 import utils.UnitTestFramework;
 
 public class JavaAppAnalyzerTest extends UnitTestFramework {

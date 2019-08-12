@@ -5,13 +5,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import de.upb.swt.cova.runner.AndroidApkAnalyzer;
-import de.upb.swt.cova.setup.config.Config;
-import de.upb.swt.cova.setup.config.DefaultConfigForAndroid;
-
 import org.apache.commons.cli.ParseException;
 import org.junit.Test;
 
+import cova.runner.AndroidApkAnalyzer;
+import cova.setup.config.Config;
+import cova.setup.config.DefaultConfigForAndroid;
 import utils.UnitTestFramework;
 
 public class AndroidApkAnalyzerTest extends UnitTestFramework {
@@ -21,17 +20,17 @@ public class AndroidApkAnalyzerTest extends UnitTestFramework {
     try {
       Config config = new DefaultConfigForAndroid();
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-ITaint", "false" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-ITaint", "false" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertFalse(config.isImpreciseTaintCreationRuleOn());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-ITaint", "true" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-ITaint", "true" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertTrue(config.isImpreciseTaintCreationRuleOn());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-CTaint", "false" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-CTaint", "false" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertFalse(config.isConcreteTaintCreationRuleOn());
         assertFalse(config.isConcreteTaintAtAssignStmtOn());
@@ -39,12 +38,12 @@ public class AndroidApkAnalyzerTest extends UnitTestFramework {
         assertFalse(config.isConcreteTaintAtCalleeOn());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-CTaint", "true" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-CTaint", "true" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertTrue(config.isConcreteTaintCreationRuleOn());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-CTaint", "true", "-CTA", "true",
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-CTaint", "true", "-CTA", "true",
             "-CTR", "true", "-CTC", "true" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertTrue(config.isConcreteTaintCreationRuleOn());
@@ -53,43 +52,43 @@ public class AndroidApkAnalyzerTest extends UnitTestFramework {
         assertTrue(config.isConcreteTaintAtCalleeOn());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-STP", "false" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-STP", "false" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertFalse(config.isStaticFieldPropagationRuleOn());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-STP", "true" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-STP", "true" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertTrue(config.isStaticFieldPropagationRuleOn());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-ITP", "false" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-ITP", "false" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertFalse(config.isImprecisePropagationRuleOn());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-ITP", "true" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-ITP", "true" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertTrue(config.isImprecisePropagationRuleOn());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-output_html", "src" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-output_html", "src" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertTrue(config.isWriteHtmlOutput());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-output_jimple", "src" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-output_jimple", "src" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertTrue(config.isWriteJimpleOutput());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-t", "5" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-t", "5" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertTrue(config.isTimeOutOn());
         assertEquals(300, config.getTimeOutDuration());
       }
       {
-        String[] args = { "-jar", "platform", "-apk", "test.apk", "-all" };
+        String[] args = { "-p", "platform", "-apk", "test.apk", "-all" };
         AndroidApkAnalyzer.parseArgs(args, config);
         assertTrue(config.isConcreteTaintAtAssignStmtOn());
         assertTrue(config.isConcreteTaintAtCalleeOn());

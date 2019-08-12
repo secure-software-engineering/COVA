@@ -1,11 +1,5 @@
 package utils;
 
-import de.upb.swt.cova.core.SceneTransformerFactory;
-import de.upb.swt.cova.data.IConstraint;
-import de.upb.swt.cova.reporter.ConstraintReporter;
-import de.upb.swt.cova.setup.config.Config;
-import de.upb.swt.cova.setup.config.DefaultConfigForTestCase;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -37,6 +31,11 @@ import soot.jimple.JimpleBody;
 import soot.options.Options;
 
 import categories.BenchmarkTestSuite;
+import cova.core.SceneTransformerFactory;
+import cova.data.IConstraint;
+import cova.reporter.ConstraintReporter;
+import cova.setup.config.Config;
+import cova.setup.config.DefaultConfigForTestCase;
 
 @Category(BenchmarkTestSuite.class)
 public class ConstraintBenchTestFramework {

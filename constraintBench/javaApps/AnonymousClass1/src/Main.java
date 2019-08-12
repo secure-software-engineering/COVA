@@ -3,7 +3,7 @@ import utils.Configuration;
 /***
  * The anonymous class sets the field of main class to a configuration option
  * 
- * @author linghui
+ * 
  *
  */
 public class Main {

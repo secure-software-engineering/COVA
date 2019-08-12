@@ -3,7 +3,7 @@ import utils.Configuration;
 /**
  * The inner class sets the field of out class to a configuration option
  * 
- * @author linghui
+ * 
  *
  */
 public class Outer {
