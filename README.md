@@ -1,11 +1,13 @@
 # COVA - Constraint Analysis with VASCO[![Build Status](https://travis-ci.com/secure-software-engineering/COVA.svg?branch=master)](https://travis-ci.com/secure-software-engineering/COVA)
-
 - The Android apps we evaluated can be found on kaggle.com ([click to download](https://www.kaggle.com/covaanalyst1/cova-dataset)) 
 - The long version of the paper can be found here ([click to download](https://github.com/covaanalyst/cova-root/blob/master/longversion.pdf))
 - The directory [`cova`](cova/) contains the source code of COVA.
 - The directory [`constraintBench`](constraintBench/) contains the micro-benchmark used for COVA.
 - The lists of constraint-APIs can be found in directory [`cova/config/`](cova/config/): click to see [UICallback-related APIs](cova/config/UICallback_APIs.txt), [Configuration-related APIs](cova/config/Configuration_APIs.txt) and [IO-related APIs](cova/config/IO_APIs.txt)
 - The tests for running constraintBench for COVA can be found in directory [`cova/src/test/java/constraintBenchTestSuite/`](cova/src/test/java/constraintBenchTestSuite)
+
+## API Documentation
+There is a generated [JavaDoc](https://secure-software-engineering.github.io/COVA/docs/) available.
 
 ## How to Build COVA?
 COVA is implemented as a maven project. However, since some dependencies COVA uses do not have public maven repositories, to build COVA you need to follow the steps below:
