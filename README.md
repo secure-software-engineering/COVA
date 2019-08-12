@@ -1,5 +1,4 @@
-# COVA - Constraint Analysis with VASCO[![Build Status](https://travis-ci.com/covaanalyst/cova-root.svg?branch=master)](https://travis-ci.com/covaanalyst/cova-root)
-We respect the double blind review process and removed information such as author and institution names in source code to maintain the author anonymity. 
+# COVA - Constraint Analysis with VASCO[![Build Status]https://travis-ci.com/secure-software-engineering/COVA.svg?branch=master)](https://travis-ci.com/secure-software-engineering/COVA)
 
 - The Android apps we evaluated can be found on kaggle.com ([click to download](https://www.kaggle.com/covaanalyst1/cova-dataset)) 
 - The long version of the paper can be found here ([click to download](https://github.com/covaanalyst/cova-root/blob/master/longversion.pdf))
