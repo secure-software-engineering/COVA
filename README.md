@@ -7,6 +7,9 @@
 - The lists of constraint-APIs can be found in directory [`cova/config/`](cova/config/): click to see [UICallback-related APIs](cova/config/UICallback_APIs.txt), [Configuration-related APIs](cova/config/Configuration_APIs.txt) and [IO-related APIs](cova/config/IO_APIs.txt)
 - The tests for running constraintBench for COVA can be found in directory [`cova/src/test/java/constraintBenchTestSuite/`](cova/src/test/java/constraintBenchTestSuite)
 
+## API Documentation
+There is a generated [JavaDoc](https://secure-software-engineering.github.io/COVA/docs/) available.
+
 ## How to Build COVA?
 COVA is implemented as a maven project. However, since some dependencies COVA uses do not have public maven repositories, to build COVA you need to follow the steps below:
 
