@@ -68,11 +68,7 @@ public class SceneTransformerFactory {
    * @param sourceCodePath
    *          the source code path of the apk
    * @param configFilePath
-   *          the resource path
-   * @param writeHtmlOutput
-   *          true, if generates html pages for visualization
-   * @param verbose
-   *          the verbose
+   *          the config file path
    * @param reporter
    *          the reporter
    * @return the scene transformer
@@ -142,10 +138,10 @@ public class SceneTransformerFactory {
    *          the test class name
    * @param testMethodName
    *          the test method name
-   * @param verbose
-   *          the verbose
    * @param reporter
    *          the reporter
+   * @param sourceCodeDir
+   *          the source code dir
    * @return the scene transformer
    */
   public SceneTransformer createAnalysisTransformerForTestCase(String className, String testMethodName,
@@ -175,6 +171,14 @@ public class SceneTransformerFactory {
   /**
    * Creates a new SceneTransformer object for java application.
    *
+   * @param apkName
+   *          the apk name
+   * @param sourceCodePath
+   *          the source code path
+   * @param configFilePath
+   *          the config file path
+   * @param reporter
+   *          the reporter
    * @return the scene transformer
    */
   public SceneTransformer createAnalysisTransformerForJavaApp(String apkName, String sourceCodePath, String configFilePath,
