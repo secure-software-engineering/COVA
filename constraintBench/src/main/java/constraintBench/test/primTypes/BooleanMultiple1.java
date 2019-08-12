@@ -3,7 +3,7 @@ package constraintBench.test.primTypes;
 import constraintBench.utils.Configuration;
 
 /**
- * 
+ * @author Linghui Luo
  *
  */
 public class BooleanMultiple1 {

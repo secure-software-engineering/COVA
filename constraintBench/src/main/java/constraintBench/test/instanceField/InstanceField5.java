@@ -7,7 +7,7 @@ import constraintBench.utils.Configuration;
  * callee(Foo foo).
  * 
  *
- *
+ * @author Linghui Luo
  */
 public class InstanceField5 {
 

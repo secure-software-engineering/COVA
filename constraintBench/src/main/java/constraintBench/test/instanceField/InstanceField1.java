@@ -5,7 +5,7 @@ import constraintBench.utils.Configuration;
 /**
  * foo.b is set to feature B in test01 and used in if statement in callee().
  * 
- * 
+ * @author Linghui Luo
  */
 public class InstanceField1 {
 

@@ -3,7 +3,7 @@ package constraintBench.test.array;
 import constraintBench.utils.Configuration;
 
 /**
- *
+ * @author Linghui Luo
  */
 public class Array1 {
 

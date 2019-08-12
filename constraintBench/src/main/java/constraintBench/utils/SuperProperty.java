@@ -2,7 +2,7 @@ package constraintBench.utils;
 
 /**
  * 
- * 
+ * @author Linghui Luo
  */
 public class SuperProperty {
   protected int v;

@@ -1,5 +1,19 @@
-/*
- * @version 1.0
+/**
+ * Copyright (C) 2019 Linghui Luo 
+ * 
+ * This library is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 2.1 of the 
+ * License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * 
  */
 
 package cova.rules;
@@ -9,6 +23,12 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import soot.SootMethod;
+import soot.Unit;
+import soot.Value;
+import soot.jimple.AssignStmt;
+import soot.jimple.Stmt;
+
 import boomerang.util.AccessPath;
 import cova.core.RuleManager;
 import cova.data.Abstraction;
@@ -17,12 +37,6 @@ import cova.data.WrappedAccessPath;
 import cova.data.taints.AbstractTaint;
 import cova.data.taints.SourceTaint;
 import cova.vasco.Context;
-
-import soot.SootMethod;
-import soot.Unit;
-import soot.Value;
-import soot.jimple.AssignStmt;
-import soot.jimple.Stmt;
 
 /**
  * The Class SourceTaintCreationRule defines the creation rules of source taints.

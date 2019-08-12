@@ -6,7 +6,7 @@ import constraintBench.utils.SuperProperty;
 
 /**
  * 
- * 
+ * @author Linghui Luo
  */
 public class NonPrimSingle2 {
 

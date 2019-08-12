@@ -7,7 +7,7 @@ import constraintBench.utils.Configuration;
  * should be created.
  * 
  * 
- *
+ * @author Linghui Luo
  */
 public class InstanceField7 {
 

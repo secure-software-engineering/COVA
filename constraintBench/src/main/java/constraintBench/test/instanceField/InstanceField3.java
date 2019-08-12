@@ -3,7 +3,7 @@ package constraintBench.test.instanceField;
 import constraintBench.utils.Configuration;
 
 /**
- * 
+ * @author Linghui Luo
  * 
  *
  */

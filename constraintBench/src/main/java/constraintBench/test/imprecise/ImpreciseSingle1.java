@@ -3,7 +3,7 @@ package constraintBench.test.imprecise;
 import constraintBench.utils.Configuration;
 
 /**
- * 
+ * @author Linghui Luo
  * 
  */
 public class ImpreciseSingle1 {

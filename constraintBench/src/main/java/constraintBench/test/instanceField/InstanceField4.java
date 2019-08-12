@@ -6,7 +6,7 @@ import constraintBench.utils.Configuration;
  * bar.field1 is set to feature A, foo.bar is set to bar, foo.bar.field1 is used in if-statement.
  * 
  * 
- *
+ * @author Linghui Luo
  */
 public class InstanceField4 {
 

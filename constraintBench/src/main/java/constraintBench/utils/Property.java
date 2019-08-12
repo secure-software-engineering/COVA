@@ -3,7 +3,7 @@ package constraintBench.utils;
 /**
  * 
  * 
- *
+ * @author Linghui Luo
  */
 public class Property extends SuperProperty{
   private int v;

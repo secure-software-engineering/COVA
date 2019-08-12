@@ -4,7 +4,7 @@ import constraintBench.utils.StaticField;
 
 /**
  * 
- * 
+ * @author Linghui Luo
  */
 public class StaticField2 {
 

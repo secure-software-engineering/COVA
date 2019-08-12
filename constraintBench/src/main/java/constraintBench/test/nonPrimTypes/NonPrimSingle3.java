@@ -5,7 +5,7 @@ import constraintBench.utils.Property;
 
 /**
  * 
- * 
+ * @author Linghui Luo
  */
 public class NonPrimSingle3 {
 

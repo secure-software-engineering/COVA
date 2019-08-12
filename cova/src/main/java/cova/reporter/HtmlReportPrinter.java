@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2019 Linghui Luo 
+ * 
+ * This library is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 2.1 of the 
+ * License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
 
 package cova.reporter;
 
@@ -22,6 +39,8 @@ import static j2html.TagCreator.title;
 import static j2html.TagCreator.tr;
 import static j2html.TagCreator.ul;
 
+import com.google.common.io.Files;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -41,16 +60,13 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.google.common.io.Files;
+import soot.SootClass;
 
+import cova.data.IConstraint;
 import j2html.Config;
 import j2html.tags.ContainerTag;
 import j2html.tags.DomContent;
 import j2html.tags.MyLi;
-
-import soot.SootClass;
-
-import cova.data.IConstraint;
 
 /**
  * The Class HtmlReportPrinter is used to print the constraints in source code as HTML files.

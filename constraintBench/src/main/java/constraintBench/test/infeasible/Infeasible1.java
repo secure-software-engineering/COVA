@@ -3,7 +3,7 @@ package constraintBench.test.infeasible;
 import constraintBench.utils.Configuration;
 
 /**
- * 
+ * @author Linghui Luo
  * 
  */
 public class Infeasible1 {

@@ -4,7 +4,7 @@ import constraintBench.utils.Configuration;
 
 /**
  * 
- *
+ * @author Linghui Luo
  */
 public class IntegerMultiple2 {
 

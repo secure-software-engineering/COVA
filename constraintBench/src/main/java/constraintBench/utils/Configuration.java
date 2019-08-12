@@ -6,7 +6,7 @@ package constraintBench.utils;
  * This is the class contains faked configuration options for test cases
  * 
  * 
- *
+ * @author Linghui Luo
  */
 public class Configuration {
   public static String fieldA = "FA";

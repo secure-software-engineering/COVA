@@ -7,7 +7,7 @@ import constraintBench.utils.Configuration;
  * callee(Foo foo). foo.bar.a is used in if-statement after calling callee(Foo foo). No constraint should be created.
  * 
  *
- *
+ * @author Linghui Luo
  */
 public class InstanceField6 {
 

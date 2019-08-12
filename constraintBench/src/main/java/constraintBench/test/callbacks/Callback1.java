@@ -3,7 +3,7 @@ package constraintBench.test.callbacks;
 import constraintBench.utils.Callback;
 
 /**
- * 
+ * @author Linghui Luo
  *
  */
 public class Callback1 {

@@ -13,9 +13,9 @@
  * 
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * Modified by Linghui Luo for COVA
  */
-
 package cova.vasco;
 
 import java.util.Map;

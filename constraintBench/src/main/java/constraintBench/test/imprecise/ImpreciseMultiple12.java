@@ -4,7 +4,7 @@ import constraintBench.utils.Configuration;
 import constraintBench.utils.Property;
 
 /**
- * 
+ * @author Linghui Luo
  * 
  */
 public class ImpreciseMultiple12 {

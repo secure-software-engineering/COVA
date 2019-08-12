@@ -3,7 +3,7 @@ package constraintBench.test.indirect;
 import constraintBench.utils.Configuration;
 
 /**
- * 
+ * @author Linghui Luo
  * 
  */
 public class IndirectConcrete1 {
