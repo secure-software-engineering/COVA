@@ -1,4 +1,7 @@
-![Logo](cova-logo.PNG)
+<p align="left">
+<img src="cova-logo.PNG" width="600">
+</p> 
+
 
 # COVA - Constraint Analysis with VASCO[![Build Status](https://travis-ci.com/secure-software-engineering/COVA.svg?branch=master)](https://travis-ci.com/secure-software-engineering/COVA)
 - The Android apps we evaluated can be found on kaggle.com ([click to download](https://www.kaggle.com/covaanalyst1/cova-dataset)) 
