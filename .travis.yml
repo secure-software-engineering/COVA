@@ -17,6 +17,6 @@ before_install:
   - echo LD_LIBRARY_PATH
 
 install: true
-script: mvn clean install -DskipTests
+script: mvn clean install 
 
 
