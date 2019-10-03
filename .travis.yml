@@ -11,10 +11,13 @@ branches:
 # commands that need to be run before installing the dependencies
 before_install:
   - REPO_LOCATION=$("pwd")
-  - sudo chmod +x ./cova/localLibs/install_local_libs.sh
+#  - sudo chmod +x ./cova/localLibs/install_local_libs.sh is now +x in repo
   - ./cova/localLibs/install_local_libs.sh
   - export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-ubuntu/bin"
-  - echo LD_LIBRARY_PATH
+  - echo "ld_library_path: $LD_LIBRARY_PATH"
+  - stat $LD_LIBRARY_PATH
+  - echo "java_home: $JAVA_HOME"
+  - stat $JAVA_HOME/lib/rt.jar
 
 install: true
 script: mvn clean install 
