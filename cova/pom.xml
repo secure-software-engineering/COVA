@@ -134,7 +134,7 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>covaanalyst</groupId>
+			<groupId>de.upb.swt</groupId>
 			<artifactId>constraintBench</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>test</scope>
