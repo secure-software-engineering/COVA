@@ -19,7 +19,9 @@ before_install:
   - stat $LD_LIBRARY_PATH
   - echo "java_home:"
   - echo $JAVA_HOME
-  - stat $JAVA_HOME/lib/rt.jar
+  - ls -a $JAVA_HOME
+  - ls -a $JAVA_HOME/lib
+#  - stat $JAVA_HOME/lib/rt.jar
 
 install: true
 script: mvn clean install 
