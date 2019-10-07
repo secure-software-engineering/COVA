@@ -18,6 +18,7 @@
 package constraintBenchTestSuite.androidApp;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import utils.ConstraintBenchTestFrameworkForAndroidApp;
@@ -28,7 +29,7 @@ public class ReflectionTest extends ConstraintBenchTestFrameworkForAndroidApp {
     targetTestAppName = "ReflectionTest";
   }
 
-  @Test
+  @Ignore
   public void test() {
     Assert.assertTrue(results.size() > 0);
   }
