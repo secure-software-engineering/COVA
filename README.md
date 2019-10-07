@@ -37,11 +37,11 @@ Value: `$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-win/bin`
 ### - Linux
 Currently, the repository only includes Z3 for Ubuntu and Debian-8.5 64bit.
 
-- **Userwide via OS**:  
+- **via OS**:  
 
 Ubuntu based distributions:
 
-Execute the following command in yout command line: (LD_LIBRARY_PATH cannot be set in an interactive shell since Ubuntu 9.04)
+Execute the following command in yout command line: (you can set LD_LIBRARY_PATH otherwise only in an interactive shell since Ubuntu 9.04)
     `REPO_LOCATION=$("pwd") && echo "$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-ubuntu/bin" | sudo tee /etc/ld.so.conf.d/cova.conf && sudo ldconfig`
 
 Other:
