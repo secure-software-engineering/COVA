@@ -45,17 +45,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.5.201505241946</version>
@@ -118,7 +107,7 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>covaanalyst</groupId>
+      <groupId>de.upb.swt</groupId>
       <artifactId>constraintBench</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <scope>test</scope>
