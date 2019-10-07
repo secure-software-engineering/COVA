@@ -1,5 +1,5 @@
 language: java
-jdk: openjdk11
+jdk: openjdk8
 
 cache:
   directories:
@@ -14,10 +14,8 @@ before_install:
 #  - sudo chmod +x ./cova/localLibs/install_local_libs.sh is now +x in repo
   - ./cova/localLibs/install_local_libs.sh
   - export LD_LIBRARY_PATH="$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-ubuntu/bin"
-  - echo "ld_library_path"
   - echo $LD_LIBRARY_PATH
   - stat $LD_LIBRARY_PATH
-  - echo "java_home:"
   - echo $JAVA_HOME
   - ls -a $JAVA_HOME
   - ls -a $JAVA_HOME/lib
