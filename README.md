@@ -8,6 +8,7 @@ COVA is a static analysis tool to compute path constraints based on user-defined
 - The Android apps we evaluated in the paper can be found on kaggle.com ([click to download](https://www.kaggle.com/covaanalyst1/cova-dataset)) 
 - The directory [`cova`](cova/) contains the source code of COVA.
 - The directory [`constraintBench`](constraintBench/) contains the micro-benchmark used for COVA.
+- The directory [`covaIDE`](covaIDE/) contains the code for COVA IDE support.
 - The lists of constraint-APIs can be found in directory [`cova/config/`](cova/config/): click to see [UICallback-related APIs](cova/config/UICallback_APIs.txt), [Configuration-related APIs](cova/config/Configuration_APIs.txt) and [IO-related APIs](cova/config/IO_APIs.txt)
 - The tests for running constraintBench for COVA can be found in directory [`cova/src/test/java/constraintBenchTestSuite/`](cova/src/test/java/constraintBenchTestSuite)
 - For more detailed description of COVA's underlying analysis, a long version of the paper can be found here ([click to download](https://github.com/covaanalyst/cova-root/blob/master/longversion.pdf))
