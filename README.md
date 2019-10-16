@@ -3,7 +3,7 @@
 </p> 
 
 
-# COVA - Constraint Analysis with VASCO[![Build Status](https://travis-ci.com/secure-software-engineering/COVA.svg?branch=master)](https://travis-ci.com/secure-software-engineering/COVA)
+# COVA - A static analysis tool to compute path conditions [![Build Status](https://travis-ci.com/secure-software-engineering/COVA.svg?branch=master)](https://travis-ci.com/secure-software-engineering/COVA)
 COVA is a static analysis tool to compute path constraints based on user-defined APIs. COVA was created for our paper ([ASE 2019](https://2019.ase-conferences.org/)) [A Qualitative Analysis of Android Taint-Analysis Results](https://linghuiluo.github.io/ASE19Cova.pdf). 
 - The Android apps we evaluated in the paper can be found on kaggle.com ([click to download](https://www.kaggle.com/covaanalyst1/cova-dataset)) 
 - The directory [`cova`](cova/) contains the source code of COVA.
