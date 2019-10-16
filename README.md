@@ -11,6 +11,8 @@ COVA is a static analysis tool to compute path constraints based on user-defined
 - The lists of constraint-APIs can be found in directory [`cova/config/`](cova/config/): click to see [UICallback-related APIs](cova/config/UICallback_APIs.txt), [Configuration-related APIs](cova/config/Configuration_APIs.txt) and [IO-related APIs](cova/config/IO_APIs.txt)
 - The tests for running constraintBench for COVA can be found in directory [`cova/src/test/java/constraintBenchTestSuite/`](cova/src/test/java/constraintBenchTestSuite)
 - For more detailed description of COVA's underlying analysis, a long version of the paper can be found here ([click to download](https://github.com/covaanalyst/cova-root/blob/master/longversion.pdf))
+- The COVA IDE support is included in the develop branch. 
+
 ## API Documentation
 There is a generated [JavaDoc](https://secure-software-engineering.github.io/COVA/docs/) available.
 
