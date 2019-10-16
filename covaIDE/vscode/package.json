@@ -1,0 +1,91 @@
+{
+	"name": "cova-ide",
+	"description": "A language server for COVA",
+	"author": "Linghui Luo ",
+	"license": "EPL-2.0",
+	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": ""
+	},
+	"publisher": "linghui-luo",
+	"categories": [],
+	"keywords": [
+		"multi-root ready"
+	],
+	"engines": {
+		"vscode": "^1.30.0"
+	},
+	"activationEvents": [
+		"onLanguage:java"
+	],
+	"main": "./out/extension",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "covaIDE",
+					"title": "COVA",
+					"icon": "media/bug.svg"
+				}
+			]
+		},
+		"views": {
+			"covaIDE": [
+				{
+					"id": "covaIDE.constraintInfo",
+					"name": "Constraint Information"
+				}
+			]
+		},
+		"menus": {
+			"view/item/context": [
+				{
+					"command": "covaIDE.goto",
+					"group": "inline",
+					"when": "view == covaIDE.constraintInfo"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "covaIDE.goto",
+				"icon": "media/goto.svg",
+				"title": "Goto"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "COVA-IDE",
+			"properties": {
+				"TaintBench.trace.server": {
+					"scope": "window",
+					"type": "string",
+					"enum": [
+						"off",
+						"messages",
+						"verbose"
+					],
+					"default": "off",
+					"description": "Traces the communication between VS Code and the language server."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "cp ../target/covaIDE-0.0.1-SNAPSHOT.jar covaIDE-0.0.1-SNAPSHOT.jar && npm run compile",
+		"compile": "tsc -b",
+		"watch": "tsc -b -w",
+		"postinstall": "node ./node_modules/vscode/bin/install"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^5.2.1"
+	},
+	"devDependencies": {
+		"vscode": "^1.1.33",
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^11.13.0",
+		"tslint": "^5.15.0",
+		"typescript": "^3.4.2"
+	}
+}

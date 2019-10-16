@@ -12,6 +12,7 @@
 	<modules>
 		<module>cova</module>
 		<module>constraintBench</module>
+		<module>covaIDE</module>
 	</modules>
 	<build>
 	<!-- use eclipse ecj compiler for compilation instead of systems default -->
