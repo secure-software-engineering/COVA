@@ -19,26 +19,26 @@ package unitTestSuite.testData;
 
 import static org.junit.Assert.assertEquals;
 
-import com.microsoft.z3.BoolExpr;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
-import soot.IntType;
-import soot.Local;
-import soot.jimple.IntConstant;
-import soot.jimple.Jimple;
+import com.microsoft.z3.BoolExpr;
 
 import cova.core.SMTSolverZ3;
 import cova.data.ConstraintZ3;
+import cova.data.WitnessPath;
 import cova.data.WrappedAccessPath;
 import cova.data.WrappedTaintSet;
 import cova.data.taints.ConcreteTaint;
 import cova.data.taints.ImpreciseTaint;
 import cova.data.taints.SourceTaint;
 import cova.data.taints.SymbolicTaint;
+import soot.IntType;
+import soot.Local;
+import soot.jimple.IntConstant;
+import soot.jimple.Jimple;
 import utils.UnitTestFramework;
 
 public class testWrappedTaintSet extends UnitTestFramework {
@@ -47,8 +47,8 @@ public class testWrappedTaintSet extends UnitTestFramework {
   private final Local local = Jimple.v().newLocal("t", IntType.v());
   private final String symbol = "SymA";
   private final WrappedAccessPath accessPath = new WrappedAccessPath(local);
-  private final ConstraintZ3 c1 = new ConstraintZ3(e1, "A");
-  private final ConstraintZ3 c2 = new ConstraintZ3(e2, "A");
+  private final ConstraintZ3 c1 = new ConstraintZ3(e1, "A", new WitnessPath());
+  private final ConstraintZ3 c2 = new ConstraintZ3(e2, "A", new WitnessPath());
   private final SourceTaint taint1 = new SourceTaint(accessPath, c1, symbol);
   private final SourceTaint taint2 = new SourceTaint(new WrappedAccessPath(local),
       c2, symbol);

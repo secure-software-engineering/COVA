@@ -31,6 +31,10 @@ import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
 
+import cova.core.ConstraintAnalysis;
+import cova.core.InterproceduralCFG;
+import cova.data.IConstraint;
+import cova.source.data.Source;
 import soot.Body;
 import soot.Printer;
 import soot.Scene;
@@ -39,12 +43,6 @@ import soot.SootField;
 import soot.SootMethod;
 import soot.Unit;
 
-import cova.core.ConstraintAnalysis;
-import cova.core.InterproceduralCFG;
-import cova.data.IConstraint;
-import cova.source.data.Source;
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class ConstraintReporter is used to record the constraints computed by the analysis.
  *
@@ -250,7 +248,7 @@ public class ConstraintReporter {
       String s = sb.toString();
       s = StringUtils.replace(s, "\u2227", "^");
       s = StringUtils.replace(s, "\u2228", "v");
-      System.out.println(s + "\n");
+      System.err.println(s + "\n");
     }
   }
 
@@ -270,7 +268,7 @@ public class ConstraintReporter {
         String s = sb.toString();
         s = StringUtils.replace(s, "\u2227", "^");
         s = StringUtils.replace(s, "\u2228", "v");
-        System.out.println(s + "\n");
+        System.err.println(s + "\n");
       }
     }
   }

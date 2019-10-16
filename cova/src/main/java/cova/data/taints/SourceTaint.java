@@ -18,6 +18,8 @@
 
 package cova.data.taints;
 
+import java.util.List;
+
 import cova.data.IConstraint;
 import cova.data.WrappedAccessPath;
 import cova.rules.SourceTaintCreationRule;
@@ -38,6 +40,7 @@ import cova.source.symbolic.SymbolicNameManager;
  */
 public class SourceTaint extends SymbolicTaint {
 
+  
   /**
    * The constructor of a taint created at a statement that contains a source.
    * 
@@ -52,7 +55,12 @@ public class SourceTaint extends SymbolicTaint {
   public SourceTaint(WrappedAccessPath accessPath, IConstraint constraint, String symbolicName) {
     super(accessPath, constraint, symbolicName);
   }
-
+  
+  public SourceTaint(WrappedAccessPath accessPath, IConstraint constraint, String symbolicName, List<String> positionInfo) {
+	    this(accessPath, constraint, symbolicName);
+	    this.info=positionInfo;
+  }
+	  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("S(");
@@ -67,12 +75,13 @@ public class SourceTaint extends SymbolicTaint {
 
   @Override
   public AbstractTaint copy() {
-    return new SourceTaint(accessPath, constraint, symbolicName);
+    return new SourceTaint(accessPath, constraint, symbolicName, info);
   }
 
   @Override
   public AbstractTaint createNewTaintFromAccessPath(WrappedAccessPath a) {
-    return new SourceTaint(a, constraint, symbolicName);
+    return new SourceTaint(a, constraint, symbolicName, info);
   }
+
 
 }

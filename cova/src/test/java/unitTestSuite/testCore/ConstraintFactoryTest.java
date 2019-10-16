@@ -17,14 +17,21 @@
  */
 package unitTestSuite.testCore;
 
-import com.microsoft.z3.BoolExpr;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.microsoft.z3.BoolExpr;
+
+import cova.core.ConstraintFactory;
+import cova.core.SMTSolverZ3;
+import cova.data.ConstraintZ3;
+import cova.data.Operator;
+import cova.data.WitnessPath;
+import cova.data.WrappedAccessPath;
+import cova.data.taints.SourceTaint;
 import soot.BooleanType;
 import soot.FloatType;
 import soot.IntType;
@@ -37,13 +44,6 @@ import soot.jimple.internal.JEqExpr;
 import soot.jimple.internal.JGeExpr;
 import soot.jimple.internal.JLeExpr;
 import soot.jimple.internal.JNeExpr;
-
-import cova.core.ConstraintFactory;
-import cova.core.SMTSolverZ3;
-import cova.data.ConstraintZ3;
-import cova.data.Operator;
-import cova.data.WrappedAccessPath;
-import cova.data.taints.SourceTaint;
 import utils.UnitTestFramework;
 
 public class ConstraintFactoryTest extends UnitTestFramework {
@@ -51,8 +51,8 @@ public class ConstraintFactoryTest extends UnitTestFramework {
   private final BoolExpr e2 = SMTSolverZ3.getInstance().makeBoolTerm("C2", false);
   private final String symbolic1 = "Sym1";
   private final String symbolic2 = "Sym2";
-  private final ConstraintZ3 c1 = new ConstraintZ3(e1, "C1");
-  private final ConstraintZ3 c2 = new ConstraintZ3(e2, "C2");
+  private final ConstraintZ3 c1 = new ConstraintZ3(e1, "C1", new WitnessPath());
+  private final ConstraintZ3 c2 = new ConstraintZ3(e2, "C2", new WitnessPath());
   @Test
   public void testCreateConstraintFromSourceTaints1() {
     // test constraint creation for two boolean source taints
@@ -63,7 +63,7 @@ public class ConstraintFactoryTest extends UnitTestFramework {
     SourceTaint s2 = new SourceTaint(new WrappedAccessPath(local2), c2, symbolic2);
     // Sym1 = Sym2 (goto case)
     ConditionExpr conditionExpr = new JEqExpr(local1, local2);
-    ConstraintZ3 constraint = (ConstraintZ3) ConstraintFactory.createConstraint(s1, s2,
+    ConstraintZ3 constraint = (ConstraintZ3) ConstraintFactory.createConstraint(false, s1, s2,
         conditionExpr, false);
     BoolExpr actual = constraint.getExpr();
     // compute expected constraint
@@ -82,7 +82,7 @@ public class ConstraintFactoryTest extends UnitTestFramework {
     }
     Assert.assertTrue(equivalent);
     // !(Sym1 = Sym2) (fall through case)
-    ConstraintZ3 negation = (ConstraintZ3) ConstraintFactory.createConstraint(s1, s2, conditionExpr,
+    ConstraintZ3 negation = (ConstraintZ3) ConstraintFactory.createConstraint(false, s1, s2, conditionExpr,
         true);
     actual = negation.getExpr();
     // compute expected constraint
@@ -111,7 +111,7 @@ public class ConstraintFactoryTest extends UnitTestFramework {
     SourceTaint s2 = new SourceTaint(new WrappedAccessPath(local2), c2, symbolic2);
     // Sym1 <= Sym2 (goto case)
     ConditionExpr conditionExpr = new JLeExpr(local1, local2);
-    ConstraintZ3 constraint = (ConstraintZ3) ConstraintFactory.createConstraint(s1, s2,
+    ConstraintZ3 constraint = (ConstraintZ3) ConstraintFactory.createConstraint(false, s1, s2,
         conditionExpr, false);
     BoolExpr actual = constraint.getExpr();
     // compute expected constraint
@@ -130,7 +130,7 @@ public class ConstraintFactoryTest extends UnitTestFramework {
     }
     Assert.assertTrue(equivalent);
     // !(Sym1 <= Sym2) (fall through case)
-    ConstraintZ3 negation = (ConstraintZ3) ConstraintFactory.createConstraint(s1, s2, conditionExpr,
+    ConstraintZ3 negation = (ConstraintZ3) ConstraintFactory.createConstraint(false, s1, s2, conditionExpr,
         true);
     actual = negation.getExpr();
     // compute expected constraint
@@ -160,7 +160,7 @@ public class ConstraintFactoryTest extends UnitTestFramework {
     SourceTaint s2 = new SourceTaint(new WrappedAccessPath(local2), c2, symbolic2);
     // Sym1 >= Sym2 (goto case)
     ConditionExpr conditionExpr = new JGeExpr(local1, local2);
-    ConstraintZ3 constraint = (ConstraintZ3) ConstraintFactory.createConstraint(s1, s2,
+    ConstraintZ3 constraint = (ConstraintZ3) ConstraintFactory.createConstraint(false, s1, s2,
         conditionExpr, false);
     BoolExpr actual = constraint.getExpr();
     // compute expected constraint
@@ -179,7 +179,7 @@ public class ConstraintFactoryTest extends UnitTestFramework {
     }
     Assert.assertTrue(equivalent);
     // !(Sym1 >= Sym2) (fall through case)
-    ConstraintZ3 negation = (ConstraintZ3) ConstraintFactory.createConstraint(s1, s2, conditionExpr,
+    ConstraintZ3 negation = (ConstraintZ3) ConstraintFactory.createConstraint(false, s1, s2, conditionExpr,
         true);
     actual = negation.getExpr();
     // compute expected constraint
@@ -208,7 +208,7 @@ public class ConstraintFactoryTest extends UnitTestFramework {
     SourceTaint s2 = new SourceTaint(new WrappedAccessPath(local2), c2, symbolic2);
     // Sym1 = Sym2 (goto case)
     ConditionExpr conditionExpr = new JEqExpr(local1, local2);
-    ConstraintZ3 constraint = (ConstraintZ3) ConstraintFactory.createConstraint(s1, s2,
+    ConstraintZ3 constraint = (ConstraintZ3) ConstraintFactory.createConstraint(false, s1, s2,
         conditionExpr, false);
     BoolExpr actual = constraint.getExpr();
     // compute expected constraint
@@ -227,7 +227,7 @@ public class ConstraintFactoryTest extends UnitTestFramework {
     }
     Assert.assertTrue(equivalent);
     // !(Sym1 = Sym2) (fall through case)
-    ConstraintZ3 negation = (ConstraintZ3) ConstraintFactory.createConstraint(s1, s2, conditionExpr,
+    ConstraintZ3 negation = (ConstraintZ3) ConstraintFactory.createConstraint(false, s1, s2, conditionExpr,
         true);
     actual = negation.getExpr();
     // compute expected constraint
@@ -256,7 +256,7 @@ public class ConstraintFactoryTest extends UnitTestFramework {
     SourceTaint s2 = new SourceTaint(new WrappedAccessPath(local2), c2, symbolic2);
     // Sym1 != Sym2 (goto)
     ConditionExpr conditionExpr = new JNeExpr(local1, local2);
-    ConstraintZ3 constraint = (ConstraintZ3) ConstraintFactory.createConstraint(s1, s2,
+    ConstraintZ3 constraint = (ConstraintZ3) ConstraintFactory.createConstraint(false, s1, s2,
         conditionExpr, false);
     BoolExpr actual = constraint.getExpr();
     // compute expected constraint
@@ -275,7 +275,7 @@ public class ConstraintFactoryTest extends UnitTestFramework {
     }
     Assert.assertTrue(equivalent);
     // !(Sym1 != Sym2) (fall through case)
-    ConstraintZ3 negation = (ConstraintZ3) ConstraintFactory.createConstraint(s1, s2, conditionExpr,
+    ConstraintZ3 negation = (ConstraintZ3) ConstraintFactory.createConstraint(false, s1, s2, conditionExpr,
         true);
     actual = negation.getExpr();
     // compute expected constraint

@@ -83,4 +83,10 @@ public interface IConstraint {
   public void simplify();
 
   public String toReadableString();
+  
+  /**
+   * 
+   * @return a witness path for this constraint.
+   */
+  public WitnessPath getPath();
 }

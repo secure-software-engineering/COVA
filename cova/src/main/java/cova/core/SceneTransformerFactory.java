@@ -24,6 +24,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import cova.reporter.ConstraintReporter;
+import cova.reporter.HtmlReportPrinter;
+import cova.setup.config.Config;
+import cova.source.SourceManager;
 import soot.Body;
 import soot.MethodOrMethodContext;
 import soot.PackManager;
@@ -34,11 +38,6 @@ import soot.Unit;
 import soot.jimple.infoflow.android.callbacks.CallbackDefinition;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.util.queue.QueueReader;
-
-import cova.reporter.ConstraintReporter;
-import cova.reporter.HtmlReportPrinter;
-import cova.setup.config.Config;
-import cova.source.SourceManager;
 
 /**
  * A factory for creating soot SceneTransformer objects.
@@ -116,7 +115,7 @@ public class SceneTransformerFactory {
         RuleManager ruleManager = new RuleManager(icfg, sourceManager, config);
         ConstraintAnalysis analysis = new ConstraintAnalysis(ruleManager);
         analysis.doAnalysis();
-        if (config.isWriteHtmlOutput() || config.isWriteJimpleOutput()) {
+        if (config.computeConstraintMap()||config.isWriteHtmlOutput() || config.isWriteJimpleOutput()) {
           reporter.setAnalysisResults(analysis, true);
           if (config.isWriteHtmlOutput()) {
             String htmlOutputPath = outputPath + "htmlOutput" + File.separator + apkName;
@@ -193,7 +192,7 @@ public class SceneTransformerFactory {
         RuleManager ruleManager = new RuleManager(icfg, sourceManager, config);
         ConstraintAnalysis analysis = new ConstraintAnalysis(ruleManager);
         analysis.doAnalysis();
-        if (config.isWriteHtmlOutput() || config.isWriteJimpleOutput()) {
+        if (config.computeConstraintMap()||config.isWriteHtmlOutput() || config.isWriteJimpleOutput()) {
           reporter.setAnalysisResults(analysis, true);
           if (config.isWriteHtmlOutput()) {
             String htmlOutputPath = outputPath + "htmlOutput" + File.separator + apkName;

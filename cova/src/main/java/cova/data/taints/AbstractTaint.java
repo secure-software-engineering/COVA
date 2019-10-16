@@ -18,10 +18,12 @@
 
 package cova.data.taints;
 
-import soot.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import cova.data.IConstraint;
 import cova.data.WrappedAccessPath;
+import soot.Type;
 
 /**
  * This is the abstract class of taint. A taint must have an access path and a constraint when this
@@ -37,6 +39,10 @@ public abstract class AbstractTaint {
   protected IConstraint constraint;
 
   /**
+   * Extra information stored in the taint, such as a witness path. 
+   */
+  protected List<String> info;
+  /**
    * Constructor of a taint
    *
    * @param accessPath
@@ -47,6 +53,7 @@ public abstract class AbstractTaint {
   public AbstractTaint(WrappedAccessPath accessPath, IConstraint constraint) {
     this.accessPath = accessPath;
     this.constraint = constraint;
+    this.info=new ArrayList<String>();
   }
 
   /**
@@ -153,6 +160,16 @@ public abstract class AbstractTaint {
    */
   public boolean isReturnTaint() {
     return accessPath.isReturnAccessPath();
+  }
+  
+  public List<String> getExtraInfo()
+  {
+	  return this.info;
+  }
+  
+  public void setExtraInfo(List<String> info)
+  {
+	  this.info=info;
   }
 
 }

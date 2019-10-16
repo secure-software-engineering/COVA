@@ -18,25 +18,27 @@
 
 package cova.rules;
 
+import java.util.Collections;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import boomerang.util.AccessPath;
+import cova.core.RuleManager;
+import cova.data.Abstraction;
+import cova.data.IConstraint;
+import cova.data.NodeType;
+import cova.data.WitnessPath;
+import cova.data.WrappedAccessPath;
+import cova.data.taints.AbstractTaint;
+import cova.data.taints.SourceTaint;
+import cova.vasco.Context;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.AssignStmt;
 import soot.jimple.Stmt;
-
-import boomerang.util.AccessPath;
-import cova.core.RuleManager;
-import cova.data.Abstraction;
-import cova.data.IConstraint;
-import cova.data.WrappedAccessPath;
-import cova.data.taints.AbstractTaint;
-import cova.data.taints.SourceTaint;
-import cova.vasco.Context;
 
 /**
  * The Class SourceTaintCreationRule defines the creation rules of source taints.
@@ -106,6 +108,8 @@ public class SourceTaintCreationRule {
     SourceTaint newSourceTaint = searchForSource(assignStmt, constraint);
     boolean createdSourceTaint = false;
     if (newSourceTaint != null) {
+  	  if(ruleManager.getConfig().recordPath())
+		  newSourceTaint.setExtraInfo(Collections.singletonList(WitnessPath.generatePositionString(NodeType.data, context.getMethod().getDeclaringClass().getName(), node.getJavaSourceStartLineNumber())));
       createdSourceTaint = true;
       Value leftOp = assignStmt.getLeftOp();
       Set<AbstractTaint> taintsOfLeftOp = in.taints()
@@ -135,6 +139,7 @@ public class SourceTaintCreationRule {
             in.taints().removeAll(in.taints().getTaintsWithAccessPath(alias));
           SourceTaint aliasTaint = new SourceTaint(alias, newSourceTaint.getConstraint(),
               newSourceTaint.getSymbolicName());
+          aliasTaint.setExtraInfo(Collections.singletonList(WitnessPath.generatePositionString(NodeType.data, context.getMethod().getDeclaringClass().getName(), node.getJavaSourceStartLineNumber())));
           in.taints().add(aliasTaint);
           }
         }

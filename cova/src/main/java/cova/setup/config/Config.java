@@ -71,9 +71,20 @@ public class Config {
 
   /** True, if print html output. */
   private boolean writeHtmlOutput;
+  
+  /**
+   * True, if the whole constraint map should be computed.
+   */
+  private boolean computeConstraintMap;
 
-  /** The location for configuration files. */
+
+/** The location for configuration files. */
   private String configDir;
+  
+  /**
+   * True, if the control flow path should be recorded during the analysis. 
+   */
+  private boolean recordPath;
 
   /**
    * Instantiates a new configuration with nothing enabled.
@@ -93,40 +104,33 @@ public class Config {
     timeOutDuration = 0;
     writeJimpleOutput = false;
     writeHtmlOutput = false;
-    this.configDir = System.getProperty("user.dir") + File.separator + "config";
+    computeConstraintMap=false; 
+    recordPath = false;
+    configDir = System.getProperty("user.dir") + File.separator + "config";
   }
 
   /**
    * Instantiates a new config.
    *
-   * @param uIConstraintCreationRuleOn
-   *          the u I constraint creation rule on
-   * @param taintConstraintCreationRuleOn
-   *          the taint constraint creation rule on
-   * @param sourceTaintCreationRule
-   *          the source taint creation rule
-   * @param taintPropagationRuleOn
-   *          the taint propagation rule on
-   * @param impreciseTaintCreationRule
-   *          the imprecise taint creation rule
-   * @param concreteTaintPropagationRuleOn
-   *          the concrete taint propagation rule on
-   * @param staticFieldPropagation
-   *          the static field propagation
-   * @param timeOutOn
-   *          the time out on
-   * @param timeOutDuration
-   *          the time out duration
-   * @param writeJimpleOutput
-   *          the write jimple output
-   * @param writeHtmlOutput
-   *          the write html output
+   * @param uIConstraintCreationRuleOn       
+   * @param taintConstraintCreationRuleOn         
+   * @param sourceTaintCreationRule         
+   * @param taintPropagationRuleOn          
+   * @param impreciseTaintCreationRule         
+   * @param concreteTaintPropagationRuleOn       
+   * @param staticFieldPropagation      
+   * @param timeOutOn     
+   * @param timeOutDuration        
+   * @param writeJimpleOutput            
+   * @param writeHtmlOutput       
+   * @param computeConstraintMap 
+   * @param recordPath the record path
    */
   public Config(boolean uIConstraintCreationRuleOn, boolean taintConstraintCreationRuleOn,
       boolean sourceTaintCreationRule, boolean taintPropagationRuleOn,
       boolean impreciseTaintCreationRule, boolean concreteTaintPropagationRuleOn,
       boolean staticFieldPropagation, boolean timeOutOn, int timeOutDuration,
-      boolean writeJimpleOutput, boolean writeHtmlOutput) {
+      boolean writeJimpleOutput, boolean writeHtmlOutput, boolean computeConstraintMap, boolean recordPath) {
     this();
     this.uIConstraintCreationRuleOn = uIConstraintCreationRuleOn;
     this.taintConstraintCreationRuleOn = taintConstraintCreationRuleOn;
@@ -139,8 +143,30 @@ public class Config {
     this.timeOutDuration = timeOutDuration;
     this.writeJimpleOutput = writeJimpleOutput;
     this.writeHtmlOutput = writeHtmlOutput;
+    this.computeConstraintMap=computeConstraintMap;
+    this.recordPath=recordPath;
+  }
+  
+  /**
+   * Checks if the control flow path should be recorded during the analysis.
+   *
+   * @return true, if successful
+   */
+  public boolean recordPath()
+  {
+	  return recordPath;
   }
 
+  /**
+   * Sets the recordPath configuration option.
+   *
+   * @param recordPath the new record path
+   */
+  public void setRecordPath(boolean recordPath)
+  {
+	  this.recordPath=recordPath;
+  }
+  
   /**
    * Checks if is UI constraint creation rule on.
    *
@@ -151,7 +177,7 @@ public class Config {
   }
 
   /**
-   * Sets the u I constraint creation rule on.
+   * Sets the UI constraint creation rule on.
    *
    * @param uIConstraintCreationRuleOn
    *          the new u I constraint creation rule on
@@ -386,16 +412,16 @@ public class Config {
   }
 
   /**
-   * Checks if is write jimple output.
+   * Checks if should write jimple output.
    *
-   * @return true, if is write jimple output
+   * @return true, if should write jimple output
    */
   public boolean isWriteJimpleOutput() {
     return writeJimpleOutput;
   }
 
   /**
-   * Sets the write jimple output.
+   * Sets the writeJimpleOutput option.
    *
    * @param writeJimpleOutput
    *          the new write jimple output
@@ -405,14 +431,31 @@ public class Config {
   }
 
   /**
-   * Checks if is write html output.
+   * Checks if should write html output.
    *
-   * @return true, if is write html output
+   * @return true, if should write html output
    */
   public boolean isWriteHtmlOutput() {
     return writeHtmlOutput;
   }
 
+  /**
+   * Check if the whole constraint map should be computed .
+   *
+   * @return true, if should compute
+   */
+  public boolean computeConstraintMap() {
+		return computeConstraintMap;
+	}
+
+	/**
+	 * Sets the computeConstraintMap option.
+	 *
+	 * @param computeConstraintMap the new computeConstraintMap value
+	 */
+	public void setComputeConstraintMap(boolean computeConstraintMap) {
+		this.computeConstraintMap = computeConstraintMap;
+	}
   /*
    * (non-Javadoc)
    * 
@@ -514,10 +557,20 @@ public class Config {
     setStaticFieldPropagationRuleOn(true);
   }
 
+  /**
+   * Gets the config dir.
+   *
+   * @return the config dir
+   */
   public String getConfigDir() {
     return this.configDir;
   }
 
+  /**
+   * Sets the config dir.
+   *
+   * @param configDir the new config dir
+   */
   public void setConfigDir(String configDir) {
     this.configDir = configDir;
   }

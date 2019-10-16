@@ -23,6 +23,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cova.core.InterproceduralCFG;
+import cova.core.RuleManager;
+import cova.data.Abstraction;
+import cova.data.IConstraint;
+import cova.data.WrappedAccessPath;
+import cova.data.taints.AbstractTaint;
+import cova.data.taints.ImpreciseTaint;
+import cova.data.taints.SourceTaint;
+import cova.data.taints.SymbolicTaint;
+import cova.source.symbolic.SymbolicNameManager;
+import cova.vasco.Context;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
@@ -35,18 +46,6 @@ import soot.jimple.InvokeExpr;
 import soot.jimple.LengthExpr;
 import soot.jimple.LookupSwitchStmt;
 import soot.jimple.NegExpr;
-
-import cova.core.InterproceduralCFG;
-import cova.core.RuleManager;
-import cova.data.Abstraction;
-import cova.data.IConstraint;
-import cova.data.WrappedAccessPath;
-import cova.data.taints.AbstractTaint;
-import cova.data.taints.ImpreciseTaint;
-import cova.data.taints.SourceTaint;
-import cova.data.taints.SymbolicTaint;
-import cova.source.symbolic.SymbolicNameManager;
-import cova.vasco.Context;
 
 /**
  * The Class ImpreciseTaintCreationRule defines the creation rules of imprecise taints.
@@ -61,8 +60,11 @@ public class ImpreciseTaintCreationRule {
 
   private InterproceduralCFG icfg;
 
+  private RuleManager ruleManager;
+  
   public ImpreciseTaintCreationRule(RuleManager ruleManager) {
     icfg = ruleManager.getIcfg();
+    this.ruleManager=ruleManager;
   }
 
   /**
@@ -81,17 +83,24 @@ public class ImpreciseTaintCreationRule {
   private ImpreciseTaint createImpreciseTaint(SymbolicTaint[] parentTaints, Value val,
       IConstraint constraint, Unit stmt) {
     ArrayList<String> sourceSymbolics = new ArrayList<String>();
+    List<String> info=new ArrayList<>();
     for (SymbolicTaint parent : parentTaints) {
       if (parent instanceof SourceTaint) {
         sourceSymbolics.add(parent.getSymbolicName());
       } else if (parent instanceof ImpreciseTaint) {
         sourceSymbolics.addAll(((ImpreciseTaint) parent).getSourceSymbolics());
       }
+      
+      info.addAll(parent.getExtraInfo());
     }
     String symbolicName = SymbolicNameManager.getInstance().createImpreciseSymbolicName(stmt,
         sourceSymbolics);
     ImpreciseTaint imprecise = new ImpreciseTaint(new WrappedAccessPath(val), constraint,
         parentTaints, sourceSymbolics, symbolicName);
+    if(ruleManager.getConfig().recordPath())
+    {
+    	imprecise.setExtraInfo(info);
+    }
     return imprecise;
   }
 

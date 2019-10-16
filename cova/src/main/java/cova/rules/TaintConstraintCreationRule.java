@@ -22,6 +22,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cova.core.ConstraintFactory;
+import cova.core.InterproceduralCFG;
+import cova.core.RuleManager;
+import cova.data.Abstraction;
+import cova.data.ConstraintZ3;
+import cova.data.IConstraint;
+import cova.data.NodeType;
+import cova.data.WrappedAccessPath;
+import cova.data.WrappedTaintSet;
+import cova.data.taints.AbstractTaint;
+import cova.data.taints.ConcreteTaint;
+import cova.vasco.Context;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
@@ -33,29 +45,22 @@ import soot.jimple.Jimple;
 import soot.jimple.LookupSwitchStmt;
 import soot.jimple.TableSwitchStmt;
 
-import cova.core.ConstraintFactory;
-import cova.core.InterproceduralCFG;
-import cova.core.RuleManager;
-import cova.data.Abstraction;
-import cova.data.ConstraintZ3;
-import cova.data.IConstraint;
-import cova.data.WrappedAccessPath;
-import cova.data.WrappedTaintSet;
-import cova.data.taints.AbstractTaint;
-import cova.data.taints.ConcreteTaint;
-import cova.vasco.Context;
-
 public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abstraction> {
   /** The interprocedural control flow graph. */
   private InterproceduralCFG icfg;
+  
+  private RuleManager ruleManager;
 
   public TaintConstraintCreationRule(RuleManager ruleManager) {
     icfg = ruleManager.getIcfg();
+    this.ruleManager=ruleManager;
   }
 
   /**
    * Creates the constraint for if-statement.
    *
+   * @param context 
+   * 		 the context
    * @param node
    *          the current if-statement
    * @param succ
@@ -64,7 +69,7 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
    *          the abstraction before analyzing the current if-statement
    * @return the abstraction after analyzing the current if-statement
    */
-  private Abstraction createConstraintForIfStmt(Unit node, Unit succ, Abstraction in) {
+  private Abstraction createConstraintForIfStmt(Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     IConstraint constraintOfStmt = in.getConstraintOfStmt();
     IfStmt ifStmt = (IfStmt) node;
     ConditionExpr conditionExpr = (ConditionExpr) ifStmt.getCondition();
@@ -84,7 +89,7 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
       constraint = ConstraintZ3.getFalse();
       for (AbstractTaint taint1 : involved1) {
         for (AbstractTaint taint2 : involved2) {
-          IConstraint c = ConstraintFactory.createConstraint(taint1, taint2, conditionExpr,
+          IConstraint c = ConstraintFactory.createConstraint(ruleManager.getConfig().recordPath(),taint1, taint2, conditionExpr,
               isFallThroughEdge);
           constraint = constraint.or(c, false);
         }
@@ -103,8 +108,10 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
       constraint = ConstraintZ3.getFalse();
       boolean allConcrete = true;
       for (AbstractTaint taint : involved1) {
-        IConstraint c = ConstraintFactory.createConstraint(taint, conditionExpr, false,
+        IConstraint c = ConstraintFactory.createConstraint(ruleManager.getConfig().recordPath(),taint, conditionExpr, false,
             isFallThroughEdge);
+        if(ruleManager.getConfig().recordPath())
+        	c.getPath().add(NodeType.control,context.getMethod().getDeclaringClass().getName(), node.getJavaSourceStartLineNumber());
         constraint = constraint.or(c, false);
         if (!(taint instanceof ConcreteTaint)) {
           allConcrete = false;
@@ -124,7 +131,7 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
       constraint = ConstraintZ3.getFalse();
       boolean allConcrete = true;
       for (AbstractTaint taint : involved2) {
-        IConstraint c = ConstraintFactory.createConstraint(taint, conditionExpr, true,
+        IConstraint c = ConstraintFactory.createConstraint(ruleManager.getConfig().recordPath(),taint, conditionExpr, true,
             isFallThroughEdge);
         constraint = constraint.or(c, false);
         if (!(taint instanceof ConcreteTaint)) {
@@ -151,6 +158,8 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
   /**
    * Creates the constraint for table switch statement.
    *
+   * @param context 
+   * 		 the context
    * @param node
    *          the current table switch statement
    * @param succ
@@ -159,7 +168,7 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
    *          the abstraction before analyzing the current table switch statement
    * @return the abstraction after analyzing the current table switch statement
    */
-  private Abstraction createConstraintForTableSwitchStmt(Unit node, Unit succ, Abstraction in) {
+  private Abstraction createConstraintForTableSwitchStmt(Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     IConstraint constraint = null;
     if (node instanceof TableSwitchStmt) {
       TableSwitchStmt switchStmt = (TableSwitchStmt) node;
@@ -183,8 +192,12 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
                 if (!defaultTarget.equals(switchStmt.getTarget(i))) {
                   int value = i + switchStmt.getLowIndex();
                   EqExpr eq = Jimple.v().newEqExpr(key, IntConstant.v(value));
-                  IConstraint c = ConstraintFactory.createConstraint(taint, eq, false, true);
-                  constraints.add(c);
+                  IConstraint c = ConstraintFactory.createConstraint(ruleManager.getConfig().recordPath(), taint, eq, false, true);
+                  if(ruleManager.getConfig().recordPath())
+                  { 
+                	  c.getPath().add(NodeType.control,context.getMethod().getDeclaringClass().getName(), node.getJavaSourceStartLineNumber());              
+                  }
+                	  constraints.add(c);
                 }
               }
               IConstraint defaultConstraint = ConstraintZ3.getTrue();
@@ -208,7 +221,7 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
             }
             if (createConstraint) {
               EqExpr eqExpr = Jimple.v().newEqExpr(key, IntConstant.v(value));
-              IConstraint c = ConstraintFactory.createConstraint(taint, eqExpr, false, false);
+              IConstraint c = ConstraintFactory.createConstraint(ruleManager.getConfig().recordPath(), taint, eqExpr, false, false);
               constraint = constraint.or(c, false);
             } else {
               constraint = ConstraintZ3.getTrue();
@@ -235,7 +248,7 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
    *          the in
    * @return the abstraction
    */
-  private Abstraction createConstraintForLookupSwitchStmt(Unit node, Unit succ, Abstraction in) {
+  private Abstraction createConstraintForLookupSwitchStmt(Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     Unit pred = icfg.getPredAsLookupSwitchStmt(node);
     if (pred != null) {
       // create constraint for the default case by lookupswitchstmt
@@ -248,6 +261,8 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
           ConcreteTaint concrete = (ConcreteTaint) taint;
           if (concrete.hasStmt() && concrete.getStmt().equals(switchStmt)) {
             constraint = constraint.and(concrete.getConstraint(), false);
+            if(ruleManager.getConfig().recordPath())
+            	constraint.getPath().add(NodeType.control, context.getMethod().getDeclaringClass().getName(),node.getJavaSourceStartLineNumber());
             remove.add(concrete);
           }
         }
@@ -264,11 +279,11 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
   @Override
   public Abstraction normalFlowFunction(Context<SootMethod, Unit, Abstraction> context, Unit node,
       Unit succ, Abstraction in) {
-    in = createConstraintForLookupSwitchStmt(node, succ, in);
+    in = createConstraintForLookupSwitchStmt(context, node, succ, in);
     if (node instanceof IfStmt) {
-      return createConstraintForIfStmt(node, succ, in);
+      return createConstraintForIfStmt(context,node, succ, in);
     } else if (node instanceof TableSwitchStmt) {
-      return createConstraintForTableSwitchStmt(node, succ, in);
+      return createConstraintForTableSwitchStmt(context, node, succ, in);
     } else {
       return null;
     }
@@ -289,6 +304,6 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
   @Override
   public Abstraction callLocalFlowFunction(Context<SootMethod, Unit, Abstraction> context,
       Unit node, Unit succ, Abstraction in) {
-    return createConstraintForLookupSwitchStmt(node, succ, in);
+    return createConstraintForLookupSwitchStmt(context, node, succ, in);
   }
 }

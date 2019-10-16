@@ -18,10 +18,18 @@
 
 package cova.core;
 
-import com.microsoft.z3.BoolExpr;
-
 import java.util.ArrayList;
 
+import com.microsoft.z3.BoolExpr;
+
+import cova.data.ConstraintZ3;
+import cova.data.IConstraint;
+import cova.data.Operator;
+import cova.data.WitnessPath;
+import cova.data.taints.AbstractTaint;
+import cova.data.taints.ConcreteTaint;
+import cova.data.taints.ImpreciseTaint;
+import cova.data.taints.SourceTaint;
 import soot.BooleanType;
 import soot.Type;
 import soot.Value;
@@ -32,20 +40,13 @@ import soot.jimple.EqExpr;
 import soot.jimple.IntConstant;
 import soot.jimple.NeExpr;
 
-import cova.data.ConstraintZ3;
-import cova.data.IConstraint;
-import cova.data.Operator;
-import cova.data.taints.AbstractTaint;
-import cova.data.taints.ConcreteTaint;
-import cova.data.taints.ImpreciseTaint;
-import cova.data.taints.SourceTaint;
-
 /**
  * A factory for creating constraint.
  * 
  */
 public class ConstraintFactory {
-
+  
+ 
   /**
    * Creates a new constraint when two source taints appear in the same condition expression of the
    * if-statement.
@@ -73,7 +74,7 @@ public class ConstraintFactory {
     ArrayList<String> symbolicNames = new ArrayList<String>();
     symbolicNames.add(source1.getSymbolicName());
     symbolicNames.add(source2.getSymbolicName());
-    IConstraint newConstraint = new ConstraintZ3(expr, symbolicNames);
+    IConstraint newConstraint = new ConstraintZ3(expr, symbolicNames, WitnessPath.merge(constraint1.getPath(), constraint2.getPath()));
     if (isFallThroughEdge) {
       newConstraint = newConstraint.negate(true);
     }
@@ -97,14 +98,14 @@ public class ConstraintFactory {
   private static IConstraint createConstraintFromConcreteTaints(ConcreteTaint concrete1,
       ConcreteTaint concrete2, ConditionExpr conditionExpr, boolean isFallThroughEdge) {
     IConstraint constraint1 = concrete1.getConstraint();
-    IConstraint constraitn2 = concrete2.getConstraint();
-    IConstraint constraint = constraint1.and(constraitn2, false);
+    IConstraint constraint2 = concrete2.getConstraint();
+    IConstraint constraint = constraint1.and(constraint2, false);
     Value value1 = concrete1.getCurrentValue();
     Value value2 = concrete2.getCurrentValue();
     if (value1 instanceof ArithmeticConstant && value2 instanceof ArithmeticConstant) {
       BoolExpr expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(value1, true, value2, true,
           conditionExpr);
-      IConstraint newConstraint = new ConstraintZ3(expr, new ArrayList<String>());
+      IConstraint newConstraint = new ConstraintZ3(expr, new ArrayList<String>(),WitnessPath.merge(constraint1.getPath(), constraint2.getPath()));
       if (isFallThroughEdge) {
         newConstraint = newConstraint.negate(true);
       }
@@ -138,7 +139,7 @@ public class ConstraintFactory {
     ArrayList<String> symbolicNames = new ArrayList<String>();
     symbolicNames.addAll(imprecise1.getSourceSymbolics());
     symbolicNames.addAll(imprecise2.getSourceSymbolics());
-    IConstraint newConstraint = new ConstraintZ3(expr, symbolicNames);
+    IConstraint newConstraint = new ConstraintZ3(expr, symbolicNames,WitnessPath.merge(constraint1.getPath(), constraint2.getPath()));
     if (isFallThroughEdge) {
       newConstraint = newConstraint.negate(true);
     }
@@ -188,7 +189,7 @@ public class ConstraintFactory {
               source.getType(), SMTSolverZ3.getInstance().translate(conditionExpr));
         }
       }
-      IConstraint newConstraint = new ConstraintZ3(expr, source.getSymbolicName());
+      IConstraint newConstraint = new ConstraintZ3(expr, source.getSymbolicName(),WitnessPath.merge(constraint1.getPath(), constraint2.getPath()));
       if (isFallThroughEdge) {
         newConstraint = newConstraint.negate(true);
       }
@@ -239,7 +240,7 @@ public class ConstraintFactory {
               imprecise.getType(), SMTSolverZ3.getInstance().translate(conditionExpr));
         }
       }
-      IConstraint newConstraint = new ConstraintZ3(expr, imprecise.getSourceSymbolics());
+      IConstraint newConstraint = new ConstraintZ3(expr, imprecise.getSourceSymbolics(),WitnessPath.merge(constraint1.getPath(), constraint2.getPath()));
       if (isFallThroughEdge) {
         newConstraint = newConstraint.negate(true);
       }
@@ -277,7 +278,7 @@ public class ConstraintFactory {
     ArrayList<String> symbolicNames = new ArrayList<String>();
     symbolicNames.add(source.getSymbolicName());
     symbolicNames.addAll(imprecise.getSourceSymbolics());
-    IConstraint newConstraint = new ConstraintZ3(expr, symbolicNames);
+    IConstraint newConstraint = new ConstraintZ3(expr, symbolicNames, WitnessPath.merge(constraint1.getPath(),constraint2.getPath()));
     if (isFallThroughEdge) {
       newConstraint = newConstraint.negate(true);
     }
@@ -316,7 +317,7 @@ public class ConstraintFactory {
         expr = SMTSolverZ3.getInstance().negate(expr, false);
       }
       if (!expr.isFalse()) {
-        IConstraint newConstraint = new ConstraintZ3(expr, new ArrayList<String>());
+        IConstraint newConstraint = new ConstraintZ3(expr, new ArrayList<String>(),WitnessPath.copy(constraint.getPath()));
         constraint = constraint.and(newConstraint, false);
       } else {
         constraint = ConstraintZ3.getFalse();
@@ -335,7 +336,7 @@ public class ConstraintFactory {
         BoolExpr expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(name, false,
             cval.toString(),
             true, cval.getType(), op);
-        IConstraint newConstraint = new ConstraintZ3(expr, concrete.getSource().getSymbolicName());
+        IConstraint newConstraint = new ConstraintZ3(expr, concrete.getSource().getSymbolicName(),WitnessPath.copy(constraint.getPath()));
         if (isFallThroughEdge) {
           newConstraint = newConstraint.negate(false);
         }
@@ -393,7 +394,7 @@ public class ConstraintFactory {
       if (isFallThroughEdge) {
         expr = SMTSolverZ3.getInstance().negate(expr, true);
       }
-      IConstraint newConstraint = new ConstraintZ3(expr, source.getSymbolicName());
+      IConstraint newConstraint = new ConstraintZ3(expr, source.getSymbolicName(),WitnessPath.copy(constraint.getPath()));
       constraint = constraint.and(newConstraint, false);
     }
     return constraint;
@@ -447,7 +448,7 @@ public class ConstraintFactory {
     if (expr == null) {
       expr = SMTSolverZ3.getInstance().makeBoolTerm(imprecise.getSymbolicName(), isFallThroughEdge);
     }
-    IConstraint newConstraint = new ConstraintZ3(expr, imprecise.getSourceSymbolics());
+    IConstraint newConstraint = new ConstraintZ3(expr, imprecise.getSourceSymbolics(),WitnessPath.copy(constraint.getPath()));
     constraint = constraint.and(newConstraint, false);
     return constraint;
   }
@@ -465,7 +466,7 @@ public class ConstraintFactory {
    *          true, if the edge is fall through edge
    * @return the constraint
    */
-  public static IConstraint createConstraint(AbstractTaint t1, AbstractTaint t2,
+  public static IConstraint createConstraint(boolean recordPath, AbstractTaint t1, AbstractTaint t2,
       ConditionExpr conditionExpr, boolean isFallThroughEdge) {
     IConstraint constraint = ConstraintZ3.getTrue();
     if (t1 instanceof SourceTaint) {
@@ -510,11 +511,17 @@ public class ConstraintFactory {
             conditionExpr, isFallThroughEdge);
       }
     }
+    if(recordPath)
+    {
+    	constraint.getPath().addAll(t1.getExtraInfo());
+    	constraint.getPath().addAll(t2.getExtraInfo());
+    }
     return constraint;
   }
 
   /**
    * Creates a new constraint when the condition expression contains only one taint.
+   *
    *
    * @param t
    *          the taint
@@ -526,7 +533,7 @@ public class ConstraintFactory {
    *          true, if the edge is fall through edge
    * @return the constraint
    */
-  public static IConstraint createConstraint(AbstractTaint t, ConditionExpr conditionExpr,
+  public static IConstraint createConstraint(boolean recordPath, AbstractTaint t, ConditionExpr conditionExpr,
       boolean negate, boolean isFallThroughEdge) {
     IConstraint constraint = ConstraintZ3.getTrue();
     boolean taintOnLeft = !negate;
@@ -541,7 +548,10 @@ public class ConstraintFactory {
     if (t instanceof ImpreciseTaint) {
       constraint = createConstraintFromImpreciseTaint((ImpreciseTaint) t, conditionExpr,
           taintOnLeft, isFallThroughEdge);
+    
     }
+    if(recordPath)
+  	  constraint.getPath().addAll(t.getExtraInfo());
     return constraint;
   }
 
@@ -554,6 +564,6 @@ public class ConstraintFactory {
    */
   public static IConstraint createConstraint(String callbackName) {
     BoolExpr expr = SMTSolverZ3.getInstance().makeBoolTerm(callbackName, false);
-    return new ConstraintZ3(expr, callbackName);
+    return new ConstraintZ3(expr, callbackName, new WitnessPath());
   }
 }

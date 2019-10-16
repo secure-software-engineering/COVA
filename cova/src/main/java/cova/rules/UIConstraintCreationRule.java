@@ -17,17 +17,17 @@
  */
 package cova.rules;
 
+import cova.core.ConstraintFactory;
+import cova.core.RuleManager;
+import cova.data.Abstraction;
+import cova.data.IConstraint;
+import cova.data.NodeType;
+import cova.vasco.Context;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.InvokeExpr;
 import soot.jimple.Stmt;
-
-import cova.core.ConstraintFactory;
-import cova.core.RuleManager;
-import cova.data.Abstraction;
-import cova.data.IConstraint;
-import cova.vasco.Context;
 
 public class UIConstraintCreationRule implements IRule<SootMethod, Unit, Abstraction> {
   /** The rule manager. */
@@ -54,6 +54,8 @@ public class UIConstraintCreationRule implements IRule<SootMethod, Unit, Abstrac
       if (callbackName != null) {
         // create constraint for callback
         IConstraint c = ConstraintFactory.createConstraint(callbackName);
+        if(ruleManager.getConfig().recordPath())
+        	c.getPath().add(NodeType.callback, invokeExpr.getMethod().getDeclaringClass().getName(), invokeExpr.getMethod().getJavaSourceStartLineNumber());
         in.updateConstraintForCallback(c);
       }
       return in;
@@ -79,6 +81,8 @@ public class UIConstraintCreationRule implements IRule<SootMethod, Unit, Abstrac
       if (callbackName != null) {
         // create constraint for callback
         IConstraint c = ConstraintFactory.createConstraint(callbackName);
+        if(ruleManager.getConfig().recordPath())
+        	c.getPath().add(NodeType.callback,invokeExpr.getMethod().getDeclaringClass().getName(), invokeExpr.getMethod().getJavaSourceStartLineNumber());
         in.updateConstraintForCallback(c);
       }
       return in;
