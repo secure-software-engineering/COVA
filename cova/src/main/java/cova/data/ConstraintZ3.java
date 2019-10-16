@@ -1,37 +1,30 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.data;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Expr;
-
 import cova.core.SMTSolverZ3;
 import cova.source.symbolic.SymbolicNameManager;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * The Class ConstraintZ3 represented by the Z3 boolean expression {@link BoolExpr}.
@@ -39,9 +32,9 @@ import cova.source.symbolic.SymbolicNameManager;
  * @date 07.08.2017
  */
 public class ConstraintZ3 implements IConstraint {
- 
-  /**The witness path related to this constraint.*/
-  private WitnessPath path; 
+
+  /** The witness path related to this constraint. */
+  private WitnessPath path;
 
   /** The Z3 boolean expression represents this constraint. */
   private BoolExpr expr;
@@ -58,72 +51,73 @@ public class ConstraintZ3 implements IConstraint {
   private static boolean showInfix = false;
 
   /** The Z3 SMT solver. */
-  private final static SMTSolverZ3 solver = SMTSolverZ3.getInstance();
+  private static final SMTSolverZ3 solver = SMTSolverZ3.getInstance();
 
   private static LoadingCache<ConstraintZ3, String> expressionCache;
 
-  private static ConstraintZ3 TRUE = new ConstraintZ3(SMTSolverZ3.getInstance().getTrue(),
-      new ArrayList<String>(), new WitnessPath());
+  private static ConstraintZ3 TRUE =
+      new ConstraintZ3(
+          SMTSolverZ3.getInstance().getTrue(), new ArrayList<String>(), new WitnessPath());
 
-  private static ConstraintZ3 FALSE = new ConstraintZ3(SMTSolverZ3.getInstance().getFalse(),
-      new ArrayList<String>(), new WitnessPath());
+  private static ConstraintZ3 FALSE =
+      new ConstraintZ3(
+          SMTSolverZ3.getInstance().getFalse(), new ArrayList<String>(), new WitnessPath());
 
   static {
-    expressionCache = CacheBuilder.newBuilder().build(new CacheLoader<ConstraintZ3, String>() {
-      @Override
-      public String load(ConstraintZ3 constraint) throws Exception {
-        BoolExpr expr = constraint.expr;
-        String rep = expressionCache.getIfPresent(constraint);
-        if (rep == null) {
-          if (expr.isTrue() || expr.isFalse()) {
-            rep = expr.toString();
-          } else {
-            rep = convertToInfixExpr(expr, false);
-          }
-          rep = StringUtils.replace(rep, "|", "");
-          if (printSourceName) {
-            for (final String symbolicName : constraint.symbolicNames) {
-              final String sourceName = SymbolicNameManager.getInstance()
-                  .getSourceName(symbolicName);
-              rep = rep.replace(symbolicName, sourceName);
-            }
-          }
-          expressionCache.put(constraint, rep);
-        }
-        return rep;
-      }
-    });
+    expressionCache =
+        CacheBuilder.newBuilder()
+            .build(
+                new CacheLoader<ConstraintZ3, String>() {
+                  @Override
+                  public String load(ConstraintZ3 constraint) throws Exception {
+                    BoolExpr expr = constraint.expr;
+                    String rep = expressionCache.getIfPresent(constraint);
+                    if (rep == null) {
+                      if (expr.isTrue() || expr.isFalse()) {
+                        rep = expr.toString();
+                      } else {
+                        rep = convertToInfixExpr(expr, false);
+                      }
+                      rep = StringUtils.replace(rep, "|", "");
+                      if (printSourceName) {
+                        for (final String symbolicName : constraint.symbolicNames) {
+                          final String sourceName =
+                              SymbolicNameManager.getInstance().getSourceName(symbolicName);
+                          rep = rep.replace(symbolicName, sourceName);
+                        }
+                      }
+                      expressionCache.put(constraint, rep);
+                    }
+                    return rep;
+                  }
+                });
   }
 
   /**
    * Instantiates a new constraint.
    *
-   * @param expr          
-   * 		the Z3 boolean expression represents this constraint.
-   * @param symbolicName          
-   * 		the single symbolic name used in the boolean expression.
+   * @param expr the Z3 boolean expression represents this constraint.
+   * @param symbolicName the single symbolic name used in the boolean expression.
    * @param path the control flow path related to this constraint
    */
   public ConstraintZ3(BoolExpr expr, String symbolicName, WitnessPath path) {
     this.expr = expr;
     symbolicNames = new ArrayList<String>();
     symbolicNames.add(symbolicName);
-    this.path=path;
+    this.path = path;
   }
 
   /**
    * Instantiates a new constraint.
    *
-   * @param expr
-   *          the Z3 boolean expression represents this constraint.
-   * @param symbolicNames
-   *          the symbolic names used in the boolean expression.
+   * @param expr the Z3 boolean expression represents this constraint.
+   * @param symbolicNames the symbolic names used in the boolean expression.
    * @param path the control flow path related to this constraint
    */
   public ConstraintZ3(BoolExpr expr, List<String> symbolicNames, WitnessPath path) {
     this.expr = expr;
     this.symbolicNames = symbolicNames;
-    this.path=path;
+    this.path = path;
   }
 
   public BoolExpr getExpr() {
@@ -158,9 +152,13 @@ public class ConstraintZ3 implements IConstraint {
           combinedSymbolicNames.add(name);
         }
       }
-      ret = new ConstraintZ3(and, combinedSymbolicNames, WitnessPath.merge(this.path, other.getPath()));
+      ret =
+          new ConstraintZ3(
+              and, combinedSymbolicNames, WitnessPath.merge(this.path, other.getPath()));
     } else {
-      ret = new ConstraintZ3(and, otherZ3.getSymbolicNames(), WitnessPath.merge(this.path, other.getPath()));
+      ret =
+          new ConstraintZ3(
+              and, otherZ3.getSymbolicNames(), WitnessPath.merge(this.path, other.getPath()));
     }
     return ret;
   }
@@ -196,9 +194,13 @@ public class ConstraintZ3 implements IConstraint {
           combinedSymbolicNames.add(name);
         }
       }
-      ret = new ConstraintZ3(or, combinedSymbolicNames, WitnessPath.merge(this.path, other.getPath()));
+      ret =
+          new ConstraintZ3(
+              or, combinedSymbolicNames, WitnessPath.merge(this.path, other.getPath()));
     } else {
-      ret = new ConstraintZ3(or, otherZ3.getSymbolicNames(),WitnessPath.merge(this.path, other.getPath()));
+      ret =
+          new ConstraintZ3(
+              or, otherZ3.getSymbolicNames(), WitnessPath.merge(this.path, other.getPath()));
     }
     return ret;
   }
@@ -235,10 +237,8 @@ public class ConstraintZ3 implements IConstraint {
   /**
    * This function convert the Z3 s-expression to infix expression for better readability.
    *
-   * @param expr
-   *          the Z3 s-expression.
-   * @param negate
-   *          if the expression should be negated.
+   * @param expr the Z3 s-expression.
+   * @param negate if the expression should be negated.
    * @return the string of infix expression
    */
   private static String convertToInfixExpr(Expr expr, boolean negate) {
@@ -247,9 +247,9 @@ public class ConstraintZ3 implements IConstraint {
       // Non-terminal expression
       String symbol = expr.getFuncDecl().getName().toString();
       if (symbol.equals("and")) {
-        symbol = " \u2227 ";// and
+        symbol = " \u2227 "; // and
       } else if (symbol.equals("or")) {
-        symbol = " \u2228 ";// or
+        symbol = " \u2228 "; // or
       } else if (symbol.equals("<=")) {
         if (negate) {
           symbol = " > ";
@@ -375,7 +375,9 @@ public class ConstraintZ3 implements IConstraint {
    */
   public static ConstraintZ3 getTrue() {
     if (TRUE == null) {
-      TRUE = new ConstraintZ3(SMTSolverZ3.getInstance().getTrue(), new ArrayList<String>(),new WitnessPath());
+      TRUE =
+          new ConstraintZ3(
+              SMTSolverZ3.getInstance().getTrue(), new ArrayList<String>(), new WitnessPath());
     }
     return TRUE;
   }
@@ -387,7 +389,9 @@ public class ConstraintZ3 implements IConstraint {
    */
   public static ConstraintZ3 getFalse() {
     if (FALSE == null) {
-      FALSE = new ConstraintZ3(SMTSolverZ3.getInstance().getFalse(), new ArrayList<String>(), new WitnessPath());
+      FALSE =
+          new ConstraintZ3(
+              SMTSolverZ3.getInstance().getFalse(), new ArrayList<String>(), new WitnessPath());
     }
     return FALSE;
   }
@@ -411,8 +415,8 @@ public class ConstraintZ3 implements IConstraint {
     if (!SMTSolverZ3.getInstance().isSatisfiable(equality)) {
       // if the and expression is equal to this constraint, then this constraint is more constrained
       solver.incCount();
-      final BoolExpr andExpr = SMTSolverZ3.getInstance().solve(expr, otherZ3.expr, Operator.AND,
-          true);
+      final BoolExpr andExpr =
+          SMTSolverZ3.getInstance().solve(expr, otherZ3.expr, Operator.AND, true);
       final BoolExpr equalityAnd = SMTSolverZ3.getInstance().makeEquality(expr, andExpr);
       if (SMTSolverZ3.getInstance().isSatisfiable(equalityAnd)) {
         ret = true;
@@ -448,7 +452,7 @@ public class ConstraintZ3 implements IConstraint {
 
   /**
    * return the number of nodes in the abstract syntax tree of given expr.
-   * 
+   *
    * @param expr
    * @return
    */
@@ -501,7 +505,6 @@ public class ConstraintZ3 implements IConstraint {
 
   @Override
   public WitnessPath getPath() {
-	 return this.path;
+    return this.path;
   }
-  
 }

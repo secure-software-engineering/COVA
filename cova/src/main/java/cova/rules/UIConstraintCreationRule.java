@@ -1,19 +1,16 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.rules;
 
@@ -38,24 +35,32 @@ public class UIConstraintCreationRule implements IRule<SootMethod, Unit, Abstrac
   }
 
   @Override
-  public Abstraction normalFlowFunction(Context<SootMethod, Unit, Abstraction> context, Unit node,
-      Unit succ, Abstraction inValue) {
+  public Abstraction normalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction inValue) {
     return null;
   }
 
   @Override
-  public Abstraction callEntryFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      SootMethod callee, Unit node, Unit succ, Abstraction in) {
+  public Abstraction callEntryFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context,
+      SootMethod callee,
+      Unit node,
+      Unit succ,
+      Abstraction in) {
     Stmt stmt = (Stmt) node;
     InvokeExpr invokeExpr = stmt.getInvokeExpr();
     if (invokeExpr instanceof InstanceInvokeExpr) {
-      String callbackName = ruleManager.getSourceAndCallbackManager()
-          .searchCallback(context.getMethod(), node);
+      String callbackName =
+          ruleManager.getSourceAndCallbackManager().searchCallback(context.getMethod(), node);
       if (callbackName != null) {
         // create constraint for callback
         IConstraint c = ConstraintFactory.createConstraint(callbackName);
-        if(ruleManager.getConfig().recordPath())
-        	c.getPath().add(NodeType.callback, invokeExpr.getMethod().getDeclaringClass().getName(), invokeExpr.getMethod().getJavaSourceStartLineNumber());
+        if (ruleManager.getConfig().recordPath())
+          c.getPath()
+              .add(
+                  NodeType.callback,
+                  invokeExpr.getMethod().getDeclaringClass().getName(),
+                  invokeExpr.getMethod().getJavaSourceStartLineNumber());
         in.updateConstraintForCallback(c);
       }
       return in;
@@ -65,24 +70,32 @@ public class UIConstraintCreationRule implements IRule<SootMethod, Unit, Abstrac
   }
 
   @Override
-  public Abstraction callExitFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      SootMethod callee, Unit node, Unit succ, Abstraction exitValue) {
+  public Abstraction callExitFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context,
+      SootMethod callee,
+      Unit node,
+      Unit succ,
+      Abstraction exitValue) {
     return null;
   }
 
   @Override
-  public Abstraction callLocalFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      Unit node, Unit succ, Abstraction in) {
+  public Abstraction callLocalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     Stmt stmt = (Stmt) node;
     InvokeExpr invokeExpr = stmt.getInvokeExpr();
     if (invokeExpr instanceof InstanceInvokeExpr) {
-      String callbackName = ruleManager.getSourceAndCallbackManager()
-          .searchCallback(context.getMethod(), node);
+      String callbackName =
+          ruleManager.getSourceAndCallbackManager().searchCallback(context.getMethod(), node);
       if (callbackName != null) {
         // create constraint for callback
         IConstraint c = ConstraintFactory.createConstraint(callbackName);
-        if(ruleManager.getConfig().recordPath())
-        	c.getPath().add(NodeType.callback,invokeExpr.getMethod().getDeclaringClass().getName(), invokeExpr.getMethod().getJavaSourceStartLineNumber());
+        if (ruleManager.getConfig().recordPath())
+          c.getPath()
+              .add(
+                  NodeType.callback,
+                  invokeExpr.getMethod().getDeclaringClass().getName(),
+                  invokeExpr.getMethod().getJavaSourceStartLineNumber());
         in.updateConstraintForCallback(c);
       }
       return in;

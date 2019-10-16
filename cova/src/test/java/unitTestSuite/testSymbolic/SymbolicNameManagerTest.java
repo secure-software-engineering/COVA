@@ -1,19 +1,16 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package unitTestSuite.testSymbolic;
 
@@ -21,12 +18,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
+import cova.source.data.Method;
+import cova.source.data.SourceMethod;
+import cova.source.data.SourceType;
+import cova.source.data.SourceUICallback;
+import cova.source.symbolic.SymbolicNameManager;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import soot.ArrayType;
 import soot.Local;
 import soot.Modifier;
@@ -41,12 +41,6 @@ import soot.jimple.Jimple;
 import soot.jimple.JimpleBody;
 import soot.jimple.infoflow.data.SootMethodAndClass;
 import soot.util.Chain;
-
-import cova.source.data.Method;
-import cova.source.data.SourceMethod;
-import cova.source.data.SourceType;
-import cova.source.data.SourceUICallback;
-import cova.source.symbolic.SymbolicNameManager;
 import utils.UnitTestFramework;
 
 public class SymbolicNameManagerTest extends UnitTestFramework {
@@ -72,10 +66,12 @@ public class SymbolicNameManagerTest extends UnitTestFramework {
     Scene.v().addClass(sClass);
 
     // Create the method, public static void main(String[])
-    method = new SootMethod("main",
-        Arrays.asList(new Type[] {ArrayType.v(RefType.v("java.lang.String"), 1)}), VoidType.v(),
-        Modifier.PUBLIC | Modifier.STATIC);
-
+    method =
+        new SootMethod(
+            "main",
+            Arrays.asList(new Type[] {ArrayType.v(RefType.v("java.lang.String"), 1)}),
+            VoidType.v(),
+            Modifier.PUBLIC | Modifier.STATIC);
 
     // create empty body
     JimpleBody body = Jimple.v().newBody(method);
@@ -93,20 +89,22 @@ public class SymbolicNameManagerTest extends UnitTestFramework {
     body.getLocals().add(tmpRef);
 
     // add "l0 = @parameter0"
-    units.add(Jimple.v().newIdentityStmt(arg,
-        Jimple.v().newParameterRef(ArrayType.v(RefType.v("java.lang.String"), 1), 0)));
+    units.add(
+        Jimple.v()
+            .newIdentityStmt(
+                arg, Jimple.v().newParameterRef(ArrayType.v(RefType.v("java.lang.String"), 1), 0)));
 
     gUnit = units.getLast();
     assertNotSame(null, gUnit);
 
     // add "l0 = @parameter0"
-    units.add(Jimple.v().newIdentityStmt(arg,
-        Jimple.v().newParameterRef(ArrayType.v(RefType.v("java.lang.String"), 1), 0)));
+    units.add(
+        Jimple.v()
+            .newIdentityStmt(
+                arg, Jimple.v().newParameterRef(ArrayType.v(RefType.v("java.lang.String"), 1), 0)));
 
     gUnitDifferentObj = units.getLast();
-
   }
-
 
   @Test
   public void testSingleton() {
@@ -115,7 +113,6 @@ public class SymbolicNameManagerTest extends UnitTestFramework {
     SymbolicNameManager SecondSNM = SymbolicNameManager.getInstance();
 
     assertSame(FirstSNM, SecondSNM);
-
   }
 
   @Test
@@ -124,16 +121,18 @@ public class SymbolicNameManagerTest extends UnitTestFramework {
     SymbolicNameManager SNM = SymbolicNameManager.getInstance();
     SymbolicNameManager.reset();
     assertNotSame(SNM, SymbolicNameManager.getInstance());
-
   }
-
-
 
   @Test
   public void testCreateSymbolicName() {
 
-    Method method = new Method(".+", "java.lang.Object", "getSystemService",
-        Arrays.asList("java.lang.String"), Arrays.asList("\\\"alarm\\\""));
+    Method method =
+        new Method(
+            ".+",
+            "java.lang.Object",
+            "getSystemService",
+            Arrays.asList("java.lang.String"),
+            Arrays.asList("\\\"alarm\\\""));
     SourceMethod source = new SourceMethod(method, SourceType.C, "ALARM", 108);
 
     Unit unit = gUnit;
@@ -152,8 +151,12 @@ public class SymbolicNameManagerTest extends UnitTestFramework {
     SNM = SymbolicNameManager.getInstance();
 
     // invoke with sourceUICallback as source
-    SootMethodAndClass cb = new SootMethodAndClass("onKeyDown", "android.view.KeyEvent$Callback",
-        "boolean", Arrays.asList("int", "android.view.KeyEvent"));
+    SootMethodAndClass cb =
+        new SootMethodAndClass(
+            "onKeyDown",
+            "android.view.KeyEvent$Callback",
+            "boolean",
+            Arrays.asList("int", "android.view.KeyEvent"));
 
     SymbolicName = SNM.createSymbolicName(gUnit, new SourceUICallback(cb, 3));
 
@@ -166,11 +169,7 @@ public class SymbolicNameManagerTest extends UnitTestFramework {
     // check if already in symbolicNameIndexMap
     SymbolicName = SNM.createSymbolicName(gUnitDifferentObj, new SourceUICallback(cb, 3));
     assertEquals("U3_1", SymbolicName);
-
-
-
   }
-
 
   @Test
   public void testGetSourceUniqueName() {
@@ -178,7 +177,6 @@ public class SymbolicNameManagerTest extends UnitTestFramework {
     SymbolicNameManager SNM = SymbolicNameManager.getInstance();
     assertEquals("abc", SNM.getSourceUniqueName("abc_XYZ"));
     assertEquals("XYZ123", SNM.getSourceUniqueName("XYZ123_BANANA123"));
-
   }
 
   @Test
@@ -186,7 +184,7 @@ public class SymbolicNameManagerTest extends UnitTestFramework {
     Unit unit = gUnit;
     SymbolicNameManager.reset();
     SymbolicNameManager SNM = SymbolicNameManager.getInstance();
-    ArrayList<String> names=new ArrayList<String>();
+    ArrayList<String> names = new ArrayList<String>();
     names.add("C108");
     names.add("C109");
     assertEquals("im(C108+C109)_0", SNM.createImpreciseSymbolicName(unit, names));
@@ -195,9 +193,13 @@ public class SymbolicNameManagerTest extends UnitTestFramework {
   @Test
   public void testGetSymbolicNames() {
 
-
-    Method method1 = new Method(".+", "java.lang.Object", "getSystemService",
-        Arrays.asList("java.lang.String"), Arrays.asList("\\\"alarm\\\""));
+    Method method1 =
+        new Method(
+            ".+",
+            "java.lang.Object",
+            "getSystemService",
+            Arrays.asList("java.lang.String"),
+            Arrays.asList("\\\"alarm\\\""));
     SourceMethod source = new SourceMethod(method1, SourceType.C, "ALARM", 108);
 
     SymbolicNameManager.reset();
@@ -208,17 +210,17 @@ public class SymbolicNameManagerTest extends UnitTestFramework {
     SymbolicNameManager.reset();
     SNM = SymbolicNameManager.getInstance();
 
-    SootMethodAndClass cb = new SootMethodAndClass("onKeyDown", "android.view.KeyEvent$Callback",
-        "boolean", Arrays.asList("int", "android.view.KeyEvent"));
+    SootMethodAndClass cb =
+        new SootMethodAndClass(
+            "onKeyDown",
+            "android.view.KeyEvent$Callback",
+            "boolean",
+            Arrays.asList("int", "android.view.KeyEvent"));
     symbolicName = SNM.createSymbolicName(gUnit, new SourceUICallback(cb, 3));
     assertEquals("onKeyDown_0", SNM.getSourceName(symbolicName));
 
     // create again with different obj with same contents and same contents for symbolicname
     symbolicName = SNM.createSymbolicName(gUnitDifferentObj, new SourceUICallback(cb, 3));
     assertEquals("onKeyDown_1", SNM.getSourceName(symbolicName));
-
   }
-
-
-
 }

@@ -1,27 +1,26 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package unitTestSuite.testSourceParser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import cova.source.data.Source;
+import cova.source.data.SourceUICallback;
+import cova.source.parser.UICallbackParser;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -32,14 +31,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.junit.Test;
-
 import soot.jimple.infoflow.data.SootMethodAndClass;
-
-import cova.source.data.Source;
-import cova.source.data.SourceUICallback;
-import cova.source.parser.UICallbackParser;
 import utils.TestPrivateFields;
 import utils.UnitTestFramework;
 
@@ -52,8 +45,7 @@ public class UICallbackParserTest extends UnitTestFramework {
     try {
       uiCallbackParser = new UICallbackParser();
 
-      uiCallbackParser
-          .readFile(new File("config/UICallback_APIs.txt").getCanonicalPath());
+      uiCallbackParser.readFile(new File("config/UICallback_APIs.txt").getCanonicalPath());
       int size = uiCallbackParser.getAllCallbacks().size();
 
       // ASSUMPTION: UICallbacks.txt does not get new lines
@@ -61,11 +53,9 @@ public class UICallbackParserTest extends UnitTestFramework {
 
       // multiple calls should clear the data container for parsing; add new parsed data to sources
       // set
-      uiCallbackParser
-          .readFile(new File("config/UICallback_APIs.txt").getCanonicalPath());
+      uiCallbackParser.readFile(new File("config/UICallback_APIs.txt").getCanonicalPath());
 
       assertEquals(size, uiCallbackParser.getAllCallbacks().size() / 2);
-
 
     } catch (IOException e) {
       fail(e.getMessage());
@@ -82,7 +72,6 @@ public class UICallbackParserTest extends UnitTestFramework {
       fail("should throw an Exception thrown");
     } catch (Exception e) {
     }
-
   }
 
   @Test
@@ -91,7 +80,6 @@ public class UICallbackParserTest extends UnitTestFramework {
     uiCallbackParser = new UICallbackParser();
     Set<?> set = uiCallbackParser.getAllCallbacks();
     assertEquals(0, set.size());
-
   }
 
   @Test
@@ -126,14 +114,10 @@ public class UICallbackParserTest extends UnitTestFramework {
       assertEquals(
           "<android.view.KeyEvent$Callback: boolean onKeyDown(intandroid.view.KeyEvent)> ID: 3",
           line);
-
     }
 
     System.setErr(oldErr);
-
-
   }
-
 
   @Test
   public void testGetRegexCallback() {
@@ -142,32 +126,37 @@ public class UICallbackParserTest extends UnitTestFramework {
         (String) TestPrivateFields.invokeMethod(uiCallbackParser, "getRegexCallback", null);
     Pattern pattern = Pattern.compile(regex);
 
-
-    assertTrue(pattern
-        .matcher(
-            "<android.view.KeyEvent$Callback: boolean onKeyDown(int,android.view.KeyEvent)>  ID: 3")
-        .find());
-
+    assertTrue(
+        pattern
+            .matcher(
+                "<android.view.KeyEvent$Callback: boolean onKeyDown(int,android.view.KeyEvent)>  ID: 3")
+            .find());
   }
-
 
   @Test
   public void testParseCallbackWithMatcher() {
 
     // test single parameter
     // e.g. <android.view.GestureDetector: boolean onTouchEvent(android.view.MotionEvent)> ID: 306
-    SootMethodAndClass cb1 = new SootMethodAndClass("onTouchEvent", "android.view.GestureDetector",
-        "boolean", Arrays.asList("android.view.MotionEvent"));
+    SootMethodAndClass cb1 =
+        new SootMethodAndClass(
+            "onTouchEvent",
+            "android.view.GestureDetector",
+            "boolean",
+            Arrays.asList("android.view.MotionEvent"));
     SourceUICallback source1 = new SourceUICallback(cb1, 306);
     helperParseCallbackWithMatcher(source1);
 
     // test multiple parameter
     // e.g. "<android.view.KeyEvent$Callback: boolean onKeyDown(int,android.view.KeyEvent)> ID: 3"
-    SootMethodAndClass cb2 = new SootMethodAndClass("onKeyDown", "android.view.KeyEvent$Callback",
-        "boolean", Arrays.asList("int", "android.view.KeyEvent"));
+    SootMethodAndClass cb2 =
+        new SootMethodAndClass(
+            "onKeyDown",
+            "android.view.KeyEvent$Callback",
+            "boolean",
+            Arrays.asList("int", "android.view.KeyEvent"));
     SourceUICallback source2 = new SourceUICallback(cb2, 3);
     helperParseCallbackWithMatcher(source2);
-
   }
 
   public void helperParseCallbackWithMatcher(SourceUICallback source) {
@@ -200,10 +189,6 @@ public class UICallbackParserTest extends UnitTestFramework {
       SourceUICallback sm = (SourceUICallback) s;
       SourceParserTest.asserthelperCompareSource(source, s);
       assertEquals(callback, sm.getCallback());
-
     }
-
   }
-
-
 }

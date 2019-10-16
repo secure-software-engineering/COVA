@@ -5,3 +5,16 @@ constraintBench/.classpath
 cova/.settings/
 constraintBench/.settings/
 .settings/
+covaOutput/
+covaIDE/vscode/node_modules/
+out.txt
+covaIDE/vscode/*.jar
+covaIDE/vscode/*.vsix
+covaIDE/vscode/package-lock.json
+covaIDE/dependency-reduced-pom.xml
+covaIDE/.classpath
+covaIDE/vscode/out
+constraintBench/androidApps/sourceCode/CovaExample/
+constraintBench/javaApps/CovaJavaExample/
+cova/dependency-reduced-pom.xml
+

@@ -1,38 +1,29 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package constraintBenchTestSuite;
 
 import com.microsoft.z3.BoolExpr;
-
-import org.junit.Assert;
-import org.junit.Test;
-
-import soot.BooleanType;
-
 import cova.core.SMTSolverZ3;
 import cova.data.ConstraintZ3;
 import cova.data.Operator;
+import org.junit.Assert;
+import org.junit.Test;
+import soot.BooleanType;
 import utils.ConstraintBenchTestFramework;
 
-/**
- * 
- * 
- */
+/** */
 public class BooleanMultiple4Test extends ConstraintBenchTestFramework {
 
   public BooleanMultiple4Test() {
@@ -43,10 +34,11 @@ public class BooleanMultiple4Test extends ConstraintBenchTestFramework {
   public void test() {
     BoolExpr termA = SMTSolverZ3.getInstance().makeBoolTerm(A, false);
     BoolExpr termE = SMTSolverZ3.getInstance().makeBoolTerm(E, false);
-    BoolExpr negatedA= SMTSolverZ3.getInstance().negate(termA, false);
+    BoolExpr negatedA = SMTSolverZ3.getInstance().negate(termA, false);
     BoolExpr negatedE = SMTSolverZ3.getInstance().negate(termE, false);
-    BoolExpr bEc = SMTSolverZ3.getInstance().makeNonTerminalExpr(B, false, C, false,
-        BooleanType.v(), Operator.EQ);
+    BoolExpr bEc =
+        SMTSolverZ3.getInstance()
+            .makeNonTerminalExpr(B, false, C, false, BooleanType.v(), Operator.EQ);
     BoolExpr negatedbEc = SMTSolverZ3.getInstance().negate(bEc, false);
     BoolExpr ea = SMTSolverZ3.getInstance().solve(negatedA, negatedE, Operator.OR, false);
     // (B = C) v !A v !E

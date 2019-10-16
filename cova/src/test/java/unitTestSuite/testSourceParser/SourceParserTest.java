@@ -1,19 +1,16 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package unitTestSuite.testSourceParser;
 
@@ -22,6 +19,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import cova.source.data.Field;
+import cova.source.data.Method;
+import cova.source.data.Source;
+import cova.source.data.SourceField;
+import cova.source.data.SourceMethod;
+import cova.source.data.SourceType;
+import cova.source.parser.SourceParser;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -31,16 +35,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.junit.Test;
-
-import cova.source.data.Field;
-import cova.source.data.Method;
-import cova.source.data.Source;
-import cova.source.data.SourceField;
-import cova.source.data.SourceMethod;
-import cova.source.data.SourceType;
-import cova.source.parser.SourceParser;
 import utils.TestPrivateFields;
 import utils.UnitTestFramework;
 
@@ -54,8 +49,7 @@ public class SourceParserTest extends UnitTestFramework {
     try {
       sourceParser = new SourceParser();
 
-      sourceParser.readFile(
-          new File("config/Configuration_APIs.txt").getCanonicalPath());
+      sourceParser.readFile(new File("config/Configuration_APIs.txt").getCanonicalPath());
       int size = sourceParser.getAllSources().size();
 
       // ASSUMPTION: ConfigurationSources.txt does not get new lines
@@ -81,7 +75,6 @@ public class SourceParserTest extends UnitTestFramework {
       fail("should throw an Exception thrown");
     } catch (Exception e) {
     }
-
   }
 
   @Test
@@ -93,7 +86,6 @@ public class SourceParserTest extends UnitTestFramework {
 
     testParseMethod();
     assertEquals(1, sourceParser.getAllSources().size());
-
   }
 
   @Test
@@ -128,35 +120,41 @@ public class SourceParserTest extends UnitTestFramework {
     for (Source source : sources) {
 
       String line =
-          ((source instanceof SourceMethod) ? ((SourceMethod) source).getMethod().getSignature()
+          ((source instanceof SourceMethod)
+              ? ((SourceMethod) source).getMethod().getSignature()
               : ((SourceField) source).getField().getSignature());
       line += " -> " + source.getType() + ": " + source.getName() + " ID: " + source.getId();
 
       assertTrue(data.contains(line));
-
     }
 
-
     System.setErr(oldErr);
-
   }
 
   @Test
   public void testParseMethod() {
 
     // test single parameter
-    Method method1 = new Method(".+", "java.lang.Object", "getSystemService",
-        Arrays.asList("java.lang.String"), Arrays.asList("\\\"alarm\\\""));
+    Method method1 =
+        new Method(
+            ".+",
+            "java.lang.Object",
+            "getSystemService",
+            Arrays.asList("java.lang.String"),
+            Arrays.asList("\\\"alarm\\\""));
     SourceMethod source1 = new SourceMethod(method1, SourceType.C, "ALARM", 108);
     helperParseMethod(source1);
 
     // test multiple parameter
-    Method method2 = new Method("android.provider.Settings$Secure", "int", "getInt",
-        Arrays.asList("android.content.ContentResolver", "java.lang.String.*"),
-        Arrays.asList(".+", "\\\"adb_enabled\\\".*"));
+    Method method2 =
+        new Method(
+            "android.provider.Settings$Secure",
+            "int",
+            "getInt",
+            Arrays.asList("android.content.ContentResolver", "java.lang.String.*"),
+            Arrays.asList(".+", "\\\"adb_enabled\\\".*"));
     SourceMethod source2 = new SourceMethod(method2, SourceType.C, "ADB", 264);
     helperParseMethod(source2);
-
   }
 
   public void helperParseMethod(SourceMethod source) {
@@ -170,8 +168,14 @@ public class SourceParserTest extends UnitTestFramework {
 
     // e.g. "<.+: java.lang.Object getSystemService(java.lang.String)>(\"alarm\") -> C: ALARM ID:
     // 108";
-    String line = method.getSignature() + " -> " + source.getType() + ": " + source.getName()
-        + " ID: " + source.getId();
+    String line =
+        method.getSignature()
+            + " -> "
+            + source.getType()
+            + ": "
+            + source.getName()
+            + " ID: "
+            + source.getId();
 
     String regex = (String) TestPrivateFields.invokeMethod(sourceParser, "getRegexMethod", null);
     Pattern pattern = Pattern.compile(regex);
@@ -191,9 +195,7 @@ public class SourceParserTest extends UnitTestFramework {
       SourceMethod sm = (SourceMethod) s;
       asserthelperCompareSource(source, s);
       assertEquals(method, sm.getMethod());
-
     }
-
   }
 
   @Test
@@ -208,8 +210,14 @@ public class SourceParserTest extends UnitTestFramework {
     SourceField source = new SourceField(field, SourceType.C, "FC", 509);
 
     // e.g. "<utils.Configuration: java.lang.String fieldC> -> C: FC ID: 509";
-    String line = field.getSignature() + "   ->   " + source.getType() + "  :     "
-        + source.getName() + "  ID:      " + source.getId();
+    String line =
+        field.getSignature()
+            + "   ->   "
+            + source.getType()
+            + "  :     "
+            + source.getName()
+            + "  ID:      "
+            + source.getId();
 
     String regex = (String) TestPrivateFields.invokeMethod(sourceParser, "getRegexField", null);
     Pattern pattern = Pattern.compile(regex);
@@ -229,11 +237,8 @@ public class SourceParserTest extends UnitTestFramework {
       SourceField sf = (SourceField) s;
       asserthelperCompareSource(source, s);
       assertEquals(field, sf.getField());
-
     }
-
   }
-
 
   public static void asserthelperCompareSource(Source a, Source b) {
 
@@ -241,7 +246,6 @@ public class SourceParserTest extends UnitTestFramework {
     assertEquals(a.getName(), b.getName());
     assertEquals(a.getType(), b.getType());
     assertEquals(a.getUniqueName(), b.getUniqueName());
-
   }
 
   @Test
@@ -255,21 +259,26 @@ public class SourceParserTest extends UnitTestFramework {
         pattern.matcher("<utils.Configuration: java.lang.String fieldC> -> C: FC ID: 509").find());
     // %fieldRefs element
     assertTrue(
-        pattern.matcher("<android.content.res.Configuration: int colorMode> -> C: COLORMODE ID: 26")
+        pattern
+            .matcher("<android.content.res.Configuration: int colorMode> -> C: COLORMODE ID: 26")
             .find());
 
     assertFalse(
-        pattern.matcher("<android.os.Build: java.lang.String getRadioVersion()> -> C: RADIO ID: 37")
+        pattern
+            .matcher("<android.os.Build: java.lang.String getRadioVersion()> -> C: RADIO ID: 37")
             .find());
 
-    assertFalse(pattern.matcher(
-        "<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\\\"wifi\\\") -> C: WIFI ID: 103")
-        .find());
+    assertFalse(
+        pattern
+            .matcher(
+                "<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\\\"wifi\\\") -> C: WIFI ID: 103")
+            .find());
 
-    assertFalse(pattern.matcher(
-        "<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \\\"data_roaming\\\".*) -> C: DATA_ROAMING ID: 270")
-        .find());
-
+    assertFalse(
+        pattern
+            .matcher(
+                "<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \\\"data_roaming\\\".*) -> C: DATA_ROAMING ID: 270")
+            .find());
   }
 
   @Test
@@ -283,24 +292,26 @@ public class SourceParserTest extends UnitTestFramework {
         pattern.matcher("<utils.Configuration: java.lang.String fieldC> -> C: FC ID: 509").find());
     // %fieldRefs element
     assertFalse(
-        pattern.matcher("<android.content.res.Configuration: int colorMode> -> C: COLORMODE ID: 26")
+        pattern
+            .matcher("<android.content.res.Configuration: int colorMode> -> C: COLORMODE ID: 26")
             .find());
 
     // %methods element
     assertTrue(
-        pattern.matcher("<android.os.Build: java.lang.String getRadioVersion()> -> C: RADIO ID: 37")
+        pattern
+            .matcher("<android.os.Build: java.lang.String getRadioVersion()> -> C: RADIO ID: 37")
             .find());
 
-    assertTrue(pattern.matcher(
-        "<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\\\"wifi\\\") -> C: WIFI ID: 103")
-        .find());
+    assertTrue(
+        pattern
+            .matcher(
+                "<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\\\"wifi\\\") -> C: WIFI ID: 103")
+            .find());
 
-    assertTrue(pattern.matcher(
-        "<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \\\"data_roaming\\\".*) -> C: DATA_ROAMING ID: 270")
-        .find());
-
+    assertTrue(
+        pattern
+            .matcher(
+                "<android.provider.Settings$Secure: int getInt(android.content.ContentResolver,java.lang.String.*)>(.+, \\\"data_roaming\\\".*) -> C: DATA_ROAMING ID: 270")
+            .find());
   }
-
-
-
 }

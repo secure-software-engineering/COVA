@@ -1,31 +1,29 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.source;
 
+import cova.source.data.SourceUICallback;
+import cova.source.parser.UICallbackParser;
+import cova.source.symbolic.SymbolicNameManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.StringUtils;
-
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
@@ -35,17 +33,11 @@ import soot.jimple.infoflow.data.SootMethodAndClass;
 import soot.util.Chain;
 import soot.util.HashChain;
 
-import cova.source.data.SourceUICallback;
-import cova.source.parser.UICallbackParser;
-import cova.source.symbolic.SymbolicNameManager;
-
 /**
  * This class is used to search all input-related callback in a given statement.
- * 
- * <p>
- * The callbackParser reads user-defined input-related callbacks from UICallbacks.txt. The method
+ *
+ * <p>The callbackParser reads user-defined input-related callbacks from UICallbacks.txt. The method
  * {@link #searchCallback(SootMethod, Unit)} checks if a given statement contains an UI callback.
- * </p>
  *
  * @date 29.08.2017
  */
@@ -69,10 +61,8 @@ public class CallbackMatcher {
   /**
    * Instantiates a new CallbackMatcher.
    *
-   * @param resourcePath
-   *          the path of the folder contains UICallbacks.txt
-   * @param callbacksInApk
-   *          the callbacks used in an android apk found by FlowDroid.
+   * @param resourcePath the path of the folder contains UICallbacks.txt
+   * @param callbacksInApk the callbacks used in an android apk found by FlowDroid.
    */
   public CallbackMatcher(String resourcePath, Set<CallbackDefinition> callbacksInApk) {
     callbackParser = new UICallbackParser();
@@ -92,8 +82,11 @@ public class CallbackMatcher {
         for (SourceUICallback uicb : uiCallbacks) {
           String signature = uicb.getCallback().getSignature();
           if (signature.equals(parentMethod.getSignature())) {
-            uiCallbacksInApk.add(new SourceUICallback(new SootMethodAndClass(method),
-                new SootMethodAndClass(parentMethod), uicb.getId()));
+            uiCallbacksInApk.add(
+                new SourceUICallback(
+                    new SootMethodAndClass(method),
+                    new SootMethodAndClass(parentMethod),
+                    uicb.getId()));
           }
         }
       }
@@ -104,12 +97,10 @@ public class CallbackMatcher {
    * Checks if an unit contains an UI callback. If an UI callback is found in the unit, return the
    * symbolic name of this callback. Otherwise, return null.
    *
-   * @param parent
-   *          the method contains this unit
-   * @param unit
-   *          the unit
+   * @param parent the method contains this unit
+   * @param unit the unit
    * @return null when no UI callback is found in this unit. symbolicName when an UI callback is
-   *         found in this unit
+   *     found in this unit
    */
   public String searchCallback(SootMethod parent, Unit unit) {
     String symbolicName = null;
@@ -142,9 +133,8 @@ public class CallbackMatcher {
       }
       for (SootClass i : parents) {
         {
-          String parentSignature = StringUtils.replace(signature,
-              method.getDeclaringClass().toString(),
-              i.toString());
+          String parentSignature =
+              StringUtils.replace(signature, method.getDeclaringClass().toString(), i.toString());
           for (SourceUICallback callback : uiCallbacks) {
             Pattern pattern = callback.getCallbackPattern();
             Matcher matcher = pattern.matcher(parentSignature);
@@ -162,8 +152,7 @@ public class CallbackMatcher {
   /**
    * Load UI callbacks from UICallbacks.txt.
    *
-   * @param resourcePath
-   *          the resource path
+   * @param resourcePath the resource path
    */
   private void loadCallbacks(String resourcePath) {
     try {

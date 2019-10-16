@@ -1,40 +1,20 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.runner;
 
 import com.google.common.io.Files;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.xmlpull.v1.XmlPullParserException;
-
-import soot.jimple.infoflow.results.InfoflowResults;
-
 import cova.core.Aliasing;
 import cova.core.SMTSolverZ3;
 import cova.data.CombinedResult;
@@ -45,12 +25,21 @@ import cova.setup.RunCova;
 import cova.setup.RunFlowDroid;
 import cova.setup.config.Config;
 import cova.setup.config.DefaultConfigForAndroid;
+import java.io.File;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.xmlpull.v1.XmlPullParserException;
+import soot.jimple.infoflow.results.InfoflowResults;
 
-/**
- * Analyzer for Android application.
- * 
- *
- */
+/** Analyzer for Android application. */
 public class AndroidApkAnalyzer {
   private static String androidJarPath = "";
   private static String apkFilePath = "";
@@ -63,7 +52,9 @@ public class AndroidApkAnalyzer {
   private static ConstraintReporter reporter = null;
 
   enum Status {
-    ANALYZED, TIMEDOUT, FAILED
+    ANALYZED,
+    TIMEDOUT,
+    FAILED
   }
 
   public static void main(String[] args) throws IOException, ParseException {
@@ -105,31 +96,69 @@ public class AndroidApkAnalyzer {
     options.addOption("h", "help", false, "Print this message.");
     options.addOption("android", false, "Analyze Android APK");
     options.addOption("p", "platform", true, "The location of the android platform jars.");
-    options.addOption("apk", "apkLocation", true,
+    options.addOption(
+        "apk",
+        "apkLocation",
+        true,
         "The location of the APK file. It can be a single Apk file or a directory.");
-    options.addOption("s", "standalone", true,
+    options.addOption(
+        "s",
+        "standalone",
+        true,
         "<arg> = true, to run cova in standalone mode. <arg> = false (default ), to run flowdroid and cova afterwards.");
     options.addOption("t", "timeout", true, "COVA analysis timout duration in minutes.");
     options.addOption("expr", false, "Enable experimentation mode");
 
     // options for analysis
-    options.addOption("ITaint", "impreciseTaintCreation", true, "<arg> = true, if enables ImpreciseTaintCreationRule.");
-    options.addOption("CTaint", "concreteTaintCreation", true, "<arg> = true, if enables ConcreteTaintCreationRule.");
-    options.addOption("CTA", "concreteTaintAtAssignStmt", true,
+    options.addOption(
+        "ITaint",
+        "impreciseTaintCreation",
+        true,
+        "<arg> = true, if enables ImpreciseTaintCreationRule.");
+    options.addOption(
+        "CTaint",
+        "concreteTaintCreation",
+        true,
+        "<arg> = true, if enables ConcreteTaintCreationRule.");
+    options.addOption(
+        "CTA",
+        "concreteTaintAtAssignStmt",
+        true,
         "<arg> = true, if creates concrete taint at assign statement");
-    options.addOption("CTR", "concreteTaintAtReturnStmt", true,
+    options.addOption(
+        "CTR",
+        "concreteTaintAtReturnStmt",
+        true,
         "<arg> = true, if creates concrete taint at return statement");
-    options.addOption("CTC", "concreteTaintAtCalleeOn", true,
+    options.addOption(
+        "CTC",
+        "concreteTaintAtCalleeOn",
+        true,
         "<arg> = true, if creates concrete taint for parameters passing to method");
-    options.addOption("ITP", "impreciseTaintPropagation", true, "<arg> = true, if enables ImprecisePropagationRule.");
-    options.addOption("STP", "staticFieldPropagation", true, "<arg> = true, if enables StaticFieldPropagationRule.");
-    options.addOption("all", "all", false,
+    options.addOption(
+        "ITP",
+        "impreciseTaintPropagation",
+        true,
+        "<arg> = true, if enables ImprecisePropagationRule.");
+    options.addOption(
+        "STP",
+        "staticFieldPropagation",
+        true,
+        "<arg> = true, if enables StaticFieldPropagationRule.");
+    options.addOption(
+        "all",
+        "all",
+        false,
         "Enables all rules. When this is enabled, options to turn on single rule will be ignored. This is the most precise configuration of the analysis.");
-    options.addOption("config", true,
+    options.addOption(
+        "config",
+        true,
         "The path of config files specified for your application: at least one of Configuration_APIs.txt, IO_APIs.txt and UICallback_APIs.txt.");
 
     // options for output files
-    options.addOption("output_html", true,
+    options.addOption(
+        "output_html",
+        true,
         "Print results in HTML files, this option should be followed by the java source code path of your application.");
     options.addOption("output_jimple", false, "Print results in Jimple files.");
     options.addOption("output_csv", false, "Print results in CSV files.");
@@ -138,7 +167,8 @@ public class AndroidApkAnalyzer {
     CommandLine cmd = parser.parse(options, args);
 
     HelpFormatter helper = new HelpFormatter();
-    String cmdLineSyntax = "-android -config <config files path> -p <android platform jar> -apk <apk file>";
+    String cmdLineSyntax =
+        "-android -config <config files path> -p <android platform jar> -apk <apk file>";
     if (cmd.hasOption("h")) {
       helper.printHelp(cmdLineSyntax, options);
       return false;
@@ -228,7 +258,8 @@ public class AndroidApkAnalyzer {
 
   private static void analyze(File apk, Config config) throws IOException {
     try {
-      boolean timedout = analyzeApk(androidJarPath, apk.getCanonicalPath(), sourceCodePath, standalone, config);
+      boolean timedout =
+          analyzeApk(androidJarPath, apk.getCanonicalPath(), sourceCodePath, standalone, config);
       System.gc();
       Status status = Status.ANALYZED;
       if (timedout) {
@@ -250,7 +281,8 @@ public class AndroidApkAnalyzer {
     }
   }
 
-  private static void moveApkAfterAnalysis(File apkFileFolder, File apk, Status status) throws IOException {
+  private static void moveApkAfterAnalysis(File apkFileFolder, File apk, Status status)
+      throws IOException {
     String failedApkPath = apkFileFolder + File.separator + "failed";
     File failedDir = new File(failedApkPath);
     if (!failedDir.exists()) {
@@ -276,7 +308,11 @@ public class AndroidApkAnalyzer {
     Files.move(apk, target);
   }
 
-  public static boolean analyzeApk(String androidJarPath, String apkFilePath, String sourceCodePath, boolean standalone,
+  public static boolean analyzeApk(
+      String androidJarPath,
+      String apkFilePath,
+      String sourceCodePath,
+      boolean standalone,
       Config config) {
     try {
       // validate if the given path exists
@@ -297,11 +333,20 @@ public class AndroidApkAnalyzer {
             RunFlowDroid.run(apkFilePath, androidJarPath, config.getConfigDir());
             InfoflowResults infoFlowResults = RunFlowDroid.getInfoFlowResults();
             // run cova
-            reporter = RunCova.runForAndroid(apkFilePath, androidJarPath, sourceCodePath, standalone,
-                RunFlowDroid.getCallbacks(), config);
+            reporter =
+                RunCova.runForAndroid(
+                    apkFilePath,
+                    androidJarPath,
+                    sourceCodePath,
+                    standalone,
+                    RunFlowDroid.getCallbacks(),
+                    config);
             if (infoFlowResults.getResults() != null) {
-              CombinedResult combinedResults = new CombinedResult(new MetaData(Files.getNameWithoutExtension(apkFilePath)),
-                  infoFlowResults.getResults(), reporter);
+              CombinedResult combinedResults =
+                  new CombinedResult(
+                      new MetaData(Files.getNameWithoutExtension(apkFilePath)),
+                      infoFlowResults.getResults(),
+                      reporter);
               results = combinedResults;
               combinedResults.serialize();
             } else {
@@ -316,8 +361,14 @@ public class AndroidApkAnalyzer {
             InfoflowResults infoFlowResults = RunFlowDroid.getInfoFlowResults();
             // run cova
             startTime = System.currentTimeMillis();
-            ConstraintReporter reporter = RunCova.runForAndroid(apkFilePath, androidJarPath, sourceCodePath, standalone,
-                RunFlowDroid.getCallbacks(), config);
+            ConstraintReporter reporter =
+                RunCova.runForAndroid(
+                    apkFilePath,
+                    androidJarPath,
+                    sourceCodePath,
+                    standalone,
+                    RunFlowDroid.getCallbacks(),
+                    config);
             endTime = System.currentTimeMillis();
             double covaTime = (double) (endTime - startTime) / 1000;
             String apkName = Files.getNameWithoutExtension(apkFilePath);
@@ -333,26 +384,42 @@ public class AndroidApkAnalyzer {
                 dexSizeTotal += entry.getSize();
               }
             }
-            long size = dexSizeTotal / 1024;// size in KB
+            long size = dexSizeTotal / 1024; // size in KB
             int reachableMethods = reporter.getNumberOfReachableMethods();
             apkFile.close();
             timeout = reporter.isTimeout();
             double failedAliasing = Aliasing.failedAliasing();
             int z3Queries = SMTSolverZ3.getInstance().getCount();
             double z3Time = SMTSolverZ3.getInstance().getUsedTimeInSeconds();
-            MetaData meta = new cova.data.MetaData(apkName, size, reachableMethods, ftime, timeout, covaTime,
-                z3Time, failedAliasing, z3Queries);
+            MetaData meta =
+                new cova.data.MetaData(
+                    apkName,
+                    size,
+                    reachableMethods,
+                    ftime,
+                    timeout,
+                    covaTime,
+                    z3Time,
+                    failedAliasing,
+                    z3Queries);
             // print results in .txt
             if (infoFlowResults.getResults() != null) {
-              CombinedResult combinedResults = new CombinedResult(meta, infoFlowResults.getResults(), reporter);
+              CombinedResult combinedResults =
+                  new CombinedResult(meta, infoFlowResults.getResults(), reporter);
               results = combinedResults;
               ResultPrinter printer = new ResultPrinter(combinedResults);
               printer.print(timeout);
             }
           }
         } else {
-          reporter = RunCova.runForAndroid(apkFilePath, androidJarPath, sourceCodePath, standalone,
-              RunFlowDroid.getCallbacks(), config);
+          reporter =
+              RunCova.runForAndroid(
+                  apkFilePath,
+                  androidJarPath,
+                  sourceCodePath,
+                  standalone,
+                  RunFlowDroid.getCallbacks(),
+                  config);
           timeout = reporter.isTimeout();
           reporter.printResultOfClasses();
         }

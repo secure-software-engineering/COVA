@@ -1,27 +1,18 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.rules;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import cova.core.InterproceduralCFG;
 import cova.core.RuleManager;
@@ -34,6 +25,10 @@ import cova.data.taints.SourceTaint;
 import cova.data.taints.SymbolicTaint;
 import cova.source.symbolic.SymbolicNameManager;
 import cova.vasco.Context;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
@@ -49,63 +44,56 @@ import soot.jimple.NegExpr;
 
 /**
  * The Class ImpreciseTaintCreationRule defines the creation rules of imprecise taints.
- * 
- * <p>
- * Imprecise taints can be created at an assignment when a source or imprecise taint appears on the
- * right side of the assignment.
- * </p>
- * 
+ *
+ * <p>Imprecise taints can be created at an assignment when a source or imprecise taint appears on
+ * the right side of the assignment.
  */
 public class ImpreciseTaintCreationRule {
 
   private InterproceduralCFG icfg;
 
   private RuleManager ruleManager;
-  
+
   public ImpreciseTaintCreationRule(RuleManager ruleManager) {
     icfg = ruleManager.getIcfg();
-    this.ruleManager=ruleManager;
+    this.ruleManager = ruleManager;
   }
 
   /**
    * Creates the imprecise taint issued by the given source or imprecise taints.
    *
-   * @param parentTaints
-   *          the taints issue the creation of imprecise taints
-   * @param val
-   *          the value used to create access path of imprecise taints
-   * @param constraint
-   *          the constraint when the imprecise taints are created
-   * @param stmt
-   *          the statement which triggers the creation of imprecise taints.
+   * @param parentTaints the taints issue the creation of imprecise taints
+   * @param val the value used to create access path of imprecise taints
+   * @param constraint the constraint when the imprecise taints are created
+   * @param stmt the statement which triggers the creation of imprecise taints.
    * @return the imprecise taints
    */
-  private ImpreciseTaint createImpreciseTaint(SymbolicTaint[] parentTaints, Value val,
-      IConstraint constraint, Unit stmt) {
+  private ImpreciseTaint createImpreciseTaint(
+      SymbolicTaint[] parentTaints, Value val, IConstraint constraint, Unit stmt) {
     ArrayList<String> sourceSymbolics = new ArrayList<String>();
-    List<String> info=new ArrayList<>();
+    List<String> info = new ArrayList<>();
     for (SymbolicTaint parent : parentTaints) {
       if (parent instanceof SourceTaint) {
         sourceSymbolics.add(parent.getSymbolicName());
       } else if (parent instanceof ImpreciseTaint) {
         sourceSymbolics.addAll(((ImpreciseTaint) parent).getSourceSymbolics());
       }
-      
+
       info.addAll(parent.getExtraInfo());
     }
-    String symbolicName = SymbolicNameManager.getInstance().createImpreciseSymbolicName(stmt,
-        sourceSymbolics);
-    ImpreciseTaint imprecise = new ImpreciseTaint(new WrappedAccessPath(val), constraint,
-        parentTaints, sourceSymbolics, symbolicName);
-    if(ruleManager.getConfig().recordPath())
-    {
-    	imprecise.setExtraInfo(info);
+    String symbolicName =
+        SymbolicNameManager.getInstance().createImpreciseSymbolicName(stmt, sourceSymbolics);
+    ImpreciseTaint imprecise =
+        new ImpreciseTaint(
+            new WrappedAccessPath(val), constraint, parentTaints, sourceSymbolics, symbolicName);
+    if (ruleManager.getConfig().recordPath()) {
+      imprecise.setExtraInfo(info);
     }
     return imprecise;
   }
 
-  public boolean normalFlowFunction(Context<SootMethod, Unit, Abstraction> context, Unit node,
-      Unit succ, Abstraction in) {
+  public boolean normalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     boolean createdImpreciseTaint = false;
     IConstraint constraint = in.getConstraintOfStmt();
     AssignStmt assignStmt = (AssignStmt) node;
@@ -130,24 +118,25 @@ public class ImpreciseTaintCreationRule {
         for (SymbolicTaint t1 : taints1) {
           if (taints2 != null && !taints2.isEmpty()) {
             for (SymbolicTaint t2 : taints2) {
-              SymbolicTaint[] parents = { t1, t2 };
+              SymbolicTaint[] parents = {t1, t2};
               newImpreciseTaints.add(createImpreciseTaint(parents, leftOp, constraint, node));
             }
           } else {
-            SymbolicTaint[] parents = { t1 };
+            SymbolicTaint[] parents = {t1};
             newImpreciseTaints.add(createImpreciseTaint(parents, leftOp, constraint, node));
           }
         }
       } else {
         if (taints2 != null && !taints2.isEmpty()) {
           for (SymbolicTaint t2 : taints2) {
-            SymbolicTaint[] parents = { t2 };
+            SymbolicTaint[] parents = {t2};
             newImpreciseTaints.add(createImpreciseTaint(parents, leftOp, constraint, node));
           }
         }
       }
 
-    } else if (rightOp instanceof InstanceOfExpr || rightOp instanceof NegExpr
+    } else if (rightOp instanceof InstanceOfExpr
+        || rightOp instanceof NegExpr
         || rightOp instanceof LengthExpr) {
       Value op = null;
       if (rightOp instanceof InstanceOfExpr) {
@@ -164,7 +153,7 @@ public class ImpreciseTaintCreationRule {
       }
       if (taints != null) {
         for (SymbolicTaint t1 : taints) {
-          SymbolicTaint[] parents = { t1 };
+          SymbolicTaint[] parents = {t1};
           newImpreciseTaints.add(createImpreciseTaint(parents, leftOp, constraint, node));
         }
       }
@@ -174,8 +163,8 @@ public class ImpreciseTaintCreationRule {
     if (!newImpreciseTaints.isEmpty()) {
       createdImpreciseTaint = true;
       // Update the constraint of existing taints containing leftOp
-      Set<AbstractTaint> taintsOfLeftOp = in.taints()
-          .getTaintsWithAccessPath(new WrappedAccessPath(leftOp));
+      Set<AbstractTaint> taintsOfLeftOp =
+          in.taints().getTaintsWithAccessPath(new WrappedAccessPath(leftOp));
       for (AbstractTaint t : taintsOfLeftOp) {
         IConstraint negation = constraint.negate(false);
         IConstraint newConstraint = t.getConstraint().and(negation, false);
@@ -191,8 +180,8 @@ public class ImpreciseTaintCreationRule {
     return createdImpreciseTaint;
   }
 
-  public boolean callLocalFlowFunction(Context<SootMethod, Unit, Abstraction> context, Unit node,
-      Unit succ, Abstraction in) {
+  public boolean callLocalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     boolean createdImpreciseTaint = false;
     IConstraint constraint = in.getConstraintOfStmt();
     AssignStmt assignStmt = (AssignStmt) node;
@@ -214,13 +203,13 @@ public class ImpreciseTaintCreationRule {
           if (rightOp instanceof InstanceInvokeExpr) {
             InstanceInvokeExpr instanceInvoke = (InstanceInvokeExpr) rightOp;
             Value base = instanceInvoke.getBase();
-            Set<SymbolicTaint> taintsOfBase = in.taints()
-                .getSymbolicTaintsWithAccessPath(new WrappedAccessPath(base));
+            Set<SymbolicTaint> taintsOfBase =
+                in.taints().getSymbolicTaintsWithAccessPath(new WrappedAccessPath(base));
             // create imprecise taint when an existing taint whose access path is the base of the
             // instance invoke expression
             if (instanceInvoke.getArgCount() == 0) {
               for (SymbolicTaint taint : taintsOfBase) {
-                SymbolicTaint[] parents = { taint };
+                SymbolicTaint[] parents = {taint};
                 ImpreciseTaint imprecise = createImpreciseTaint(parents, leftOp, constraint, node);
                 newImpreciseTaints.add(imprecise);
               }
@@ -244,15 +233,14 @@ public class ImpreciseTaintCreationRule {
                 newImpreciseTaints.add(imprecise);
               }
             }
-
           }
         }
       }
       if (!newImpreciseTaints.isEmpty()) {
         createdImpreciseTaint = true;
         // Update the constraint of existing taints containing leftOp
-        Set<AbstractTaint> taintsOfLeftOp = in.taints()
-            .getTaintsWithAccessPath(new WrappedAccessPath(leftOp));
+        Set<AbstractTaint> taintsOfLeftOp =
+            in.taints().getTaintsWithAccessPath(new WrappedAccessPath(leftOp));
         for (AbstractTaint t : taintsOfLeftOp) {
           IConstraint negation = constraint.negate(false);
           IConstraint newConstraint = t.getConstraint().and(negation, false);

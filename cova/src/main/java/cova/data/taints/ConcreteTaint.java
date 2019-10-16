@@ -1,55 +1,45 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.data.taints;
-
-import soot.Unit;
-import soot.Value;
 
 import cova.data.IConstraint;
 import cova.data.WrappedAccessPath;
 import cova.rules.ConcreteTaintCreationRule;
+import soot.Unit;
+import soot.Value;
 
 /**
  * The Class ConcreteTaint contains all information of a concrete taint.
- * 
- * <p>
- * It contains the concrete value of this taint. Concrete taints are created by
- * {@link ConcreteTaintCreationRule}.
- * </p>
- * 
+ *
+ * <p>It contains the concrete value of this taint. Concrete taints are created by {@link
+ * ConcreteTaintCreationRule}.
  */
 public class ConcreteTaint extends AbstractTaint {
 
   /** The current value of this taint. */
   private Value currentValue;
+
   private SymbolicTaint source;
   private Unit stmt;
 
   /**
    * Constructor of concrete taint.
-   * 
-   * @param accessPath
-   *          the access path of this concrete taint
-   * @param constraint
-   *          the constraint when this concrete taint is alive
-   * @param value
-   *          the current value of this concrete taint
+   *
+   * @param accessPath the access path of this concrete taint
+   * @param constraint the constraint when this concrete taint is alive
+   * @param value the current value of this concrete taint
    */
   public ConcreteTaint(WrappedAccessPath accessPath, IConstraint constraint, Value value) {
     super(accessPath, constraint);
@@ -58,8 +48,12 @@ public class ConcreteTaint extends AbstractTaint {
     stmt = null;
   }
 
-  public ConcreteTaint(WrappedAccessPath accessPath, IConstraint constraint, Value value,
-      SymbolicTaint source, Unit stmt) {
+  public ConcreteTaint(
+      WrappedAccessPath accessPath,
+      IConstraint constraint,
+      Value value,
+      SymbolicTaint source,
+      Unit stmt) {
     this(accessPath, constraint, value);
     this.source = source;
     this.stmt = stmt;
@@ -93,8 +87,7 @@ public class ConcreteTaint extends AbstractTaint {
   /**
    * Update current value.
    *
-   * @param value
-   *          the value
+   * @param value the value
    */
   public void updateCurrentValue(Value value) {
     currentValue = value;
@@ -175,13 +168,11 @@ public class ConcreteTaint extends AbstractTaint {
   /**
    * Return a concrete taint whose constraint is the disjunction of the constraints of t1 and t2.
    * The access path and value of t1 and t2 must be same.
-   * 
-   * @param t1
-   *          the first concrete taint
-   * @param t2
-   *          the second concrete taint
+   *
+   * @param t1 the first concrete taint
+   * @param t2 the second concrete taint
    * @return Return a concrete taint whose constraint is the disjunction of the constraints of t1
-   *         and t2.
+   *     and t2.
    */
   public static ConcreteTaint meetConstraint(ConcreteTaint t1, ConcreteTaint t2) {
     if (t1.accessPath.equals(t2.accessPath) && t1.currentValue.equals(t2.currentValue)) {
@@ -194,5 +185,4 @@ public class ConcreteTaint extends AbstractTaint {
           "the access pathes and value of the given two taints must be the same.");
     }
   }
-
 }

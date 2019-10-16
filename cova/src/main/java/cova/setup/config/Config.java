@@ -1,30 +1,24 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.setup.config;
 
+import cova.rules.ConcreteTaintCreationRule;
 import java.io.File;
 
-import cova.rules.ConcreteTaintCreationRule;
-
 // TODO: Auto-generated Javadoc
-/**
- * The Class Configuration.
- */
+/** The Class Configuration. */
 public class Config {
 
   /** True, if the UI constraint creation rule is on. */
@@ -71,24 +65,17 @@ public class Config {
 
   /** True, if print html output. */
   private boolean writeHtmlOutput;
-  
-  /**
-   * True, if the whole constraint map should be computed.
-   */
+
+  /** True, if the whole constraint map should be computed. */
   private boolean computeConstraintMap;
 
-
-/** The location for configuration files. */
+  /** The location for configuration files. */
   private String configDir;
-  
-  /**
-   * True, if the control flow path should be recorded during the analysis. 
-   */
+
+  /** True, if the control flow path should be recorded during the analysis. */
   private boolean recordPath;
 
-  /**
-   * Instantiates a new configuration with nothing enabled.
-   */
+  /** Instantiates a new configuration with nothing enabled. */
   public Config() {
     uIConstraintCreationRuleOn = false;
     taintConstraintCreationRuleOn = false;
@@ -104,7 +91,7 @@ public class Config {
     timeOutDuration = 0;
     writeJimpleOutput = false;
     writeHtmlOutput = false;
-    computeConstraintMap=false; 
+    computeConstraintMap = false;
     recordPath = false;
     configDir = System.getProperty("user.dir") + File.separator + "config";
   }
@@ -112,25 +99,34 @@ public class Config {
   /**
    * Instantiates a new config.
    *
-   * @param uIConstraintCreationRuleOn       
-   * @param taintConstraintCreationRuleOn         
-   * @param sourceTaintCreationRule         
-   * @param taintPropagationRuleOn          
-   * @param impreciseTaintCreationRule         
-   * @param concreteTaintPropagationRuleOn       
-   * @param staticFieldPropagation      
-   * @param timeOutOn     
-   * @param timeOutDuration        
-   * @param writeJimpleOutput            
-   * @param writeHtmlOutput       
-   * @param computeConstraintMap 
+   * @param uIConstraintCreationRuleOn
+   * @param taintConstraintCreationRuleOn
+   * @param sourceTaintCreationRule
+   * @param taintPropagationRuleOn
+   * @param impreciseTaintCreationRule
+   * @param concreteTaintPropagationRuleOn
+   * @param staticFieldPropagation
+   * @param timeOutOn
+   * @param timeOutDuration
+   * @param writeJimpleOutput
+   * @param writeHtmlOutput
+   * @param computeConstraintMap
    * @param recordPath the record path
    */
-  public Config(boolean uIConstraintCreationRuleOn, boolean taintConstraintCreationRuleOn,
-      boolean sourceTaintCreationRule, boolean taintPropagationRuleOn,
-      boolean impreciseTaintCreationRule, boolean concreteTaintPropagationRuleOn,
-      boolean staticFieldPropagation, boolean timeOutOn, int timeOutDuration,
-      boolean writeJimpleOutput, boolean writeHtmlOutput, boolean computeConstraintMap, boolean recordPath) {
+  public Config(
+      boolean uIConstraintCreationRuleOn,
+      boolean taintConstraintCreationRuleOn,
+      boolean sourceTaintCreationRule,
+      boolean taintPropagationRuleOn,
+      boolean impreciseTaintCreationRule,
+      boolean concreteTaintPropagationRuleOn,
+      boolean staticFieldPropagation,
+      boolean timeOutOn,
+      int timeOutDuration,
+      boolean writeJimpleOutput,
+      boolean writeHtmlOutput,
+      boolean computeConstraintMap,
+      boolean recordPath) {
     this();
     this.uIConstraintCreationRuleOn = uIConstraintCreationRuleOn;
     this.taintConstraintCreationRuleOn = taintConstraintCreationRuleOn;
@@ -143,18 +139,17 @@ public class Config {
     this.timeOutDuration = timeOutDuration;
     this.writeJimpleOutput = writeJimpleOutput;
     this.writeHtmlOutput = writeHtmlOutput;
-    this.computeConstraintMap=computeConstraintMap;
-    this.recordPath=recordPath;
+    this.computeConstraintMap = computeConstraintMap;
+    this.recordPath = recordPath;
   }
-  
+
   /**
    * Checks if the control flow path should be recorded during the analysis.
    *
    * @return true, if successful
    */
-  public boolean recordPath()
-  {
-	  return recordPath;
+  public boolean recordPath() {
+    return recordPath;
   }
 
   /**
@@ -162,11 +157,10 @@ public class Config {
    *
    * @param recordPath the new record path
    */
-  public void setRecordPath(boolean recordPath)
-  {
-	  this.recordPath=recordPath;
+  public void setRecordPath(boolean recordPath) {
+    this.recordPath = recordPath;
   }
-  
+
   /**
    * Checks if is UI constraint creation rule on.
    *
@@ -179,8 +173,7 @@ public class Config {
   /**
    * Sets the UI constraint creation rule on.
    *
-   * @param uIConstraintCreationRuleOn
-   *          the new u I constraint creation rule on
+   * @param uIConstraintCreationRuleOn the new u I constraint creation rule on
    */
   public void setUIConstraintCreationRuleOn(boolean uIConstraintCreationRuleOn) {
     this.uIConstraintCreationRuleOn = uIConstraintCreationRuleOn;
@@ -198,8 +191,7 @@ public class Config {
   /**
    * Sets the taint constraint creation rule on.
    *
-   * @param taintConstraintCreationRuleOn
-   *          the new taint constraint creation rule on
+   * @param taintConstraintCreationRuleOn the new taint constraint creation rule on
    */
   public void setTaintConstraintCreationRuleOn(boolean taintConstraintCreationRuleOn) {
     this.taintConstraintCreationRuleOn = taintConstraintCreationRuleOn;
@@ -217,8 +209,7 @@ public class Config {
   /**
    * Sets the source taint creation rule on.
    *
-   * @param sourceTaintCreationRule
-   *          the new source taint creation rule on
+   * @param sourceTaintCreationRule the new source taint creation rule on
    */
   public void setSourceTaintCreationRuleOn(boolean sourceTaintCreationRule) {
     this.sourceTaintCreationRule = sourceTaintCreationRule;
@@ -236,14 +227,11 @@ public class Config {
   /**
    * Sets the taint propagation rule on.
    *
-   * @param taintPropagationRuleOn
-   *          the new taint propagation rule on
+   * @param taintPropagationRuleOn the new taint propagation rule on
    */
   public void setTaintPropagationRuleOn(boolean taintPropagationRuleOn) {
     this.taintPropagationRuleOn = taintPropagationRuleOn;
   }
-
-
 
   /**
    * Checks if is imprecise taint propagation rule on.
@@ -257,8 +245,7 @@ public class Config {
   /**
    * Sets the imprecise taint propagation rule on.
    *
-   * @param impreciseTaintCreationRuleOn
-   *          the new imprecise taint propagation rule on
+   * @param impreciseTaintCreationRuleOn the new imprecise taint propagation rule on
    */
   public void setImpreciseTaintCreationRuleOn(boolean impreciseTaintCreationRuleOn) {
     this.impreciseTaintCreationRuleOn = impreciseTaintCreationRuleOn;
@@ -276,8 +263,7 @@ public class Config {
   /**
    * Sets the imprecise propagation rule on.
    *
-   * @param imprecisePropagationRuleOn
-   *          the new imprecise propagation rule on
+   * @param imprecisePropagationRuleOn the new imprecise propagation rule on
    */
   public void setImprecisePropagationRuleOn(boolean imprecisePropagationRuleOn) {
     this.imprecisePropagationRuleOn = imprecisePropagationRuleOn;
@@ -295,17 +281,13 @@ public class Config {
   /**
    * Sets the concrete taint creation rule on.
    *
-   * @param concreteTaintCreationRuleOn
-   *          the new concrete taint creation rule on
-   * @param assignOn
-   *          the concrete taint at assign stmt rule on
-   * @param returnOn
-   *          the concrete taint at return stmt rule on
-   * @param calleeOn
-   *          the concrete taint at callee rule on
+   * @param concreteTaintCreationRuleOn the new concrete taint creation rule on
+   * @param assignOn the concrete taint at assign stmt rule on
+   * @param returnOn the concrete taint at return stmt rule on
+   * @param calleeOn the concrete taint at callee rule on
    */
-  public void setConcreteTaintCreationRuleOn(boolean concreteTaintCreationRuleOn, boolean assignOn,
-      boolean returnOn, boolean calleeOn) {
+  public void setConcreteTaintCreationRuleOn(
+      boolean concreteTaintCreationRuleOn, boolean assignOn, boolean returnOn, boolean calleeOn) {
     this.concreteTaintCreationRuleOn = concreteTaintCreationRuleOn;
     if (concreteTaintCreationRuleOn) {
       concreteTaintAtAssignStmtOn = assignOn;
@@ -320,11 +302,10 @@ public class Config {
 
   /**
    * Sets the concrete taint creation rule on. The sub rules are all enabled if
-   * concreteTaintCreationRuleOn is true, otherwise they are all disabled.
-   * {@link ConcreteTaintCreationRule}.
+   * concreteTaintCreationRuleOn is true, otherwise they are all disabled. {@link
+   * ConcreteTaintCreationRule}.
    *
-   * @param concreteTaintCreationRuleOn
-   *          the new concrete taint creation rule on
+   * @param concreteTaintCreationRuleOn the new concrete taint creation rule on
    */
   public void setConcreteTaintCreationRuleOn(boolean concreteTaintCreationRuleOn) {
     this.concreteTaintCreationRuleOn = concreteTaintCreationRuleOn;
@@ -332,7 +313,6 @@ public class Config {
       concreteTaintAtAssignStmtOn = false;
       concreteTaintAtReturnStmtOn = false;
       concreteTaintAtCalleeOn = false;
-
     }
   }
 
@@ -375,8 +355,7 @@ public class Config {
   /**
    * Sets the static field propagation.
    *
-   * @param staticFieldPropagation
-   *          the new static field propagation
+   * @param staticFieldPropagation the new static field propagation
    */
   public void setStaticFieldPropagationRuleOn(boolean staticFieldPropagation) {
     staticFieldPropagationOn = staticFieldPropagation;
@@ -394,8 +373,7 @@ public class Config {
   /**
    * Sets the time out on.
    *
-   * @param timeOutDuration
-   *          the time out duration in seconds
+   * @param timeOutDuration the time out duration in seconds
    */
   public void setTimeOutOn(int timeOutDuration) {
     timeOutOn = true;
@@ -423,8 +401,7 @@ public class Config {
   /**
    * Sets the writeJimpleOutput option.
    *
-   * @param writeJimpleOutput
-   *          the new write jimple output
+   * @param writeJimpleOutput the new write jimple output
    */
   public void setWriteJimpleOutput(boolean writeJimpleOutput) {
     this.writeJimpleOutput = writeJimpleOutput;
@@ -445,20 +422,20 @@ public class Config {
    * @return true, if should compute
    */
   public boolean computeConstraintMap() {
-		return computeConstraintMap;
-	}
+    return computeConstraintMap;
+  }
 
-	/**
-	 * Sets the computeConstraintMap option.
-	 *
-	 * @param computeConstraintMap the new computeConstraintMap value
-	 */
-	public void setComputeConstraintMap(boolean computeConstraintMap) {
-		this.computeConstraintMap = computeConstraintMap;
-	}
+  /**
+   * Sets the computeConstraintMap option.
+   *
+   * @param computeConstraintMap the new computeConstraintMap value
+   */
+  public void setComputeConstraintMap(boolean computeConstraintMap) {
+    this.computeConstraintMap = computeConstraintMap;
+  }
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override
@@ -535,17 +512,13 @@ public class Config {
   /**
    * Sets the write html output.
    *
-   * @param writeHtmlOutput
-   *          the new write html output
+   * @param writeHtmlOutput the new write html output
    */
   public void setWriteHtmlOutput(boolean writeHtmlOutput) {
     this.writeHtmlOutput = writeHtmlOutput;
   }
 
-
-  /**
-   * Turn on all rules.
-   */
+  /** Turn on all rules. */
   public void turnOnAllRules() {
     setUIConstraintCreationRuleOn(true);
     setTaintConstraintCreationRuleOn(true);

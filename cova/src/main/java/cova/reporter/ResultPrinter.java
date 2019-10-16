@@ -1,35 +1,30 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.reporter;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import soot.Unit;
 
 import cova.data.CombinedResult;
 import cova.data.CombinedResult.LeakConstraint;
 import cova.data.ConstraintType;
 import cova.data.ConstraintZ3;
 import cova.data.MetaData;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import soot.Unit;
 
 public class ResultPrinter {
   private final CombinedResult combinedResults;
@@ -46,14 +41,44 @@ public class ResultPrinter {
     }
     if (!csvFile.exists()) {
       try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))) {
-        writer.write(String.join(separator, "#", "APK", "Dex Size(KB)", "#Reachable Methods",
-            "FlowDroid-Time(s)", "Cova-Timeout", "Cova-Time(s)", "Z3-Time(s)", "#Z3-Queries",
-            "%Failed Aliasing", "#Leaks", "Sink", "SinkLine", "SinkMethod", "SinkClass",
-            "SinkConstraint", "Source", "SourceLine", "SourceMethod", "SourceClass",
-            "SourceConstraint", "Constraint", "AST Size",
-            "#U-Constraint", "#I-Constraint", "#C-Constraint", "#UI-Constraint", "#UC-Constraint",
-            "#IC-Constraint", "#UIC-Constraint", "#Infeasible", "#None", "Appeared U", "Appeared I",
-            "Apeared C"));
+        writer.write(
+            String.join(
+                separator,
+                "#",
+                "APK",
+                "Dex Size(KB)",
+                "#Reachable Methods",
+                "FlowDroid-Time(s)",
+                "Cova-Timeout",
+                "Cova-Time(s)",
+                "Z3-Time(s)",
+                "#Z3-Queries",
+                "%Failed Aliasing",
+                "#Leaks",
+                "Sink",
+                "SinkLine",
+                "SinkMethod",
+                "SinkClass",
+                "SinkConstraint",
+                "Source",
+                "SourceLine",
+                "SourceMethod",
+                "SourceClass",
+                "SourceConstraint",
+                "Constraint",
+                "AST Size",
+                "#U-Constraint",
+                "#I-Constraint",
+                "#C-Constraint",
+                "#UI-Constraint",
+                "#UC-Constraint",
+                "#IC-Constraint",
+                "#UIC-Constraint",
+                "#Infeasible",
+                "#None",
+                "Appeared U",
+                "Appeared I",
+                "Apeared C"));
         writer.newLine();
       } catch (IOException e) {
         e.printStackTrace();
@@ -102,8 +127,7 @@ public class ResultPrinter {
         sb.append(separator);
         if (leak.getSinkMethod() != null) {
           sb.append(leak.getSinkMethod().getSignature());
-        }
-        else {
+        } else {
           sb.append("null");
         }
         sb.append(separator);

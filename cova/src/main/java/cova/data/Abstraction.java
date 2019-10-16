@@ -1,30 +1,23 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.data;
 
 import cova.data.taints.AbstractTaint;
 import cova.data.taints.ZeroTaint;
 
-/**
- * The Class Abstraction contains the constraint of current statement and a set of taints.
- * 
- */
+/** The Class Abstraction contains the constraint of current statement and a set of taints. */
 public class Abstraction {
 
   /** The constraint of current statement. */
@@ -37,9 +30,7 @@ public class Abstraction {
 
   private static Abstraction BOTTOM;
 
-  /**
-   * Instantiates a new abstraction with given constraint and taint set
-   */
+  /** Instantiates a new abstraction with given constraint and taint set */
   public Abstraction(IConstraint c, WrappedTaintSet set) {
     constraintOfStmt = c;
     taintSet = set;
@@ -48,13 +39,12 @@ public class Abstraction {
   /**
    * Instantiates a new abstraction as a copy of given abstraction.
    *
-   * @param fact
-   *          the fact
+   * @param fact the fact
    */
   public Abstraction(Abstraction fact) {
     try {
-    taintSet = new WrappedTaintSet(fact.taintSet);
-    constraintOfStmt = fact.constraintOfStmt.copy();
+      taintSet = new WrappedTaintSet(fact.taintSet);
+      constraintOfStmt = fact.constraintOfStmt.copy();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -76,8 +66,7 @@ public class Abstraction {
    * Updates the constraint of current statement with given constraint and the constraint of each
    * taint by performing AND-operation to its current constraint.
    *
-   * @param constraint
-   *          the constraint
+   * @param constraint the constraint
    */
   public void updateConstraint(IConstraint constraint) {
     constraintOfStmt = constraint;
@@ -89,8 +78,7 @@ public class Abstraction {
    * Updates the constraint of current statement and taints by performing AND-operation to current
    * constraints. It is only used for creating constraint issued by callbacks.
    *
-   * @param constraint
-   *          the constraint
+   * @param constraint the constraint
    */
   public void updateConstraintForCallback(IConstraint constraint) {
     constraintOfStmt = constraintOfStmt.and(constraint, false);
@@ -113,7 +101,7 @@ public class Abstraction {
 
   /**
    * Return the bottom value represents unknown value
-   * 
+   *
    * @return the bottom value
    */
   public static Abstraction bottomValue() {
@@ -125,8 +113,7 @@ public class Abstraction {
   /**
    * Replace zero taint with given zero taint.
    *
-   * @param zeroTaint
-   *          the new zero taint
+   * @param zeroTaint the new zero taint
    */
   public void replaceZeroTaint(AbstractTaint zeroTaint) {
     AbstractTaint oldZeroTaint = taintSet.getZeroTaint();
@@ -135,13 +122,11 @@ public class Abstraction {
   }
 
   /**
-   * Meet operation of two given abstractions.The constraints are merged with disjunction and the taints are merged with
-   * {@link WrappedTaintSet#meet(WrappedTaintSet)}
+   * Meet operation of two given abstractions.The constraints are merged with disjunction and the
+   * taints are merged with {@link WrappedTaintSet#meet(WrappedTaintSet)}
    *
-   * @param a
-   *          the first abstraction
-   * @param b
-   *          the second abstraction
+   * @param a the first abstraction
+   * @param b the second abstraction
    * @return the abstraction of a and b after performing the meet operation.
    */
   public static Abstraction meet(Abstraction a, Abstraction b) {
@@ -157,14 +142,11 @@ public class Abstraction {
   }
 
   /**
-   * Meet operation of two given abstractions shallowly. The constraints are merged with disjunction and the taints are
-   * simply merged with set union.
-   * 
+   * Meet operation of two given abstractions shallowly. The constraints are merged with disjunction
+   * and the taints are simply merged with set union.
    *
-   * @param a
-   *          the first abstraction
-   * @param b
-   *          the second abstraction
+   * @param a the first abstraction
+   * @param b the second abstraction
    * @return the abstraction of a and b after performing the shallow meet operation.
    */
   public static Abstraction shallowMeet(Abstraction a, Abstraction b) {
@@ -177,10 +159,8 @@ public class Abstraction {
   /**
    * Merge local abstraction with return abstraction at call site.
    *
-   * @param local
-   *          the local abstraction of caller
-   * @param ret
-   *          the return abstraction of callee
+   * @param local the local abstraction of caller
+   * @param ret the return abstraction of callee
    * @return the merged abstraction at call site
    */
   public static Abstraction merge(Abstraction local, Abstraction ret) {
@@ -252,15 +232,13 @@ public class Abstraction {
   /**
    * Updates taint set.
    *
-   * @param newSet
-   *          the newtaint set
+   * @param newSet the newtaint set
    */
   public void updateTaintSet(WrappedTaintSet newSet) {
     taintSet = newSet;
   }
 
-  public boolean isBottomValue()
-  {
+  public boolean isBottomValue() {
     return equals(BOTTOM);
   }
 

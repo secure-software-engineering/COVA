@@ -1,31 +1,18 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.core;
-
-import java.util.ArrayList;
-import java.util.Date;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import soot.SootMethod;
-import soot.Unit;
 
 import cova.data.Abstraction;
 import cova.rules.ConcreteTaintCreationRule;
@@ -38,11 +25,14 @@ import cova.rules.UIConstraintCreationRule;
 import cova.setup.config.Config;
 import cova.source.SourceManager;
 import cova.vasco.Context;
+import java.util.ArrayList;
+import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import soot.SootMethod;
+import soot.Unit;
 
-/**
- * The Class RuleManager manages all rules in the analysis.
- * 
- */
+/** The Class RuleManager manages all rules in the analysis. */
 public class RuleManager {
 
   /** The interprocedural control flow graph. */
@@ -82,12 +72,9 @@ public class RuleManager {
   /**
    * Instantiates a new taint analysis rule manager.
    *
-   * @param icfg
-   *          the icfg
-   * @param sourceManager
-   *          the source manager
-   * @param config
-   *          the configuration
+   * @param icfg the icfg
+   * @param sourceManager the source manager
+   * @param config the configuration
    */
   public RuleManager(InterproceduralCFG icfg, SourceManager sourceManager, Config config) {
     this.icfg = icfg;
@@ -106,9 +93,7 @@ public class RuleManager {
     }
   }
 
-  /**
-   * Setup constraint creation and taint propagation rules.
-   */
+  /** Setup constraint creation and taint propagation rules. */
   private void setupPropagationRules() {
     if (config.isSourceTaintCreationRuleOn()) {
       sourceTaintCreationRule = new SourceTaintCreationRule(this);
@@ -117,9 +102,12 @@ public class RuleManager {
       impreciseTaintCreationRule = new ImpreciseTaintCreationRule(this);
     }
     if (config.isConcreteTaintCreationRuleOn()) {
-      concreteTaintCreationRule = new ConcreteTaintCreationRule(
-          config.isConcreteTaintAtAssignStmtOn(), config.isConcreteTaintAtReturnStmtOn(),
-          config.isConcreteTaintAtCalleeOn(), this);
+      concreteTaintCreationRule =
+          new ConcreteTaintCreationRule(
+              config.isConcreteTaintAtAssignStmtOn(),
+              config.isConcreteTaintAtReturnStmtOn(),
+              config.isConcreteTaintAtCalleeOn(),
+              this);
     }
     if (config.isUIConstraintCreationRuleOn()) {
       rules.add(new UIConstraintCreationRule(this));
@@ -135,18 +123,14 @@ public class RuleManager {
   /**
    * Apply normal flow function.
    *
-   * @param context
-   *          the context
-   * @param node
-   *          the node
-   * @param succ
-   *          the succ
-   * @param in
-   *          the in
+   * @param context the context
+   * @param node the node
+   * @param succ the succ
+   * @param in the in
    * @return the abstraction
    */
-  public Abstraction applyNormalFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      Unit node, Unit succ, Abstraction in) {
+  public Abstraction applyNormalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     Abstraction out = new Abstraction(in);
     for (IRule<SootMethod, Unit, Abstraction> rule : rules) {
       Abstraction ruleOut = rule.normalFlowFunction(context, node, succ, out);
@@ -160,20 +144,19 @@ public class RuleManager {
   /**
    * Apply call entry flow function.
    *
-   * @param context
-   *          the context
-   * @param callee
-   *          the callee
-   * @param node
-   *          the node
-   * @param succ
-   *          the successor node
-   * @param in
-   *          the in
+   * @param context the context
+   * @param callee the callee
+   * @param node the node
+   * @param succ the successor node
+   * @param in the in
    * @return the abstraction
    */
-  public Abstraction applyCallEntryFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      SootMethod callee, Unit node, Unit succ, Abstraction in) {
+  public Abstraction applyCallEntryFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context,
+      SootMethod callee,
+      Unit node,
+      Unit succ,
+      Abstraction in) {
     Abstraction out = new Abstraction(in);
     for (IRule<SootMethod, Unit, Abstraction> rule : rules) {
       Abstraction ruleOut = rule.callEntryFlowFunction(context, callee, node, succ, out);
@@ -187,20 +170,19 @@ public class RuleManager {
   /**
    * Apply call exit flow function.
    *
-   * @param context
-   *          the context
-   * @param callee
-   *          the callee
-   * @param node
-   *          the node
-   * @param succ
-   *          the successor node
-   * @param in
-   *          the in
+   * @param context the context
+   * @param callee the callee
+   * @param node the node
+   * @param succ the successor node
+   * @param in the in
    * @return the abstraction
    */
-  public Abstraction applyCallExitFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      SootMethod callee, Unit node, Unit succ, Abstraction in) {
+  public Abstraction applyCallExitFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context,
+      SootMethod callee,
+      Unit node,
+      Unit succ,
+      Abstraction in) {
     Abstraction out = new Abstraction(in);
     for (IRule<SootMethod, Unit, Abstraction> rule : rules) {
       Abstraction ruleOut = rule.callExitFlowFunction(context, callee, node, succ, out);
@@ -209,24 +191,19 @@ public class RuleManager {
       }
     }
     return out;
-
   }
 
   /**
    * Apply call local flow function.
    *
-   * @param context
-   *          the context
-   * @param node
-   *          the node
-   * @param succ
-   *          the successor node
-   * @param in
-   *          the in
+   * @param context the context
+   * @param node the node
+   * @param succ the successor node
+   * @param in the in
    * @return the abstraction
    */
-  public Abstraction applyCallLocalFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      Unit node, Unit succ, Abstraction in) {
+  public Abstraction applyCallLocalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     Abstraction out = new Abstraction(in);
     for (IRule<SootMethod, Unit, Abstraction> rule : rules) {
       Abstraction ruleOut = rule.callLocalFlowFunction(context, node, succ, out);

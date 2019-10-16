@@ -1,34 +1,26 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.source.symbolic;
-
-import java.util.HashMap;
-import java.util.List;
-
-import soot.Unit;
 
 import cova.source.data.Source;
 import cova.source.data.SourceUICallback;
+import java.util.HashMap;
+import java.util.List;
+import soot.Unit;
 
-/**
- * The Class SymbolicNameManager manages the symbolic names used in constraints.
- */
+/** The Class SymbolicNameManager manages the symbolic names used in constraints. */
 public class SymbolicNameManager {
 
   /** The instance. */
@@ -46,9 +38,7 @@ public class SymbolicNameManager {
   /** The map stores symbolicName and the corresponding user-defined name of the source. */
   private HashMap<String, String> symbolicToName;
 
-  /**
-   * Instantiates a new symbolic name manager.
-   */
+  /** Instantiates a new symbolic name manager. */
   private SymbolicNameManager() {
     symbolicNameIndexMap = new HashMap<String, Integer>();
     unitSymbolicNameMap = new HashMap<Unit, String>();
@@ -57,7 +47,7 @@ public class SymbolicNameManager {
 
   /**
    * Return the instance of the symbolic name manager.
-   * 
+   *
    * @return the instance of the symbolic name manager
    */
   public static SymbolicNameManager getInstance() {
@@ -67,9 +57,7 @@ public class SymbolicNameManager {
     return instance;
   }
 
-  /**
-   * Reset the symbolic name manager.
-   */
+  /** Reset the symbolic name manager. */
   public static void reset() {
     instance = new SymbolicNameManager();
   }
@@ -77,10 +65,8 @@ public class SymbolicNameManager {
   /**
    * Creates the symbolic name for a given source.
    *
-   * @param unit
-   *          the unit
-   * @param source
-   *          the source
+   * @param unit the unit
+   * @param source the source
    * @return the symbolic name
    */
   public String createSymbolicName(Unit unit, Source source) {
@@ -115,8 +101,7 @@ public class SymbolicNameManager {
   /**
    * Gets the source unique name.
    *
-   * @param symbolicName
-   *          the symbolic name
+   * @param symbolicName the symbolic name
    * @return the source unique name
    */
   public String getSourceUniqueName(String symbolicName) {
@@ -126,16 +111,13 @@ public class SymbolicNameManager {
 
   /**
    * Creates the imprecise symbolic name.
-   * 
-   * <p>
-   * Imprecise symbolic name has the form im(S)_i, where S is the symbolic name of the source taint
-   * and i is the index which differs imprecise symbolic name issued from the same source taint.
-   * </p>
    *
-   * @param unit
-   *          the unit
-   * @param symbolicName
-   *          the symbolic names
+   * <p>Imprecise symbolic name has the form im(S)_i, where S is the symbolic name of the source
+   * taint and i is the index which differs imprecise symbolic name issued from the same source
+   * taint.
+   *
+   * @param unit the unit
+   * @param symbolicName the symbolic names
    * @return the string
    */
   public String createImpreciseSymbolicName(Unit unit, List<String> symbolicNames) {
@@ -179,8 +161,7 @@ public class SymbolicNameManager {
   /**
    * Gets the source name.
    *
-   * @param symbolicName
-   *          the symbolic name
+   * @param symbolicName the symbolic name
    * @return the source name
    */
   public String getSourceName(String symbolicName) {

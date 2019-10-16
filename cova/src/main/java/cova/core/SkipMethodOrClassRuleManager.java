@@ -1,42 +1,34 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.core;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-
+import cova.source.data.SourceMethod;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
-
 import soot.Scene;
 import soot.SootMethod;
 import soot.jimple.InvokeExpr;
 
-import cova.source.data.SourceMethod;
-
 /**
  * The Class SkipMethodOrClassRuleManager is used to check if some method or class should be skipped
  * from the analysis.
- * 
  */
 public class SkipMethodOrClassRuleManager {
 
@@ -63,12 +55,15 @@ public class SkipMethodOrClassRuleManager {
   private static LoadingCache<InvokeExpr, String> signatureCache;
 
   static {
-    signatureCache = CacheBuilder.newBuilder().build(new CacheLoader<InvokeExpr, String>() {
-      @Override
-      public String load(InvokeExpr invokeExpr) throws Exception {
-        return getSignature(invokeExpr);
-      }
-    });
+    signatureCache =
+        CacheBuilder.newBuilder()
+            .build(
+                new CacheLoader<InvokeExpr, String>() {
+                  @Override
+                  public String load(InvokeExpr invokeExpr) throws Exception {
+                    return getSignature(invokeExpr);
+                  }
+                });
   }
 
   private static String getSignature(InvokeExpr invokeExpr) {
@@ -92,9 +87,7 @@ public class SkipMethodOrClassRuleManager {
     return signature;
   }
 
-  /**
-   * Instantiates a new SkipMethodOrClassRuleManager object.
-   */
+  /** Instantiates a new SkipMethodOrClassRuleManager object. */
   private SkipMethodOrClassRuleManager() {
     toBeSkiped = new ArrayList<SourceMethod>();
     skipedCalls = new LinkedHashSet<InvokeExpr>();
@@ -104,8 +97,8 @@ public class SkipMethodOrClassRuleManager {
     objectInit = Scene.v().getObjectType().getSootClass().getMethodUnsafe("void <init>()");
     // skip "java.lang.object void<clinit>()"
     objectClinit = Scene.v().getObjectType().getSootClass().getMethodUnsafe("void <clinit>()");
-    objectGetClass = Scene.v().getObjectType().getSootClass()
-        .getMethodUnsafe("java.lang.Class getClass()");
+    objectGetClass =
+        Scene.v().getObjectType().getSootClass().getMethodUnsafe("java.lang.Class getClass()");
     threadInit = Scene.v().grabMethod("<java.lang.Thread: void <init>()>");
   }
 
@@ -124,8 +117,7 @@ public class SkipMethodOrClassRuleManager {
   /**
    * Normally we skip all source methods.
    *
-   * @param sourceMethods
-   *          the new skip methods
+   * @param sourceMethods the new skip methods
    */
   public void setSkipMethods(Set<SourceMethod> sourceMethods) {
     for (SourceMethod method : sourceMethods) {
@@ -136,23 +128,23 @@ public class SkipMethodOrClassRuleManager {
   /**
    * Checks if the given method is system method.
    *
-   * @param method
-   *          the method
+   * @param method the method
    * @return true, if the given method is system method
    */
   private boolean isSystemMethod(SootMethod method) {
-    return method == objectInit || method == objectClinit || method == objectGetClass
+    return method == objectInit
+        || method == objectClinit
+        || method == objectGetClass
         || method == threadInit;
   }
 
   /**
    * Checks if the method called in the given invoke expression should be skipped during the
    * analysis.
-   * 
-   * @param invokeExpr
-   *          the invoke expression
+   *
+   * @param invokeExpr the invoke expression
    * @return true, if the method called in the invoke expression should be skipped during the
-   *         analysis.
+   *     analysis.
    */
   public boolean isSkipCall(InvokeExpr invokeExpr) {
     if (skipedCalls.contains(invokeExpr)) {
@@ -175,5 +167,4 @@ public class SkipMethodOrClassRuleManager {
       return false;
     }
   }
-
 }

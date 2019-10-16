@@ -1,23 +1,25 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.source.parser;
 
+import cova.source.data.Field;
+import cova.source.data.Method;
+import cova.source.data.Source;
+import cova.source.data.SourceField;
+import cova.source.data.SourceMethod;
+import cova.source.data.SourceType;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,16 +29,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import cova.source.data.Field;
-import cova.source.data.Method;
-import cova.source.data.Source;
-import cova.source.data.SourceField;
-import cova.source.data.SourceMethod;
-import cova.source.data.SourceType;
 
 /**
  * The Class SourceParser parses ConfigurationSources.txt and InputSources.txt.
@@ -51,9 +45,7 @@ public class SourceParser {
   private String regexField;
   private String regexMethod;
 
-  /**
-   * Instantiates a new source parser.
-   */
+  /** Instantiates a new source parser. */
   public SourceParser() {
     sources = new HashSet<Source>();
     regexField = getRegexField();
@@ -101,12 +93,12 @@ public class SourceParser {
    */
   private String getRegexField() {
     if (regexField == null) {
-      String group1 = "(.+)";// class name
-      String group2 = "(.+)";// field type
-      String group3 = "([^\\(\\)]+)";// field name
-      String group4 = "(.+)";// source type
-      String group5 = "(.+)";// option
-      String group6 = "(.+)";// id
+      String group1 = "(.+)"; // class name
+      String group2 = "(.+)"; // field type
+      String group3 = "([^\\(\\)]+)"; // field name
+      String group4 = "(.+)"; // source type
+      String group5 = "(.+)"; // option
+      String group6 = "(.+)"; // id
       StringBuilder sb = new StringBuilder("^<");
       sb.append(group1);
       sb.append(":");
@@ -137,14 +129,14 @@ public class SourceParser {
    */
   private String getRegexMethod() {
     if (regexMethod == null) {
-      String group1 = "(.+)";// class name
-      String group2 = "(.+)";// return type
-      String group3 = "(.+)";// method name
-      String group4 = "(.*?)";// parameter types
-      String group5 = "(.*?)";// parameter values
-      String group6 = "(.+)";// source type
-      String group7 = "(.+)";// option
-      String group8 = "(.+)";// id
+      String group1 = "(.+)"; // class name
+      String group2 = "(.+)"; // return type
+      String group3 = "(.+)"; // method name
+      String group4 = "(.*?)"; // parameter types
+      String group5 = "(.*?)"; // parameter values
+      String group6 = "(.+)"; // source type
+      String group7 = "(.+)"; // option
+      String group8 = "(.+)"; // id
       StringBuilder sb = new StringBuilder("^<");
       sb.append(group1);
       sb.append(":");

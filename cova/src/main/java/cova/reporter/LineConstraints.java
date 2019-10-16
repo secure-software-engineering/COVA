@@ -1,36 +1,29 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.reporter;
 
+import cova.data.IConstraint;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
-
 import soot.SootClass;
-
-import cova.data.IConstraint;
 
 /**
  * The Class LineConstraints stores the constraints of each line of code in a class after the
  * analysis.
- * 
  */
 public class LineConstraints {
 
@@ -46,8 +39,7 @@ public class LineConstraints {
   /**
    * Instantiates a new line results.
    *
-   * @param cl
-   *          the class
+   * @param cl the class
    */
   public LineConstraints(SootClass cl) {
     this.cl = cl;
@@ -57,18 +49,14 @@ public class LineConstraints {
   /**
    * Adds the line result.
    *
-   * @param lineNumber
-   *          the java line number
-   * @param constraint
-   *          the constraint of the line
+   * @param lineNumber the java line number
+   * @param constraint the constraint of the line
    */
   public void addLineResult(int lineNumber, IConstraint constraint) {
     javaLnConstraintMap.put(lineNumber, constraint);
   }
 
-  /**
-   * remove all constraints which are true.
-   */
+  /** remove all constraints which are true. */
   private void filterResult() {
     Set<Integer> removed = new HashSet<Integer>();
     for (Entry<Integer, IConstraint> entry : javaLnConstraintMap.entrySet()) {
@@ -145,9 +133,8 @@ public class LineConstraints {
     }
     return sb.toString();
   }
-  
-  public int size()
-  {
+
+  public int size() {
     if (!filtered) {
       filterResult();
     }

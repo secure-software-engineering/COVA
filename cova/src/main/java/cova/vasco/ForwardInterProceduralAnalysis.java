@@ -1,55 +1,46 @@
 /**
  * Copyright (C) 2013 Rohan Padhye
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Modified by Linghui Luo for COVA
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * <p>Modified by Linghui Luo for COVA
  */
 package cova.vasco;
 
 import com.google.common.base.Stopwatch;
-
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
 import soot.toolkits.graph.DirectedGraph;
 import soot.toolkits.scalar.Pair;
 
 /**
  * A generic forward-flow inter-procedural analysis which is fully context-sensitive.
- * 
- * <p>
- * This class essentially captures a forward data flow problem which can be solved using the context-sensitive
- * inter-procedural analysis framework as described in {@link InterProceduralAnalysis}.
- * </p>
- * 
- * <p>
- * This is the class that client analyses will extend in order to perform forward-flow inter-procedural analysis.
- * </p>
- * 
- * 
- * @param <M>
- *          the type of a method
- * @param <N>
- *          the type of a node in the CFG
- * @param <A>
- *          the type of a data flow value
+ *
+ * <p>This class essentially captures a forward data flow problem which can be solved using the
+ * context-sensitive inter-procedural analysis framework as described in {@link
+ * InterProceduralAnalysis}.
+ *
+ * <p>This is the class that client analyses will extend in order to perform forward-flow
+ * inter-procedural analysis.
+ *
+ * @param <M> the type of a method
+ * @param <N> the type of a node in the CFG
+ * @param <A> the type of a data flow value
  */
-public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProceduralAnalysis<M, N, A> {
+public abstract class ForwardInterProceduralAnalysis<M, N, A>
+    extends InterProceduralAnalysis<M, N, A> {
 
   /** The stop watch. */
   private Stopwatch stopWatch;
@@ -65,9 +56,7 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
 
   private Set<M> reachableMethods;
 
-  /**
-   * Instantiates a new forward interprocedural analysis.
-   */
+  /** Instantiates a new forward interprocedural analysis. */
   public ForwardInterProceduralAnalysis() {
     super(false);
     this.usedTime = 0;
@@ -78,10 +67,8 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
   /**
    * Creates a new value for phantom method.
    *
-   * @param method
-   *          the method
-   * @param entryValue
-   *          the entry value
+   * @param method the method
+   * @param entryValue the entry value
    * @return the context
    */
   protected Context<M, N, A> initContextForPhantomMethod(M method, A entryValue) {
@@ -93,22 +80,19 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
 
   /**
    * Creates a new value context and initialises data flow values for its nodes.
-   * 
-   * <p>
-   * The following steps are performed:
-   * <ol>
-   * <li>Construct the context.</li>
-   * <li>Initialise IN/OUT for all nodes and add them to the work-list</li>
-   * <li>Initialise the IN of entry points with a copy of the given entry value.</li>
-   * <li>Add this new context to the given method's mapping.</li>
-   * <li>Add this context to the global work-list.</li>
-   * </ol>
-   * </p>
    *
-   * @param method
-   *          the method whose context to create
-   * @param entryValue
-   *          the data flow value at the entry of this method
+   * <p>The following steps are performed:
+   *
+   * <ol>
+   *   <li>Construct the context.
+   *   <li>Initialise IN/OUT for all nodes and add them to the work-list
+   *   <li>Initialise the IN of entry points with a copy of the given entry value.
+   *   <li>Add this new context to the given method's mapping.
+   *   <li>Add this context to the global work-list.
+   * </ol>
+   *
+   * @param method the method whose context to create
+   * @param entryValue the data flow value at the entry of this method
    * @return the context
    */
   protected Context<M, N, A> initContext(M method, A entryValue) {
@@ -117,7 +101,8 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
     }
 
     // Construct the context
-    Context<M, N, A> context = new Context<M, N, A>(method, programRepresentation().getControlFlowGraph(method), false);
+    Context<M, N, A> context =
+        new Context<M, N, A>(method, programRepresentation().getControlFlowGraph(method), false);
     context.bottomValue = bottomValue();
 
     // Initialize IN/OUT for all nodes
@@ -152,10 +137,8 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
   /**
    * This method computes the in value for given node
    *
-   * @param context
-   *          the context
-   * @param node
-   *          the node
+   * @param context the context
+   * @param node the node
    * @return the merged in value
    */
   protected A computeInValue(Context<M, N, A> context, N node) {
@@ -181,8 +164,7 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
   /**
    * Compute exit value by merging the edge values of synthesized tail edges.
    *
-   * @param context
-   *          the context
+   * @param context the context
    * @return the exit value
    */
   protected A computeExitValue(Context<M, N, A> context) {
@@ -209,7 +191,8 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
     while (!worklistOfContexts.isEmpty()) {
       // check if timed out
       if (timeOutOn) {
-        if (stopWatch.elapsed(TimeUnit.SECONDS) > TimeUnit.SECONDS.toSeconds(this.timeOutDuration)) {
+        if (stopWatch.elapsed(TimeUnit.SECONDS)
+            > TimeUnit.SECONDS.toSeconds(this.timeOutDuration)) {
           analysisFinished = false;
           timeOut = true;
           break;
@@ -228,7 +211,12 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
       if (!currentContext.getWorklist().isEmpty()) {
         count++;
         if (logger.isDebugEnabled()) {
-          logger.debug(count + ". X" + currentContext.getId() + ": " + currentContext.getMethod().toString());
+          logger.debug(
+              count
+                  + ". X"
+                  + currentContext.getId()
+                  + ": "
+                  + currentContext.getMethod().toString());
         }
 
         // remove the first edge from the worklist of the currentContext
@@ -269,18 +257,21 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
                   targetContext.setCallNode(node);
                 }
 
-                // store the transition from the calling context and call site to the target context.
+                // store the transition from the calling context and call site to the target
+                // context.
                 CallSite<M, N, A> callSite = new CallSite<M, N, A>(currentContext, node);
                 contextTransitions.addTransition(callSite, targetContext);
 
-                // check if the target context has been analyzed (surely not if it is just newly made):
+                // check if the target context has been analyzed (surely not if it is just newly
+                // made):
                 if (targetContext.isAnalysed()) {
                   hit = true;
                   A exitValue = targetContext.getExitValue();
                   if (logger.isDebugEnabled()) {
                     logger.debug("HIT: reuse exit value " + exitValue);
                   }
-                  A returnedValue = callExitFlowFunction(currentContext, callee, node, succ, exitValue);
+                  A returnedValue =
+                      callExitFlowFunction(currentContext, callee, node, succ, exitValue);
                   out = meet(out, returnedValue);
                 }
               }
@@ -311,7 +302,8 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
           logger.debug("");
         }
 
-        // if the out value for edge (node, succ) has been changed, add all outgoing edges from succ to the worklist of
+        // if the out value for edge (node, succ) has been changed, add all outgoing edges from succ
+        // to the worklist of
         // currentContext.
         if (!oldOut.equals(out)) {
           currentContext.addToWorklist(succ);
@@ -342,7 +334,14 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
               Context<M, N, A> callingContext = callSite.getCallingContext();
               N callNode = callSite.getCallNode();
               if (logger.isDebugEnabled()) {
-                logger.debug("X" + callingContext.getId() + "-->" + "X" + currentContext.getId() + " via " + callNode);
+                logger.debug(
+                    "X"
+                        + callingContext.getId()
+                        + "-->"
+                        + "X"
+                        + currentContext.getId()
+                        + " via "
+                        + callNode);
               }
               // make sure callingContext is in the worklistOfContexts
               worklistOfContexts.add(callingContext);
@@ -365,70 +364,56 @@ public abstract class ForwardInterProceduralAnalysis<M, N, A> extends InterProce
       timeout = true;
       logger.info("Timeout. Timeout duration: " + usedTime + "s");
     }
-
   }
 
   /**
-   * Processes the intra-procedural flow function of a statement that does not contain a method call.
+   * Processes the intra-procedural flow function of a statement that does not contain a method
+   * call.
    *
-   * @param context
-   *          the value context at the call-site
-   * @param node
-   *          the statement whose flow function to process
-   * @param succ
-   *          the succ
-   * @param inValue
-   *          the data flow value before the statement
+   * @param context the value context at the call-site
+   * @param node the statement whose flow function to process
+   * @param succ the succ
+   * @param inValue the data flow value before the statement
    * @return the data flow value after the statement
    */
   public abstract A normalFlowFunction(Context<M, N, A> context, N node, N succ, A inValue);
 
   /**
-   * Processes the inter-procedural flow function for a method call at the start of the call, to handle parameters.
+   * Processes the inter-procedural flow function for a method call at the start of the call, to
+   * handle parameters.
    *
-   * @param context
-   *          the value context at the call-site
-   * @param callee
-   *          the target (or one of the targets) of this call site
-   * @param node
-   *          the statement containing the method call
-   * @param succ
-   *          the succ
-   * @param inValue
-   *          the data flow value before the call
+   * @param context the value context at the call-site
+   * @param callee the target (or one of the targets) of this call site
+   * @param node the statement containing the method call
+   * @param succ the succ
+   * @param inValue the data flow value before the call
    * @return the data flow value at the entry to the called procedure
    */
-  public abstract A callEntryFlowFunction(Context<M, N, A> context, M callee, N node, N succ, A inValue);
+  public abstract A callEntryFlowFunction(
+      Context<M, N, A> context, M callee, N node, N succ, A inValue);
 
   /**
-   * Processes the inter-procedural flow function for a method call at the end of the call, to handle return values.
+   * Processes the inter-procedural flow function for a method call at the end of the call, to
+   * handle return values.
    *
-   * @param context
-   *          the value context at the call-site
-   * @param callee
-   *          the target (or one of the targets) of this call site
-   * @param node
-   *          the statement containing the method call
-   * @param succ
-   *          the succ
-   * @param exitValue
-   *          the data flow value at the exit of the called procedure
+   * @param context the value context at the call-site
+   * @param callee the target (or one of the targets) of this call site
+   * @param node the statement containing the method call
+   * @param succ the succ
+   * @param exitValue the data flow value at the exit of the called procedure
    * @return the data flow value after the call (returned component)
    */
-  public abstract A callExitFlowFunction(Context<M, N, A> context, M callee, N node, N succ, A exitValue);
+  public abstract A callExitFlowFunction(
+      Context<M, N, A> context, M callee, N node, N succ, A exitValue);
 
   /**
-   * Processes the intra-procedural flow function for a method call at the call-site itself, to handle propagation of local
-   * values that are not involved in the call.
+   * Processes the intra-procedural flow function for a method call at the call-site itself, to
+   * handle propagation of local values that are not involved in the call.
    *
-   * @param context
-   *          the value context at the call-site
-   * @param node
-   *          the statement containing the method call
-   * @param succ
-   *          the succ
-   * @param inValue
-   *          the data flow value before the call
+   * @param context the value context at the call-site
+   * @param node the statement containing the method call
+   * @param succ the succ
+   * @param inValue the data flow value before the call
    * @return the data flow value after the call (local component)
    */
   public abstract A callLocalFlowFunction(Context<M, N, A> context, N node, N succ, A inValue);

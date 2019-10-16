@@ -1,26 +1,31 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.rules;
 
+import boomerang.util.AccessPath;
+import cova.core.InterproceduralCFG;
+import cova.core.RuleManager;
+import cova.data.Abstraction;
+import cova.data.ConstraintZ3;
+import cova.data.WrappedAccessPath;
+import cova.data.WrappedTaintSet;
+import cova.data.taints.AbstractTaint;
+import cova.vasco.Context;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import soot.Local;
 import soot.RefType;
 import soot.SootMethod;
@@ -44,16 +49,6 @@ import soot.jimple.StaticFieldRef;
 import soot.jimple.Stmt;
 import soot.jimple.UnopExpr;
 
-import boomerang.util.AccessPath;
-import cova.core.InterproceduralCFG;
-import cova.core.RuleManager;
-import cova.data.Abstraction;
-import cova.data.ConstraintZ3;
-import cova.data.WrappedAccessPath;
-import cova.data.WrappedTaintSet;
-import cova.data.taints.AbstractTaint;
-import cova.vasco.Context;
-
 public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction> {
   private InterproceduralCFG icfg;
   private RuleManager ruleManager;
@@ -66,15 +61,15 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
     callNodes = new LinkedHashSet<Unit>();
   }
 
-  private void killTaintsAndAliases(SootMethod method, Unit node, Value leftOp,
-      Set<AbstractTaint> leftTaints, Abstraction in) {
+  private void killTaintsAndAliases(
+      SootMethod method, Unit node, Value leftOp, Set<AbstractTaint> leftTaints, Abstraction in) {
     // if leftOp is tainted, kill taints on leftOp and aliases
     in.taints().removeAll(leftTaints);
 
     // kill aliasing taints of leftOp;
     if (cova.core.Aliasing.canBeQueried(leftOp)) {
-      Set<AccessPath> aliases = ruleManager.getAliasing().findAliasAtStmt(leftOp, (Stmt) node,
-          method);
+      Set<AccessPath> aliases =
+          ruleManager.getAliasing().findAliasAtStmt(leftOp, (Stmt) node, method);
       for (AccessPath alias : aliases) {
         WrappedAccessPath aliasAccessPath = WrappedAccessPath.convert(alias);
         if (aliasAccessPath.getFields() != null) {
@@ -87,8 +82,14 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
     }
   }
 
-  private void createTaintsAndAliases(SootMethod method, Unit node, Value leftOp, Value rightOp,
-      Set<AbstractTaint> leftTaints, Set<AbstractTaint> rightTaints, Abstraction in) {
+  private void createTaintsAndAliases(
+      SootMethod method,
+      Unit node,
+      Value leftOp,
+      Value rightOp,
+      Set<AbstractTaint> leftTaints,
+      Set<AbstractTaint> rightTaints,
+      Abstraction in) {
     WrappedAccessPath right = new WrappedAccessPath(rightOp);
     Set<WrappedAccessPath> aliasesOfLeftOp = new HashSet<WrappedAccessPath>();
     // if leftOp is already tainted, kill taints on leftOp and aliases at first
@@ -97,8 +98,8 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
     }
     // find the aliases of the leftOp
     if (cova.core.Aliasing.canBeQueried(leftOp)) {
-      Set<AccessPath> aliases = ruleManager.getAliasing().findAliasAtStmt(leftOp, (Stmt) node,
-          method);
+      Set<AccessPath> aliases =
+          ruleManager.getAliasing().findAliasAtStmt(leftOp, (Stmt) node, method);
       // kill existing taints start with aliasing access path
       for (AccessPath alias : aliases) {
         WrappedAccessPath aliasAccessPath = WrappedAccessPath.convert(alias);
@@ -110,16 +111,16 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
     // taint leftOp and its aliases with new value
     for (AbstractTaint t : rightTaints) {
       // create taint with leftOp as its access path
-      WrappedAccessPath leftAccessPath = t.getAccessPath()
-          .replacePrefix(new WrappedAccessPath(leftOp), right.getDepth());
+      WrappedAccessPath leftAccessPath =
+          t.getAccessPath().replacePrefix(new WrappedAccessPath(leftOp), right.getDepth());
       AbstractTaint leftTaint = t.createNewTaintFromAccessPath(leftAccessPath);
       in.taints().add(leftTaint);
       // create taints from aliases of leftOp
       for (WrappedAccessPath alias : aliasesOfLeftOp) {
         if (!alias.equals(leftAccessPath)) {
           // Note: boomerang returns also the query value back
-          WrappedAccessPath aliasAccessPath = t.getAccessPath().replacePrefix(alias,
-              right.getDepth());
+          WrappedAccessPath aliasAccessPath =
+              t.getAccessPath().replacePrefix(alias, right.getDepth());
           AbstractTaint aliasTaint = t.createNewTaintFromAccessPath(aliasAccessPath);
           in.taints().add(aliasTaint);
         }
@@ -128,15 +129,15 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
   }
 
   @Override
-  public Abstraction normalFlowFunction(Context<SootMethod, Unit, Abstraction> context, Unit node,
-      Unit succ, Abstraction in) {
+  public Abstraction normalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     if (node instanceof AssignStmt) {
       SootMethod method = context.getMethod();
       AssignStmt assignStmt = (AssignStmt) node;
       Value leftOp = assignStmt.getLeftOp();
       Value rightOp = assignStmt.getRightOp();
       if (rightOp instanceof CastExpr) {
-        /** CASE: local= (type) imm **/
+        /** CASE: local= (type) imm * */
         CastExpr castExpr = (CastExpr) rightOp;
         rightOp = castExpr.getOp();
       }
@@ -144,21 +145,22 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
       Set<AbstractTaint> rightTaints = null;
       boolean leftTainted = false;
       boolean rightTainted = false;
-      if (WrappedAccessPath.isSupportedType(leftOp)) {// check if leftOp is tainted
+      if (WrappedAccessPath.isSupportedType(leftOp)) { // check if leftOp is tainted
         leftTaints = in.taints().getTaintsStartWith(new WrappedAccessPath(leftOp));
         if (!leftTaints.isEmpty()) {
           leftTainted = true;
         }
       }
-      if (WrappedAccessPath.isSupportedType(rightOp)) {// check if rightOp is tainted
+      if (WrappedAccessPath.isSupportedType(rightOp)) { // check if rightOp is tainted
         rightTaints = in.taints().getTaintsStartWith(new WrappedAccessPath(rightOp));
         if (!rightTaints.isEmpty()) {
           rightTainted = true;
         }
       }
-      if (leftOp instanceof Local) { /* 1. local=rvalue */
+      if (leftOp instanceof Local) {
+        /* 1. local=rvalue */
         if (rightOp instanceof Constant) {
-          /** CASE: local=constant **/
+          /** CASE: local=constant * */
           if (leftTainted) {
             killTaintsAndAliases(method, node, leftOp, leftTaints, in);
           }
@@ -168,12 +170,12 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
             ruleManager.getConcreteTaintCreationRule().normalFlowFunction(context, node, succ, in);
           }
         } else if (rightOp instanceof Local) {
-          /** CASE: local=local **/
+          /** CASE: local=local * */
           if (rightTainted) {
             createTaintsAndAliases(method, node, leftOp, rightOp, leftTaints, rightTaints, in);
           }
         } else if (rightOp instanceof FieldRef) {
-          /** CASE: local=field or local=local.field **/
+          /** CASE: local=field or local=local.field * */
           if (rightTainted) {
             createTaintsAndAliases(method, node, leftOp, rightOp, leftTaints, rightTaints, in);
           }
@@ -182,42 +184,46 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
           }
           if (rightOp instanceof InstanceFieldRef) {
             if (ruleManager.getConfig().isImpreciseTaintCreationRuleOn()) {
-              ruleManager.getImpreciseTaintCreationRule().normalFlowFunction(context, node, succ,
-                  in);
+              ruleManager
+                  .getImpreciseTaintCreationRule()
+                  .normalFlowFunction(context, node, succ, in);
             }
           }
         } else if (rightOp instanceof BinopExpr) {
-          /** CASE: local= imm binop imm **/
+          /** CASE: local= imm binop imm * */
           if (ruleManager.getConfig().isImpreciseTaintCreationRuleOn()) {
             ruleManager.getImpreciseTaintCreationRule().normalFlowFunction(context, node, succ, in);
           }
         } else if (rightOp instanceof InstanceOfExpr) {
-          /** CASE: local= imm instanceof type **/
+          /** CASE: local= imm instanceof type * */
           if (ruleManager.getConfig().isImprecisePropagationRuleOn()) {
             ruleManager.getImpreciseTaintCreationRule().normalFlowFunction(context, node, succ, in);
           }
         } else if (rightOp instanceof NewExpr) {
-          /** CASE: local=new RefType **/
+          /** CASE: local=new RefType * */
           // TODO:
         } else if (rightOp instanceof UnopExpr) {
           if (rightOp instanceof LengthExpr) {
-            /** CASE: local=length imm **/
+            /** CASE: local=length imm * */
             if (ruleManager.getConfig().isImpreciseTaintCreationRuleOn()) {
-              ruleManager.getImpreciseTaintCreationRule().normalFlowFunction(context, node, succ,
-                  in);
+              ruleManager
+                  .getImpreciseTaintCreationRule()
+                  .normalFlowFunction(context, node, succ, in);
             }
           }
           if (rightOp instanceof NegExpr) {
-            /** CASE: local =neg imm **/
+            /** CASE: local =neg imm * */
             if (ruleManager.getConfig().isImpreciseTaintCreationRuleOn()) {
-              ruleManager.getImpreciseTaintCreationRule().normalFlowFunction(context, node, succ,
-                  in);
+              ruleManager
+                  .getImpreciseTaintCreationRule()
+                  .normalFlowFunction(context, node, succ, in);
             }
           }
         }
-      } else if (leftOp instanceof StaticFieldRef) { /* 2. field= imm */
+      } else if (leftOp instanceof StaticFieldRef) {
+        /* 2. field= imm */
         if (rightOp instanceof Constant) {
-          /** CASE: field=constant **/
+          /** CASE: field=constant * */
           if (leftTainted) {
             killTaintsAndAliases(method, node, leftOp, leftTaints, in);
           }
@@ -227,7 +233,7 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
             ruleManager.getConcreteTaintCreationRule().normalFlowFunction(context, node, succ, in);
           }
         } else if (rightOp instanceof Local) {
-          /** CASE: field=local **/
+          /** CASE: field=local * */
           if (rightTainted) {
             createTaintsAndAliases(method, node, leftOp, rightOp, leftTaints, rightTaints, in);
           } else {
@@ -236,9 +242,10 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
             }
           }
         }
-      } else if (leftOp instanceof InstanceFieldRef) { /* 3. local.field=imm */
+      } else if (leftOp instanceof InstanceFieldRef) {
+        /* 3. local.field=imm */
         if (rightOp instanceof Constant) {
-          /** CASE: local.field=constant **/
+          /** CASE: local.field=constant * */
           if (leftTainted) {
             killTaintsAndAliases(method, node, leftOp, leftTaints, in);
           }
@@ -248,7 +255,7 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
             ruleManager.getConcreteTaintCreationRule().normalFlowFunction(context, node, succ, in);
           }
         } else if (rightOp instanceof Local) {
-          /** CASE: local.field=local **/
+          /** CASE: local.field=local * */
           if (rightTainted) {
             createTaintsAndAliases(method, node, leftOp, rightOp, leftTaints, rightTaints, in);
           } else {
@@ -266,13 +273,12 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
       Value returnValue = returnStmt.getOp();
       // create return taints
       if (!(returnValue instanceof Constant)) {
-        Set<AbstractTaint> involved = in.taints()
-            .getTaintsStartWith(new WrappedAccessPath(returnValue));
+        Set<AbstractTaint> involved =
+            in.taints().getTaintsStartWith(new WrappedAccessPath(returnValue));
         for (AbstractTaint taint : involved) {
           WrappedAccessPath taintAp = taint.getAccessPath();
           WrappedAccessPath retAp = WrappedAccessPath.getRetAccessPath(taintAp.getFields());
-          AbstractTaint retTaint = taint
-              .createNewTaintFromAccessPath(retAp);
+          AbstractTaint retTaint = taint.createNewTaintFromAccessPath(retAp);
           in.taints().remove(taint);
           in.taints().add(retTaint);
         }
@@ -300,8 +306,12 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
   }
 
   @Override
-  public Abstraction callEntryFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      SootMethod callee, Unit node, Unit succ, Abstraction in) {
+  public Abstraction callEntryFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context,
+      SootMethod callee,
+      Unit node,
+      Unit succ,
+      Abstraction in) {
     if (!callNodes.contains(node)) {
       callNodes.add(node);
     }
@@ -316,8 +326,8 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
       Value arg = invokeExpr.getArg(i);
       if (WrappedAccessPath.isSupportedType(arg)) {
         Local param = callee.getActiveBody().getParameterLocal(i);
-        Set<AbstractTaint> involvedTaints = in.taints()
-            .getTaintsStartWith(new WrappedAccessPath(arg));
+        Set<AbstractTaint> involvedTaints =
+            in.taints().getTaintsStartWith(new WrappedAccessPath(arg));
         for (AbstractTaint taint : involvedTaints) {
           WrappedAccessPath calleeSite = taint.getAccessPath().copyFields(param);
           AbstractTaint t = taint.createNewTaintFromAccessPath(calleeSite);
@@ -335,8 +345,8 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
       if (!calleeMethod.isPhantom() && calleeMethod.hasActiveBody()) {
         IdentityStmt identityStmt = icfg.getIdentityStmt(calleeMethod);
         Local calleeBase = (Local) identityStmt.getLeftOp();
-        Set<AbstractTaint> taintsAtCallee = in.taints().deriveTaintsAtCallee(callerBase,
-            calleeBase);
+        Set<AbstractTaint> taintsAtCallee =
+            in.taints().deriveTaintsAtCallee(callerBase, calleeBase);
         entry.addAll(taintsAtCallee);
       }
     }
@@ -359,15 +369,20 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
     // statement is not true
     if (ruleManager.getConfig().isConcreteTaintCreationRuleOn()
         && !in.getConstraintOfStmt().isTrue()) {
-      ruleManager.getConcreteTaintCreationRule().callEntryFlowFunction(context, callee, node, succ,
-          in);
+      ruleManager
+          .getConcreteTaintCreationRule()
+          .callEntryFlowFunction(context, callee, node, succ, in);
     }
     return in;
   }
 
   @Override
-  public Abstraction callExitFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      SootMethod callee, Unit node, Unit succ, Abstraction exitValue) {
+  public Abstraction callExitFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context,
+      SootMethod callee,
+      Unit node,
+      Unit succ,
+      Abstraction exitValue) {
     WrappedTaintSet ret = new WrappedTaintSet();
     // zero taint will be propagated back to call site
     ret.add(exitValue.taints().getZeroTaint());
@@ -392,23 +407,23 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
         if (arg.getType() instanceof RefType) {
           if (WrappedAccessPath.isSupportedType(arg) && callee.hasActiveBody()) {
             Local param = callee.getActiveBody().getParameterLocal(i);
-            Set<AbstractTaint> involvedTaints = exitValue.taints()
-                .getTaintsStartWith(new WrappedAccessPath(param));
+            Set<AbstractTaint> involvedTaints =
+                exitValue.taints().getTaintsStartWith(new WrappedAccessPath(param));
             for (AbstractTaint taint : involvedTaints) {
-              WrappedAccessPath callerSiteAP = taint.getAccessPath()
-                  .replacePrefix(new WrappedAccessPath(arg), 1);
+              WrappedAccessPath callerSiteAP =
+                  taint.getAccessPath().replacePrefix(new WrappedAccessPath(arg), 1);
               AbstractTaint taintAtCaller = taint.createNewTaintFromAccessPath(callerSiteAP);
               ret.add(taintAtCaller);
               // also create aliasing taints at caller
               if (cova.core.Aliasing.canBeQueried(arg)) {
                 SootMethod method = context.getMethod();
-                Set<AccessPath> aliases = ruleManager.getAliasing().findAliasAtStmt(arg,
-                    (Stmt) node, method);
+                Set<AccessPath> aliases =
+                    ruleManager.getAliasing().findAliasAtStmt(arg, (Stmt) node, method);
                 for (AccessPath alias : aliases) {
                   WrappedAccessPath aliasAccessPath = WrappedAccessPath.convert(alias);
                   if (!aliasAccessPath.equals(new WrappedAccessPath(arg))) {
-                    WrappedAccessPath taintAP = taintAtCaller.getAccessPath()
-                        .replacePrefix(aliasAccessPath, 1);
+                    WrappedAccessPath taintAP =
+                        taintAtCaller.getAccessPath().replacePrefix(aliasAccessPath, 1);
                     AbstractTaint aliasTaint = taintAtCaller.createNewTaintFromAccessPath(taintAP);
                     ret.add(aliasTaint);
                   }
@@ -429,21 +444,21 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
       if (!calleeMethod.isPhantom() && calleeMethod.hasActiveBody()) {
         IdentityStmt identityStmt = icfg.getIdentityStmt(calleeMethod);
         Local calleeBase = (Local) identityStmt.getLeftOp();
-        Set<AbstractTaint> taintsAtCaller = exitValue.taints().deriveTaintsAtCaller(calleeBase,
-            callerBase);
+        Set<AbstractTaint> taintsAtCaller =
+            exitValue.taints().deriveTaintsAtCaller(calleeBase, callerBase);
         if (!taintsAtCaller.isEmpty()) {
           ret.addAll(taintsAtCaller);
           // also create aliasing taints at caller
           if (cova.core.Aliasing.canBeQueried(callerBase)) {
             SootMethod method = context.getMethod();
-            Set<AccessPath> aliases = ruleManager.getAliasing().findAliasAtStmt(callerBase,
-                (Stmt) node, method);
+            Set<AccessPath> aliases =
+                ruleManager.getAliasing().findAliasAtStmt(callerBase, (Stmt) node, method);
             for (AccessPath alias : aliases) {
               WrappedAccessPath aliasAccessPath = WrappedAccessPath.convert(alias);
               if (!aliasAccessPath.equals(new WrappedAccessPath(callerBase))) {
                 for (AbstractTaint taintAtCaller : taintsAtCaller) {
-                  WrappedAccessPath taintAP = taintAtCaller.getAccessPath()
-                      .replacePrefix(aliasAccessPath, 1);
+                  WrappedAccessPath taintAP =
+                      taintAtCaller.getAccessPath().replacePrefix(aliasAccessPath, 1);
                   AbstractTaint aliasTaint = taintAtCaller.createNewTaintFromAccessPath(taintAP);
                   ret.add(aliasTaint);
                 }
@@ -472,29 +487,33 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
   }
 
   @Override
-  public Abstraction callLocalFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      Unit node, Unit succ, Abstraction in) {
+  public Abstraction callLocalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     boolean taintCreated = false;
     SootMethod method = context.getMethod();
     // according to different rules, create taints at caller
     if (node instanceof AssignStmt) {
       if (ruleManager.getConfig().isSourceTaintCreationRuleOn()) {
-        boolean createdSourceTaint = ruleManager.getSourceTaintCreationRule().flowFunction(context,
-            node, in);
+        boolean createdSourceTaint =
+            ruleManager.getSourceTaintCreationRule().flowFunction(context, node, in);
         if (createdSourceTaint) {
           taintCreated = true;
         }
       }
       if (ruleManager.getConfig().isImpreciseTaintCreationRuleOn()) {
-        boolean createdImpreciseTaint = ruleManager.getImpreciseTaintCreationRule()
-            .callLocalFlowFunction(context, node, succ, in);
+        boolean createdImpreciseTaint =
+            ruleManager
+                .getImpreciseTaintCreationRule()
+                .callLocalFlowFunction(context, node, succ, in);
         if (createdImpreciseTaint) {
           taintCreated = true;
         }
       }
       if (ruleManager.getConfig().isConcreteTaintCreationRuleOn()) {
-        boolean createdConcreteTaint = ruleManager.getConcreteTaintCreationRule()
-            .callLocalFlowFunction(context, node, succ, in);
+        boolean createdConcreteTaint =
+            ruleManager
+                .getConcreteTaintCreationRule()
+                .callLocalFlowFunction(context, node, succ, in);
         if (createdConcreteTaint) {
           taintCreated = true;
         }
@@ -504,8 +523,8 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
         // the assignment
         AssignStmt assignStmt = (AssignStmt) node;
         Value leftOp = assignStmt.getLeftOp();
-        Set<AbstractTaint> taintsOfLeftOp = in.taints()
-            .getTaintsStartWith(new WrappedAccessPath(leftOp));
+        Set<AbstractTaint> taintsOfLeftOp =
+            in.taints().getTaintsStartWith(new WrappedAccessPath(leftOp));
         killTaintsAndAliases(context.getMethod(), node, leftOp, taintsOfLeftOp, in);
       }
     }
@@ -519,22 +538,25 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
         // taints can be changed in the callee.
         for (Value arg : invokeExpr.getArgs()) {
           if (WrappedAccessPath.isSupportedType(arg) && arg.getType() instanceof RefType) {
-            Set<AbstractTaint> nonPropagateTaints = in.taints()
-                .getTaintsStartWith(new WrappedAccessPath(arg));
+            Set<AbstractTaint> nonPropagateTaints =
+                in.taints().getTaintsStartWith(new WrappedAccessPath(arg));
             if (!nonPropagateTaints.isEmpty()) {
               in.taints().removeAll(nonPropagateTaints);
               // kill also its aliasing taints
               if (cova.core.Aliasing.canBeQueried(arg)) {
-                Set<AccessPath> aliases = ruleManager.getAliasing().findAliasAtStmt(arg,
-                    (Stmt) node, method);
+                Set<AccessPath> aliases =
+                    ruleManager.getAliasing().findAliasAtStmt(arg, (Stmt) node, method);
                 for (AccessPath alias : aliases) {
                   WrappedAccessPath aliasAccessPath = WrappedAccessPath.convert(alias);
                   Set<AbstractTaint> aliasTaints = in.taints().getTaintsStartWith(aliasAccessPath);
                   for (AbstractTaint aliasTaint : aliasTaints) {
                     for (AbstractTaint nonPropagate : nonPropagateTaints) {
                       WrappedAccessPath accessPathNP = nonPropagate.getAccessPath();
-                      if (!accessPathNP.isLocal() && WrappedAccessPath.hasSameSuffix(
-                          aliasTaint.getAccessPath(), accessPathNP, accessPathNP.getDepth() - 1)) {
+                      if (!accessPathNP.isLocal()
+                          && WrappedAccessPath.hasSameSuffix(
+                              aliasTaint.getAccessPath(),
+                              accessPathNP,
+                              accessPathNP.getDepth() - 1)) {
                         in.taints().remove(aliasTaint);
                       }
                     }
@@ -553,22 +575,25 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
         Value base = instanceInvoke.getBase();
         SootMethod calleeMethod = instanceInvoke.getMethod();
         if (!calleeMethod.isPhantom() && calleeMethod.hasActiveBody()) {
-          Set<AbstractTaint> nonPropagateTaints = in.taints()
-              .getTaintsStartWith(new WrappedAccessPath(base));
+          Set<AbstractTaint> nonPropagateTaints =
+              in.taints().getTaintsStartWith(new WrappedAccessPath(base));
           if (!nonPropagateTaints.isEmpty()) {
             in.taints().removeAll(nonPropagateTaints);
             // kill also its aliasing taints
             if (cova.core.Aliasing.canBeQueried(base)) {
-              Set<AccessPath> aliases = ruleManager.getAliasing().findAliasAtStmt(base, (Stmt) node,
-                  method);
+              Set<AccessPath> aliases =
+                  ruleManager.getAliasing().findAliasAtStmt(base, (Stmt) node, method);
               for (AccessPath alias : aliases) {
                 WrappedAccessPath aliasAccessPath = WrappedAccessPath.convert(alias);
                 Set<AbstractTaint> aliasTaints = in.taints().getTaintsStartWith(aliasAccessPath);
                 for (AbstractTaint aliasTaint : aliasTaints) {
                   for (AbstractTaint nonPropagate : nonPropagateTaints) {
                     WrappedAccessPath accessPathNP = nonPropagate.getAccessPath();
-                    if (!accessPathNP.isLocal() && WrappedAccessPath.hasSameSuffix(
-                        aliasTaint.getAccessPath(), accessPathNP, accessPathNP.getDepth() - 1)) {
+                    if (!accessPathNP.isLocal()
+                        && WrappedAccessPath.hasSameSuffix(
+                            aliasTaint.getAccessPath(),
+                            accessPathNP,
+                            accessPathNP.getDepth() - 1)) {
                       in.taints().remove(aliasTaint);
                     }
                   }

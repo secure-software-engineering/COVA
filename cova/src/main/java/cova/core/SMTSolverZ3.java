@@ -1,21 +1,17 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.core;
 
 import com.google.common.cache.CacheBuilder;
@@ -31,12 +27,10 @@ import com.microsoft.z3.Solver;
 import com.microsoft.z3.Sort;
 import com.microsoft.z3.Status;
 import com.microsoft.z3.Tactic;
-
+import cova.data.Operator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 import org.apache.commons.lang3.StringUtils;
-
 import soot.BooleanType;
 import soot.ByteType;
 import soot.CharType;
@@ -57,12 +51,7 @@ import soot.jimple.LeExpr;
 import soot.jimple.LtExpr;
 import soot.jimple.NeExpr;
 
-import cova.data.Operator;
-
-/**
- * The Class SMTSolverZ3 creates Z3 boolean expression and solves boolean constraints.
- * 
- */
+/** The Class SMTSolverZ3 creates Z3 boolean expression and solves boolean constraints. */
 public class SMTSolverZ3 {
 
   /** The instance. */
@@ -103,42 +92,39 @@ public class SMTSolverZ3 {
     FALSE = ctx.mkFalse();
     count = 0;
     usedTime = 0;
-    solverCache = CacheBuilder.newBuilder().build(new CacheLoader<BoolExpr, Status>() {
-      @Override
-      public Status load(BoolExpr constraint) throws Exception {
-        Status status = solverCache.getIfPresent(constraint);
-        if (status == null) {
-          Solver s = ctx.mkSolver();
-          s.add(constraint);
-          status = s.check();
-          solverCache.put(constraint, status);
-        }
-        return status;
-      }
-
-    });
+    solverCache =
+        CacheBuilder.newBuilder()
+            .build(
+                new CacheLoader<BoolExpr, Status>() {
+                  @Override
+                  public Status load(BoolExpr constraint) throws Exception {
+                    Status status = solverCache.getIfPresent(constraint);
+                    if (status == null) {
+                      Solver s = ctx.mkSolver();
+                      s.add(constraint);
+                      status = s.check();
+                      solverCache.put(constraint, status);
+                    }
+                    return status;
+                  }
+                });
   }
 
-  /**
-   * Reset.
-   */
+  /** Reset. */
   public void reset() {
     count = 0;
     usedTime = 0;
   }
 
   /**
-   * This function solves the boolean formula (op1 op op2) using the "ctx-solver-simplify" tactic of Z3 and returns the
-   * result in CNF(Conjunctive Normal Form). So far it only supports AND and OR operators.
+   * This function solves the boolean formula (op1 op op2) using the "ctx-solver-simplify" tactic of
+   * Z3 and returns the result in CNF(Conjunctive Normal Form). So far it only supports AND and OR
+   * operators.
    *
-   * @param op1
-   *          the first operand
-   * @param op2
-   *          the second operand (optional )
-   * @param op
-   *          the operator
-   * @param simplify
-   *          true if the constraint should be simplified.
+   * @param op1 the first operand
+   * @param op2 the second operand (optional )
+   * @param op the operator
+   * @param simplify true if the constraint should be simplified.
    * @return the simplified CNF by applying the operator op to op1 and op2.
    */
   public BoolExpr solve(BoolExpr op1, BoolExpr op2, Operator op, boolean simplify) {
@@ -159,10 +145,8 @@ public class SMTSolverZ3 {
   /**
    * This function proves if the given two boolean expressions are equivalent.
    *
-   * @param expr1
-   *          the first expression
-   * @param expr2
-   *          the second expression
+   * @param expr1 the first expression
+   * @param expr2 the second expression
    * @return true, if expr1 and expr2 are equivalent.
    */
   public boolean prove(BoolExpr expr1, BoolExpr expr2) {
@@ -187,10 +171,8 @@ public class SMTSolverZ3 {
   /**
    * Negate the given expression.
    *
-   * @param expr
-   *          the given expression
-   * @param simplify
-   *          true if the constraint should be simplified.
+   * @param expr the given expression
+   * @param simplify true if the constraint should be simplified.
    * @return the negation
    */
   public BoolExpr negate(BoolExpr expr, boolean simplify) {
@@ -222,8 +204,7 @@ public class SMTSolverZ3 {
   /**
    * Checks if the given boolean constraint is satisfiable.
    *
-   * @param constraint
-   *          the constraint
+   * @param constraint the constraint
    * @return true, if the given boolean constraint is satisfiable
    */
   public boolean isSatisfiable(BoolExpr constraint) {
@@ -252,8 +233,7 @@ public class SMTSolverZ3 {
   /**
    * Applies tatic ctx-solver-simplify.
    *
-   * @param expr
-   *          the expression
+   * @param expr the expression
    * @return the simplified expression
    */
   private BoolExpr applyCtxSolverSimplify(BoolExpr expr) {
@@ -281,7 +261,7 @@ public class SMTSolverZ3 {
           if (ret != null) {
             return ret;
           } else {
-            return ctx.mkBool(true);// if ret==null, it means the result is true
+            return ctx.mkBool(true); // if ret==null, it means the result is true
           }
         }
       }
@@ -301,10 +281,8 @@ public class SMTSolverZ3 {
   /**
    * Make boolean equality expr1==expr2.
    *
-   * @param expr1
-   *          the expr1
-   * @param expr2
-   *          the expr2
+   * @param expr1 the expr1
+   * @param expr2 the expr2
    * @return the equality expression.
    */
   public BoolExpr makeEquality(BoolExpr expr1, BoolExpr expr2) {
@@ -314,10 +292,8 @@ public class SMTSolverZ3 {
   /**
    * Makes boolean term.
    *
-   * @param name
-   *          the name of the term
-   * @param negate
-   *          true, if the boolean expression should be negated.
+   * @param name the name of the term
+   * @param negate true, if the boolean expression should be negated.
    * @return the boolean expression
    */
   public BoolExpr makeBoolTerm(String name, boolean negate) {
@@ -332,14 +308,10 @@ public class SMTSolverZ3 {
   /**
    * Makes boolean term.
    *
-   * @param name
-   *          the name
-   * @param v
-   *          the value
-   * @param equal
-   *          true, if the condition expression is an equality
-   * @param negate
-   *          true, if the boolean expression should be negated
+   * @param name the name
+   * @param v the value
+   * @param equal true, if the condition expression is an equality
+   * @param negate true, if the boolean expression should be negated
    * @return the boolean expression
    */
   public BoolExpr makeBoolTerm(String name, int v, boolean equal, boolean negate) {
@@ -370,8 +342,7 @@ public class SMTSolverZ3 {
   /**
    * Translate.
    *
-   * @param conditionExpr
-   *          the condition expr
+   * @param conditionExpr the condition expr
    * @return the operator
    */
   public Operator translate(ConditionExpr conditionExpr) {
@@ -395,29 +366,31 @@ public class SMTSolverZ3 {
   /**
    * Make non-terminal boolean expression of form left op right.
    *
-   * @param left
-   *          the left operand
-   * @param leftConstant
-   *          the left operand is constant
-   * @param right
-   *          the right operand
-   * @param rightConstant
-   *          the right operand constant
-   * @param type
-   *          the type of the operands
-   * @param operator
-   *          the operator
+   * @param left the left operand
+   * @param leftConstant the left operand is constant
+   * @param right the right operand
+   * @param rightConstant the right operand constant
+   * @param type the type of the operands
+   * @param operator the operator
    * @return the boolean expression
    */
-  public BoolExpr makeNonTerminalExpr(String left, boolean leftConstant, String right, boolean rightConstant, Type type,
+  public BoolExpr makeNonTerminalExpr(
+      String left,
+      boolean leftConstant,
+      String right,
+      boolean rightConstant,
+      Type type,
       Operator operator) {
     Expr leftExpr = null;
     Expr rightExpr = null;
     if (type instanceof PrimType) {
-      if (type instanceof BooleanType || left.equals("true") || left.equals("false") || right.equals("true")
+      if (type instanceof BooleanType
+          || left.equals("true")
+          || left.equals("false")
+          || right.equals("true")
           || right.equals("false")) { // z3 boolsort: it can happen a
-                                      // boolean value has integer type
-                                      // because of type inference
+        // boolean value has integer type
+        // because of type inference
         if (leftConstant) {
           leftExpr = ctx.mkBool(Boolean.parseBoolean(left));
         } else {
@@ -428,8 +401,11 @@ public class SMTSolverZ3 {
         } else {
           rightExpr = ctx.mkBoolConst(right);
         }
-      } else if (type instanceof ByteType || type instanceof CharType || type instanceof ShortType || type instanceof IntType
-          || type instanceof LongType) {// z3 intsort
+      } else if (type instanceof ByteType
+          || type instanceof CharType
+          || type instanceof ShortType
+          || type instanceof IntType
+          || type instanceof LongType) { // z3 intsort
         if (leftConstant) {
           if (type instanceof LongType) {
             leftExpr = ctx.mkInt(left.substring(0, left.length() - 1));
@@ -448,7 +424,7 @@ public class SMTSolverZ3 {
         } else {
           rightExpr = ctx.mkIntConst(right);
         }
-      } else if (type instanceof FloatType || type instanceof DoubleType) {// z3 realsort
+      } else if (type instanceof FloatType || type instanceof DoubleType) { // z3 realsort
         if (leftConstant) {
           leftExpr = ctx.mkReal(left);
         } else {
@@ -456,7 +432,7 @@ public class SMTSolverZ3 {
         }
       }
     } else if (type instanceof RefType) {
-      if (((RefType) type).getClassName().equals(String.class.getName())) {// z3 stringsort
+      if (((RefType) type).getClassName().equals(String.class.getName())) { // z3 stringsort
         if (leftConstant && !left.equals("null")) {
           leftExpr = ctx.MkString(left);
         } else {
@@ -469,12 +445,12 @@ public class SMTSolverZ3 {
           rightExpr = ctx.mkConst(right, ctx.getStringSort());
         }
       } else {
-        Sort uninterpretedSort = ctx.mkUninterpretedSort(type.toString());// z3 uninterpretedsort
+        Sort uninterpretedSort = ctx.mkUninterpretedSort(type.toString()); // z3 uninterpretedsort
         leftExpr = ctx.mkConst(left, uninterpretedSort);
         rightExpr = ctx.mkConst(right, uninterpretedSort);
       }
     } else {
-      Sort uninterpretedSort = ctx.mkUninterpretedSort(type.toString());// z3 uninterpretedsort
+      Sort uninterpretedSort = ctx.mkUninterpretedSort(type.toString()); // z3 uninterpretedsort
       leftExpr = ctx.mkConst(left, uninterpretedSort);
       rightExpr = ctx.mkConst(right, uninterpretedSort);
     }
@@ -509,24 +485,23 @@ public class SMTSolverZ3 {
   /**
    * Make non-terminal boolean expression of form left op right.
    *
-   * @param left
-   *          the left operand
-   * @param leftConstant
-   *          the left operand is constant
-   * @param right
-   *          the right operand
-   * @param rightConstant
-   *          the right operand constant
-   * @param conditionExpr
-   *          the conditional expression.
-   * 
+   * @param left the left operand
+   * @param leftConstant the left operand is constant
+   * @param right the right operand
+   * @param rightConstant the right operand constant
+   * @param conditionExpr the conditional expression.
    * @return the boolean expression
    */
-  public BoolExpr makeNonTerminalExpr(Value left, boolean leftConstant, Value right, boolean rightConstant,
+  public BoolExpr makeNonTerminalExpr(
+      Value left,
+      boolean leftConstant,
+      Value right,
+      boolean rightConstant,
       ConditionExpr conditionExpr) {
     Operator operator = translate(conditionExpr);
     if (operator != null) {
-      return makeNonTerminalExpr(left.toString(), leftConstant, right.toString(), rightConstant, left.getType(), operator);
+      return makeNonTerminalExpr(
+          left.toString(), leftConstant, right.toString(), rightConstant, left.getType(), operator);
     } else {
       throw new RuntimeException("Unsupported conditional expr: " + conditionExpr.toString());
     }
@@ -534,7 +509,7 @@ public class SMTSolverZ3 {
 
   /**
    * Only used for test
-   * 
+   *
    * @param exprs
    * @param simplify
    * @return

@@ -1,34 +1,28 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.data.taints;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cova.data.IConstraint;
 import cova.data.WrappedAccessPath;
+import java.util.ArrayList;
+import java.util.List;
 import soot.Type;
 
 /**
  * This is the abstract class of taint. A taint must have an access path and a constraint when this
  * taint is alive.
- * 
  */
 public abstract class AbstractTaint {
 
@@ -38,22 +32,18 @@ public abstract class AbstractTaint {
   /** The constraint of the taint when it is alive. */
   protected IConstraint constraint;
 
-  /**
-   * Extra information stored in the taint, such as a witness path. 
-   */
+  /** Extra information stored in the taint, such as a witness path. */
   protected List<String> info;
   /**
    * Constructor of a taint
    *
-   * @param accessPath
-   *          the access path
-   * @param constraint
-   *          the constraint
+   * @param accessPath the access path
+   * @param constraint the constraint
    */
   public AbstractTaint(WrappedAccessPath accessPath, IConstraint constraint) {
     this.accessPath = accessPath;
     this.constraint = constraint;
-    this.info=new ArrayList<String>();
+    this.info = new ArrayList<String>();
   }
 
   /**
@@ -76,9 +66,8 @@ public abstract class AbstractTaint {
 
   /**
    * update the constraint of this taint.
-   * 
-   * @param c
-   *          the current constraint of this taint
+   *
+   * @param c the current constraint of this taint
    */
   public void updateConstraint(IConstraint c) {
     constraint = c;
@@ -147,8 +136,7 @@ public abstract class AbstractTaint {
    * Create a new taint derived from the given access path as it's access path. Except the access
    * path, all other attributes of new taint have the same value as this taint
    *
-   * @param a
-   *          the given access path
+   * @param a the given access path
    * @return the abstract taint
    */
   public abstract AbstractTaint createNewTaintFromAccessPath(WrappedAccessPath a);
@@ -161,15 +149,12 @@ public abstract class AbstractTaint {
   public boolean isReturnTaint() {
     return accessPath.isReturnAccessPath();
   }
-  
-  public List<String> getExtraInfo()
-  {
-	  return this.info;
-  }
-  
-  public void setExtraInfo(List<String> info)
-  {
-	  this.info=info;
+
+  public List<String> getExtraInfo() {
+    return this.info;
   }
 
+  public void setExtraInfo(List<String> info) {
+    this.info = info;
+  }
 }

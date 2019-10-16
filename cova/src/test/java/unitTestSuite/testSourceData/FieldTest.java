@@ -1,19 +1,16 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package unitTestSuite.testSourceData;
 
@@ -22,9 +19,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import cova.source.data.Field;
+import org.junit.Test;
 import utils.UnitTestFramework;
 
 public class FieldTest extends UnitTestFramework {
@@ -39,7 +35,6 @@ public class FieldTest extends UnitTestFramework {
 
     // getSignature() calls toString; toString is tested in testHashcodeAndToString
     assertEquals(f1.getSignature(), f1.toString());
-
   }
 
   @Test
@@ -73,9 +68,7 @@ public class FieldTest extends UnitTestFramework {
 
     // same object different instance
     assertEquals(f1, f1Equal);
-
   }
-
 
   @Test
   public void testHashcodeAndToString() {
@@ -121,10 +114,5 @@ public class FieldTest extends UnitTestFramework {
     assertEquals(f9.hashCode(), f10.hashCode());
     assertEquals("<1: 1 a>", f9.toString());
     assertEquals("<1: 1 a>", f10.toString());
-
-
   }
-
-
-
 }
