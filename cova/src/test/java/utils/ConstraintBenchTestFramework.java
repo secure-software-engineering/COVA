@@ -1,34 +1,35 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package utils;
 
+import categories.BenchmarkTestSuite;
+import cova.core.SceneTransformerFactory;
+import cova.data.IConstraint;
+import cova.reporter.ConstraintReporter;
+import cova.setup.config.Config;
+import cova.setup.config.DefaultConfigForTestCase;
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
-
 import soot.ArrayType;
 import soot.G;
 import soot.Local;
@@ -47,24 +48,22 @@ import soot.jimple.Jimple;
 import soot.jimple.JimpleBody;
 import soot.options.Options;
 
-import categories.BenchmarkTestSuite;
-import cova.core.SceneTransformerFactory;
-import cova.data.IConstraint;
-import cova.reporter.ConstraintReporter;
-import cova.setup.config.Config;
-import cova.setup.config.DefaultConfigForTestCase;
-
 @Category(BenchmarkTestSuite.class)
 public class ConstraintBenchTestFramework {
-  @Rule
-  public TestName testMethodName = new TestName();
+  @Rule public TestName testMethodName = new TestName();
   protected String targetTestClassName = "";
   protected TreeMap<Integer, IConstraint> results;
-  
+
   private String userDir = System.getProperty("user.dir");
   private String covaRootDir = new File(userDir).getParent();
-  private String benchdir
-      = covaRootDir + File.separator + "constraintBench" + File.separator + "target" + File.separator + "classes";
+  private String benchdir =
+      covaRootDir
+          + File.separator
+          + "constraintBench"
+          + File.separator
+          + "target"
+          + File.separator
+          + "classes";
 
   // set the unique name of configurations for comparing results
   protected final String A = "C1001";
@@ -95,12 +94,14 @@ public class ConstraintBenchTestFramework {
       Config config = new DefaultConfigForTestCase();
       SceneTransformerFactory transformerFactory = new SceneTransformerFactory(config);
       String[] names = className.split("\\.");
-      ConstraintReporter reporter
-          = new ConstraintReporter(names[names.length - 1] + File.separator + testMethodName.getMethodName(),
-              config.isWriteJimpleOutput(), true);
-      SceneTransformer transformer
-          = transformerFactory.createAnalysisTransformerForTestCase(className, testMethodName.getMethodName(), reporter,
-              covaRootDir);
+      ConstraintReporter reporter =
+          new ConstraintReporter(
+              names[names.length - 1] + File.separator + testMethodName.getMethodName(),
+              config.isWriteJimpleOutput(),
+              true);
+      SceneTransformer transformer =
+          transformerFactory.createAnalysisTransformerForTestCase(
+              className, testMethodName.getMethodName(), reporter, covaRootDir);
       analyze(transformer);
       SootClass testClass = Scene.v().forceResolve(targetTestClassName, SootClass.BODIES);
       results = reporter.getResultOfLines(testClass);
@@ -117,9 +118,8 @@ public class ConstraintBenchTestFramework {
     Options.v().set_print_tags_in_output(true);
     Options.v().setPhaseOption("cg.spark", "on");
     Options.v().set_keep_line_number(true);
-    String sootClassPath
-        = userDir + File.separator + "target" + File.separator + "test-classes";
-    sootClassPath+= File.pathSeparator + benchdir;
+    String sootClassPath = userDir + File.separator + "target" + File.separator + "test-classes";
+    sootClassPath += File.pathSeparator + benchdir;
     Options.v().set_no_bodies_for_excluded(true);
     Options.v().set_allow_phantom_refs(true);
     Options.v().set_exclude(excludedPackages());
@@ -129,8 +129,7 @@ public class ConstraintBenchTestFramework {
     SootMethod testMethod = null;
     testMethod = targetTestClass.getMethodByName("test");
     if (testMethod == null) {
-      throw new RuntimeException(
-          "The method with test was not found in " + targetTestClassName);
+      throw new RuntimeException("The method with test was not found in " + targetTestClassName);
     }
     SootClass dummyMainClass = createDummyMainClass(testMethod);
     Scene.v().addClass(dummyMainClass);
@@ -160,16 +159,21 @@ public class ConstraintBenchTestFramework {
   }
 
   /**
-   * This method construct a dummyMainClass with main method contains the invocation of the test method in target test class.
-   * 
+   * This method construct a dummyMainClass with main method contains the invocation of the test
+   * method in target test class.
+   *
    * @param testMethod
    * @return
    */
   private SootClass createDummyMainClass(SootMethod testMethod) {
     SootClass dummyMainClass = new SootClass("dummyMainClass");
     Type type = ArrayType.v(RefType.v("java.lang.String"), 1);
-    SootMethod dummyMainMethod
-        = new SootMethod("main", Arrays.asList(new Type[] { type }), VoidType.v(), Modifier.PUBLIC | Modifier.STATIC);
+    SootMethod dummyMainMethod =
+        new SootMethod(
+            "main",
+            Arrays.asList(new Type[] {type}),
+            VoidType.v(),
+            Modifier.PUBLIC | Modifier.STATIC);
     dummyMainClass.addMethod(dummyMainMethod);
     JimpleBody body = Jimple.v().newBody(dummyMainMethod);
     RefType testCaseType = RefType.v(this.targetTestClassName);
@@ -177,9 +181,18 @@ public class ConstraintBenchTestFramework {
     body.getLocals().add(allocatedTestObj);
     // create @this identityStmt for main method, otherwise boomerang will throw exception
     body.getUnits()
-        .add(Jimple.v().newIdentityStmt(new LocalGenerator(body).generateLocal(type), Jimple.v().newParameterRef(type, 0)));
-    body.getUnits().add(Jimple.v().newAssignStmt(allocatedTestObj, Jimple.v().newNewExpr(testCaseType)));
-    body.getUnits().add(Jimple.v().newInvokeStmt(Jimple.v().newVirtualInvokeExpr(allocatedTestObj, testMethod.makeRef())));
+        .add(
+            Jimple.v()
+                .newIdentityStmt(
+                    new LocalGenerator(body).generateLocal(type),
+                    Jimple.v().newParameterRef(type, 0)));
+    body.getUnits()
+        .add(Jimple.v().newAssignStmt(allocatedTestObj, Jimple.v().newNewExpr(testCaseType)));
+    body.getUnits()
+        .add(
+            Jimple.v()
+                .newInvokeStmt(
+                    Jimple.v().newVirtualInvokeExpr(allocatedTestObj, testMethod.makeRef())));
     dummyMainMethod.setActiveBody(body);
     return dummyMainClass;
   }

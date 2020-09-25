@@ -1,21 +1,17 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.data;
 
 /**
@@ -28,8 +24,7 @@ public interface IConstraint {
   /**
    * And Operation.
    *
-   * @param other
-   *          the other
+   * @param other the other
    * @return the i constraint
    */
   public IConstraint and(IConstraint other, boolean simplify);
@@ -37,8 +32,7 @@ public interface IConstraint {
   /**
    * Or Operation.
    *
-   * @param other
-   *          the other
+   * @param other the other
    * @return the i constraint
    */
   public IConstraint or(IConstraint other, boolean simplify);
@@ -73,9 +67,8 @@ public interface IConstraint {
 
   /**
    * Checks if this constraint is more constrained than other.
-   * 
-   * @param other
-   *          the other constraint to be compared
+   *
+   * @param other the other constraint to be compared
    * @return
    */
   public boolean isMoreConstrained(IConstraint other);

@@ -1,20 +1,18 @@
 /**
  * Copyright (C) 2013 Rohan Padhye
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Modified by Linghui Luo for COVA
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * <p>Modified by Linghui Luo for COVA
  */
 package cova.vasco;
 
@@ -26,24 +24,16 @@ import java.util.Set;
 
 /**
  * A record of transitions between contexts at call-sites.
- * 
- * <p>
- * The context transition table records a bidirectional one-to-many mapping of call-sites to called
- * contexts parameterised by their methods.
- * </p>
- * 
- * <p>
- * If a call-site transition is not traversed in an analysis (e.g. a call to a native method) then
- * it is listed as a "default site" which this table also records.
- * 
- * 
- * 
- * @param <M>
- *          the type of a method
- * @param <N>
- *          the type of a node in the CFG
- * @param <A>
- *          the type of a data flow value
+ *
+ * <p>The context transition table records a bidirectional one-to-many mapping of call-sites to
+ * called contexts parameterised by their methods.
+ *
+ * <p>If a call-site transition is not traversed in an analysis (e.g. a call to a native method)
+ * then it is listed as a "default site" which this table also records.
+ *
+ * @param <M> the type of a method
+ * @param <N> the type of a node in the CFG
+ * @param <A> the type of a data flow value
  */
 public class ContextTransitionTable<M, N, A> {
 
@@ -69,22 +59,16 @@ public class ContextTransitionTable<M, N, A> {
 
   /**
    * Adds a transition to the table.
-   * 
-   * <p>
-   * If the target context is specified as <tt>null</tt>, the source call-site is considered a
+   *
+   * <p>If the target context is specified as <tt>null</tt>, the source call-site is considered a
    * "default site" from which transitions are unknown. This is used to model unpredictable targets,
    * for example, when encountering calls to native methods.
-   * </p>
-   * 
-   * <p>
-   * Any previous transitions from the source call site to other contexts of the same called method
-   * are deleted.
-   * </p>
-   * 
-   * @param callSite
-   *          the call-site which is the source of the transition
-   * @param targetContext
-   *          the value context which is the target of the call-site
+   *
+   * <p>Any previous transitions from the source call site to other contexts of the same called
+   * method are deleted.
+   *
+   * @param callSite the call-site which is the source of the transition
+   * @param targetContext the value context which is the target of the call-site
    */
   public void addTransition(CallSite<M, N, A> callSite, Context<M, N, A> targetContext) {
 
@@ -138,7 +122,7 @@ public class ContextTransitionTable<M, N, A> {
 
   /**
    * Returns an unmodifiable view of the mapping from contexts to their callers.
-   * 
+   *
    * @return an unmodifiable view of the mapping from contexts to their callers
    */
   public Map<Context<M, N, A>, Set<CallSite<M, N, A>>> getCallers() {
@@ -147,9 +131,8 @@ public class ContextTransitionTable<M, N, A> {
 
   /**
    * Returns the callers of a value context.
-   * 
-   * @param target
-   *          the target value context
+   *
+   * @param target the target value context
    * @return a set of call-sites which transition to the given target context
    */
   public Set<CallSite<M, N, A>> getCallers(Context<M, N, A> target) {
@@ -158,7 +141,7 @@ public class ContextTransitionTable<M, N, A> {
 
   /**
    * Returns an unmodifiable view of a mapping from calling contexts to all their call-sites.
-   * 
+   *
    * @return an unmodifiable view of a mapping from calling contexts to all their call-sites
    */
   public Map<Context<M, N, A>, Set<CallSite<M, N, A>>> getCallSitesOfContexts() {
@@ -167,7 +150,7 @@ public class ContextTransitionTable<M, N, A> {
 
   /**
    * Returns an unmodifiable view of the set of call-sites marked "default".
-   * 
+   *
    * @return an unmodifiable view of the set of call-sites marked "default"
    */
   public Set<CallSite<M, N, A>> getDefaultCallSites() {
@@ -176,9 +159,8 @@ public class ContextTransitionTable<M, N, A> {
 
   /**
    * Returns the targets of a call-site.
-   * 
-   * @param callSite
-   *          the source of the transition
+   *
+   * @param callSite the source of the transition
    * @return a map of target methods to target contexts
    */
   public Map<M, Context<M, N, A>> getTargets(CallSite<M, N, A> callSite) {
@@ -187,7 +169,7 @@ public class ContextTransitionTable<M, N, A> {
 
   /**
    * Returns an unmodifiable view of context transitions.
-   * 
+   *
    * @return an unmodifiable view of context transitions
    */
   public Map<CallSite<M, N, A>, Map<M, Context<M, N, A>>> getTransitions() {

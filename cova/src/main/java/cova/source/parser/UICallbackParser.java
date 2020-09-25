@@ -1,23 +1,21 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.source.parser;
 
+import cova.source.data.SourceField;
+import cova.source.data.SourceUICallback;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,14 +25,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import soot.jimple.infoflow.data.SootMethodAndClass;
-
-import cova.source.data.SourceField;
-import cova.source.data.SourceUICallback;
 
 /**
  * The Class UICallbackParser parses UICallbacks.txt.
@@ -46,9 +39,7 @@ public class UICallbackParser {
   /** The callbacks. */
   private Set<SourceUICallback> callbacks;
 
-  /**
-   * Instantiates a new UI callback parser.
-   */
+  /** Instantiates a new UI callback parser. */
   public UICallbackParser() {
     callbacks = new HashSet<SourceUICallback>();
   }
@@ -92,19 +83,30 @@ public class UICallbackParser {
    * @return the regex for a callback method
    */
   private String getRegexCallback() {
-    String group1 = "(.+)";// class name
-    String group2 = "(.+)";// return type
-    String group3 = "(.+)";// method name
-    String group4 = "(.*?)";// parameter types
-    String group5 = "(.+)";// id
-    String regexCallback = "^<" + group1 + ":" + "\\s+" + group2 + "\\s+" + group3 + "\\(" + group4
-        + "\\)" + ">" + "\\s+ID:\\s+" + group5 + "$";
+    String group1 = "(.+)"; // class name
+    String group2 = "(.+)"; // return type
+    String group3 = "(.+)"; // method name
+    String group4 = "(.*?)"; // parameter types
+    String group5 = "(.+)"; // id
+    String regexCallback =
+        "^<"
+            + group1
+            + ":"
+            + "\\s+"
+            + group2
+            + "\\s+"
+            + group3
+            + "\\("
+            + group4
+            + "\\)"
+            + ">"
+            + "\\s+ID:\\s+"
+            + group5
+            + "$";
     return regexCallback;
   }
 
-  /**
-   * Parses the callback.
-   */
+  /** Parses the callback. */
   private void parseCallbacks(List<String> data) {
     String regexCallback = getRegexCallback();
     Pattern patternCallback = Pattern.compile(regexCallback);
@@ -138,8 +140,10 @@ public class UICallbackParser {
       }
     }
     String id = matcher.group(5).trim();
-    SourceUICallback callback = new SourceUICallback(
-        new SootMethodAndClass(methodName, className, returnType, paraTypes), Integer.parseInt(id));
+    SourceUICallback callback =
+        new SourceUICallback(
+            new SootMethodAndClass(methodName, className, returnType, paraTypes),
+            Integer.parseInt(id));
     callbacks.add(callback);
   }
 }

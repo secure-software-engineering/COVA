@@ -1,23 +1,23 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.reporter;
 
+import cova.core.ConstraintAnalysis;
+import cova.core.InterproceduralCFG;
+import cova.data.IConstraint;
+import cova.source.data.Source;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,9 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-
 import org.apache.commons.lang3.StringUtils;
-
 import soot.Body;
 import soot.Printer;
 import soot.Scene;
@@ -39,16 +37,8 @@ import soot.SootField;
 import soot.SootMethod;
 import soot.Unit;
 
-import cova.core.ConstraintAnalysis;
-import cova.core.InterproceduralCFG;
-import cova.data.IConstraint;
-import cova.source.data.Source;
-
 // TODO: Auto-generated Javadoc
-/**
- * The Class ConstraintReporter is used to record the constraints computed by the analysis.
- *
- */
+/** The Class ConstraintReporter is used to record the constraints computed by the analysis. */
 public class ConstraintReporter {
 
   /** The application name. */
@@ -83,10 +73,8 @@ public class ConstraintReporter {
   /**
    * Instantiates a new reporter.
    *
-   * @param appName
-   *          the application name
-   * @param writeJimpleOutput
-   *          true, if output jimple files
+   * @param appName the application name
+   * @param writeJimpleOutput true, if output jimple files
    */
   public ConstraintReporter(String appName, boolean writeJimpleOutput, boolean test) {
     this.appName = appName;
@@ -99,8 +87,7 @@ public class ConstraintReporter {
   /**
    * Sets the analysis results.
    *
-   * @param analysis
-   *          the new analysis results
+   * @param analysis the new analysis results
    */
   public void setAnalysisResults(ConstraintAnalysis analysis, boolean computeForAllClasses) {
     this.analysis = analysis;
@@ -116,10 +103,8 @@ public class ConstraintReporter {
   /**
    * Creates the path for a jimple class.
    *
-   * @param jimpleOutPutPath
-   *          the jimple output path
-   * @param declaringClass
-   *          the declaring class
+   * @param jimpleOutPutPath the jimple output path
+   * @param declaringClass the declaring class
    * @return the string
    */
   private String createPathForJimpleClass(String jimpleOutPutPath, String declaringClass) {
@@ -143,8 +128,7 @@ public class ConstraintReporter {
   /**
    * This method is only used for test case!.
    *
-   * @param sc
-   *          the sc
+   * @param sc the sc
    * @return the result of lines
    */
   public TreeMap<Integer, IConstraint> getResultOfLines(SootClass sc) {
@@ -175,14 +159,18 @@ public class ConstraintReporter {
     return analysis.getConstraintMap(method);
   }
 
-  /**
-   * Use the constraint map to write results of classes.
-   */
+  /** Use the constraint map to write results of classes. */
   private void writeResultsOfClasses() {
     Map<Unit, IConstraint> constraintMap = analysis.getConstraintMap();
-    String jimpleOutputPath = System.getProperty("user.dir") + File.separator + "covaOutput" + File.separator
-        + "jimpleOutput"
-        + File.separator + appName + File.separator;
+    String jimpleOutputPath =
+        System.getProperty("user.dir")
+            + File.separator
+            + "covaOutput"
+            + File.separator
+            + "jimpleOutput"
+            + File.separator
+            + appName
+            + File.separator;
     Printer printer = Printer.v();
     Iterator<SootClass> reachableClasses = Scene.v().getClasses().snapshotIterator();
     while (reachableClasses.hasNext()) {
@@ -209,7 +197,13 @@ public class ConstraintReporter {
                 // write constraints to jimple files
                 if (writeJimpleOutput) {
                   unit.addTag(
-                      new ConstraintTag("\n *\t\t" + javaLineNumber + "." + "\n" + constraintOfStmt.toString() + "\n"));
+                      new ConstraintTag(
+                          "\n *\t\t"
+                              + javaLineNumber
+                              + "."
+                              + "\n"
+                              + constraintOfStmt.toString()
+                              + "\n"));
                 }
               }
             }
@@ -234,9 +228,7 @@ public class ConstraintReporter {
     }
   }
 
-  /**
-   * Prints the result of classes in console.
-   */
+  /** Prints the result of classes in console. */
   public void printResultOfClasses() {
     if (!resultsOfClasses.isEmpty()) {
       StringBuilder sb = new StringBuilder("\n");
@@ -257,8 +249,7 @@ public class ConstraintReporter {
   /**
    * Prints the result of lines.
    *
-   * @param sc
-   *          the sc
+   * @param sc the sc
    */
   public void printResultOfLines(SootClass sc) {
     for (SootClass klass : resultsOfClasses.keySet()) {
@@ -278,8 +269,7 @@ public class ConstraintReporter {
   /**
    * Sets the timeout.
    *
-   * @param timeout
-   *          the new timeout
+   * @param timeout the new timeout
    */
   private void setTimeout(boolean timeout) {
     this.timeout = timeout;
@@ -288,8 +278,7 @@ public class ConstraintReporter {
   /**
    * Sets the icfg.
    *
-   * @param icfg
-   *          the new icfg
+   * @param icfg the new icfg
    */
   public void setICFG(InterproceduralCFG icfg) {
     this.icfg = icfg;
@@ -307,8 +296,7 @@ public class ConstraintReporter {
   /**
    * Sets the reachable methods.
    *
-   * @param n
-   *          the new reachable methods
+   * @param n the new reachable methods
    */
   private void setReachableMethods(int n) {
     reachableMethods = n;
@@ -326,8 +314,7 @@ public class ConstraintReporter {
   /**
    * Gets the method contains the unit.
    *
-   * @param unit
-   *          the unit
+   * @param unit the unit
    * @return the method of
    */
   public SootMethod getMethodOf(Unit unit) {
@@ -336,7 +323,7 @@ public class ConstraintReporter {
 
   /**
    * Return the signature of the source API.
-   * 
+   *
    * @param symbolicName
    * @return
    */
@@ -351,5 +338,4 @@ public class ConstraintReporter {
     }
     return s;
   }
-
 }

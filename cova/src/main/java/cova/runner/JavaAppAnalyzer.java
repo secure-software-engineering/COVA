@@ -1,25 +1,25 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.runner;
 
+import cova.reporter.ConstraintReporter;
+import cova.setup.RunCova;
+import cova.setup.config.Config;
+import cova.setup.config.DefaultConfigForJava;
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -27,16 +27,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import cova.reporter.ConstraintReporter;
-import cova.setup.RunCova;
-import cova.setup.config.Config;
-import cova.setup.config.DefaultConfigForJava;
-
-/**
- * Analyzer for Java application.
- * 
- *
- */
+/** Analyzer for Java application. */
 public class JavaAppAnalyzer {
   private static String javaLibPath = "";
   private static String appName = "";
@@ -48,8 +39,8 @@ public class JavaAppAnalyzer {
   public static void main(String[] args) throws ParseException {
     Config config = new DefaultConfigForJava();
     if (parseArgs(args, config)) {
-      analyzeApp(appName, appClassPath, sourceCodePath, javaLibPath, configFilePath, mainClass,
-          config);
+      analyzeApp(
+          appName, appClassPath, sourceCodePath, javaLibPath, configFilePath, mainClass, config);
     }
   }
 
@@ -61,30 +52,57 @@ public class JavaAppAnalyzer {
     options.addOption("main", true, "The main class of the Java application.");
     options.addOption("lib", true, "The location of rt.jar");
     options.addOption("cp", true, "The class path of the Java application.");
-    options.addOption("config", true,
+    options.addOption(
+        "config",
+        true,
         "The path of config files specified for your application: at least one of Configuration_APIs.txt, IO_APIs.txt and UICallback_APIs.txt.");
     options.addOption("t", "timeout", true, "COVA analysis timout duration in minutes.");
 
     // options for analysis
-    options.addOption("ITaint", "impreciseTaintCreation", true,
+    options.addOption(
+        "ITaint",
+        "impreciseTaintCreation",
+        true,
         "<arg> = true, if enables ImpreciseTaintCreationRule.");
-    options.addOption("CTaint", "concreteTaintCreation", true,
+    options.addOption(
+        "CTaint",
+        "concreteTaintCreation",
+        true,
         "<arg> = true, if enables ConcreteTaintCreationRule.");
-    options.addOption("CTA", "concreteTaintAtAssignStmt", true,
+    options.addOption(
+        "CTA",
+        "concreteTaintAtAssignStmt",
+        true,
         "<arg> = true, if creates concrete taint at assign statement");
-    options.addOption("CTR", "concreteTaintAtReturnStmt", true,
+    options.addOption(
+        "CTR",
+        "concreteTaintAtReturnStmt",
+        true,
         "<arg> = true, if creates concrete taint at return statement");
-    options.addOption("CTC", "concreteTaintAtCalleeOn", true,
+    options.addOption(
+        "CTC",
+        "concreteTaintAtCalleeOn",
+        true,
         "<arg> = true, if creates concrete taint for parameters passing to method");
-    options.addOption("ITP", "impreciseTaintPropagation", true,
+    options.addOption(
+        "ITP",
+        "impreciseTaintPropagation",
+        true,
         "<arg> = true, if enables ImprecisePropagationRule.");
-    options.addOption("STP", "staticFieldPropagation", true,
+    options.addOption(
+        "STP",
+        "staticFieldPropagation",
+        true,
         "<arg> = true, if enables StaticFieldPropagationRule.");
-    options.addOption("all", false,
+    options.addOption(
+        "all",
+        false,
         "Enables all rules. When this is enabled, options to turn on single rule will be ignored. This is the most precise configuration of the analysis.");
 
     // options for output files
-    options.addOption("output_html", true,
+    options.addOption(
+        "output_html",
+        true,
         "Print results in HTML files, this option should be followed by the java source code path of your application.");
     options.addOption("output_jimple", false, "Print results in Jimple files.");
 
@@ -109,8 +127,8 @@ public class JavaAppAnalyzer {
     if (cmd.hasOption("lib")) {
       javaLibPath = cmd.getOptionValue("lib");
     } else {
-      javaLibPath = System.getProperty("java.home") + File.separator + "lib" + File.separator
-          + "rt.jar";
+      javaLibPath =
+          System.getProperty("java.home") + File.separator + "lib" + File.separator + "rt.jar";
     }
     if (cmd.hasOption("cp")) {
       appClassPath = cmd.getOptionValue("cp");
@@ -180,9 +198,14 @@ public class JavaAppAnalyzer {
     return true;
   }
 
-  public static ConstraintReporter analyzeApp(String appName, String appClassPath,
+  public static ConstraintReporter analyzeApp(
+      String appName,
+      String appClassPath,
       String sourceCodePath,
-      String libPath, String configFilePath, String mainClass, Config config) {
+      String libPath,
+      String configFilePath,
+      String mainClass,
+      Config config) {
     try {
       // validate if the given path exists
       appClassPath = new File(appClassPath).getCanonicalPath();
@@ -203,9 +226,9 @@ public class JavaAppAnalyzer {
       e1.printStackTrace();
     }
     // run cova
-    ConstraintReporter reporter
-        = RunCova.runForJava(appName, appClassPath,
-        sourceCodePath, libPath, configFilePath, config, mainClass);
+    ConstraintReporter reporter =
+        RunCova.runForJava(
+            appName, appClassPath, sourceCodePath, libPath, configFilePath, config, mainClass);
     reporter.printResultOfClasses();
     return reporter;
   }

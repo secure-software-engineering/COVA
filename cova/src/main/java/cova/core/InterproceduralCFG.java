@@ -1,30 +1,26 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.core;
 
+import cova.vasco.ProgramRepresentation;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import soot.Scene;
 import soot.SootMethod;
 import soot.Unit;
@@ -38,12 +34,7 @@ import soot.jimple.toolkits.ide.icfg.JimpleBasedInterproceduralCFG;
 import soot.toolkits.graph.DirectedGraph;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 
-import cova.vasco.ProgramRepresentation;
-
-/**
- * The Class InterproceduralCFG represents the interprocedural control flow graph.
- * 
- */
+/** The Class InterproceduralCFG represents the interprocedural control flow graph. */
 public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Unit> {
 
   /** The cache for control flow graph. */
@@ -56,11 +47,9 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
     return delegateICFG;
   }
 
-  private String[] excluded = { "java.lang.*", "android.*", "java.io.Serializable" };
+  private String[] excluded = {"java.lang.*", "android.*", "java.io.Serializable"};
 
-  /**
-   * Instantiates a new interprocedural CFG.
-   */
+  /** Instantiates a new interprocedural CFG. */
   public InterproceduralCFG() {
     cfgCache = new HashMap<SootMethod, DirectedGraph<Unit>>();
     delegateICFG = new JimpleBasedInterproceduralCFG(true);
@@ -80,8 +69,7 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
   /**
    * Returns an {@link ExceptionalUnitGraph} for a given method.
    *
-   * @param method
-   *          the method
+   * @param method the method
    * @return the control flow graph
    */
   @Override
@@ -99,8 +87,7 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
   /**
    * Returns <code>true</code> iff the jimple statement contains an invoke expression.
    *
-   * @param node
-   *          the given statement
+   * @param node the given statement
    * @return true, if the given statement contains invoke expression
    */
   @Override
@@ -112,10 +99,8 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
    * Resolves virtual calls using the default call graph and returns a list of methods which are the
    * targets of explicit edges. TODO: Should we consider thread/clinit edges?
    *
-   * @param method
-   *          the method
-   * @param node
-   *          the node
+   * @param method the method
+   * @param node the node
    * @return the list
    */
   @Override
@@ -134,8 +119,7 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
   /**
    * Gets the method contains the given statement.
    *
-   * @param node
-   *          the given statement
+   * @param node the given statement
    * @return the method contains the given statement
    */
   public SootMethod getMethodOf(Unit node) {
@@ -150,10 +134,8 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
   /**
    * Checks if is the successor is a fall through successor.
    *
-   * @param unit
-   *          the current statement
-   * @param succ
-   *          the successor statement
+   * @param unit the current statement
+   * @param succ the successor statement
    * @return true, if the successor is fall through successor
    */
   public boolean isFallThroughSuccessor(Unit unit, Unit succ) {
@@ -163,8 +145,7 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
   /**
    * Checks if the given statement is call statement.
    *
-   * @param unit
-   *          the given statement
+   * @param unit the given statement
    * @return true, if the given statement is a call statement
    */
   public boolean isCallStmt(Unit unit) {
@@ -174,8 +155,7 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
   /**
    * Gets the callees of call at the given statement.
    *
-   * @param unit
-   *          the given statement
+   * @param unit the given statement
    * @return the callees of call at the given statement
    */
   public Collection<SootMethod> getCalleesOfCallAt(Unit unit) {
@@ -185,8 +165,7 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
   /**
    * Gets the predecessors of the given statement.
    *
-   * @param unit
-   *          the given statement
+   * @param unit the given statement
    * @return the predecessors of the given statement
    */
   public List<Unit> getPredsOf(Unit unit) {
@@ -196,8 +175,7 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
   /**
    * Checks if there is a predecessor is a LookupSwitchStmt.
    *
-   * @param unit
-   *          the unit
+   * @param unit the unit
    * @return true, if successful
    */
   public boolean hasPredAsLookupSwitchStmt(Unit unit) {
@@ -208,7 +186,6 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
     }
     return false;
   }
-
 
   public Unit getPredAsLookupSwitchStmt(Unit unit) {
     for (Unit pred : delegateICFG.getPredsOf(unit)) {
@@ -221,8 +198,7 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
   /**
    * Return the first identity statement assigning from \@this.
    *
-   * @param method
-   *          the method
+   * @param method the method
    * @return the first identity statement assigning from \@this
    */
   public IdentityStmt getIdentityStmt(SootMethod method) {
@@ -248,13 +224,12 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
   public boolean isExcludedMethod(SootMethod method) {
     String name = method.getDeclaringClass().getName();
     for (String pkg : excluded) {
-      if (name.equals(pkg) || ((pkg.endsWith(".*") || pkg.endsWith("$*"))
-          && name.startsWith(pkg.substring(0, pkg.length() - 1)))) {
+      if (name.equals(pkg)
+          || ((pkg.endsWith(".*") || pkg.endsWith("$*"))
+              && name.startsWith(pkg.substring(0, pkg.length() - 1)))) {
         return true;
       }
     }
     return false;
   }
-
-
 }

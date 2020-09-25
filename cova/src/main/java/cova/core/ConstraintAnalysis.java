@@ -1,31 +1,18 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.core;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import soot.SootMethod;
-import soot.Unit;
-import soot.toolkits.graph.DirectedGraph;
 
 import cova.data.Abstraction;
 import cova.data.IConstraint;
@@ -33,12 +20,17 @@ import cova.source.data.Source;
 import cova.vasco.Context;
 import cova.vasco.ForwardInterProceduralAnalysis;
 import cova.vasco.ProgramRepresentation;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import soot.SootMethod;
+import soot.Unit;
+import soot.toolkits.graph.DirectedGraph;
 
-/**
- * The Class ConstraintAnalysis defines all flow functions for handling constraints.
- * 
- */
-public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMethod, Unit, Abstraction> {
+/** The Class ConstraintAnalysis defines all flow functions for handling constraints. */
+public class ConstraintAnalysis
+    extends ForwardInterProceduralAnalysis<SootMethod, Unit, Abstraction> {
 
   /** The interprocedural control flow graph. */
   private final InterproceduralCFG icfg;
@@ -52,8 +44,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
   /**
    * Instantiates a new constraint analysis.
    *
-   * @param ruleManager
-   *          the rule manager
+   * @param ruleManager the rule manager
    */
   public ConstraintAnalysis(RuleManager ruleManager) {
     super();
@@ -66,11 +57,12 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.ForwardInterProceduralAnalysis#initContext(java.lang.Object, java.lang.Object)
    */
   @Override
-  protected Context<SootMethod, Unit, Abstraction> initContext(SootMethod method, Abstraction entryValue) {
+  protected Context<SootMethod, Unit, Abstraction> initContext(
+      SootMethod method, Abstraction entryValue) {
     if (icfg.isAnalyzable(method) && !icfg.isExcludedMethod(method)) {
       return super.initContext(method, entryValue);
     } else {
@@ -80,13 +72,13 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.ForwardInterProceduralAnalysis#normalFlowFunction(vasco.Context, java.lang.Object, java.lang.Object,
    * java.lang.Object)
    */
   @Override
-  public Abstraction normalFlowFunction(Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ,
-      Abstraction in) {
+  public Abstraction normalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     if (in.isBottomValue()) {
       return in;
     }
@@ -95,13 +87,17 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.ForwardInterProceduralAnalysis#callEntryFlowFunction(vasco.Context, java.lang.Object, java.lang.Object,
    * java.lang.Object, java.lang.Object)
    */
   @Override
-  public Abstraction callEntryFlowFunction(Context<SootMethod, Unit, Abstraction> context, SootMethod callee, Unit node,
-      Unit succ, Abstraction in) {
+  public Abstraction callEntryFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context,
+      SootMethod callee,
+      Unit node,
+      Unit succ,
+      Abstraction in) {
     if (icfg.isAnalyzable(callee)) {
       if (in.isBottomValue()) {
         return in;
@@ -114,13 +110,17 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.ForwardInterProceduralAnalysis#callExitFlowFunction(vasco.Context, java.lang.Object, java.lang.Object,
    * java.lang.Object, java.lang.Object)
    */
   @Override
-  public Abstraction callExitFlowFunction(Context<SootMethod, Unit, Abstraction> context, SootMethod callee, Unit node,
-      Unit succ, Abstraction exitValue) {
+  public Abstraction callExitFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context,
+      SootMethod callee,
+      Unit node,
+      Unit succ,
+      Abstraction exitValue) {
     if (exitValue.isBottomValue()) {
       return exitValue;
     }
@@ -129,13 +129,13 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.ForwardInterProceduralAnalysis#callLocalFlowFunction(vasco.Context, java.lang.Object, java.lang.Object,
    * java.lang.Object)
    */
   @Override
-  public Abstraction callLocalFlowFunction(Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ,
-      Abstraction in) {
+  public Abstraction callLocalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     if (in.isBottomValue()) {
       return in;
     }
@@ -144,7 +144,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.InterProceduralAnalysis#boundaryValue(java.lang.Object)
    */
   @Override
@@ -154,7 +154,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.InterProceduralAnalysis#copy(java.lang.Object)
    */
   @Override
@@ -168,7 +168,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.InterProceduralAnalysis#shallowMeet(java.lang.Object, java.lang.Object)
    */
   @Override
@@ -184,7 +184,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.InterProceduralAnalysis#meet(java.lang.Object, java.lang.Object)
    */
   @Override
@@ -202,7 +202,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.InterProceduralAnalysis#merge(java.lang.Object, java.lang.Object)
    */
   @Override
@@ -212,7 +212,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.InterProceduralAnalysis#programRepresentation()
    */
   @Override
@@ -222,7 +222,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see vasco.InterProceduralAnalysis#bottomValue()
    */
   @Override
@@ -270,8 +270,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
   /**
    * Only compute constraint map for given method.
    *
-   * @param method
-   *          the method
+   * @param method the method
    * @return the constraint map
    */
   public Map<Unit, IConstraint> getConstraintMap(SootMethod method) {
@@ -300,7 +299,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
         if (in != null) {
           constraintMapForMethod.put(node, in);
           if (constraintMap == null) {
-            constraintMap=new HashMap<>();
+            constraintMap = new HashMap<>();
           }
           constraintMap.put(node, in);
         }
@@ -309,7 +308,7 @@ public class ConstraintAnalysis extends ForwardInterProceduralAnalysis<SootMetho
     logger.info("Constraint map is computed.");
     return constraintMapForMethod;
   }
-  
+
   public Set<Source> getSources() {
     return this.ruleManager.getSourceAndCallbackManager().getSources();
   }

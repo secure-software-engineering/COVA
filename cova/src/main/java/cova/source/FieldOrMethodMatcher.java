@@ -1,33 +1,18 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.source;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import soot.SootMethod;
-import soot.Unit;
-import soot.Value;
-import soot.jimple.AssignStmt;
 
 import cova.core.SkipMethodOrClassRuleManager;
 import cova.source.data.Source;
@@ -35,17 +20,25 @@ import cova.source.data.SourceField;
 import cova.source.data.SourceMethod;
 import cova.source.parser.SourceParser;
 import cova.source.symbolic.SymbolicNameManager;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import soot.SootMethod;
+import soot.Unit;
+import soot.Value;
+import soot.jimple.AssignStmt;
 
 /**
  * This class is used to search configuration-related or input-related field or method in a given
  * statement.
- * 
- * <p>
- * The sourceParser reads user-defined configuration-related or input-related APIs(sources) from
- * ConfigurationSources.txt and InputSources.txt. The method
- * {@link #searchFieldOrMethod(SootMethod, Unit)} checks if a given statement contains a source.
- * </p>
- * 
+ *
+ * <p>The sourceParser reads user-defined configuration-related or input-related APIs(sources) from
+ * ConfigurationSources.txt and InputSources.txt. The method {@link #searchFieldOrMethod(SootMethod,
+ * Unit)} checks if a given statement contains a source.
+ *
  * @date 29.08.2017
  */
 public class FieldOrMethodMatcher {
@@ -59,8 +52,8 @@ public class FieldOrMethodMatcher {
   /**
    * Instantiates a new FieldOrMethodMatcher.
    *
-   * @param resourcePath
-   *          the path of the folder that contains ConfigurationSources.txt and InputSources.txt.
+   * @param resourcePath the path of the folder that contains ConfigurationSources.txt and
+   *     InputSources.txt.
    */
   public FieldOrMethodMatcher(String resourcePath) {
     sources = new HashSet<Source>();
@@ -73,12 +66,10 @@ public class FieldOrMethodMatcher {
    * Check if an unit(a statement in soot) contains a source. If a source is found in the unit,
    * return the symbolic name of this source. Otherwise, return null.
    *
-   * @param parent
-   *          the method contains this unit
-   * @param unit
-   *          the unit
+   * @param parent the method contains this unit
+   * @param unit the unit
    * @return null when no source is found in this unit. symbolicName when a source is found in this
-   *         unit
+   *     unit
    */
   public String searchFieldOrMethod(SootMethod parent, Unit unit) {
     String symbolicName = null;
@@ -107,16 +98,16 @@ public class FieldOrMethodMatcher {
   /**
    * Load sources from ConfigurationSources.txt and InputSources.txt
    *
-   * @param resourcePath
-   *          the path of the folder that contains ConfigurationSources.txt and InputSources.txt
+   * @param resourcePath the path of the folder that contains ConfigurationSources.txt and
+   *     InputSources.txt
    */
   private void loadSources(String resourcePath) {
     try {
       if (!resourcePath.endsWith(File.separator)) {
-        resourcePath+=File.separator;
+        resourcePath += File.separator;
       }
       File confiFile = new File(resourcePath + "Configuration_APIs.txt");
-      if(confiFile.exists()) {
+      if (confiFile.exists()) {
         sourceParser.readFile(confiFile.getCanonicalPath());
       }
       File inputFile = new File(resourcePath + "IO_APIs.txt");

@@ -1,20 +1,18 @@
 /**
  * Copyright (C) 2013 Rohan Padhye
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Modified by Linghui Luo for COVA
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * <p>Modified by Linghui Luo for COVA
  */
 package cova.vasco;
 
@@ -24,33 +22,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.NavigableSet;
 import java.util.TreeSet;
-
 import soot.toolkits.graph.DirectedGraph;
 import soot.toolkits.graph.PseudoTopologicalOrderer;
 import soot.toolkits.scalar.Pair;
+
 /**
  * A value-based context for a context-sensitive inter-procedural data flow analysis.
- * 
- * <p>
- * A value-based context is identified as a pair of a method and the data flow value at the entry of the method, for forward
- * flows, or the data flow value at the exit of the method, for backward flows. Thus, if two distinct calls are made to a
- * method and each call-site has the same data flow value then it is considered that the target of that call is the same
- * context. This concept allows termination in the presence of recursion as the number of contexts is limited by the size of
- * the lattice (which must be finite).
- * </p>
- * 
- * <p>
- * Each value context has its own work-list of CFG nodes to analyse, and the results of analysis are stored in a map from
- * nodes to the data flow values before/after the node.
- * </p>
- * 
- * 
- * @param <M>
- *          the type of a method
- * @param <N>
- *          the type of a node in the CFG
- * @param <A>
- *          the type of a data flow value
+ *
+ * <p>A value-based context is identified as a pair of a method and the data flow value at the entry
+ * of the method, for forward flows, or the data flow value at the exit of the method, for backward
+ * flows. Thus, if two distinct calls are made to a method and each call-site has the same data flow
+ * value then it is considered that the target of that call is the same context. This concept allows
+ * termination in the presence of recursion as the number of contexts is limited by the size of the
+ * lattice (which must be finite).
+ *
+ * <p>Each value context has its own work-list of CFG nodes to analyse, and the results of analysis
+ * are stored in a map from nodes to the data flow values before/after the node.
+ *
+ * @param <M> the type of a method
+ * @param <N> the type of a node in the CFG
+ * @param <A> the type of a data flow value
  */
 public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, A>> {
 
@@ -63,7 +54,7 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
   /** The control-flow graph of this method's body. */
   private DirectedGraph<N> controlFlowGraph;
 
-  /** The data flow value associated with the entry to the method. **/
+  /** The data flow value associated with the entry to the method. * */
   private A entryValue;
 
   /** The data flow value associated with the exit of the method. */
@@ -94,12 +85,10 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
 
   public A bottomValue;
 
-
   /**
    * Creates a new context for phantom method.
    *
-   * @param method
-   *          the method
+   * @param method the method
    */
   public Context(M method) {
     this.method = method;
@@ -107,14 +96,11 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
 
   /**
    * Creates a new context for the given method.
-   * 
-   * @param method
-   *          the method to which this value context belongs
-   * @param cfg
-   *          the control-flow graph for the body of <tt>method</tt>
-   * @param reverse
-   *          <tt>true</tt> if the analysis is in the reverse direction, and <tt>false</tt> if the analysis is in the forward
-   *          direction
+   *
+   * @param method the method to which this value context belongs
+   * @param cfg the control-flow graph for the body of <tt>method</tt>
+   * @param reverse <tt>true</tt> if the analysis is in the reverse direction, and <tt>false</tt> if
+   *     the analysis is in the forward direction
    */
   public Context(M method, DirectedGraph<N> cfg, boolean reverse) {
     // Increment count and set id.
@@ -146,22 +132,23 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
     }
 
     // Now, create a sorted set with a comparator created on-the-fly using the total order.
-    worklist = new TreeSet<Pair<N, N>>(new Comparator<Pair<N, N>>() {
-      @Override
-      public int compare(Pair<N, N> u, Pair<N, N> v) {
-        return numbers.get(u) - numbers.get(v);
-      }
-    });
+    worklist =
+        new TreeSet<Pair<N, N>>(
+            new Comparator<Pair<N, N>>() {
+              @Override
+              public int compare(Pair<N, N> u, Pair<N, N> v) {
+                return numbers.get(u) - numbers.get(v);
+              }
+            });
   }
 
   /**
    * Compares two contexts by their globally unique IDs.
-   * 
-   * This functionality is useful in the framework's internal methods where ordered processing of newer contexts first helps
-   * speed up certain operations.
    *
-   * @param other
-   *          the other
+   * <p>This functionality is useful in the framework's internal methods where ordered processing of
+   * newer contexts first helps speed up certain operations.
+   *
+   * @param other the other
    * @return the int
    */
   @Override
@@ -171,7 +158,7 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
 
   /**
    * Returns a reference to the control flow graph of this context's method.
-   * 
+   *
    * @return a reference to the control flow graph of this context's method
    */
   public DirectedGraph<N> getControlFlowGraph() {
@@ -189,7 +176,7 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
 
   /**
    * Returns a reference to the data flow value at the method entry.
-   * 
+   *
    * @return a reference to the data flow value at the method entry
    */
   public A getEntryValue() {
@@ -198,7 +185,7 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
 
   /**
    * Returns a reference to the data flow value at the method exit.
-   * 
+   *
    * @return a reference to the data flow value at the method exit
    */
   public A getExitValue() {
@@ -207,7 +194,7 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
 
   /**
    * Returns the globally unique identifier of this context.
-   * 
+   *
    * @return the globally unique identifier of this context
    */
   public int getId() {
@@ -216,7 +203,7 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
 
   /**
    * Returns a reference to this context's method.
-   * 
+   *
    * @return a reference to this context's method
    */
   public M getMethod() {
@@ -226,10 +213,8 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
   /**
    * Gets the edge value.
    *
-   * @param node
-   *          the node
-   * @param succ
-   *          the succ
+   * @param node the node
+   * @param succ the succ
    * @return the edge value
    */
   public A getEdgeValue(N node, N succ) {
@@ -239,12 +224,9 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
   /**
    * Sets the edge value.
    *
-   * @param node
-   *          the node
-   * @param succ
-   *          the succ
-   * @param val
-   *          the val
+   * @param node the node
+   * @param succ the succ
+   * @param val the val
    */
   public void setEdgeValue(N node, N succ, A val) {
     this.edgeValues.put(new Pair<N, N>(node, succ), val);
@@ -252,9 +234,8 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
 
   /**
    * Gets the data flow value at the entry of the given node.
-   * 
-   * @param node
-   *          a node in the control flow graph
+   *
+   * @param node a node in the control flow graph
    * @return the data flow value at the entry of the given node
    */
   public A getValueBefore(N node) {
@@ -262,15 +243,12 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
   }
 
   /**
-   * This method checks if it is necessary to analyze the edge from node to succ. Only when the in value of this edge has
-   * been changed or this is first time to analyze the edge.
+   * This method checks if it is necessary to analyze the edge from node to succ. Only when the in
+   * value of this edge has been changed or this is first time to analyze the edge.
    *
-   * @param node
-   *          the node
-   * @param succ
-   *          the succ
-   * @param in
-   *          the in
+   * @param node the node
+   * @param succ the succ
+   * @param in the in
    * @return true, if successful
    */
   public boolean reanalyzeEdge(N node, N succ, A in) {
@@ -288,24 +266,22 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
   /**
    * Returns whether or not this context has been analysed at least once.
    *
-   * @return <tt>true</tt> if the context has been analysed at least once, or <tt>false</tt> otherwise
+   * @return <tt>true</tt> if the context has been analysed at least once, or <tt>false</tt>
+   *     otherwise
    */
   public boolean isAnalysed() {
     return analysed;
   }
 
-  /**
-   * Marks this context as analysed.
-   */
+  /** Marks this context as analysed. */
   public void markAnalysed() {
     this.analysed = true;
   }
 
   /**
    * Sets the entry flow of this context.
-   * 
-   * @param entryValue
-   *          the new data flow value at the method entry
+   *
+   * @param entryValue the new data flow value at the method entry
    */
   public void setEntryValue(A entryValue) {
     this.entryValue = entryValue;
@@ -313,9 +289,8 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
 
   /**
    * Sets the exit flow of this context.
-   * 
-   * @param exitValue
-   *          the new data flow value at the method exit
+   *
+   * @param exitValue the new data flow value at the method exit
    */
   public void setExitValue(A exitValue) {
     this.exitValue = exitValue;
@@ -323,11 +298,9 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
 
   /**
    * Sets the data flow value at the entry of the given node.
-   * 
-   * @param node
-   *          a node in the control flow graph
-   * @param value
-   *          the new data flow at the node entry
+   *
+   * @param node a node in the control flow graph
+   * @param value the new data flow at the node entry
    */
   public void setValueBefore(N node, A value) {
     inValues.put(node, value);
@@ -340,7 +313,8 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
   }
 
   /**
-   * Initialize worklist of current context by setting analysed to false and add all edges of CFG to worklist.
+   * Initialize worklist of current context by setting analysed to false and add all edges of CFG to
+   * worklist.
    */
   public void initworklist() {
     this.analysed = false;
@@ -374,8 +348,7 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
   /**
    * Adds all outgoing edges from node to worklist.
    *
-   * @param node
-   *          the node
+   * @param node the node
    */
   public void addToWorklist(N node) {
     List<N> succs = controlFlowGraph.getSuccsOf(node);
@@ -391,8 +364,7 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
   /**
    * Sets the call node.
    *
-   * @param callNode
-   *          the new call node
+   * @param callNode the new call node
    */
   public void setCallNode(N callNode) {
     this.callNode = callNode;
@@ -419,5 +391,4 @@ public class Context<M, N, A> implements soot.Context, Comparable<Context<M, N, 
   public static void reset() {
     count = 0;
   }
-
 }

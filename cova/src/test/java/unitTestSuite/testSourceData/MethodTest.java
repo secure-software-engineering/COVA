@@ -1,19 +1,16 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package unitTestSuite.testSourceData;
 
@@ -21,17 +18,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-
-import org.junit.Test;
-
 import cova.source.data.Method;
+import java.util.Arrays;
+import org.junit.Test;
 import utils.UnitTestFramework;
 
-
 public class MethodTest extends UnitTestFramework {
-
-
 
   @Test
   public void testGetterSetter() {
@@ -40,7 +32,6 @@ public class MethodTest extends UnitTestFramework {
 
     // getSignature() calls toString; toString is tested in testToString
     assertEquals(m1.getSignature(), m1.toString());
-
   }
 
   @Test
@@ -56,11 +47,11 @@ public class MethodTest extends UnitTestFramework {
     // own parametervalues is null but other is set
     assertFalse(new Method("Math", "int", "abs", Arrays.asList("a"), null).equals(m1));
     // parametervalues differs
-    assertFalse(m1
-        .equals(new Method("Math", "int", "abs", Arrays.asList("a"), Arrays.asList("123", "321"))));
+    assertFalse(
+        m1.equals(
+            new Method("Math", "int", "abs", Arrays.asList("a"), Arrays.asList("123", "321"))));
     // same object different instance
     assertEquals(m1, m1Equal);
-
   }
 
   @Test
@@ -81,11 +72,8 @@ public class MethodTest extends UnitTestFramework {
     assertEquals("<Integer: Integer parseInt(s)>(1)", m3.toString());
 
     // parametervalue is null
-    Method m4 = new Method("Integer", "Integer", "parseInt", Arrays.asList("s"),
-        Arrays.asList("null"));
+    Method m4 =
+        new Method("Integer", "Integer", "parseInt", Arrays.asList("s"), Arrays.asList("null"));
     assertEquals("<Integer: Integer parseInt(s)>(null)", m4.toString());
-
   }
-
-
 }

@@ -1,38 +1,30 @@
 /**
  * Copyright (C) 2013 Rohan Padhye
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Modified by Linghui Luo for COVA
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * <p>Modified by Linghui Luo for COVA
  */
 package cova.vasco;
 
 /**
  * A context-sensitive location of a method invocation.
- * 
- * <p>
- * A call-site is a uniquely identified by the calling context and the node containing the call
+ *
+ * <p>A call-site is a uniquely identified by the calling context and the node containing the call
  * statement.
- * </p>
- * 
- * 
- * @param <M>
- *          the type of a method
- * @param <N>
- *          the type of a node in the CFG
- * @param <A>
- *          the type of a data flow value
+ *
+ * @param <M> the type of a method
+ * @param <N> the type of a node in the CFG
+ * @param <A> the type of a data flow value
  */
 public class CallSite<M, N, A> implements Comparable<CallSite<M, N, A>> {
 
@@ -50,8 +42,8 @@ public class CallSite<M, N, A> implements Comparable<CallSite<M, N, A>> {
 
   /**
    * Call-sites are ordered by the ordering of their context's IDs.
-   * 
-   * This functionality is useful in the framework's internal methods where ordered processing of
+   *
+   * <p>This functionality is useful in the framework's internal methods where ordered processing of
    * newer contexts first helps speed up certain operations.
    */
   @Override
@@ -61,7 +53,7 @@ public class CallSite<M, N, A> implements Comparable<CallSite<M, N, A>> {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @SuppressWarnings("rawtypes")
@@ -96,7 +88,7 @@ public class CallSite<M, N, A> implements Comparable<CallSite<M, N, A>> {
 
   /**
    * Returns the value context at this call-site.
-   * 
+   *
    * @return the value context at this call-site
    */
   public Context<M, N, A> getCallingContext() {
@@ -105,7 +97,7 @@ public class CallSite<M, N, A> implements Comparable<CallSite<M, N, A>> {
 
   /**
    * Returns the calling node.
-   * 
+   *
    * @return the calling node
    */
   public N getCallNode() {
@@ -114,7 +106,7 @@ public class CallSite<M, N, A> implements Comparable<CallSite<M, N, A>> {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -128,7 +120,7 @@ public class CallSite<M, N, A> implements Comparable<CallSite<M, N, A>> {
 
   /**
    * Returns a string representation of this call-site.
-   * 
+   *
    * @return a string representation of this call-site
    */
   @Override

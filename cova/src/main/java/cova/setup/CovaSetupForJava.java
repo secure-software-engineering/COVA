@@ -1,27 +1,25 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.setup;
 
+import cova.core.SceneTransformerFactory;
+import cova.reporter.ConstraintReporter;
+import cova.setup.config.Config;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import soot.G;
 import soot.PackManager;
 import soot.Scene;
@@ -30,13 +28,7 @@ import soot.SootMethod;
 import soot.Transform;
 import soot.options.Options;
 
-import cova.core.SceneTransformerFactory;
-import cova.reporter.ConstraintReporter;
-import cova.setup.config.Config;
-
-/**
- * The Class CovaSetupForJava setups COVA for analyzing java application.
- */
+/** The Class CovaSetupForJava setups COVA for analyzing java application. */
 public class CovaSetupForJava {
 
   /** The application name. */
@@ -63,23 +55,22 @@ public class CovaSetupForJava {
   /**
    * Instantiates a new cova setup for java application.
    *
-   * @param appName
-   *          the app name
-   * @param appClassPath
-   *          the app class path
-   * @param sourceCodePath
-   *          the source code path
-   * @param libPath
-   *          the lib path
-   * @param writeJimpleOutput
-   *          the write jimple output
-   * @param writeHtmlOutput
-   *          the write html output
-   * @param verbose
-   *          the verbose
+   * @param appName the app name
+   * @param appClassPath the app class path
+   * @param sourceCodePath the source code path
+   * @param libPath the lib path
+   * @param writeJimpleOutput the write jimple output
+   * @param writeHtmlOutput the write html output
+   * @param verbose the verbose
    */
-  public CovaSetupForJava(String appName, String appClassPath, String sourceCodePath,
-      String libPath, String configFilePath, Config configuration, String mainClass) {
+  public CovaSetupForJava(
+      String appName,
+      String appClassPath,
+      String sourceCodePath,
+      String libPath,
+      String configFilePath,
+      Config configuration,
+      String mainClass) {
     this.appName = appName;
     this.appClassPath = appClassPath;
     this.sourceCodePath = sourceCodePath;
@@ -90,9 +81,7 @@ public class CovaSetupForJava {
     reporter = new ConstraintReporter(appName, config.isWriteJimpleOutput(), false);
   }
 
-  /**
-   * Initialize soot.
-   */
+  /** Initialize soot. */
   private void initializeSoot() {
     G.reset();
     Options.v().set_no_bodies_for_excluded(true);
@@ -122,8 +111,7 @@ public class CovaSetupForJava {
   /**
    * Starts the analysis.
    *
-   * @param transformer
-   *          the transformer
+   * @param transformer the transformer
    */
   private void analyze(SceneTransformer transformer) {
     PackManager.v().getPack("cg").apply();
@@ -131,16 +119,13 @@ public class CovaSetupForJava {
     PackManager.v().getPack("wjtp").apply();
   }
 
-  
-  /**
-   * Run COVA for java application.
-   */
-  public void run()
-  {
+  /** Run COVA for java application. */
+  public void run() {
     initializeSoot();
     SceneTransformerFactory transformerFactory = new SceneTransformerFactory(config);
-    SceneTransformer transformer = transformerFactory.createAnalysisTransformerForJavaApp(appName,
-        sourceCodePath, configFilePath, reporter);
+    SceneTransformer transformer =
+        transformerFactory.createAnalysisTransformerForJavaApp(
+            appName, sourceCodePath, configFilePath, reporter);
     analyze(transformer);
   }
 
@@ -152,5 +137,4 @@ public class CovaSetupForJava {
   public ConstraintReporter getReporter() {
     return reporter;
   }
-
 }

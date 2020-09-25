@@ -1,37 +1,18 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.rules;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import soot.SootMethod;
-import soot.Unit;
-import soot.Value;
-import soot.jimple.ConditionExpr;
-import soot.jimple.EqExpr;
-import soot.jimple.IfStmt;
-import soot.jimple.IntConstant;
-import soot.jimple.Jimple;
-import soot.jimple.LookupSwitchStmt;
-import soot.jimple.TableSwitchStmt;
 
 import cova.core.ConstraintFactory;
 import cova.core.InterproceduralCFG;
@@ -44,6 +25,20 @@ import cova.data.WrappedTaintSet;
 import cova.data.taints.AbstractTaint;
 import cova.data.taints.ConcreteTaint;
 import cova.vasco.Context;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import soot.SootMethod;
+import soot.Unit;
+import soot.Value;
+import soot.jimple.ConditionExpr;
+import soot.jimple.EqExpr;
+import soot.jimple.IfStmt;
+import soot.jimple.IntConstant;
+import soot.jimple.Jimple;
+import soot.jimple.LookupSwitchStmt;
+import soot.jimple.TableSwitchStmt;
 
 public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abstraction> {
   /** The interprocedural control flow graph. */
@@ -56,12 +51,9 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
   /**
    * Creates the constraint for if-statement.
    *
-   * @param node
-   *          the current if-statement
-   * @param succ
-   *          the successor statement
-   * @param in
-   *          the abstraction before analyzing the current if-statement
+   * @param node the current if-statement
+   * @param succ the successor statement
+   * @param in the abstraction before analyzing the current if-statement
    * @return the abstraction after analyzing the current if-statement
    */
   private Abstraction createConstraintForIfStmt(Unit node, Unit succ, Abstraction in) {
@@ -84,8 +76,8 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
       constraint = ConstraintZ3.getFalse();
       for (AbstractTaint taint1 : involved1) {
         for (AbstractTaint taint2 : involved2) {
-          IConstraint c = ConstraintFactory.createConstraint(taint1, taint2, conditionExpr,
-              isFallThroughEdge);
+          IConstraint c =
+              ConstraintFactory.createConstraint(taint1, taint2, conditionExpr, isFallThroughEdge);
           constraint = constraint.or(c, false);
         }
       }
@@ -103,8 +95,8 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
       constraint = ConstraintZ3.getFalse();
       boolean allConcrete = true;
       for (AbstractTaint taint : involved1) {
-        IConstraint c = ConstraintFactory.createConstraint(taint, conditionExpr, false,
-            isFallThroughEdge);
+        IConstraint c =
+            ConstraintFactory.createConstraint(taint, conditionExpr, false, isFallThroughEdge);
         constraint = constraint.or(c, false);
         if (!(taint instanceof ConcreteTaint)) {
           allConcrete = false;
@@ -124,8 +116,8 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
       constraint = ConstraintZ3.getFalse();
       boolean allConcrete = true;
       for (AbstractTaint taint : involved2) {
-        IConstraint c = ConstraintFactory.createConstraint(taint, conditionExpr, true,
-            isFallThroughEdge);
+        IConstraint c =
+            ConstraintFactory.createConstraint(taint, conditionExpr, true, isFallThroughEdge);
         constraint = constraint.or(c, false);
         if (!(taint instanceof ConcreteTaint)) {
           allConcrete = false;
@@ -151,12 +143,9 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
   /**
    * Creates the constraint for table switch statement.
    *
-   * @param node
-   *          the current table switch statement
-   * @param succ
-   *          the successor statement
-   * @param in
-   *          the abstraction before analyzing the current table switch statement
+   * @param node the current table switch statement
+   * @param succ the successor statement
+   * @param in the abstraction before analyzing the current table switch statement
    * @return the abstraction after analyzing the current table switch statement
    */
   private Abstraction createConstraintForTableSwitchStmt(Unit node, Unit succ, Abstraction in) {
@@ -165,8 +154,8 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
       TableSwitchStmt switchStmt = (TableSwitchStmt) node;
       Value key = switchStmt.getKey();
       if (WrappedAccessPath.isSupportedType(key)) {
-        Set<AbstractTaint> involved = in.taints()
-            .getTaintsWithAccessPath(new WrappedAccessPath(key));
+        Set<AbstractTaint> involved =
+            in.taints().getTaintsWithAccessPath(new WrappedAccessPath(key));
         for (AbstractTaint taint : involved) {
           constraint = ConstraintZ3.getFalse();
           Unit defaultTarget = switchStmt.getDefaultTarget();
@@ -227,12 +216,9 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
   /**
    * Creates the constraint for the default case by lookup switch statement.
    *
-   * @param node
-   *          the node
-   * @param succ
-   *          the succ
-   * @param in
-   *          the in
+   * @param node the node
+   * @param succ the succ
+   * @param in the in
    * @return the abstraction
    */
   private Abstraction createConstraintForLookupSwitchStmt(Unit node, Unit succ, Abstraction in) {
@@ -262,8 +248,8 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
   }
 
   @Override
-  public Abstraction normalFlowFunction(Context<SootMethod, Unit, Abstraction> context, Unit node,
-      Unit succ, Abstraction in) {
+  public Abstraction normalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     in = createConstraintForLookupSwitchStmt(node, succ, in);
     if (node instanceof IfStmt) {
       return createConstraintForIfStmt(node, succ, in);
@@ -275,20 +261,28 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
   }
 
   @Override
-  public Abstraction callEntryFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      SootMethod callee, Unit node, Unit succ, Abstraction in) {
+  public Abstraction callEntryFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context,
+      SootMethod callee,
+      Unit node,
+      Unit succ,
+      Abstraction in) {
     return null;
   }
 
   @Override
-  public Abstraction callExitFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      SootMethod callee, Unit node, Unit succ, Abstraction exitValue) {
+  public Abstraction callExitFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context,
+      SootMethod callee,
+      Unit node,
+      Unit succ,
+      Abstraction exitValue) {
     return null;
   }
 
   @Override
-  public Abstraction callLocalFlowFunction(Context<SootMethod, Unit, Abstraction> context,
-      Unit node, Unit succ, Abstraction in) {
+  public Abstraction callLocalFlowFunction(
+      Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
     return createConstraintForLookupSwitchStmt(node, succ, in);
   }
 }

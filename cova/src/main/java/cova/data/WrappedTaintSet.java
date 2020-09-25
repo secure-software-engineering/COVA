@@ -1,35 +1,18 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.data;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
-import soot.Local;
-import soot.PrimType;
-import soot.SootMethod;
-import soot.Value;
-import soot.toolkits.scalar.Pair;
 
 import cova.data.taints.AbstractTaint;
 import cova.data.taints.ConcreteTaint;
@@ -37,23 +20,29 @@ import cova.data.taints.ImpreciseTaint;
 import cova.data.taints.SourceTaint;
 import cova.data.taints.SymbolicTaint;
 import cova.data.taints.ZeroTaint;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import soot.Local;
+import soot.PrimType;
+import soot.SootMethod;
+import soot.Value;
+import soot.toolkits.scalar.Pair;
 
 /**
  * The Class WrappedTaintSet is a container of taint set.
- * 
- * <p>
- * It provides all operations that can be done to the taint set.
- * </p>
- * 
+ *
+ * <p>It provides all operations that can be done to the taint set.
  */
 public class WrappedTaintSet implements Iterable<AbstractTaint> {
 
   /** The taints. */
   private final Set<AbstractTaint> taints;
 
-  /**
-   * Instantiates a new wrapped taint set.
-   */
+  /** Instantiates a new wrapped taint set. */
   public WrappedTaintSet() {
     taints = new HashSet<AbstractTaint>();
   }
@@ -61,9 +50,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Instantiates a new wrapped taint set with the given wrapped taint set.
    *
-   * @param t
-   *          the given wrapped taint set.
-   * 
+   * @param t the given wrapped taint set.
    */
   public WrappedTaintSet(WrappedTaintSet t) {
     taints = new HashSet<AbstractTaint>(t.taints);
@@ -94,7 +81,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -130,8 +117,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Return all taints whose access path has the given access path as its prefix.
    *
-   * @param a
-   *          the given access path
+   * @param a the given access path
    * @return the taints whose access path has the given access path as its prefix.
    */
   public Set<AbstractTaint> getTaintsStartWith(WrappedAccessPath a) {
@@ -162,8 +148,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Return all taints whose access path has the given local variable as its base.
    *
-   * @param base
-   *          the base
+   * @param base the base
    * @return the taints whose access path has the given local as its base.
    */
   public Set<AbstractTaint> getTaintsWithBase(Local base) {
@@ -198,8 +183,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Return all taints whose access path is static field of the giving class.
    *
-   * @param clName
-   *          the class name
+   * @param clName the class name
    * @return the taints whose access path is static field of the giving class
    */
   public Set<AbstractTaint> getPropagateTaintsWithStaticField(String clName) {
@@ -216,8 +200,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Gets the taints whose access path has the same String representation as the given access path.
    *
-   * @param a
-   *          the given access path
+   * @param a the given access path
    * @return the taints with access path
    */
   public Set<AbstractTaint> getTaintsWithAccessPath(WrappedAccessPath a) {
@@ -234,8 +217,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
    * Gets the symbolic taints whose access path has the same String representation as the given
    * access path.
    *
-   * @param a
-   *          the given access path
+   * @param a the given access path
    * @return the taints with access path
    */
   public Set<SymbolicTaint> getSymbolicTaintsWithAccessPath(WrappedAccessPath a) {
@@ -253,8 +235,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Check if the taint set contains the given taint.
    *
-   * @param t
-   *          the taint
+   * @param t the taint
    * @return true, if the taint set contains the given taint.
    */
   public boolean contains(AbstractTaint t) {
@@ -298,8 +279,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Adds a taint to the taint set.
    *
-   * @param t
-   *          the given taint
+   * @param t the given taint
    */
   public void add(AbstractTaint t) {
     if (!contains(t)) {
@@ -310,8 +290,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Adds the given taints to this taint set.
    *
-   * @param other
-   *          the given taints
+   * @param other the given taints
    */
   public void addAll(Collection<AbstractTaint> other) {
     for (AbstractTaint t : other) {
@@ -321,9 +300,8 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
 
   /**
    * Adds the given taint set to this taint set.
-   * 
-   * @param other
-   *          the given taint set
+   *
+   * @param other the given taint set
    */
   public void addAll(WrappedTaintSet other) {
     this.addAll(other.taints);
@@ -332,8 +310,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Removes the all given taints from the taint set.
    *
-   * @param other
-   *          the given taints
+   * @param other the given taints
    */
   public void removeAll(Collection<AbstractTaint> other) {
     for (AbstractTaint t : other) {
@@ -344,16 +321,13 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Removes the given taint from the taint set.
    *
-   * @param t
-   *          the given taint
+   * @param t the given taint
    */
   public void remove(AbstractTaint t) {
     taints.remove(t);
   }
 
-  /**
-   * Reset zero taint.
-   */
+  /** Reset zero taint. */
   public void resetZeroTaint() {
     taints.remove(getZeroTaint());
     taints.add(ZeroTaint.getInstance());
@@ -362,8 +336,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Merged the return taint set of callee to the local taint set of caller.
    *
-   * @param retSet
-   *          the return taint set
+   * @param retSet the return taint set
    * @return the merged taint set at call site.
    */
   public WrappedTaintSet merge(WrappedTaintSet retSet) {
@@ -384,11 +357,10 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   }
 
   /**
-   * meet the given WrappedTaintSet otherSet to this taint set. Merge the taints with same access path together by disjoining
-   * their constraints.
+   * meet the given WrappedTaintSet otherSet to this taint set. Merge the taints with same access
+   * path together by disjoining their constraints.
    *
-   * @param otherSet
-   *          the other wrapped taint set
+   * @param otherSet the other wrapped taint set
    * @return the merged taint set.
    */
   public WrappedTaintSet meet(WrappedTaintSet otherSet) {
@@ -415,8 +387,8 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
         // concrete taint is identified by the pair of access path and value
         HashMap<Pair<WrappedAccessPath, Value>, ConcreteTaint> taintsMap = new HashMap<>();
         for (ConcreteTaint concreteTaint : concreteTaints) {
-          Pair<WrappedAccessPath, Value> pair = new Pair<>(concreteTaint.getAccessPath(),
-              concreteTaint.getCurrentValue());
+          Pair<WrappedAccessPath, Value> pair =
+              new Pair<>(concreteTaint.getAccessPath(), concreteTaint.getCurrentValue());
           if (taintsMap.containsKey(pair)) {
             ConcreteTaint old = taintsMap.get(pair);
             ConcreteTaint updated = ConcreteTaint.meetConstraint(old, concreteTaint);
@@ -433,8 +405,8 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
         // symbolic taint is identified by the pair of access path and symbolic name
         HashMap<Pair<WrappedAccessPath, String>, SymbolicTaint> taintsMap = new HashMap<>();
         for (SymbolicTaint symbolicTaint : symbolicTaints) {
-          Pair<WrappedAccessPath, String> pair = new Pair<>(symbolicTaint.getAccessPath(),
-              symbolicTaint.getSymbolicName());
+          Pair<WrappedAccessPath, String> pair =
+              new Pair<>(symbolicTaint.getAccessPath(), symbolicTaint.getSymbolicName());
           if (taintsMap.containsKey(pair)) {
             SymbolicTaint old = taintsMap.get(pair);
             SymbolicTaint updated = SymbolicTaint.meetConstraint(old, symbolicTaint);
@@ -456,22 +428,18 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
    * union(or-operation) of all constraints, say b, should be equal to the constraint of the
    * statement c. If it is not complete, return the missing constraint a. The missing constraint can
    * be computed by (c v -b) due to the following derivation.
-   * 
-   * <p>
-   * a v b = c <br>
+   *
+   * <p>a v b = c <br>
    * a v (b v -b) = c v -b <br>
    * a v true = c v -b <br>
    * a = c v -b<br>
-   * </p>
-   * 
-   * @param taints
-   *          the taints
-   * @param constraintOfStmt
-   *          the constraint of the statement
+   *
+   * @param taints the taints
+   * @param constraintOfStmt the constraint of the statement
    * @return the missing constraint
    */
-  public static IConstraint getMissingConstraint(Set<AbstractTaint> taints,
-      IConstraint constraintOfStmt) {
+  public static IConstraint getMissingConstraint(
+      Set<AbstractTaint> taints, IConstraint constraintOfStmt) {
     IConstraint constraint = null;
     for (AbstractTaint taint : taints) {
       if (constraint == null) {
@@ -541,14 +509,11 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
    * Search taints which have the given caller base and create new taint at the callee by replacing
    * the base of each access path with the given callee base.
    *
-   * @param callerBase
-   *          the caller base
-   * @param calleeBase
-   *          the callee base
+   * @param callerBase the caller base
+   * @param calleeBase the callee base
    * @return the sets of taints propagated to callee
-   * 
    * @see GeneralPropagationRule#callEntryFlowFunction(soot.SootMethod, soot.Unit, soot.Unit,
-   *      WrappedTaintSet)
+   *     WrappedTaintSet)
    */
   public Set<AbstractTaint> deriveTaintsAtCallee(Local callerBase, Local calleeBase) {
     Set<AbstractTaint> ret = new HashSet<AbstractTaint>();
@@ -556,8 +521,8 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
       WrappedAccessPath accessPath = t.getAccessPath();
       if (!accessPath.isStaticFieldRef()) {
         if (accessPath.getBase().equals(callerBase)) {
-          WrappedAccessPath accessPathAtCallee = new WrappedAccessPath(calleeBase,
-              accessPath.getFields());
+          WrappedAccessPath accessPathAtCallee =
+              new WrappedAccessPath(calleeBase, accessPath.getFields());
           AbstractTaint taintAtCallee = t.createNewTaintFromAccessPath(accessPathAtCallee);
           ret.add(taintAtCallee);
         }
@@ -570,22 +535,19 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
    * Search taints which have the given callee base and create new taint at the caller by replacing
    * the base of each access path with the given caller base.
    *
-   * @param calleeBase
-   *          the callee base
-   * @param callerBase
-   *          the caller base
+   * @param calleeBase the callee base
+   * @param callerBase the caller base
    * @return the sets of taints propagated back to caller
-   * 
    * @see GeneralPropagationRule#callExitFlowFunction(soot.SootMethod, soot.Unit, soot.Unit,
-   *      WrappedTaintSet)
+   *     WrappedTaintSet)
    */
   public Set<AbstractTaint> deriveTaintsAtCaller(Local calleeBase, Local callerBase) {
     Set<AbstractTaint> ret = new HashSet<AbstractTaint>();
     for (AbstractTaint t : taints) {
       WrappedAccessPath accessPath = t.getAccessPath();
       if (!accessPath.isStaticFieldRef() && accessPath.getBase().equals(calleeBase)) {
-        WrappedAccessPath accessPathAtCaller = new WrappedAccessPath(callerBase,
-            accessPath.getFields());
+        WrappedAccessPath accessPathAtCaller =
+            new WrappedAccessPath(callerBase, accessPath.getFields());
         AbstractTaint taintAtCaller = t.createNewTaintFromAccessPath(accessPathAtCaller);
         ret.add(taintAtCaller);
       }
@@ -596,8 +558,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Derive ret taints.
    *
-   * @param value
-   *          the value
+   * @param value the value
    * @return the sets the
    */
   public Set<AbstractTaint> deriveRetTaints(Value value) {
@@ -605,8 +566,8 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
     for (AbstractTaint t : taints) {
       if (t.isReturnTaint()) {
         WrappedAccessPath ap = t.getAccessPath();
-        AbstractTaint retTaint = t.createNewTaintFromAccessPath(
-            new WrappedAccessPath(value, ap.getFields()));
+        AbstractTaint retTaint =
+            t.createNewTaintFromAccessPath(new WrappedAccessPath(value, ap.getFields()));
         ret.add(retTaint);
       }
     }
@@ -618,8 +579,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
    * constraint and given constraint. It returns a taint set contains taints with updated
    * constraint.
    *
-   * @param constraint
-   *          the constraint
+   * @param constraint the constraint
    * @return updated taint set
    */
   public WrappedTaintSet updateConstraintForTaints(IConstraint constraint) {
@@ -636,7 +596,6 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
             copy.updateConstraint(newConstraint);
           }
           ret.add(copy);
-
         }
       } else {
         if (t instanceof ZeroTaint) {
@@ -665,9 +624,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
     return taints.isEmpty();
   }
 
-  /**
-   * Clear the taint set.
-   */
+  /** Clear the taint set. */
   public void clear() {
     taints.clear();
   }
@@ -675,8 +632,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
   /**
    * Kill all taints which can not be propagated back to caller.
    *
-   * @param method
-   *          the method
+   * @param method the method
    */
   public void killAllNonPropagate(SootMethod method) {
     boolean noParameter = method.getParameterCount() == 0 ? true : false;
@@ -691,7 +647,8 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
       } else if (accessPath.isLocal()) {
         if (!accessPath.getBase().toString().equals("this")) {
           if (noParameter || accessPath.getType() instanceof PrimType) {
-            // if the callee has no parameter, kill all locals, otherwise kill all locals of primitive
+            // if the callee has no parameter, kill all locals, otherwise kill all locals of
+            // primitive
             // type
             toRemove.add(taint);
           } else {
@@ -706,9 +663,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
     removeAll(toRemove);
   }
 
-  /**
-   * Kill all public static taints.
-   */
+  /** Kill all public static taints. */
   public void killAllPublicStaticTaints() {
     Set<AbstractTaint> toRemove = new HashSet<AbstractTaint>();
     for (AbstractTaint taint : taints) {
@@ -720,9 +675,7 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
     removeAll(toRemove);
   }
 
-  /**
-   * Kill all imprecise taints.
-   */
+  /** Kill all imprecise taints. */
   public void killAllImpreciseTaints() {
     Set<AbstractTaint> toRemove = new HashSet<AbstractTaint>();
     for (AbstractTaint taint : taints) {

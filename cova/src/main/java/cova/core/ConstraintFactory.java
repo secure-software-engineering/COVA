@@ -1,27 +1,28 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.core;
 
 import com.microsoft.z3.BoolExpr;
-
+import cova.data.ConstraintZ3;
+import cova.data.IConstraint;
+import cova.data.Operator;
+import cova.data.taints.AbstractTaint;
+import cova.data.taints.ConcreteTaint;
+import cova.data.taints.ImpreciseTaint;
+import cova.data.taints.SourceTaint;
 import java.util.ArrayList;
-
 import soot.BooleanType;
 import soot.Type;
 import soot.Value;
@@ -32,44 +33,38 @@ import soot.jimple.EqExpr;
 import soot.jimple.IntConstant;
 import soot.jimple.NeExpr;
 
-import cova.data.ConstraintZ3;
-import cova.data.IConstraint;
-import cova.data.Operator;
-import cova.data.taints.AbstractTaint;
-import cova.data.taints.ConcreteTaint;
-import cova.data.taints.ImpreciseTaint;
-import cova.data.taints.SourceTaint;
-
-/**
- * A factory for creating constraint.
- * 
- */
+/** A factory for creating constraint. */
 public class ConstraintFactory {
 
   /**
    * Creates a new constraint when two source taints appear in the same condition expression of the
    * if-statement.
    *
-   * @param source1
-   *          the first source taint
-   * @param source2
-   *          the second source taint
-   * @param conditionExpr
-   *          the condition expression of the if-statement
-   * @param isFallThroughEdge
-   *          true, if the current edge is a fall through edge
+   * @param source1 the first source taint
+   * @param source2 the second source taint
+   * @param conditionExpr the condition expression of the if-statement
+   * @param isFallThroughEdge true, if the current edge is a fall through edge
    * @return the constraint
    */
-  private static IConstraint createConstraintFromSourceTaints(SourceTaint source1,
-      SourceTaint source2, ConditionExpr conditionExpr, boolean isFallThroughEdge) {
+  private static IConstraint createConstraintFromSourceTaints(
+      SourceTaint source1,
+      SourceTaint source2,
+      ConditionExpr conditionExpr,
+      boolean isFallThroughEdge) {
     IConstraint constraint1 = source1.getConstraint();
     IConstraint constraint2 = source2.getConstraint();
     IConstraint constraint = constraint1.and(constraint2, false);
     String nameWithoutIndex1 = source1.getSymbolicName();
     String nameWithoutIndex2 = source2.getSymbolicName();
-    BoolExpr expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(nameWithoutIndex1, false,
-        nameWithoutIndex2, false, source1.getType(),
-        SMTSolverZ3.getInstance().translate(conditionExpr));
+    BoolExpr expr =
+        SMTSolverZ3.getInstance()
+            .makeNonTerminalExpr(
+                nameWithoutIndex1,
+                false,
+                nameWithoutIndex2,
+                false,
+                source1.getType(),
+                SMTSolverZ3.getInstance().translate(conditionExpr));
     ArrayList<String> symbolicNames = new ArrayList<String>();
     symbolicNames.add(source1.getSymbolicName());
     symbolicNames.add(source2.getSymbolicName());
@@ -84,26 +79,25 @@ public class ConstraintFactory {
   /**
    * Creates a new constraint when two concrete taints appear in the same condition expression.
    *
-   * @param concrete1
-   *          the first concrete taint
-   * @param concrete2
-   *          the second concrete taint
-   * @param conditionExpr
-   *          the condition expression of the if-statement
-   * @param isFallThroughEdge
-   *          true, if the current edge is fall through edge
+   * @param concrete1 the first concrete taint
+   * @param concrete2 the second concrete taint
+   * @param conditionExpr the condition expression of the if-statement
+   * @param isFallThroughEdge true, if the current edge is fall through edge
    * @return the constraint
    */
-  private static IConstraint createConstraintFromConcreteTaints(ConcreteTaint concrete1,
-      ConcreteTaint concrete2, ConditionExpr conditionExpr, boolean isFallThroughEdge) {
+  private static IConstraint createConstraintFromConcreteTaints(
+      ConcreteTaint concrete1,
+      ConcreteTaint concrete2,
+      ConditionExpr conditionExpr,
+      boolean isFallThroughEdge) {
     IConstraint constraint1 = concrete1.getConstraint();
     IConstraint constraitn2 = concrete2.getConstraint();
     IConstraint constraint = constraint1.and(constraitn2, false);
     Value value1 = concrete1.getCurrentValue();
     Value value2 = concrete2.getCurrentValue();
     if (value1 instanceof ArithmeticConstant && value2 instanceof ArithmeticConstant) {
-      BoolExpr expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(value1, true, value2, true,
-          conditionExpr);
+      BoolExpr expr =
+          SMTSolverZ3.getInstance().makeNonTerminalExpr(value1, true, value2, true, conditionExpr);
       IConstraint newConstraint = new ConstraintZ3(expr, new ArrayList<String>());
       if (isFallThroughEdge) {
         newConstraint = newConstraint.negate(true);
@@ -116,25 +110,31 @@ public class ConstraintFactory {
   /**
    * Creates a new constraint when two imprecise taints appear in the same condition expression.
    *
-   * @param imprecise1
-   *          the first imprecise taint
-   * @param imprecise2
-   *          the second imprecise taint
-   * @param conditionExpr
-   *          the condition expression of the if-statement
-   * @param isFallThroughEdge
-   *          true, if the current edge is fall through edge
+   * @param imprecise1 the first imprecise taint
+   * @param imprecise2 the second imprecise taint
+   * @param conditionExpr the condition expression of the if-statement
+   * @param isFallThroughEdge true, if the current edge is fall through edge
    * @return the constraint
    */
-  private static IConstraint createConstraintFromImpreciseTaints(ImpreciseTaint imprecise1,
-      ImpreciseTaint imprecise2, ConditionExpr conditionExpr, boolean isFallThroughEdge) {
+  private static IConstraint createConstraintFromImpreciseTaints(
+      ImpreciseTaint imprecise1,
+      ImpreciseTaint imprecise2,
+      ConditionExpr conditionExpr,
+      boolean isFallThroughEdge) {
     IConstraint constraint1 = imprecise1.getConstraint();
     IConstraint constraint2 = imprecise2.getConstraint();
     IConstraint constraint = constraint1.and(constraint2, false);
     String name1 = imprecise1.getSymbolicName();
     String name2 = imprecise2.getSymbolicName();
-    BoolExpr expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(name1, false, name2, false,
-        imprecise1.getType(), SMTSolverZ3.getInstance().translate(conditionExpr));
+    BoolExpr expr =
+        SMTSolverZ3.getInstance()
+            .makeNonTerminalExpr(
+                name1,
+                false,
+                name2,
+                false,
+                imprecise1.getType(),
+                SMTSolverZ3.getInstance().translate(conditionExpr));
     ArrayList<String> symbolicNames = new ArrayList<String>();
     symbolicNames.addAll(imprecise1.getSourceSymbolics());
     symbolicNames.addAll(imprecise2.getSourceSymbolics());
@@ -150,20 +150,18 @@ public class ConstraintFactory {
    * Creates a new constraint when a source taint and a concrete taint appear in the same condition
    * expression.
    *
-   * @param source
-   *          the source taint
-   * @param concrete
-   *          the concrete taint
-   * @param conditionExpr
-   *          the condition expression of the if-statement
-   * @param sourceOnLeft
-   *          true, if the source taint is on left side of the condition expression
-   * @param isFallThroughEdge
-   *          true, if the current edge is fall through edge
+   * @param source the source taint
+   * @param concrete the concrete taint
+   * @param conditionExpr the condition expression of the if-statement
+   * @param sourceOnLeft true, if the source taint is on left side of the condition expression
+   * @param isFallThroughEdge true, if the current edge is fall through edge
    * @return the constraint
    */
-  private static IConstraint createConstraintFromSourceAndConcreteTaints(SourceTaint source,
-      ConcreteTaint concrete, ConditionExpr conditionExpr, boolean sourceOnLeft,
+  private static IConstraint createConstraintFromSourceAndConcreteTaints(
+      SourceTaint source,
+      ConcreteTaint concrete,
+      ConditionExpr conditionExpr,
+      boolean sourceOnLeft,
       boolean isFallThroughEdge) {
     IConstraint constraint1 = source.getConstraint();
     IConstraint constraint2 = concrete.getConstraint();
@@ -181,11 +179,25 @@ public class ConstraintFactory {
         expr = SMTSolverZ3.getInstance().makeBoolTerm(name, v, equal, !sourceOnLeft);
       } else {
         if (sourceOnLeft) {
-          expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(name, false, cval.toString(), true,
-              source.getType(), SMTSolverZ3.getInstance().translate(conditionExpr));
+          expr =
+              SMTSolverZ3.getInstance()
+                  .makeNonTerminalExpr(
+                      name,
+                      false,
+                      cval.toString(),
+                      true,
+                      source.getType(),
+                      SMTSolverZ3.getInstance().translate(conditionExpr));
         } else {
-          expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(cval.toString(), true, name, false,
-              source.getType(), SMTSolverZ3.getInstance().translate(conditionExpr));
+          expr =
+              SMTSolverZ3.getInstance()
+                  .makeNonTerminalExpr(
+                      cval.toString(),
+                      true,
+                      name,
+                      false,
+                      source.getType(),
+                      SMTSolverZ3.getInstance().translate(conditionExpr));
         }
       }
       IConstraint newConstraint = new ConstraintZ3(expr, source.getSymbolicName());
@@ -201,21 +213,19 @@ public class ConstraintFactory {
    * Creates a new constraint when an imprecise taint and a concrete taint appear in the same
    * condition expression.
    *
-   * @param imprecise
-   *          the imprecise taint
-   * @param concrete
-   *          the concrete taint
-   * @param conditionExpr
-   *          the condition expression
-   * @param impreciseOnLeft
-   *          true, if the imprecise taint is on left side of the condition expression
-   * @param isFallThroughEdge
-   *          true, if the edge is fall through edge
+   * @param imprecise the imprecise taint
+   * @param concrete the concrete taint
+   * @param conditionExpr the condition expression
+   * @param impreciseOnLeft true, if the imprecise taint is on left side of the condition expression
+   * @param isFallThroughEdge true, if the edge is fall through edge
    * @return the constraint
    */
   private static IConstraint createConstraintFromImpreciseAndConcreteTaints(
-      ImpreciseTaint imprecise, ConcreteTaint concrete, ConditionExpr conditionExpr,
-      boolean impreciseOnLeft, boolean isFallThroughEdge) {
+      ImpreciseTaint imprecise,
+      ConcreteTaint concrete,
+      ConditionExpr conditionExpr,
+      boolean impreciseOnLeft,
+      boolean isFallThroughEdge) {
     IConstraint constraint1 = imprecise.getConstraint();
     IConstraint constraint2 = concrete.getConstraint();
     IConstraint constraint = constraint1.and(constraint2, false);
@@ -232,11 +242,25 @@ public class ConstraintFactory {
         expr = SMTSolverZ3.getInstance().makeBoolTerm(name, v, equal, !impreciseOnLeft);
       } else {
         if (impreciseOnLeft) {
-          expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(name, false, val.toString(), true,
-              imprecise.getType(), SMTSolverZ3.getInstance().translate(conditionExpr));
+          expr =
+              SMTSolverZ3.getInstance()
+                  .makeNonTerminalExpr(
+                      name,
+                      false,
+                      val.toString(),
+                      true,
+                      imprecise.getType(),
+                      SMTSolverZ3.getInstance().translate(conditionExpr));
         } else {
-          expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(val.toString(), true, name, false,
-              imprecise.getType(), SMTSolverZ3.getInstance().translate(conditionExpr));
+          expr =
+              SMTSolverZ3.getInstance()
+                  .makeNonTerminalExpr(
+                      val.toString(),
+                      true,
+                      name,
+                      false,
+                      imprecise.getType(),
+                      SMTSolverZ3.getInstance().translate(conditionExpr));
         }
       }
       IConstraint newConstraint = new ConstraintZ3(expr, imprecise.getSourceSymbolics());
@@ -252,28 +276,33 @@ public class ConstraintFactory {
    * Creates a new constraint when a source taint and an imprecise taint appear in the same
    * condition expression.
    *
-   * @param source
-   *          the source taint
-   * @param imprecise
-   *          the imprecise taint
-   * @param conditionExpr
-   *          the condition expression
-   * @param sourceOnLeft
-   *          true, if the source taint is on the left side of the condition expression
-   * @param isFallThroughEdge
-   *          true, if the edge is fall through edge
+   * @param source the source taint
+   * @param imprecise the imprecise taint
+   * @param conditionExpr the condition expression
+   * @param sourceOnLeft true, if the source taint is on the left side of the condition expression
+   * @param isFallThroughEdge true, if the edge is fall through edge
    * @return the i constraint
    */
-  private static IConstraint createConstraintFromSourceAndImpreciseTaint(SourceTaint source,
-      ImpreciseTaint imprecise, ConditionExpr conditionExpr, boolean sourceOnLeft,
+  private static IConstraint createConstraintFromSourceAndImpreciseTaint(
+      SourceTaint source,
+      ImpreciseTaint imprecise,
+      ConditionExpr conditionExpr,
+      boolean sourceOnLeft,
       boolean isFallThroughEdge) {
     IConstraint constraint1 = source.getConstraint();
     IConstraint constraint2 = imprecise.getConstraint();
     IConstraint constraint = constraint1.and(constraint2, false);
     String sname = source.getSymbolicName();
     String iname = imprecise.getSymbolicName();
-    BoolExpr expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(sname, false, iname, false,
-        source.getType(), SMTSolverZ3.getInstance().translate(conditionExpr));
+    BoolExpr expr =
+        SMTSolverZ3.getInstance()
+            .makeNonTerminalExpr(
+                sname,
+                false,
+                iname,
+                false,
+                source.getType(),
+                SMTSolverZ3.getInstance().translate(conditionExpr));
     ArrayList<String> symbolicNames = new ArrayList<String>();
     symbolicNames.add(source.getSymbolicName());
     symbolicNames.addAll(imprecise.getSourceSymbolics());
@@ -288,18 +317,17 @@ public class ConstraintFactory {
   /**
    * Creates a new constraint when the condition expression contains only one concrete taint.
    *
-   * @param concrete
-   *          the concrete taint
-   * @param conditionExpr
-   *          the condition expression of the if-statement
-   * @param taintOnLeft
-   *          true, if the concrete taint is on the left side of the condition expression
-   * @param isFallThroughEdge
-   *          true, if the edge is fall through edge
+   * @param concrete the concrete taint
+   * @param conditionExpr the condition expression of the if-statement
+   * @param taintOnLeft true, if the concrete taint is on the left side of the condition expression
+   * @param isFallThroughEdge true, if the edge is fall through edge
    * @return the constraint
    */
-  private static IConstraint createConstraintFromConcreteTaint(ConcreteTaint concrete,
-      ConditionExpr conditionExpr, boolean taintOnLeft, boolean isFallThroughEdge) {
+  private static IConstraint createConstraintFromConcreteTaint(
+      ConcreteTaint concrete,
+      ConditionExpr conditionExpr,
+      boolean taintOnLeft,
+      boolean isFallThroughEdge) {
     IConstraint constraint = concrete.getConstraint();
     Value cval = concrete.getCurrentValue();
     Value val = null;
@@ -310,8 +338,9 @@ public class ConstraintFactory {
     }
 
     if (cval instanceof ArithmeticConstant && val instanceof ArithmeticConstant) {
-      BoolExpr expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(concrete.getCurrentValue(),
-          true, val, true, conditionExpr);
+      BoolExpr expr =
+          SMTSolverZ3.getInstance()
+              .makeNonTerminalExpr(concrete.getCurrentValue(), true, val, true, conditionExpr);
       if (isFallThroughEdge) {
         expr = SMTSolverZ3.getInstance().negate(expr, false);
       }
@@ -332,9 +361,9 @@ public class ConstraintFactory {
         if (conditionExpr instanceof NeExpr && val.equals(IntConstant.v(1))) {
           op = Operator.NE;
         }
-        BoolExpr expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(name, false,
-            cval.toString(),
-            true, cval.getType(), op);
+        BoolExpr expr =
+            SMTSolverZ3.getInstance()
+                .makeNonTerminalExpr(name, false, cval.toString(), true, cval.getType(), op);
         IConstraint newConstraint = new ConstraintZ3(expr, concrete.getSource().getSymbolicName());
         if (isFallThroughEdge) {
           newConstraint = newConstraint.negate(false);
@@ -348,18 +377,17 @@ public class ConstraintFactory {
   /**
    * Creates a new constraint when the condition expression contains only one source taint.
    *
-   * @param source
-   *          the source taint
-   * @param conditionExpr
-   *          the condition expression of the if-statement
-   * @param taintOnLeft
-   *          true, if the source taint is on the left side of the condition expression
-   * @param isFallThroughEdge
-   *          true, if the edge is fall through edge
+   * @param source the source taint
+   * @param conditionExpr the condition expression of the if-statement
+   * @param taintOnLeft true, if the source taint is on the left side of the condition expression
+   * @param isFallThroughEdge true, if the edge is fall through edge
    * @return the constraint
    */
-  private static IConstraint createConstraintFromSourceTaint(SourceTaint source,
-      ConditionExpr conditionExpr, boolean taintOnLeft, boolean isFallThroughEdge) {
+  private static IConstraint createConstraintFromSourceTaint(
+      SourceTaint source,
+      ConditionExpr conditionExpr,
+      boolean taintOnLeft,
+      boolean isFallThroughEdge) {
     IConstraint constraint = source.getConstraint();
     Value val = null;
     if (taintOnLeft) {
@@ -379,11 +407,25 @@ public class ConstraintFactory {
         expr = SMTSolverZ3.getInstance().makeBoolTerm(name, v, equal, !taintOnLeft);
       } else {
         if (taintOnLeft) {
-          expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(name, false, val.toString(), true,
-              source.getType(), SMTSolverZ3.getInstance().translate(conditionExpr));
+          expr =
+              SMTSolverZ3.getInstance()
+                  .makeNonTerminalExpr(
+                      name,
+                      false,
+                      val.toString(),
+                      true,
+                      source.getType(),
+                      SMTSolverZ3.getInstance().translate(conditionExpr));
         } else {
-          expr = SMTSolverZ3.getInstance().makeNonTerminalExpr(val.toString(), true, name, false,
-              source.getType(), SMTSolverZ3.getInstance().translate(conditionExpr));
+          expr =
+              SMTSolverZ3.getInstance()
+                  .makeNonTerminalExpr(
+                      val.toString(),
+                      true,
+                      name,
+                      false,
+                      source.getType(),
+                      SMTSolverZ3.getInstance().translate(conditionExpr));
         }
       }
     } else {
@@ -402,18 +444,17 @@ public class ConstraintFactory {
   /**
    * Creates a new constraint when the condition expression contains only one imprecise taint.
    *
-   * @param imprecise
-   *          the imprecise taint
-   * @param conditionExpr
-   *          the condition expression of the if-statement
-   * @param taintOnLeft
-   *          true, if the imprecise taint is on the left side of the condition expression
-   * @param isFallThroughEdge
-   *          true, if the edge is fall through edge
+   * @param imprecise the imprecise taint
+   * @param conditionExpr the condition expression of the if-statement
+   * @param taintOnLeft true, if the imprecise taint is on the left side of the condition expression
+   * @param isFallThroughEdge true, if the edge is fall through edge
    * @return the constraint
    */
-  private static IConstraint createConstraintFromImpreciseTaint(ImpreciseTaint imprecise,
-      ConditionExpr conditionExpr, boolean taintOnLeft, boolean isFallThroughEdge) {
+  private static IConstraint createConstraintFromImpreciseTaint(
+      ImpreciseTaint imprecise,
+      ConditionExpr conditionExpr,
+      boolean taintOnLeft,
+      boolean isFallThroughEdge) {
     IConstraint constraint = imprecise.getConstraint();
     Type type = imprecise.getAccessPath().getType();
     BoolExpr expr = null;
@@ -455,59 +496,64 @@ public class ConstraintFactory {
   /**
    * Creates a new constraint when two taints appear in the same condition expression.
    *
-   * @param t1
-   *          the first taint
-   * @param t2
-   *          the second taint
-   * @param conditionExpr
-   *          the condition expression
-   * @param isFallThroughEdge
-   *          true, if the edge is fall through edge
+   * @param t1 the first taint
+   * @param t2 the second taint
+   * @param conditionExpr the condition expression
+   * @param isFallThroughEdge true, if the edge is fall through edge
    * @return the constraint
    */
-  public static IConstraint createConstraint(AbstractTaint t1, AbstractTaint t2,
-      ConditionExpr conditionExpr, boolean isFallThroughEdge) {
+  public static IConstraint createConstraint(
+      AbstractTaint t1, AbstractTaint t2, ConditionExpr conditionExpr, boolean isFallThroughEdge) {
     IConstraint constraint = ConstraintZ3.getTrue();
     if (t1 instanceof SourceTaint) {
       if (t2 instanceof SourceTaint) {
-        constraint = createConstraintFromSourceTaints((SourceTaint) t1, (SourceTaint) t2,
-            conditionExpr, isFallThroughEdge);
+        constraint =
+            createConstraintFromSourceTaints(
+                (SourceTaint) t1, (SourceTaint) t2, conditionExpr, isFallThroughEdge);
       }
       if (t2 instanceof ConcreteTaint) {
-        constraint = createConstraintFromSourceAndConcreteTaints((SourceTaint) t1,
-            (ConcreteTaint) t2, conditionExpr, true, isFallThroughEdge);
+        constraint =
+            createConstraintFromSourceAndConcreteTaints(
+                (SourceTaint) t1, (ConcreteTaint) t2, conditionExpr, true, isFallThroughEdge);
       }
       if (t2 instanceof ImpreciseTaint) {
-        constraint = createConstraintFromSourceAndImpreciseTaint((SourceTaint) t1,
-            (ImpreciseTaint) t2, conditionExpr, true, isFallThroughEdge);
+        constraint =
+            createConstraintFromSourceAndImpreciseTaint(
+                (SourceTaint) t1, (ImpreciseTaint) t2, conditionExpr, true, isFallThroughEdge);
       }
     }
     if (t1 instanceof ConcreteTaint) {
       if (t2 instanceof SourceTaint) {
-        constraint = createConstraintFromSourceAndConcreteTaints((SourceTaint) t2,
-            (ConcreteTaint) t1, conditionExpr, false, isFallThroughEdge);
+        constraint =
+            createConstraintFromSourceAndConcreteTaints(
+                (SourceTaint) t2, (ConcreteTaint) t1, conditionExpr, false, isFallThroughEdge);
       }
       if (t2 instanceof ConcreteTaint) {
-        constraint = createConstraintFromConcreteTaints((ConcreteTaint) t1, (ConcreteTaint) t2,
-            conditionExpr, isFallThroughEdge);
+        constraint =
+            createConstraintFromConcreteTaints(
+                (ConcreteTaint) t1, (ConcreteTaint) t2, conditionExpr, isFallThroughEdge);
       }
       if (t2 instanceof ImpreciseTaint) {
-        constraint = createConstraintFromImpreciseAndConcreteTaints((ImpreciseTaint) t2,
-            (ConcreteTaint) t1, conditionExpr, false, isFallThroughEdge);
+        constraint =
+            createConstraintFromImpreciseAndConcreteTaints(
+                (ImpreciseTaint) t2, (ConcreteTaint) t1, conditionExpr, false, isFallThroughEdge);
       }
     }
     if (t1 instanceof ImpreciseTaint) {
       if (t2 instanceof SourceTaint) {
-        constraint = createConstraintFromSourceAndImpreciseTaint((SourceTaint) t2,
-            (ImpreciseTaint) t1, conditionExpr, false, isFallThroughEdge);
+        constraint =
+            createConstraintFromSourceAndImpreciseTaint(
+                (SourceTaint) t2, (ImpreciseTaint) t1, conditionExpr, false, isFallThroughEdge);
       }
       if (t2 instanceof ConcreteTaint) {
-        constraint = createConstraintFromImpreciseAndConcreteTaints((ImpreciseTaint) t1,
-            (ConcreteTaint) t2, conditionExpr, true, isFallThroughEdge);
+        constraint =
+            createConstraintFromImpreciseAndConcreteTaints(
+                (ImpreciseTaint) t1, (ConcreteTaint) t2, conditionExpr, true, isFallThroughEdge);
       }
       if (t2 instanceof ImpreciseTaint) {
-        constraint = createConstraintFromImpreciseTaints((ImpreciseTaint) t1, (ImpreciseTaint) t2,
-            conditionExpr, isFallThroughEdge);
+        constraint =
+            createConstraintFromImpreciseTaints(
+                (ImpreciseTaint) t1, (ImpreciseTaint) t2, conditionExpr, isFallThroughEdge);
       }
     }
     return constraint;
@@ -516,31 +562,30 @@ public class ConstraintFactory {
   /**
    * Creates a new constraint when the condition expression contains only one taint.
    *
-   * @param t
-   *          the taint
-   * @param conditionExpr
-   *          the condition expression of the if-statement
-   * @param negate
-   *          true, if the constraint should be negated
-   * @param isFallThroughEdge
-   *          true, if the edge is fall through edge
+   * @param t the taint
+   * @param conditionExpr the condition expression of the if-statement
+   * @param negate true, if the constraint should be negated
+   * @param isFallThroughEdge true, if the edge is fall through edge
    * @return the constraint
    */
-  public static IConstraint createConstraint(AbstractTaint t, ConditionExpr conditionExpr,
-      boolean negate, boolean isFallThroughEdge) {
+  public static IConstraint createConstraint(
+      AbstractTaint t, ConditionExpr conditionExpr, boolean negate, boolean isFallThroughEdge) {
     IConstraint constraint = ConstraintZ3.getTrue();
     boolean taintOnLeft = !negate;
     if (t instanceof SourceTaint) {
-      constraint = createConstraintFromSourceTaint((SourceTaint) t, conditionExpr, taintOnLeft,
-          isFallThroughEdge);
+      constraint =
+          createConstraintFromSourceTaint(
+              (SourceTaint) t, conditionExpr, taintOnLeft, isFallThroughEdge);
     }
     if (t instanceof ConcreteTaint) {
-      constraint = createConstraintFromConcreteTaint((ConcreteTaint) t, conditionExpr, taintOnLeft,
-          isFallThroughEdge);
+      constraint =
+          createConstraintFromConcreteTaint(
+              (ConcreteTaint) t, conditionExpr, taintOnLeft, isFallThroughEdge);
     }
     if (t instanceof ImpreciseTaint) {
-      constraint = createConstraintFromImpreciseTaint((ImpreciseTaint) t, conditionExpr,
-          taintOnLeft, isFallThroughEdge);
+      constraint =
+          createConstraintFromImpreciseTaint(
+              (ImpreciseTaint) t, conditionExpr, taintOnLeft, isFallThroughEdge);
     }
     return constraint;
   }
@@ -548,8 +593,7 @@ public class ConstraintFactory {
   /**
    * Creates a new constraint for callbacks.
    *
-   * @param callbackName
-   *          the callback name
+   * @param callbackName the callback name
    * @return the constraint
    */
   public static IConstraint createConstraint(String callbackName) {

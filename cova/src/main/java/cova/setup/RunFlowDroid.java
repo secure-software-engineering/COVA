@@ -1,41 +1,32 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.setup;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlPullParserException;
-
 import soot.jimple.infoflow.android.SetupApplication;
 import soot.jimple.infoflow.android.callbacks.CallbackDefinition;
 import soot.jimple.infoflow.android.config.SootConfigForAndroid;
 import soot.jimple.infoflow.results.InfoflowResults;
 import soot.jimple.infoflow.taintWrappers.EasyTaintWrapper;
 
-/**
- * The Class RunFlowDroid runs FlowDroid.
- * 
- */
+/** The Class RunFlowDroid runs FlowDroid. */
 public class RunFlowDroid {
   private static final Logger logger = LoggerFactory.getLogger(RunFlowDroid.class);
 
@@ -66,12 +57,9 @@ public class RunFlowDroid {
   /**
    * Run.
    *
-   * @param apkFilePath
-   *          the apk file path
-   * @param androidJarPath
-   *          the android jar path
-   * @param writeJimpleOutput
-   *          true, if print jimple output
+   * @param apkFilePath the apk file path
+   * @param androidJarPath the android jar path
+   * @param writeJimpleOutput true, if print jimple output
    * @throws IOException
    * @throws XmlPullParserException
    * @throws Exception
@@ -94,5 +82,4 @@ public class RunFlowDroid {
     callbacks = flowDroid.getCallbackMethods().values();
     flowDroid.abortAnalysis();
   }
-
 }

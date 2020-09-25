@@ -1,38 +1,18 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.core;
-
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import soot.Local;
-import soot.PrimType;
-import soot.SootMethod;
-import soot.Unit;
-import soot.Value;
-import soot.jimple.InstanceFieldRef;
-import soot.jimple.Stmt;
-import soot.jimple.toolkits.ide.icfg.BiDiInterproceduralCFG;
 
 import boomerang.BackwardQuery;
 import boomerang.Boomerang;
@@ -42,6 +22,20 @@ import boomerang.jimple.Field;
 import boomerang.jimple.Statement;
 import boomerang.jimple.Val;
 import boomerang.util.AccessPath;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import soot.Local;
+import soot.PrimType;
+import soot.SootMethod;
+import soot.Unit;
+import soot.Value;
+import soot.jimple.InstanceFieldRef;
+import soot.jimple.Stmt;
+import soot.jimple.toolkits.ide.icfg.BiDiInterproceduralCFG;
 
 public class Aliasing {
   private final boolean turnoff = false;
@@ -55,45 +49,46 @@ public class Aliasing {
     notAnswered = 0;
     total = 0;
     // Create a Boomerang solver.
-    solver = new Boomerang(new DefaultBoomerangOptions() {
-      @Override
-      public boolean onTheFlyCallGraph() {
-        // Must be turned of if no SeedFactory is specified.
-        return false;
-      };
+    solver =
+        new Boomerang(
+            new DefaultBoomerangOptions() {
+              @Override
+              public boolean onTheFlyCallGraph() {
+                // Must be turned of if no SeedFactory is specified.
+                return false;
+              };
 
-      @Override
-      public int analysisTimeoutMS() {
-        return 300;
-      }
+              @Override
+              public int analysisTimeoutMS() {
+                return 300;
+              }
+            }) {
+          @Override
+          public BiDiInterproceduralCFG<Unit, SootMethod> icfg() {
+            return icfg;
+          }
+        };
 
-    }) {
-      @Override
-      public BiDiInterproceduralCFG<Unit, SootMethod> icfg() {
-        return icfg;
-      }
-
-    };
-
-    queryCache = CacheBuilder.newBuilder().build(new CacheLoader<BackwardQuery, Set<AccessPath>>() {
-      @Override
-      public Set<AccessPath> load(BackwardQuery query) throws Exception {
-        Set<AccessPath> aliases = queryCache.getIfPresent(query);
-        if (aliases == null) {
-          aliases = runBoomerang(query);
-          queryCache.put(query, aliases);
-        }
-        return aliases;
-      }
-
-    });
+    queryCache =
+        CacheBuilder.newBuilder()
+            .build(
+                new CacheLoader<BackwardQuery, Set<AccessPath>>() {
+                  @Override
+                  public Set<AccessPath> load(BackwardQuery query) throws Exception {
+                    Set<AccessPath> aliases = queryCache.getIfPresent(query);
+                    if (aliases == null) {
+                      aliases = runBoomerang(query);
+                      queryCache.put(query, aliases);
+                    }
+                    return aliases;
+                  }
+                });
   }
 
   /**
    * If the queried value is a local primitive type, it can not be queried by boomerang.
    *
-   * @param value
-   *          the value
+   * @param value the value
    * @return true, if successful
    */
   public static boolean canBeQueried(Value value) {
@@ -114,15 +109,11 @@ public class Aliasing {
   /**
    * This method starts a boomerang query at the given statement for searching aliases of the given
    * value. It returns all aliases of the value, including the value itself.
-   * 
-   * @param value
-   *          queried value
-   * @param stmt
-   *          the statement where the query starts
-   * @param method
-   *          the method contains the statement
+   *
+   * @param value queried value
+   * @param stmt the statement where the query starts
+   * @param method the method contains the statement
    * @return all aliases of the given value
-   * 
    */
   public Set<AccessPath> findAliasAtStmt(Value value, Stmt stmt, SootMethod method) {
     Set<AccessPath> aliases = new HashSet<AccessPath>(1);
@@ -159,8 +150,7 @@ public class Aliasing {
   /**
    * Run boomerang with the given query.
    *
-   * @param query
-   *          the query
+   * @param query the query
    * @return the set of aliases found by boomerang
    */
   private Set<AccessPath> runBoomerang(BackwardQuery query) {

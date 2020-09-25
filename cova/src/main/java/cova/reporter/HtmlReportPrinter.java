@@ -1,21 +1,17 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.reporter;
 
 import static j2html.TagCreator.a;
@@ -40,7 +36,11 @@ import static j2html.TagCreator.tr;
 import static j2html.TagCreator.ul;
 
 import com.google.common.io.Files;
-
+import cova.data.IConstraint;
+import j2html.Config;
+import j2html.tags.ContainerTag;
+import j2html.tags.DomContent;
+import j2html.tags.MyLi;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -59,19 +59,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import soot.SootClass;
 
-import cova.data.IConstraint;
-import j2html.Config;
-import j2html.tags.ContainerTag;
-import j2html.tags.DomContent;
-import j2html.tags.MyLi;
-
-/**
- * The Class HtmlReportPrinter is used to print the constraints in source code as HTML files.
- * 
- */
+/** The Class HtmlReportPrinter is used to print the constraints in source code as HTML files. */
 public class HtmlReportPrinter {
 
   static {
@@ -91,8 +81,7 @@ public class HtmlReportPrinter {
   /**
    * Instantiates a new html report printer.
    *
-   * @param outputPath
-   *          the output path
+   * @param outputPath the output path
    */
   public HtmlReportPrinter(String outputPath) {
     this.outputPath = outputPath;
@@ -101,10 +90,8 @@ public class HtmlReportPrinter {
   /**
    * Instantiates a new HTML report printer.
    *
-   * @param sourcePath
-   *          the source path
-   * @param outputPath
-   *          the output path
+   * @param sourcePath the source path
+   * @param outputPath the output path
    */
   public HtmlReportPrinter(String sourcePath, String outputPath) {
     this(outputPath);
@@ -114,10 +101,8 @@ public class HtmlReportPrinter {
   /**
    * Merge.
    *
-   * @param lineResults1
-   *          the line results 1
-   * @param lineResults2
-   *          the line results 2
+   * @param lineResults1 the line results 1
+   * @param lineResults2 the line results 2
    * @return the line results
    */
   private LineConstraints merge(LineConstraints lineResults1, LineConstraints lineResults2) {
@@ -128,41 +113,41 @@ public class HtmlReportPrinter {
   /**
    * Merge inner classes into one HMTL file.
    *
-   * @param report
-   *          the report
+   * @param report the report
    */
   private void mergeInnerClasses() {
     // create list of inner classes only
-    List<SootClass> innerClasses = report.keySet().stream().filter(sc -> sc.getName().contains("$"))
-        .collect(Collectors.toList());
+    List<SootClass> innerClasses =
+        report.keySet().stream()
+            .filter(sc -> sc.getName().contains("$"))
+            .collect(Collectors.toList());
     // merge inner class LineResultss into outer classes
-    innerClasses.forEach(inner -> {
-      String innerName = inner.getName();
-      String outerName = innerName.substring(0, innerName.indexOf("$"));
-      Optional<Entry<SootClass, LineConstraints>> outerEntry = report.entrySet().stream()
-          .filter(outer -> outer.getKey().getName().equals(outerName)).findFirst();
-      if (outerEntry.isPresent()) {
-        // merge into LineResultss for outer class and remove inner class from LineResults
-        merge(outerEntry.get().getValue(), report.remove(inner));
-      } else {
-        // outer class not in LineResultsSet: use inner class as outer class
-        inner.setName(outerName);
-      }
-    });
+    innerClasses.forEach(
+        inner -> {
+          String innerName = inner.getName();
+          String outerName = innerName.substring(0, innerName.indexOf("$"));
+          Optional<Entry<SootClass, LineConstraints>> outerEntry =
+              report.entrySet().stream()
+                  .filter(outer -> outer.getKey().getName().equals(outerName))
+                  .findFirst();
+          if (outerEntry.isPresent()) {
+            // merge into LineResultss for outer class and remove inner class from LineResults
+            merge(outerEntry.get().getValue(), report.remove(inner));
+          } else {
+            // outer class not in LineResultsSet: use inner class as outer class
+            inner.setName(outerName);
+          }
+        });
   }
 
-  /**
-   * The Class Package represents a pacakge of the source code.
-   */
+  /** The Class Package represents a pacakge of the source code. */
   private class Package {
 
     /**
      * Instantiates a new package.
      *
-     * @param parent
-     *          the parent package
-     * @param name
-     *          the name
+     * @param parent the parent package
+     * @param name the name
      */
     public Package(Package parent, String name) {
       this.parent = parent;
@@ -200,10 +185,8 @@ public class HtmlReportPrinter {
   /**
    * Builds the navigation tree.
    *
-   * @param parent
-   *          the parent
-   * @param classes
-   *          the classes
+   * @param parent the parent
+   * @param classes the classes
    */
   private void buildNavigationTree(Package parent, Collection<SootClass> classes) {
     Map<String, List<SootClass>> subPackages = new HashMap<>();
@@ -224,21 +207,21 @@ public class HtmlReportPrinter {
         parent.classes.add(clazz);
       }
     }
-    subPackages.forEach((packName, subClasses) -> {
-      Package pack = new Package(parent, packName);
-      for (SootClass subClass : subClasses) {
-        pack.noOfConstraints += report.get(subClass).getLineNumberConstraintMap().size();
-      }
-      parent.subpackages.add(pack);
-      buildNavigationTree(pack, subClasses);
-    });
+    subPackages.forEach(
+        (packName, subClasses) -> {
+          Package pack = new Package(parent, packName);
+          for (SootClass subClass : subClasses) {
+            pack.noOfConstraints += report.get(subClass).getLineNumberConstraintMap().size();
+          }
+          parent.subpackages.add(pack);
+          buildNavigationTree(pack, subClasses);
+        });
   }
 
   /**
    * Prints the report.
    *
-   * @param report
-   *          the report
+   * @param report the report
    */
   public void printReport(Map<SootClass, LineConstraints> report) {
     this.report = report;
@@ -246,24 +229,32 @@ public class HtmlReportPrinter {
     Map<SootClass, File> sourceFiles = new HashMap<>();
     mergeInnerClasses();
     // create output files for each class
-    report.keySet().forEach(sootClass -> {
-      String classname = sootClass.getName();
-      outputPaths.put(sootClass, "classes/" + classname + ".html");
-      try {
-		sourceFiles.put(sootClass, findSourceFile(sootClass.getName()));
-	} catch (FileNotFoundException e) {
-		//ignore
-	}
-    });
+    report
+        .keySet()
+        .forEach(
+            sootClass -> {
+              String classname = sootClass.getName();
+              outputPaths.put(sootClass, "classes/" + classname + ".html");
+              try {
+                sourceFiles.put(sootClass, findSourceFile(sootClass.getName()));
+              } catch (FileNotFoundException e) {
+                // ignore
+              }
+            });
 
     Package root = new Package(null, "");
     buildNavigationTree(root, report.keySet());
 
     // print index page
-    ContainerTag document = html(
-        head(getHeader("COVA Report Index", true)),
-        body(main(div(attrs(".navigation"), h2("Analyzed Classes:"),
-            createNavigation(root, outputPaths,sourceFiles, true, null)))));
+    ContainerTag document =
+        html(
+            head(getHeader("COVA Report Index", true)),
+            body(
+                main(
+                    div(
+                        attrs(".navigation"),
+                        h2("Analyzed Classes:"),
+                        createNavigation(root, outputPaths, sourceFiles, true, null)))));
 
     File outputFile = new File(outputPath + "/index.html");
     try {
@@ -291,126 +282,166 @@ public class HtmlReportPrinter {
     }
 
     // create output files
-    report.forEach((sootClass, LineResults) -> {
-      String content;
-      try {
-        content = html(
-            head(getHeader(sootClass.getName(), false)),
-            body(main(
-                div(attrs(".split.split-horizontal.navigation"),
-                	a("Back to Index").withHref("../index.html"),
-                    createNavigation(root, outputPaths,sourceFiles, false, sootClass)),
-                div(attrs("#code.split.split-horizontal"),
-                iff(!report.get(sootClass).getLineNumberConstraintMap().isEmpty(),
-                    a("Go to first").withHref("#constr0")),
-                createOutputContent(LineResults))))).renderFormatted();
+    report.forEach(
+        (sootClass, LineResults) -> {
+          String content;
+          try {
+            content =
+                html(
+                        head(getHeader(sootClass.getName(), false)),
+                        body(
+                            main(
+                                div(
+                                    attrs(".split.split-horizontal.navigation"),
+                                    a("Back to Index").withHref("../index.html"),
+                                    createNavigation(
+                                        root, outputPaths, sourceFiles, false, sootClass)),
+                                div(
+                                    attrs("#code.split.split-horizontal"),
+                                    iff(
+                                        !report
+                                            .get(sootClass)
+                                            .getLineNumberConstraintMap()
+                                            .isEmpty(),
+                                        a("Go to first").withHref("#constr0")),
+                                    createOutputContent(LineResults)))))
+                    .renderFormatted();
 
-        File classOutputFile = new File(outputPath + "/" + outputPaths.get(sootClass));
+            File classOutputFile = new File(outputPath + "/" + outputPaths.get(sootClass));
 
-        Files.createParentDirs(classOutputFile);
+            Files.createParentDirs(classOutputFile);
 
-        try (BufferedWriter writer = Files.newWriter(classOutputFile, StandardCharsets.UTF_8);) {
-          writer.write(content);
-        }
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-
-    });
-
+            try (BufferedWriter writer =
+                Files.newWriter(classOutputFile, StandardCharsets.UTF_8); ) {
+              writer.write(content);
+            }
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+        });
   }
-  
+
   private DomContent[] getHeader(String title, boolean isIndex) {
-	  return new DomContent[]{
-			  title(title),
-          	link().withRel("stylesheet").withHref("https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"),
-          	link().withRel("stylesheet").withHref("https://use.fontawesome.com/releases/v5.0.13/css/all.css"),
-          	link().withRel("stylesheet").withHref(isIndex?"css/report.css":"../css/report.css"),
-          	script().withSrc("https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"),
-          	script().withSrc("https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"),
-          	script().withSrc("https://unpkg.com/split.js/split.min.js"),
-          	script().withSrc(isIndex?"js/report.js":"../js/report.js")
-	  };
+    return new DomContent[] {
+      title(title),
+      link()
+          .withRel("stylesheet")
+          .withHref(
+              "https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"),
+      link()
+          .withRel("stylesheet")
+          .withHref("https://use.fontawesome.com/releases/v5.0.13/css/all.css"),
+      link().withRel("stylesheet").withHref(isIndex ? "css/report.css" : "../css/report.css"),
+      script().withSrc("https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"),
+      script().withSrc("https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"),
+      script().withSrc("https://unpkg.com/split.js/split.min.js"),
+      script().withSrc(isIndex ? "js/report.js" : "../js/report.js")
+    };
   }
 
   /**
    * Creates the navigation.
    *
-   * @param root
-   *          the root
-   * @param outputPaths
-   *          the output paths
- * @param sourceFiles 
-   * @param isIndex
-   *          the is index
+   * @param root the root
+   * @param outputPaths the output paths
+   * @param sourceFiles
+   * @param isIndex the is index
    * @return the container tag
    */
-  private ContainerTag createNavigation(Package root, Map<SootClass, String> outputPaths,
-      Map<SootClass, File> sourceFiles, boolean isIndex, SootClass current) {
-    return div(attrs("#tree"),
-    	each(root.subpackages, sub -> createPackageSubtree(current, sub, outputPaths,sourceFiles, isIndex)),
-        each(root.classes, clazz -> createClassLink(clazz == current, clazz, outputPaths, isIndex, sourceFiles.containsKey(clazz))));
+  private ContainerTag createNavigation(
+      Package root,
+      Map<SootClass, String> outputPaths,
+      Map<SootClass, File> sourceFiles,
+      boolean isIndex,
+      SootClass current) {
+    return div(
+        attrs("#tree"),
+        each(
+            root.subpackages,
+            sub -> createPackageSubtree(current, sub, outputPaths, sourceFiles, isIndex)),
+        each(
+            root.classes,
+            clazz ->
+                createClassLink(
+                    clazz == current,
+                    clazz,
+                    outputPaths,
+                    isIndex,
+                    sourceFiles.containsKey(clazz))));
   }
 
   /**
    * Creates the package subtree.
    *
-   * @param indentation
-   *          the indentation
-   * @param pack
-   *          the pack
-   * @param outputPaths
-   *          the output paths
- * @param sourceFiles 
-   * @param isIndex
-   *          the is index
+   * @param indentation the indentation
+   * @param pack the pack
+   * @param outputPaths the output paths
+   * @param sourceFiles
+   * @param isIndex the is index
    * @return the dom content
    */
-  private DomContent createPackageSubtree(SootClass current, Package pack,
-      Map<SootClass, String> outputPaths, Map<SootClass, File> sourceFiles, boolean isIndex) {
-	  boolean isonpath = false;
-	  if (current != null) {
-		  isonpath = current.getPackageName().startsWith(pack.getFullName());
-	  }
+  private DomContent createPackageSubtree(
+      SootClass current,
+      Package pack,
+      Map<SootClass, String> outputPaths,
+      Map<SootClass, File> sourceFiles,
+      boolean isIndex) {
+    boolean isonpath = false;
+    if (current != null) {
+      isonpath = current.getPackageName().startsWith(pack.getFullName());
+    }
     return ul(
-        li(	a(pack.name /*+ " (" + pack.noOfConstraints + ")"*/).withHref("#"),
-        		each(pack.subpackages, sub -> createPackageSubtree(current, sub, outputPaths,sourceFiles, isIndex)),
-        		each(pack.classes, clazz -> createClassLink(clazz==current, clazz, outputPaths, isIndex, sourceFiles.containsKey(clazz))))
-        .withCondClass(isonpath||isIndex, "jstree-open"));
+        li(
+                a(pack.name /*+ " (" + pack.noOfConstraints + ")"*/).withHref("#"),
+                each(
+                    pack.subpackages,
+                    sub -> createPackageSubtree(current, sub, outputPaths, sourceFiles, isIndex)),
+                each(
+                    pack.classes,
+                    clazz ->
+                        createClassLink(
+                            clazz == current,
+                            clazz,
+                            outputPaths,
+                            isIndex,
+                            sourceFiles.containsKey(clazz))))
+            .withCondClass(isonpath || isIndex, "jstree-open"));
   }
 
   /**
    * Creates the class link.
    *
-   * @param isCurrent
-   *          the indentation
-   * @param clazz
-   *          the clazz
-   * @param outputPaths
-   *          the output paths
-   * @param isIndex
-   *          the is index
- * @param hasSource 
+   * @param isCurrent the indentation
+   * @param clazz the clazz
+   * @param outputPaths the output paths
+   * @param isIndex the is index
+   * @param hasSource
    * @return the container tag
    */
-  private ContainerTag createClassLink(boolean isCurrent, SootClass clazz,
-      Map<SootClass, String> outputPaths, boolean isIndex, boolean hasSource) {
-	  String type =hasSource?"file":"noSource";
-    return ul(new MyLi(a(clazz.getShortName() + ".java (" + report.get(clazz).getLineNumberConstraintMap().size() + ")")
-            .withHref((isIndex ? "" : "../") + outputPaths.get(clazz)))
-    		.withData("jstree","{\"type\":\""+type+"\",\"selected\":"+isCurrent+"}")); 
-    }
-  
+  private ContainerTag createClassLink(
+      boolean isCurrent,
+      SootClass clazz,
+      Map<SootClass, String> outputPaths,
+      boolean isIndex,
+      boolean hasSource) {
+    String type = hasSource ? "file" : "noSource";
+    return ul(
+        new MyLi(
+                a(clazz.getShortName()
+                        + ".java ("
+                        + report.get(clazz).getLineNumberConstraintMap().size()
+                        + ")")
+                    .withHref((isIndex ? "" : "../") + outputPaths.get(clazz)))
+            .withData("jstree", "{\"type\":\"" + type + "\",\"selected\":" + isCurrent + "}"));
+  }
 
   /**
    * Find source file.
    *
-   * @param className
-   *          the class name
+   * @param className the class name
    * @return the file
-   * @throws FileNotFoundException
-   *           the file not found exception
+   * @throws FileNotFoundException the file not found exception
    */
   private File findSourceFile(String className) throws FileNotFoundException {
     String relativePath = className.replaceAll("\\.", "/") + ".java";
@@ -446,10 +477,8 @@ public class HtmlReportPrinter {
   /**
    * Find source file.
    *
-   * @param startFile
-   *          the start file
-   * @param targetFileName
-   *          the target file name
+   * @param startFile the start file
+   * @param targetFileName the target file name
    * @return the file
    * @throws FileNotFoundException
    */
@@ -473,19 +502,17 @@ public class HtmlReportPrinter {
   /**
    * Creates the output content.
    *
-   * @param LineResults
-   *          the line results
+   * @param LineResults the line results
    * @return the container tag
-   * @throws FileNotFoundException
-   *           the file not found exception
+   * @throws FileNotFoundException the file not found exception
    */
   private ContainerTag createOutputContent(LineConstraints LineResults) {
     ContainerTag output = table().withClass("content");
 
     // load source class
 
-    try (InputStream stream = new FileInputStream(
-        findSourceFile(LineResults.getSootClass().getName()))) {
+    try (InputStream stream =
+        new FileInputStream(findSourceFile(LineResults.getSootClass().getName()))) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
       int lineNumber = 1;
@@ -509,8 +536,8 @@ public class HtmlReportPrinter {
         lineNumber++;
       }
     } catch (IOException e) {
-      //source file not found:
-    	output.with(h2("No source found"));
+      // source file not found:
+      output.with(h2("No source found"));
     }
     return output;
   }
@@ -518,8 +545,7 @@ public class HtmlReportPrinter {
   /**
    * Prints the line.
    *
-   * @param line
-   *          the line
+   * @param line the line
    * @return the container tag
    */
   private ContainerTag printLine(String line) {
@@ -570,8 +596,7 @@ public class HtmlReportPrinter {
   /**
    * Highlight the keywords in HTML.
    *
-   * @param strParts
-   *          the str parts
+   * @param strParts the str parts
    */
   private void highlightKeywords(String[] strParts) {
     boolean lineComment = false;
@@ -596,10 +621,11 @@ public class HtmlReportPrinter {
           strParts[i] = "<span class='string'>" + strParts[i];
         } else {
           strParts[i] = strParts[i] + "</span>";
-
         }
       }
-      if (!isString && !isblockCommentLine && !lineComment
+      if (!isString
+          && !isblockCommentLine
+          && !lineComment
           && keywords.contains(strParts[i].replaceAll(" ", ""))) {
         strParts[i] = span(attrs(".keyword"), strParts[i]).render();
       } else if (strParts[i].replaceAll(" ", "").startsWith("@")) {
@@ -612,5 +638,4 @@ public class HtmlReportPrinter {
       strParts[strParts.length - 1] = strParts[strParts.length - 1] + "</span>";
     }
   }
-
 }

@@ -1,19 +1,16 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package unitTestSuite.testData;
 
@@ -23,14 +20,13 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import cova.data.WrappedAccessPath;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
 import soot.ArrayType;
 import soot.BooleanType;
 import soot.Local;
@@ -51,8 +47,6 @@ import soot.jimple.JimpleBody;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.internal.JimpleLocal;
 import soot.util.Chain;
-
-import cova.data.WrappedAccessPath;
 import utils.UnitTestFramework;
 
 public class WrappedAccessPathTest extends UnitTestFramework {
@@ -67,8 +61,10 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     Scene.v().loadClassAndSupport("java.lang.Object");
     Scene.v().loadClassAndSupport("java.lang.System");
 
-    Scene.v().makeSootField("java.lang.System.out", RefType.v("java.io.PrintStream"), Modifier.PUBLIC);
-    Scene.v().makeSootField("java.lang.System.in", RefType.v("java.io.InputStream"), Modifier.PUBLIC);
+    Scene.v()
+        .makeSootField("java.lang.System.out", RefType.v("java.io.PrintStream"), Modifier.PUBLIC);
+    Scene.v()
+        .makeSootField("java.lang.System.in", RefType.v("java.io.InputStream"), Modifier.PUBLIC);
 
     // Declare 'public class HelloWorld'
     sClass = new SootClass("HelloWorld", Modifier.PRIVATE);
@@ -78,9 +74,12 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     Scene.v().addClass(sClass);
 
     // Create the method, public static void main(String[])
-    method = new SootMethod("main",
-        Arrays.asList(new Type[] {ArrayType.v(RefType.v("java.lang.String"), 1)}), VoidType.v(),
-        Modifier.PUBLIC | Modifier.STATIC);
+    method =
+        new SootMethod(
+            "main",
+            Arrays.asList(new Type[] {ArrayType.v(RefType.v("java.lang.String"), 1)}),
+            VoidType.v(),
+            Modifier.PUBLIC | Modifier.STATIC);
 
     sClass.addMethod(method);
 
@@ -102,20 +101,27 @@ public class WrappedAccessPathTest extends UnitTestFramework {
       body.getLocals().add(tmpRef);
 
       // add "l0 = @parameter0"
-      units.add(Jimple.v().newIdentityStmt(arg,
-          Jimple.v().newParameterRef(ArrayType.v(RefType.v("java.lang.String"), 1), 0)));
+      units.add(
+          Jimple.v()
+              .newIdentityStmt(
+                  arg,
+                  Jimple.v().newParameterRef(ArrayType.v(RefType.v("java.lang.String"), 1), 0)));
 
       // add "tmpRef = java.lang.System.out"
-      units.add(Jimple.v().newAssignStmt(tmpRef, Jimple.v().newStaticFieldRef(
-          Scene.v().getField("<java.lang.System: java.io.PrintStream out>").makeRef())));
+      units.add(
+          Jimple.v()
+              .newAssignStmt(
+                  tmpRef,
+                  Jimple.v()
+                      .newStaticFieldRef(
+                          Scene.v()
+                              .getField("<java.lang.System: java.io.PrintStream out>")
+                              .makeRef())));
 
       // insert "return"
       units.add(Jimple.v().newReturnVoidStmt());
-
     }
-
   }
-
 
   @Test
   public void testWrappedAccessPathLocal() {
@@ -125,7 +131,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
 
     assertSame(null, wap.getFields());
     assertEquals(local, wap.getBase());
-
   }
 
   @Test
@@ -150,8 +155,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     wap = new WrappedAccessPath(local, null);
     assertEquals(null, wap.getFields());
     assertEquals(local, wap.getBase());
-
-
   }
 
   @Test
@@ -181,19 +184,18 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     SFRField.add(sfr.getField());
     assertEquals("[" + field + "]", "" + wap.getFields());
     assertEquals(null, wap.getBase());
-
-
   }
 
   @Test
   public void testGetZeroAccessPath() {
 
-    assertEquals("" + WrappedAccessPath.getZeroAccessPath(),
+    assertEquals(
+        "" + WrappedAccessPath.getZeroAccessPath(),
         "" + new WrappedAccessPath(new JimpleLocal("ZERO", NullType.v())));
 
-    assertEquals("" + WrappedAccessPath.getZeroAccessPath(),
+    assertEquals(
+        "" + WrappedAccessPath.getZeroAccessPath(),
         "" + new WrappedAccessPath(new JimpleLocal("ZERO", NullType.v())));
-
   }
 
   // @Test
@@ -206,7 +208,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     assertTrue(
         WrappedAccessPath.isSupportedType(Jimple.v().newInstanceFieldRef(value, field.makeRef())));
     assertTrue(WrappedAccessPath.isSupportedType(Jimple.v().newStaticFieldRef(field.makeRef())));
-
   }
 
   // @Test
@@ -216,11 +217,11 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     SootField field = new SootField("username", ArrayType.v(LongType.v(), 1), Modifier.PUBLIC);
 
     assertFalse(new WrappedAccessPath(Jimple.v().newLocal("tmp", LongType.v())).isStaticFieldRef());
-    assertFalse(new WrappedAccessPath(Jimple.v().newInstanceFieldRef(value, field.makeRef()))
-        .isStaticFieldRef());
+    assertFalse(
+        new WrappedAccessPath(Jimple.v().newInstanceFieldRef(value, field.makeRef()))
+            .isStaticFieldRef());
     assertTrue(
         new WrappedAccessPath(Jimple.v().newStaticFieldRef(field.makeRef())).isStaticFieldRef());
-
   }
 
   // @Test
@@ -231,11 +232,11 @@ public class WrappedAccessPathTest extends UnitTestFramework {
 
     assertFalse(
         new WrappedAccessPath(Jimple.v().newLocal("tmp", LongType.v())).isInstanceFieldRef());
-    assertTrue(new WrappedAccessPath(Jimple.v().newInstanceFieldRef(value, field.makeRef()))
-        .isInstanceFieldRef());
+    assertTrue(
+        new WrappedAccessPath(Jimple.v().newInstanceFieldRef(value, field.makeRef()))
+            .isInstanceFieldRef());
     assertFalse(
         new WrappedAccessPath(Jimple.v().newStaticFieldRef(field.makeRef())).isInstanceFieldRef());
-
   }
 
   // @Test
@@ -248,7 +249,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     assertFalse(
         new WrappedAccessPath(Jimple.v().newInstanceFieldRef(value, field.makeRef())).isLocal());
     assertFalse(new WrappedAccessPath(Jimple.v().newStaticFieldRef(field.makeRef())).isLocal());
-
   }
 
   @Test
@@ -277,8 +277,9 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     // base is null
     SootField field = Scene.v().getField("<java.lang.System: java.io.PrintStream out>");
     assertFalse(new WrappedAccessPath(Jimple.v().newStaticFieldRef(field.makeRef())).equals(wap));
-    assertTrue(new WrappedAccessPath(Jimple.v().newStaticFieldRef(field.makeRef()))
-        .equals(new WrappedAccessPath(Jimple.v().newStaticFieldRef(field.makeRef()))));
+    assertTrue(
+        new WrappedAccessPath(Jimple.v().newStaticFieldRef(field.makeRef()))
+            .equals(new WrappedAccessPath(Jimple.v().newStaticFieldRef(field.makeRef()))));
 
     assertFalse(wap.equals(wapDifferent));
 
@@ -305,9 +306,7 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     fields.add(new SootField("electron", ShortType.v(), Modifier.PUBLIC));
     assertFalse(new WrappedAccessPath(local, fields2).equals(new WrappedAccessPath(local, fields)));
 
-
     assertTrue(wap.equals(wapEqual));
-
   }
 
   @Test
@@ -316,7 +315,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     Value value = Jimple.v().newLocal("tmp", LongType.v());
     WrappedAccessPath wap = new WrappedAccessPath(value);
     assertEquals(wap, wap.copy());
-
   }
 
   @Ignore
@@ -341,14 +339,13 @@ public class WrappedAccessPathTest extends UnitTestFramework {
 
     // base1 == base2 == null || base1 == !null && base2 == !null
     assertFalse(new WrappedAccessPath(value).hasPrefix(new WrappedAccessPath(local, fields)));
-    assertTrue(new WrappedAccessPath(local, fields)
-        .hasPrefix(new WrappedAccessPath(local, fieldsDifferent)));
+    assertTrue(
+        new WrappedAccessPath(local, fields)
+            .hasPrefix(new WrappedAccessPath(local, fieldsDifferent)));
 
     assertTrue(new WrappedAccessPath(value).hasPrefix(new WrappedAccessPath(valueEqual)));
 
     // TODO: MORE
-
-
 
   }
 
@@ -358,7 +355,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     Value value = Jimple.v().newLocal("tmp", LongType.v());
     WrappedAccessPath wap = new WrappedAccessPath(value);
     assertEquals(LongType.v(), wap.getBaseType());
-
   }
 
   @Test
@@ -381,7 +377,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
 
     fields.add(new SootField("leaf", ShortType.v(), Modifier.PRIVATE));
     assertEquals(ShortType.v(), new WrappedAccessPath(local, fields).getLastFieldType());
-
   }
 
   @Test
@@ -397,7 +392,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
 
     fields.add(new SootField("root2", ShortType.v(), Modifier.PROTECTED));
     assertFalse(new WrappedAccessPath(local, fields).isPublic());
-
   }
 
   @Test
@@ -413,7 +407,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
 
     fields.add(new SootField("root2", ShortType.v(), Modifier.PROTECTED));
     assertFalse(new WrappedAccessPath(local, fields).isPrivate());
-
   }
 
   @Test
@@ -429,7 +422,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
 
     fields.add(new SootField("root2", ShortType.v(), Modifier.PROTECTED));
     assertTrue(new WrappedAccessPath(local, fields).isProtected());
-
   }
 
   @Test
@@ -441,7 +433,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     ArrayList<SootField> fields = new ArrayList<SootField>();
     fields.add(new SootField("root", ShortType.v(), Modifier.PROTECTED));
     assertEquals(ShortType.v(), new WrappedAccessPath(local, fields).getType());
-
   }
 
   @Test
@@ -451,11 +442,10 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     Local localOther = Jimple.v().newLocal("Elephant", LongType.v());
 
     // fields is null
-    assertEquals(new WrappedAccessPath(localOther),
-        new WrappedAccessPath(local).copyFields(localOther));
+    assertEquals(
+        new WrappedAccessPath(localOther), new WrappedAccessPath(local).copyFields(localOther));
 
     assertEquals(new WrappedAccessPath(local), new WrappedAccessPath(localOther).copyFields(local));
-
 
     ArrayList<SootField> fields = new ArrayList<SootField>();
     fields.add(new SootField("Things", LongType.v(), Modifier.PRIVATE));
@@ -475,9 +465,9 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     expectedFields.add(new SootField("Banana", ShortType.v(), Modifier.PRIVATE));
     expectedFields.add(new SootField("color", ShortType.v(), Modifier.PRIVATE));
 
-    assertEquals("" + new WrappedAccessPath(localOther, expectedFields),
+    assertEquals(
+        "" + new WrappedAccessPath(localOther, expectedFields),
         "" + new WrappedAccessPath(local, fields).copyFields(localOther));
-
 
     ArrayList<SootField> fields2 = new ArrayList<SootField>();
     fields.add(new SootField("Things", LongType.v(), Modifier.PRIVATE));
@@ -497,11 +487,9 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     expectedFields.add(new SootField("Banana", ShortType.v(), Modifier.PRIVATE));
     expectedFields.add(new SootField("color", BooleanType.v(), Modifier.PRIVATE));
 
-    assertEquals("" + new WrappedAccessPath(localOther, expectedFields),
+    assertEquals(
+        "" + new WrappedAccessPath(localOther, expectedFields),
         "" + new WrappedAccessPath(local, fields).copyFields(localOther));
-
-
-
   }
 
   @Test
@@ -521,7 +509,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     // WrappedAccessPath.deriveExtendedAccessPath(new AccessPath(), new SootField("leaf",
     // IntType.v(), Modifier.PRIVATE)));
 
-
   }
 
   // @Test
@@ -537,8 +524,8 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     prefixFields.add(new SootField("Banana", LongType.v(), Modifier.PRIVATE));
 
     try {
-      new WrappedAccessPath(local, fields).replacePrefix(new WrappedAccessPath(local, prefixFields),
-          5);
+      new WrappedAccessPath(local, fields)
+          .replacePrefix(new WrappedAccessPath(local, prefixFields), 5);
       fail("should throw an exception");
     } catch (Exception e) {
     }
@@ -554,9 +541,6 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     prefixFields.add(new SootField("body", LongType.v(), Modifier.PRIVATE));
 
     assertSame(wap, wap.replacePrefix(new WrappedAccessPath(local, prefixFields), 1));
-
-
-
   }
 
   @Test
@@ -571,8 +555,5 @@ public class WrappedAccessPathTest extends UnitTestFramework {
     fields.clear();
     fields.add(new SootField("fruit", LongType.v(), Modifier.PRIVATE));
     assertEquals(1, new WrappedAccessPath(null, fields).getDepth());
-
   }
-
-
 }

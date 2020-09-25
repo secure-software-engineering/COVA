@@ -1,19 +1,16 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cova.data;
 
@@ -21,22 +18,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
+import cova.data.CombinedResult.LeakConstraint;
+import cova.reporter.ConstraintReporter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
-
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.infoflow.results.ResultSinkInfo;
 import soot.jimple.infoflow.results.ResultSourceInfo;
 import soot.util.MultiMap;
-
-import cova.data.CombinedResult.LeakConstraint;
-import cova.reporter.ConstraintReporter;
 
 public class CombinedResult implements Iterable<LeakConstraint> {
   private ConstraintReporter reporter;
@@ -54,8 +48,16 @@ public class CombinedResult implements Iterable<LeakConstraint> {
     private IConstraint constraintAtSource;
     private IConstraint constraint;
 
-    public LeakConstraint(Unit sink, SootMethod sinkMethod, SootClass sinkClass, IConstraint sinkConstraint, Unit source,
-        SootMethod sourceMethod, SootClass sourceClass, IConstraint sourceConstraint, IConstraint constraint) {
+    public LeakConstraint(
+        Unit sink,
+        SootMethod sinkMethod,
+        SootClass sinkClass,
+        IConstraint sinkConstraint,
+        Unit source,
+        SootMethod sourceMethod,
+        SootClass sourceClass,
+        IConstraint sourceConstraint,
+        IConstraint constraint) {
       this.sink = sink;
       this.source = source;
       this.sinkMethod = sinkMethod;
@@ -104,7 +106,9 @@ public class CombinedResult implements Iterable<LeakConstraint> {
     }
   }
 
-  public CombinedResult(MetaData apkMetaData, MultiMap<ResultSinkInfo, ResultSourceInfo> sinksSources,
+  public CombinedResult(
+      MetaData apkMetaData,
+      MultiMap<ResultSinkInfo, ResultSourceInfo> sinksSources,
       ConstraintReporter reporter) {
     this.apkMetaData = apkMetaData;
     this.reporter = reporter;
@@ -115,7 +119,7 @@ public class CombinedResult implements Iterable<LeakConstraint> {
         SootMethod sinkMethod = this.reporter.getMethodOf(sinkStmt);
         // get the constraint map of sink method
         Map<Unit, IConstraint> constraintsOfSinkMethod = reporter.getConstraintMap(sinkMethod);
-        IConstraint constraintAtSink = ConstraintZ3.getTrue();// default constraint true
+        IConstraint constraintAtSink = ConstraintZ3.getTrue(); // default constraint true
         if (constraintsOfSinkMethod.containsKey(sinkStmt)) {
           // get constraint of sink stmt
           constraintAtSink = constraintsOfSinkMethod.get(sinkStmt);
@@ -124,16 +128,26 @@ public class CombinedResult implements Iterable<LeakConstraint> {
           Unit sourceStmt = source.getStmt();
           SootMethod sourceMethod = this.reporter.getMethodOf(sourceStmt);
           // get the constraint map of source method
-          Map<Unit, IConstraint> constraintsOfSourceMethod = reporter.getConstraintMap(sourceMethod);
-          IConstraint constraintAtSource = ConstraintZ3.getTrue();// default constraint true
+          Map<Unit, IConstraint> constraintsOfSourceMethod =
+              reporter.getConstraintMap(sourceMethod);
+          IConstraint constraintAtSource = ConstraintZ3.getTrue(); // default constraint true
           if (constraintsOfSourceMethod.containsKey(sourceStmt)) {
             // get constraint of source stmt
             constraintAtSource = constraintsOfSourceMethod.get(sourceStmt);
           }
           // compute merged the constraint of source and sink
           IConstraint constraint = constraintAtSource.and(constraintAtSink, true);
-          results.add(new LeakConstraint(sinkStmt, sinkMethod, sinkMethod.getDeclaringClass(), constraintAtSink, sourceStmt,
-              sourceMethod, sourceMethod.getDeclaringClass(), constraintAtSource, constraint));
+          results.add(
+              new LeakConstraint(
+                  sinkStmt,
+                  sinkMethod,
+                  sinkMethod.getDeclaringClass(),
+                  constraintAtSink,
+                  sourceStmt,
+                  sourceMethod,
+                  sourceMethod.getDeclaringClass(),
+                  constraintAtSource,
+                  constraint));
         }
       }
     }
@@ -152,9 +166,7 @@ public class CombinedResult implements Iterable<LeakConstraint> {
     return apkMetaData;
   }
 
-  /**
-   * Serialize the results.
-   */
+  /** Serialize the results. */
   public void serialize() {
     ObjectMapper mapper = new ObjectMapper();
     ArrayNode leaksArray = mapper.createArrayNode();
@@ -191,14 +203,20 @@ public class CombinedResult implements Iterable<LeakConstraint> {
       leaksArray.add(leakNode);
     }
     try {
-      String outputPath
-          = System.getProperty("user.dir") + File.separator + "covaOutput" + File.separator + "jsonOutput" + File.separator;
+      String outputPath =
+          System.getProperty("user.dir")
+              + File.separator
+              + "covaOutput"
+              + File.separator
+              + "jsonOutput"
+              + File.separator;
       File pathFile = new File(outputPath);
       if (!pathFile.exists()) {
         pathFile.mkdirs();
       }
-      mapper.writerWithDefaultPrettyPrinter().writeValue(new File(outputPath + this.apkMetaData.getApkName() + ".json"),
-          leaksArray);
+      mapper
+          .writerWithDefaultPrettyPrinter()
+          .writeValue(new File(outputPath + this.apkMetaData.getApkName() + ".json"), leaksArray);
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     } catch (IOException e) {
@@ -208,18 +226,15 @@ public class CombinedResult implements Iterable<LeakConstraint> {
 
   /**
    * return the constraint of given leak. If it doesn't exists, return true.
-   * 
-   * @param sourceLine
-   *          the line number of source in sourceClass
-   * @param sourceClass
-   *          the class contains source
-   * @param sinkLine
-   *          the line number of sink in sinkClass
-   * @param sinkClass
-   *          the class contains sink
+   *
+   * @param sourceLine the line number of source in sourceClass
+   * @param sourceClass the class contains source
+   * @param sinkLine the line number of sink in sinkClass
+   * @param sinkClass the class contains sink
    * @return
    */
-  public IConstraint getConstraint(int sourceLine, String sourceClass, int sinkLine, String sinkClass) {
+  public IConstraint getConstraint(
+      int sourceLine, String sourceClass, int sinkLine, String sinkClass) {
     for (LeakConstraint leakConstraint : results) {
       if (leakConstraint.getSource().getJavaSourceStartLineNumber() == sourceLine
           && leakConstraint.getSourceClass().toString().equals(sourceClass)) {

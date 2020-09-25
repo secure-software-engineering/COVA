@@ -1,40 +1,32 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.setup;
 
 import com.google.common.io.Files;
-
+import cova.core.SceneTransformerFactory;
+import cova.reporter.ConstraintReporter;
+import cova.setup.config.Config;
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
-
 import org.xmlpull.v1.XmlPullParserException;
-
 import soot.PackManager;
 import soot.SceneTransformer;
 import soot.Transform;
 import soot.jimple.infoflow.android.SetupApplication;
 import soot.jimple.infoflow.android.callbacks.CallbackDefinition;
-
-import cova.core.SceneTransformerFactory;
-import cova.reporter.ConstraintReporter;
-import cova.setup.config.Config;
 
 /**
  * The Class CovaSetupForAndroid setups COVA for analyzing Android apks.
@@ -54,27 +46,19 @@ public class CovaSetupForAndroid extends SetupApplication {
 
   private Config config;
 
-
   /**
    * Instantiates a new cova setup.
    *
-   * @param androidJarPath
-   *          the android jar path
-   * @param apkFilePath
-   *          the apk file path
-   * @param sourceCodePath
-   *          the source code path
-   * @param writeJimpleOutput
-   *          true, if print jimple output
-   * @param writeHtmlOutput
-   *          true, if print thtml output
-   * @param verbose
-   *          true, verbose mode
-   * @param standalone
-   *          true, standalone mode
+   * @param androidJarPath the android jar path
+   * @param apkFilePath the apk file path
+   * @param sourceCodePath the source code path
+   * @param writeJimpleOutput true, if print jimple output
+   * @param writeHtmlOutput true, if print thtml output
+   * @param verbose true, verbose mode
+   * @param standalone true, standalone mode
    */
-  public CovaSetupForAndroid(String androidJarPath, String apkFilePath, String sourceCodePath,
-      Config configuration) {
+  public CovaSetupForAndroid(
+      String androidJarPath, String apkFilePath, String sourceCodePath, Config configuration) {
     super(androidJarPath, apkFilePath);
     this.sourceCodePath = sourceCodePath;
     config = configuration;
@@ -95,8 +79,7 @@ public class CovaSetupForAndroid extends SetupApplication {
    * This method use the SetupApplication class from FlowDroid to create the dummyMainMethod and
    * sets it as entry point.
    *
-   * @throws IOException
-   *           Signals that an I/O exception has occurred.
+   * @throws IOException Signals that an I/O exception has occurred.
    */
   private void createDummyMainClass() throws IOException {
     // add aditional soot options
@@ -112,8 +95,7 @@ public class CovaSetupForAndroid extends SetupApplication {
   /**
    * Starts the analysis.
    *
-   * @param transformer
-   *          the transformer
+   * @param transformer the transformer
    */
   private void analyze(SceneTransformer transformer) {
     PackManager.v().getPack("wjtp").add(new Transform("wjtp.cova", transformer));
@@ -123,10 +105,8 @@ public class CovaSetupForAndroid extends SetupApplication {
   /**
    * * Run COVA as a standalone tool.
    *
-   * @throws IOException
-   *           Signals that an I/O exception has occurred.
-   * @throws XmlPullParserException
-   *           the xml pull parser exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   * @throws XmlPullParserException the xml pull parser exception
    */
   public void run() throws IOException, XmlPullParserException {
     createDummyMainClass();
@@ -137,13 +117,13 @@ public class CovaSetupForAndroid extends SetupApplication {
   /**
    * Run COVA after running flowDroid.
    *
-   * @param callbacks
-   *          the callbacks
+   * @param callbacks the callbacks
    */
   public void run(Set<CallbackDefinition> callbacks) {
     SceneTransformerFactory transformerFactory = new SceneTransformerFactory(config);
-    SceneTransformer transformer = transformerFactory.createAnalysisTransformerForAndroidApk(
-        apkName, callbacks, sourceCodePath, config.getConfigDir(), reporter);
+    SceneTransformer transformer =
+        transformerFactory.createAnalysisTransformerForAndroidApk(
+            apkName, callbacks, sourceCodePath, config.getConfigDir(), reporter);
     analyze(transformer);
   }
 }

@@ -1,27 +1,26 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.data;
 
+import boomerang.jimple.Field;
+import boomerang.jimple.StaticFieldVal;
+import boomerang.jimple.Val;
+import boomerang.util.AccessPath;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
 import soot.Local;
 import soot.NullType;
 import soot.SootField;
@@ -31,15 +30,9 @@ import soot.jimple.InstanceFieldRef;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.internal.JimpleLocal;
 
-import boomerang.jimple.Field;
-import boomerang.jimple.StaticFieldVal;
-import boomerang.jimple.Val;
-import boomerang.util.AccessPath;
-
 /**
  * The Class WrappedAccessPath represents the access path of a taint object. An access path can be a
  * base, a static field or based followed by instance fields.
- *
  */
 public class WrappedAccessPath {
 
@@ -57,10 +50,8 @@ public class WrappedAccessPath {
    * Instantiates a new access path with given base and fields. The value of fields can be null. The
    * base of a static field is null.
    *
-   * @param base
-   *          the base
-   * @param fields
-   *          the fields
+   * @param base the base
+   * @param fields the fields
    */
   public WrappedAccessPath(Local base, ArrayList<SootField> fields) {
     this.base = base;
@@ -73,7 +64,7 @@ public class WrappedAccessPath {
 
   /**
    * Instantiates a new access path with given base and fields.
-   * 
+   *
    * @param base
    * @param fields
    */
@@ -87,11 +78,10 @@ public class WrappedAccessPath {
   }
 
   /**
-   * Instantiates a new access path with given value. It supports the value of the type
-   * {@link Local}, {@link InstanceFieldRef} and {@link StaticFieldRef}.
+   * Instantiates a new access path with given value. It supports the value of the type {@link
+   * Local}, {@link InstanceFieldRef} and {@link StaticFieldRef}.
    *
-   * @param value
-   *          the value
+   * @param value the value
    */
   public WrappedAccessPath(Value value) {
     if (value instanceof Local) {
@@ -156,12 +146,12 @@ public class WrappedAccessPath {
   /**
    * Checks if the given value is supported type for creating an instance of access path.
    *
-   * @param value
-   *          the value
+   * @param value the value
    * @return true, if is supported type
    */
   public static boolean isSupportedType(Value value) {
-    return value instanceof Local || value instanceof InstanceFieldRef
+    return value instanceof Local
+        || value instanceof InstanceFieldRef
         || value instanceof StaticFieldRef;
   }
 
@@ -279,8 +269,7 @@ public class WrappedAccessPath {
   /**
    * Checks if the given access path is a prefix of this access path.
    *
-   * @param other
-   *          the given access path
+   * @param other the given access path
    * @return true, if the given access path is a prefix of this access path.
    */
   public boolean hasPrefix(WrappedAccessPath other) {
@@ -380,8 +369,7 @@ public class WrappedAccessPath {
    * at callee site. eg. the access path at the caller is a.b.c.field, the parameter is d. If d and
    * b have the same data type, then the access path at the callee is d.c.field.
    *
-   * @param param
-   *          parameter of callee method, it can only be local.
+   * @param param parameter of callee method, it can only be local.
    * @return a new access path at the callee
    * @see rules.GeneralPropagationRule
    */
@@ -409,11 +397,10 @@ public class WrappedAccessPath {
   }
 
   /**
-   * This method converts the access path of type {@link boomerang.util.AccessPath} to
-   * {@link WrappedAccessPath}.
-   * 
-   * @param accessPath
-   *          the access path of type {@link boomerang.util.AccessPath}
+   * This method converts the access path of type {@link boomerang.util.AccessPath} to {@link
+   * WrappedAccessPath}.
+   *
+   * @param accessPath the access path of type {@link boomerang.util.AccessPath}
    * @return the access path of type {@link WrappedAccessPath}
    */
   public static WrappedAccessPath convert(AccessPath accessPath) {
@@ -444,11 +431,9 @@ public class WrappedAccessPath {
   /**
    * The method extends the given access path with given field by appending it at the tail of the
    * access path.
-   * 
-   * @param accessPath
-   *          the access path of type {@link boomerang.util.AccessPath}
-   * @param f
-   *          the given field
+   *
+   * @param accessPath the access path of type {@link boomerang.util.AccessPath}
+   * @param f the given field
    * @return the extended access path
    */
   public static WrappedAccessPath deriveExtendedAccessPath(AccessPath accessPath, SootField f) {
@@ -478,11 +463,9 @@ public class WrappedAccessPath {
    * This method replace the prefix of this access path with given access path e.g. Assume this
    * access path is a.b.c, prefixLength is 2, given access path is d.e, then the return access path
    * is d.e.c.
-   * 
-   * @param accessPath
-   *          the acessPath which replaces the prefix
-   * @param prefixLength
-   *          the length of the prefix to be replaced
+   *
+   * @param accessPath the acessPath which replaces the prefix
+   * @param prefixLength the length of the prefix to be replaced
    * @return access path whose prefix with given length is replaced by the given value.
    */
   public WrappedAccessPath replacePrefix(WrappedAccessPath accessPath, int prefixLength) {
@@ -491,56 +474,56 @@ public class WrappedAccessPath {
       throw new RuntimeException("PrefixLength must be smaller than the depth of the access path");
     } else {
       switch (prefixLength) {
-      case 0:
-        ret = this;
-        break;
-      case 1:
-        if (!isStaticFieldRef()) {
-          if (accessPath.isLocal() && isLocal()) {
-            ret = accessPath;
+        case 0:
+          ret = this;
+          break;
+        case 1:
+          if (!isStaticFieldRef()) {
+            if (accessPath.isLocal() && isLocal()) {
+              ret = accessPath;
+            } else {
+              final ArrayList<SootField> newFields = new ArrayList<SootField>();
+              if (accessPath.fields != null) {
+                newFields.addAll(accessPath.fields);
+              }
+              if (fields != null) {
+                newFields.addAll(fields);
+              }
+              ret = new WrappedAccessPath(accessPath.base, newFields);
+            }
           } else {
             final ArrayList<SootField> newFields = new ArrayList<SootField>();
             if (accessPath.fields != null) {
               newFields.addAll(accessPath.fields);
             }
-            if (fields != null) {
-              newFields.addAll(fields);
+            final int length = fields.size();
+            for (int i = 1; i < length; i++) {
+              newFields.add(fields.get(i));
             }
             ret = new WrappedAccessPath(accessPath.base, newFields);
           }
-        } else {
-          final ArrayList<SootField> newFields = new ArrayList<SootField>();
-          if (accessPath.fields != null) {
-            newFields.addAll(accessPath.fields);
-          }
-          final int length = fields.size();
-          for (int i = 1; i < length; i++) {
-            newFields.add(fields.get(i));
-          }
-          ret = new WrappedAccessPath(accessPath.base, newFields);
-        }
-        break;
-      default:
-        if (prefixLength == getDepth()) {
-          ret = accessPath;
-        } else {
-          int startIndex = 0;
-          if (!isStaticFieldRef()) {
-            startIndex = prefixLength - 1;
+          break;
+        default:
+          if (prefixLength == getDepth()) {
+            ret = accessPath;
           } else {
-            startIndex = prefixLength;
+            int startIndex = 0;
+            if (!isStaticFieldRef()) {
+              startIndex = prefixLength - 1;
+            } else {
+              startIndex = prefixLength;
+            }
+            final ArrayList<SootField> newFields = new ArrayList<SootField>();
+            if (accessPath.fields != null) {
+              newFields.addAll(accessPath.fields);
+            }
+            final int length = fields.size();
+            for (int i = startIndex; i < length; i++) {
+              newFields.add(fields.get(i));
+            }
+            ret = new WrappedAccessPath(accessPath.base, newFields);
           }
-          final ArrayList<SootField> newFields = new ArrayList<SootField>();
-          if (accessPath.fields != null) {
-            newFields.addAll(accessPath.fields);
-          }
-          final int length = fields.size();
-          for (int i = startIndex; i < length; i++) {
-            newFields.add(fields.get(i));
-          }
-          ret = new WrappedAccessPath(accessPath.base, newFields);
-        }
-        break;
+          break;
       }
     }
     return ret;
@@ -548,7 +531,7 @@ public class WrappedAccessPath {
 
   /**
    * Get the depth of the access path.
-   * 
+   *
    * @return depth of the access path.
    */
   public int getDepth() {
@@ -565,10 +548,8 @@ public class WrappedAccessPath {
   /**
    * Checks if the given access paths have same suffix of length k.
    *
-   * @param a1
-   *          the first access path
-   * @param a2
-   *          the second access path
+   * @param a1 the first access path
+   * @param a2 the second access path
    * @return true, if they have same suffix
    */
   public static boolean hasSameSuffix(WrappedAccessPath a1, WrappedAccessPath a2, int k) {

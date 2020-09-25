@@ -1,21 +1,17 @@
 /**
- * Copyright (C) 2019 Linghui Luo 
- * 
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as 
- * published by the Free Software Foundation, either version 2.1 of the 
- * License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * Copyright (C) 2019 Linghui Luo
+ *
+ * <p>This library is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version
+ * 2.1 of the License, or (at your option) any later version.
+ *
+ * <p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cova.data.taints;
 
 import cova.data.IConstraint;
@@ -24,29 +20,23 @@ import cova.source.symbolic.SymbolicNameManager;
 
 /**
  * The Class SymbolicTaint is an abstract Class of all symbolic taints whose values are uncertain.
- * 
- * <p>
- * Symbolic taints use {@link SymbolicTaint#symbolicName} to represent values. Different than
+ *
+ * <p>Symbolic taints use {@link SymbolicTaint#symbolicName} to represent values. Different than
  * {@link ConcreteTaint} whose value can be derived from the program, statically we can not know the
  * value of a {@link SymbolicTaint}. {@link SourceTaint} and {@link ImpreciseTaint} are both
  * symbolic taints.
- * </p>
- * 
  */
 public abstract class SymbolicTaint extends AbstractTaint {
-  
+
   /** The symbolic name. */
   protected String symbolicName;
 
   /**
    * Instantiates a new symbolic taint.
    *
-   * @param accessPath
-   *          the access path
-   * @param constraint
-   *          the constraint
-   * @param symbolicName
-   *          the symbolic name created by {@link SymbolicNameManager}
+   * @param accessPath the access path
+   * @param constraint the constraint
+   * @param symbolicName the symbolic name created by {@link SymbolicNameManager}
    */
   public SymbolicTaint(WrappedAccessPath accessPath, IConstraint constraint, String symbolicName) {
     super(accessPath, constraint);
@@ -95,11 +85,9 @@ public abstract class SymbolicTaint extends AbstractTaint {
   /**
    * Return a symbolic taint whose constraint is the disjunction of the constraints of t1 and t2.
    * The access path and symbolic name of t1 and t2 must be same.
-   * 
-   * @param t1
-   *          the first symbolic taint
-   * @param t2
-   *          the second symbolic taint
+   *
+   * @param t1 the first symbolic taint
+   * @param t2 the second symbolic taint
    * @return
    */
   public static SymbolicTaint meetConstraint(SymbolicTaint t1, SymbolicTaint t2) {
