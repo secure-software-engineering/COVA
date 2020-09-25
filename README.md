@@ -112,5 +112,10 @@ Run cova with the following options:
    - source code of this apk: ``$REPO_LOCATION/constraintBench/androidApps/sourceCode/Callbacks1``
 
    The results are in HTML files located in ``$WORKING_DIRECTORY/covaOutput/htmlOutput``
+
+   ## Code Style
+   The submodule cova follows Google's code styleguide. We use fmt-maven-plugin to format the code.  
+   Execute this before making your pull request `mvn com.coveo:fmt-maven-plugin:format`
+
    
 
