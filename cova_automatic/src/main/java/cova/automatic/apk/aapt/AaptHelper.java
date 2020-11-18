@@ -6,10 +6,7 @@ import cova.source.SourceInformation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -64,8 +61,8 @@ public class AaptHelper {
     return listCallbacksOfSection(section, layoutId);
   }
 
-  public Map<Integer, List<SourceInformation>> listCallbacks(Path apkFile, Map<Integer, String> mapping)
-      throws IOException, InterruptedException {
+  public Map<Integer, List<SourceInformation>> listCallbacks(
+      Path apkFile, Map<Integer, String> mapping) throws IOException, InterruptedException {
     Map<String, Integer> swappedMapping =
         mapping.entrySet().stream()
             .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));

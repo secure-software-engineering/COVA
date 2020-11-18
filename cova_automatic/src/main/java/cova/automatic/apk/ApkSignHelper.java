@@ -1,5 +1,6 @@
 package cova.automatic.apk;
 
+import cova.automatic.sdk.SDKResolver;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -12,8 +13,6 @@ import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.zip.ZipFile;
-
-import cova.automatic.sdk.SDKResolver;
 import jdk.security.jarsigner.JarSigner;
 
 public class ApkSignHelper {
@@ -21,8 +20,8 @@ public class ApkSignHelper {
   public boolean sign(Path input, Path signed, Path aligned)
       throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException,
           UnrecoverableKeyException, InterruptedException {
-	Path androidPath = SDKResolver.resolve();
-	
+    Path androidPath = SDKResolver.resolve();
+
     String zipalignBinary = androidPath.resolve("zipalign").toString();
     URL fileUrl = getClass().getResource("/demo.jks");
     File ksF = new File(fileUrl.getFile());
@@ -32,10 +31,8 @@ public class ApkSignHelper {
     KeyStore.PrivateKeyEntry entry =
         new KeyStore.PrivateKeyEntry(key, ks.getCertificateChain("demo"));
 
-    JarSigner signer =
-        new JarSigner.Builder(entry)
-            
-            .build();
+    JarSigner signer = new JarSigner.Builder(entry).build();
+
     ZipFile f = new ZipFile(input.toFile());
 
     signer.sign(f, Files.newOutputStream(signed));
