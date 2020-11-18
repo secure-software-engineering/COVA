@@ -23,11 +23,15 @@ import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Context;
 import com.microsoft.z3.Expr;
 import com.microsoft.z3.Goal;
+import com.microsoft.z3.IntExpr;
+import com.microsoft.z3.Model;
+import com.microsoft.z3.SeqExpr;
 import com.microsoft.z3.Solver;
 import com.microsoft.z3.Sort;
 import com.microsoft.z3.Status;
 import com.microsoft.z3.Tactic;
 import cova.data.Operator;
+import cova.rules.StringMethod;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import org.apache.commons.lang3.StringUtils;
@@ -114,6 +118,14 @@ public class SMTSolverZ3 {
   public void reset() {
     count = 0;
     usedTime = 0;
+  }
+
+  public Model solveValues(BoolExpr expr) {
+    Solver solver = ctx.mkSolver();
+    solver.add(expr);
+    Status status = solver.check();
+    if (status == Status.SATISFIABLE) return solver.getModel();
+    return null;
   }
 
   /**
@@ -303,6 +315,42 @@ public class SMTSolverZ3 {
     } else {
       return expr;
     }
+  }
+
+  public BoolExpr makeCompareTerm(String name, String length, Operator operator, boolean negate) {
+    SeqExpr str = (SeqExpr) ctx.mkConst(name, ctx.getStringSort());
+    IntExpr strLength = ctx.MkLength(str);
+    IntExpr maxLength = ctx.mkInt(length.toString());
+    BoolExpr expr;
+    if (operator == Operator.LE) {
+      expr = ctx.mkLe(strLength, maxLength);
+    } else if (operator == Operator.GE) {
+      expr = ctx.mkGe(strLength, maxLength);
+    } else {
+      throw new RuntimeException(operator.toString());
+    }
+
+    if (negate) {
+      expr = ctx.mkNot(expr);
+    }
+    return expr;
+  }
+
+  public BoolExpr makeInStrTerm(String name, String constant, StringMethod method) {
+    SeqExpr str = (SeqExpr) ctx.mkConst(name, ctx.getStringSort());
+
+    SeqExpr strExpr = ctx.MkString(constant);
+    BoolExpr contains;
+    if (method == StringMethod.CONTAINS) {
+      contains = ctx.MkContains(str, strExpr);
+    } else if (method == StringMethod.STARTSWITH) {
+      contains = ctx.MkPrefixOf(strExpr, str);
+    } else if (method == StringMethod.ENDSWITH) {
+      contains = ctx.MkSuffixOf(strExpr, str);
+    } else {
+      throw new RuntimeException("Wrong StringMethod");
+    }
+    return contains;
   }
 
   /**

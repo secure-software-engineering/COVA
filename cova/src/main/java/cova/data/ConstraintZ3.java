@@ -19,10 +19,14 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Expr;
+import com.microsoft.z3.FuncDecl;
+import com.microsoft.z3.Model;
 import cova.core.SMTSolverZ3;
 import cova.source.symbolic.SymbolicNameManager;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -506,5 +510,30 @@ public class ConstraintZ3 implements IConstraint {
   @Override
   public WitnessPath getPath() {
     return this.path;
+  }
+
+  public Map<String, Object> getValues() {
+    Model model = solver.solveValues(this.getExpr());
+    if (model == null) {
+      return null;
+    }
+    Map<String, Object> values = new HashMap<>();
+    // TODO floats?
+    for (FuncDecl decl : model.getDecls()) {
+      String sourceName =
+          SymbolicNameManager.getInstance().getSourceName(decl.getName().toString());
+      Expr value = model.getConstInterp(decl);
+      if (value.isBool()) {
+        values.put(sourceName, Boolean.parseBoolean(value.toString()));
+      } else if (value.isInt()) {
+        values.put(sourceName, Integer.parseInt(value.toString()));
+      } else {
+        String valString = value.toString();
+        valString = valString.substring(1, valString.length() - 1);
+        valString = valString.replace("\\x00", " ");
+        values.put(sourceName, valString);
+      }
+    }
+    return values;
   }
 }

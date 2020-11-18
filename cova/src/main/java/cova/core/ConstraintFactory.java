@@ -23,15 +23,20 @@ import cova.data.taints.AbstractTaint;
 import cova.data.taints.ConcreteTaint;
 import cova.data.taints.ImpreciseTaint;
 import cova.data.taints.SourceTaint;
+import cova.data.taints.StringTaint;
+import cova.rules.StringMethod;
 import java.util.ArrayList;
 import soot.BooleanType;
+import soot.IntType;
 import soot.Type;
 import soot.Value;
 import soot.jimple.ArithmeticConstant;
 import soot.jimple.ConditionExpr;
 import soot.jimple.Constant;
 import soot.jimple.EqExpr;
+import soot.jimple.GeExpr;
 import soot.jimple.IntConstant;
+import soot.jimple.LeExpr;
 import soot.jimple.NeExpr;
 
 /** A factory for creating constraint. */
@@ -520,6 +525,61 @@ public class ConstraintFactory {
     return constraint;
   }
 
+  private static IConstraint createConstraintFromStringTaint(
+      StringTaint stringTaint,
+      ConditionExpr conditionExpr,
+      boolean taintOnLeft,
+      boolean isFallThroughEdge) {
+
+    IConstraint constraint = stringTaint.getConstraint();
+    Type type = stringTaint.getAccessPath().getType();
+    IConstraint newConstraint;
+    if (type instanceof IntType) {
+      Operator operator;
+      if (conditionExpr instanceof LeExpr) {
+        operator = Operator.LE;
+      } else if (conditionExpr instanceof GeExpr) {
+        operator = Operator.GE;
+      } else {
+        throw new RuntimeException();
+      }
+
+      if (stringTaint.getStringMethod() == StringMethod.LENGTH) {
+        Value constant = conditionExpr.getOp1();
+        Value val = conditionExpr.getOp2();
+        if (taintOnLeft) {
+          constant = conditionExpr.getOp2();
+          val = conditionExpr.getOp1();
+        }
+
+        String name = stringTaint.getSource().getSymbolicName();
+        String constantString = constant.toString();
+        newConstraint = createLengthConstraint(name, constantString, operator, isFallThroughEdge);
+        constraint = constraint.and(newConstraint, false);
+        return constraint;
+      } else {
+        throw new RuntimeException("Wrong string method: " + stringTaint.getStringMethod());
+      }
+    } else if (type instanceof BooleanType) {
+
+      newConstraint =
+          createConstantInStringConstraint(
+              stringTaint.getSymbolicName(),
+              stringTaint.getConstant(),
+              stringTaint.getStringMethod());
+      if (!isFallThroughEdge) {
+        newConstraint = newConstraint.negate(false);
+      }
+
+    } else {
+      throw new RuntimeException(type.toString());
+    }
+
+    constraint = constraint.and(newConstraint, false);
+
+    return constraint;
+  }
+
   /**
    * Creates a new constraint when two taints appear in the same condition expression.
    *
@@ -626,6 +686,12 @@ public class ConstraintFactory {
           createConstraintFromImpreciseTaint(
               (ImpreciseTaint) t, conditionExpr, taintOnLeft, isFallThroughEdge);
     }
+    if (t instanceof StringTaint) {
+      constraint =
+          createConstraintFromStringTaint(
+              (StringTaint) t, conditionExpr, taintOnLeft, isFallThroughEdge);
+    }
+
     if (recordPath) constraint.getPath().addAll(t.getExtraInfo());
     return constraint;
   }
@@ -639,5 +705,23 @@ public class ConstraintFactory {
   public static IConstraint createConstraint(String callbackName) {
     BoolExpr expr = SMTSolverZ3.getInstance().makeBoolTerm(callbackName, false);
     return new ConstraintZ3(expr, callbackName, new WitnessPath());
+  }
+
+  public static IConstraint createConstantInStringConstraint(
+      String name, String constant, StringMethod method) {
+    if (name == null || constant == null) {
+      throw new RuntimeException("Name or constant is null");
+    }
+    BoolExpr contains = SMTSolverZ3.getInstance().makeInStrTerm(name, constant, method);
+
+    return new ConstraintZ3(contains, name, new WitnessPath());
+  }
+
+  public static IConstraint createLengthConstraint(
+      String name, String constant, Operator operator, boolean isFallThroughEdge) {
+
+    BoolExpr expr =
+        SMTSolverZ3.getInstance().makeCompareTerm(name, constant, operator, isFallThroughEdge);
+    return new ConstraintZ3(expr, name, new WitnessPath());
   }
 }

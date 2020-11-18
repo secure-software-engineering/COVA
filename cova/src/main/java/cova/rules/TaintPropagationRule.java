@@ -22,10 +22,18 @@ import cova.data.ConstraintZ3;
 import cova.data.WrappedAccessPath;
 import cova.data.WrappedTaintSet;
 import cova.data.taints.AbstractTaint;
+import cova.data.taints.SourceTaint;
+import cova.source.IdManager;
 import cova.vasco.Context;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import soot.Local;
 import soot.RefType;
 import soot.SootMethod;
@@ -44,10 +52,13 @@ import soot.jimple.InvokeExpr;
 import soot.jimple.LengthExpr;
 import soot.jimple.NegExpr;
 import soot.jimple.NewExpr;
+import soot.jimple.ParameterRef;
 import soot.jimple.ReturnStmt;
+import soot.jimple.SpecialInvokeExpr;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.Stmt;
 import soot.jimple.UnopExpr;
+import soot.jimple.VirtualInvokeExpr;
 
 public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction> {
   private InterproceduralCFG icfg;
@@ -55,10 +66,13 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
 
   private LinkedHashSet<Unit> callNodes;
 
+  private Map<String, Pair<List<Set<AbstractTaint>>, List<Value>>> callValues;
+
   public TaintPropagationRule(RuleManager ruleManager) {
     icfg = ruleManager.getIcfg();
     this.ruleManager = ruleManager;
     callNodes = new LinkedHashSet<Unit>();
+    callValues = new HashMap<>();
   }
 
   private void killTaintsAndAliases(
@@ -283,6 +297,27 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
           in.taints().add(retTaint);
         }
       }
+    } else if (node instanceof IdentityStmt) {
+      // Create taints for constructor variables in inner classes
+      IdentityStmt idStmt = (IdentityStmt) node;
+
+      SootMethod method = context.getMethod();
+      String calleeClassName = method.getDeclaringClass().getName();
+      Pair<List<Set<AbstractTaint>>, List<Value>> pair = callValues.get(calleeClassName);
+
+      if (pair != null) {
+        List<Set<AbstractTaint>> taints = pair.getLeft();
+        List<Value> taintValues = pair.getRight();
+        Value leftOp = idStmt.getLeftOp();
+        Value rightOp = idStmt.getRightOp();
+        if (rightOp instanceof ParameterRef) {
+          ParameterRef parameter = (ParameterRef) rightOp;
+          Set<AbstractTaint> rightTaints = taints.get(parameter.getIndex());
+          Value taintVal = taintValues.get(parameter.getIndex());
+
+          createTaintsAndAliases(method, node, leftOp, taintVal, null, rightTaints, in);
+        }
+      }
     }
     // At the tail of each method, reset constraint and zero taint of the exit value. Taints can be
     // killed according to user-defined configuration.
@@ -489,6 +524,21 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
   @Override
   public Abstraction callLocalFlowFunction(
       Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
+
+    // TODO refine listener detection
+    if (node.toString().contains("Listener")) {
+      // Create mapping for listeners defined in inner classes
+      Stmt stmt = (Stmt) node;
+      InvokeExpr invokeExpr = stmt.getInvokeExpr();
+      VirtualInvokeExpr vInv = (VirtualInvokeExpr) invokeExpr;
+      Value v = invokeExpr.getArg(0);
+      Set<AbstractTaint> taintsOfElement =
+          in.taints().getTaintsStartWith(new WrappedAccessPath(vInv.getBase()));
+      AbstractTaint taintOfElement = taintsOfElement.iterator().next();
+      SourceTaint taint = (SourceTaint) taintOfElement;
+      Integer id = Integer.parseInt(taint.getSymbolicName().replace("I", ""));
+      IdManager.getInstance().getClassnameToIntegerMapping().put(v.getType().toString(), id);
+    }
     boolean taintCreated = false;
     SootMethod method = context.getMethod();
     // according to different rules, create taints at caller
@@ -500,7 +550,14 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
           taintCreated = true;
         }
       }
-      if (ruleManager.getConfig().isImpreciseTaintCreationRuleOn()) {
+      if (ruleManager.getConfig().isStringTaintCreationRuleOn()) {
+        boolean createdStringTaint =
+            ruleManager.getStringTaintCreationRule().callLocalFlowFunction(context, node, succ, in);
+        if (createdStringTaint) {
+          taintCreated = true;
+        }
+      }
+      if (!taintCreated && ruleManager.getConfig().isImpreciseTaintCreationRuleOn()) {
         boolean createdImpreciseTaint =
             ruleManager
                 .getImpreciseTaintCreationRule()
@@ -533,6 +590,33 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
     if (callNodes.contains(node) && !taintCreated) {
       Stmt stmt = (Stmt) node;
       InvokeExpr invokeExpr = stmt.getInvokeExpr();
+
+      if (invokeExpr instanceof SpecialInvokeExpr) {
+        // Save taints for values of constructor calls -> match later
+        SpecialInvokeExpr specialInvokeExpr = (SpecialInvokeExpr) invokeExpr;
+
+        String calleeClassName = specialInvokeExpr.getMethod().getDeclaringClass().getName();
+        String callerClassName = method.getDeclaringClass().getName();
+        // TODO refine anonym class detection
+        if (calleeClassName.startsWith(callerClassName + "$")) {
+          List<Value> args = specialInvokeExpr.getArgs();
+          List<Value> taintsValues = new ArrayList<>();
+          List<Set<AbstractTaint>> taintsList = new ArrayList<>();
+          for (int i = 0; i < args.size(); i++) {
+            Value val = args.get(i);
+            if (WrappedAccessPath.isSupportedType(val)) { // check if call value is tainted
+              Set<AbstractTaint> taints =
+                  in.taints().getTaintsStartWith(new WrappedAccessPath(val));
+              taintsList.add(taints);
+              taintsValues.add(val);
+            }
+          }
+          ImmutablePair<List<Set<AbstractTaint>>, List<Value>> pair =
+              ImmutablePair.of(taintsList, taintsValues);
+          callValues.put(calleeClassName, pair);
+        }
+      }
+
       if (invokeExpr.getArgCount() > 0) {
         // don't propagate taints that are on an argument of the virtual method call, since the
         // taints can be changed in the callee.

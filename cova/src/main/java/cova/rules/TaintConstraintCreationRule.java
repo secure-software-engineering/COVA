@@ -25,6 +25,7 @@ import cova.data.WrappedAccessPath;
 import cova.data.WrappedTaintSet;
 import cova.data.taints.AbstractTaint;
 import cova.data.taints.ConcreteTaint;
+import cova.data.taints.StringTaint;
 import cova.vasco.Context;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -120,7 +121,7 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
                   context.getMethod().getDeclaringClass().getName(),
                   node.getJavaSourceStartLineNumber());
         constraint = constraint.or(c, false);
-        if (!(taint instanceof ConcreteTaint)) {
+        if (!(taint instanceof ConcreteTaint || taint instanceof StringTaint)) {
           allConcrete = false;
         }
       }
@@ -146,7 +147,7 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
                 true,
                 isFallThroughEdge);
         constraint = constraint.or(c, false);
-        if (!(taint instanceof ConcreteTaint)) {
+        if (!(taint instanceof ConcreteTaint || taint instanceof StringTaint)) {
           allConcrete = false;
         }
       }

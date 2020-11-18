@@ -15,9 +15,11 @@
 package cova.source;
 
 import cova.core.SkipMethodOrClassRuleManager;
+import cova.source.data.DynamicSource;
 import cova.source.data.Source;
 import cova.source.data.SourceField;
 import cova.source.data.SourceMethod;
+import cova.source.data.SourceType;
 import cova.source.parser.SourceParser;
 import cova.source.symbolic.SymbolicNameManager;
 import java.io.File;
@@ -30,6 +32,7 @@ import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.AssignStmt;
+import soot.jimple.InvokeExpr;
 
 /**
  * This class is used to search configuration-related or input-related field or method in a given
@@ -62,6 +65,32 @@ public class FieldOrMethodMatcher {
     SkipMethodOrClassRuleManager.getInstance().setSkipMethods(getAllSourceMethods());
   }
 
+  private String searchDynamicFieldOrMethod(SootMethod parent, Unit unit) {
+    if (!IdManager.getInstance().isEnabled()) {
+      return null;
+    }
+    if (unit instanceof AssignStmt) {
+      AssignStmt assignStmt = (AssignStmt) unit;
+      if (assignStmt.containsInvokeExpr()) {
+        InvokeExpr invoke = assignStmt.getInvokeExpr();
+        SootMethod m = invoke.getMethod();
+        if ("android.view.View".equals(m.getReturnType().toString())) {
+          if ("findViewById".equals(m.getName())) {
+            int activityId = SourceIdHelper.getActivityId(parent.getDeclaringClass());
+            int fieldId = Integer.parseInt(invoke.getArg(0).toString());
+
+            int resultingId = IdManager.getInstance().put(activityId, fieldId);
+
+            Source source =
+                new DynamicSource(SourceType.I, "I" + resultingId, resultingId, m.getSignature());
+            return SymbolicNameManager.getInstance().createSymbolicName(unit, source);
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   /**
    * Check if an unit(a statement in soot) contains a source. If a source is found in the unit,
    * return the symbolic name of this source. Otherwise, return null.
@@ -73,6 +102,10 @@ public class FieldOrMethodMatcher {
    */
   public String searchFieldOrMethod(SootMethod parent, Unit unit) {
     String symbolicName = null;
+    symbolicName = searchDynamicFieldOrMethod(parent, unit);
+    if (symbolicName != null) {
+      return symbolicName;
+    }
     if (unit instanceof AssignStmt) {
       AssignStmt assignStmt = (AssignStmt) unit;
       Value rightOp = assignStmt.getRightOp();

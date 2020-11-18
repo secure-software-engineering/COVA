@@ -42,6 +42,9 @@ public class Config {
   /** True, if the concrete taint propagation rule is on. */
   private boolean concreteTaintCreationRuleOn;
 
+  /** True, if the string taint propagation rule is on. */
+  private boolean stringTaintCreationRuleOn;
+
   /** The concrete taint at assignStmt on. */
   private boolean concreteTaintAtAssignStmtOn;
 
@@ -83,6 +86,7 @@ public class Config {
     taintPropagationRuleOn = false;
     impreciseTaintCreationRuleOn = false;
     concreteTaintCreationRuleOn = false;
+    stringTaintCreationRuleOn = false;
     concreteTaintAtAssignStmtOn = false;
     concreteTaintAtReturnStmtOn = false;
     concreteTaintAtCalleeOn = false;
@@ -314,6 +318,14 @@ public class Config {
       concreteTaintAtReturnStmtOn = false;
       concreteTaintAtCalleeOn = false;
     }
+  }
+
+  public boolean isStringTaintCreationRuleOn() {
+    return stringTaintCreationRuleOn;
+  }
+
+  public void setStringTaintCreationRuleOn(boolean stringTaintCreationRuleOn) {
+    this.stringTaintCreationRuleOn = stringTaintCreationRuleOn;
   }
 
   /**
