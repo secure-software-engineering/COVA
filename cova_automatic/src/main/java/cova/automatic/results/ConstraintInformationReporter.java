@@ -1,6 +1,6 @@
 package cova.automatic.results;
 
-import cova.automatic.AutomaticRunner;
+import cova.automatic.executor.AutomaticRunner;
 import cova.data.IConstraint;
 import cova.runner.AndroidApkAnalyzer;
 import java.util.ArrayList;

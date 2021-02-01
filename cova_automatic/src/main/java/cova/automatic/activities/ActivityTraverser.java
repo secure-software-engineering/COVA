@@ -1,23 +1,30 @@
-package cova.automatic;
+package cova.automatic.activities;
 
 import cova.automatic.results.ConstraintInformation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import soot.MethodOrMethodContext;
+import soot.Scene;
 import soot.SootClass;
+import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.ClassConstant;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 import soot.jimple.SpecialInvokeExpr;
+import soot.jimple.toolkits.callgraph.Edge;
 
 public class ActivityTraverser {
 
   private Map<String, List<ConstraintInformation>> activityConstraints;
-  private ConstraintInformation choosenInfo;
+  private ConstraintInformation selectedInfo;
   private String mainActivity;
   private List<List<ConstraintInformation>> paths;
   private List<ConstraintInformation> allInformation;
@@ -25,11 +32,11 @@ public class ActivityTraverser {
 
   public ActivityTraverser(
       List<ConstraintInformation> information,
-      ConstraintInformation choosenInfo,
+      ConstraintInformation selectedInfo,
       String mainActivity) {
     paths = new ArrayList<>();
     activityConstraints = new HashMap<>();
-    this.choosenInfo = choosenInfo;
+    this.selectedInfo = selectedInfo;
     this.mainActivity = mainActivity;
     this.allInformation = information;
     traversed = false;
@@ -38,12 +45,13 @@ public class ActivityTraverser {
   public void traverse() {
     if (!traversed) {
       parseIntents();
-      traverse(new ArrayList<ConstraintInformation>(), choosenInfo);
+      traverse(new ArrayList<ConstraintInformation>(), selectedInfo);
     }
   }
 
   private void parseIntents() {
     for (ConstraintInformation info : allInformation) {
+
       Unit u = info.getUnit();
       if (u instanceof InvokeStmt) {
         InvokeStmt stmt = (InvokeStmt) u;
@@ -85,10 +93,36 @@ public class ActivityTraverser {
     }
   }
 
+  boolean getPreds(MethodOrMethodContext m, Set<String> activityNames) {
+
+    if (m instanceof SootMethod) {
+      SootMethod sootMethod = (SootMethod) m;
+      String activityName = sootMethod.getDeclaringClass().getName();
+      if (activityName.equals(mainActivity)) {
+        return true;
+      }
+      if (activityConstraints.containsKey(activityName)) {
+        activityNames.add(activityName);
+      }
+    }
+    Iterator<Edge> edges = Scene.v().getCallGraph().edgesInto(m);
+    while (edges.hasNext()) {
+      Edge e = edges.next();
+      boolean ret = getPreds(e.getSrc(), activityNames);
+      if (ret) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private void traverse(List<ConstraintInformation> path, ConstraintInformation info) {
+    if (path.contains(info)) {
+      // Found loop
+      return;
+    }
     path = new ArrayList<>(path);
     path.add(info);
-
     SootClass infoClass = info.getClazz();
     if (infoClass.isInnerClass()) {
       infoClass = infoClass.getOuterClass();
@@ -100,11 +134,43 @@ public class ActivityTraverser {
       paths.add(path);
       return;
     }
-    if (!activityConstraints.containsKey(activityName)) {
+    Set<String> activityNames = new HashSet<>();
+    // Check if constraint is in activity
+    if (activityConstraints.containsKey(activityName)) {
+      activityNames.add(activityName);
+    }
+
+    // check for activities in constraint
+    if (activityNames.isEmpty()) {
+      for (SootClass cl : info.getConstraintSootClasses()) {
+        String tmpActivityName = cl.getName();
+        if (activityConstraints.containsKey(tmpActivityName)) {
+          activityNames.add(tmpActivityName);
+        }
+        if (tmpActivityName.equals(mainActivity)) {
+          Collections.reverse(path);
+          paths.add(path);
+          return;
+        }
+      }
+    }
+    // check for activities in callgraph
+    if (activityNames.isEmpty()) {
+      boolean ret = getPreds(info.getMethod(), activityNames);
+      // Has main activity in callgraph
+      if (ret) {
+        Collections.reverse(path);
+        paths.add(path);
+        return;
+      }
+    }
+    if (activityNames.isEmpty()) {
       return;
     }
-    for (ConstraintInformation candidate : activityConstraints.get(activityName)) {
-      traverse(path, candidate);
+    for (String tmpActivityName : activityNames) {
+      for (ConstraintInformation candidate : activityConstraints.get(tmpActivityName)) {
+        traverse(path, candidate);
+      }
     }
   }
 

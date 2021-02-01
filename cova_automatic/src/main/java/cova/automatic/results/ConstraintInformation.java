@@ -3,8 +3,12 @@ package cova.automatic.results;
 import cova.data.IConstraint;
 import cova.source.IdManager;
 import cova.source.SourceInformation;
+import heros.solver.Pair;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
@@ -17,6 +21,9 @@ public class ConstraintInformation {
   private IConstraint constraint;
   private String output;
   private Map<Integer, String> mapping;
+  private List<SootClass> constraintSootClasses;
+  private List<List<ConstraintInformation>> paths;
+  private Map<String, String> oldNewMapping;
 
   public ConstraintInformation(
       SootClass clazz,
@@ -33,6 +40,7 @@ public class ConstraintInformation {
     this.constraint = constraint;
     this.output = output;
     this.mapping = mapping;
+    this.oldNewMapping = new HashMap<>();
   }
 
   public SootClass getClazz() {
@@ -72,14 +80,18 @@ public class ConstraintInformation {
   }
 
   public Map<String, Object> getConstraintMap() {
+    constraintSootClasses = new ArrayList<>();
     Map<String, Object> values = constraint.getValues();
     Map<String, Object> newValues = new HashMap<>();
     if (values == null) {
       return newValues;
     }
     for (String key : values.keySet()) {
+      if (key == null) continue;
       Object value = values.get(key);
+
       String tmpKey = key;
+      String oldKey = key;
       tmpKey = tmpKey.replace("I", "");
       tmpKey = tmpKey.replace("U", "");
       try {
@@ -92,6 +104,11 @@ public class ConstraintInformation {
           String tmp = "";
           for (SourceInformation info : i.getAllInfos()) {
             int activityId = info.getLayoutId();
+            for (Pair<SootClass, Integer> e : IdManager.getInstance().getLayoutClasses()) {
+              if (e.getO2() == activityId) {
+                constraintSootClasses.add(e.getO1());
+              }
+            }
             int fieldId = info.getId();
             if (mapping.containsKey(activityId) && mapping.containsKey(fieldId)) {
               String activityName = mapping.get(activityId);
@@ -107,9 +124,12 @@ public class ConstraintInformation {
           }
         }
       } catch (Exception e) {
-
+        e.printStackTrace();
       }
       newValues.put(key, value);
+      if (!oldKey.equals(key)) {
+        oldNewMapping.put(oldKey, key);
+      }
     }
     return newValues;
   }
@@ -124,5 +144,31 @@ public class ConstraintInformation {
 
   public void setOutput(String output) {
     this.output = output;
+  }
+
+  public List<SootClass> getConstraintSootClasses() {
+    if (constraintSootClasses == null) {
+      getConstraintMap();
+    }
+    return constraintSootClasses;
+  }
+
+  public List<List<ConstraintInformation>> getPaths() {
+    return paths;
+  }
+
+  public void setPaths(List<List<ConstraintInformation>> paths) {
+    this.paths = paths;
+  }
+
+  public String constraintToReadableString() {
+    if (constraintSootClasses == null) {
+      getConstraintMap();
+    }
+    String s = this.getConstraint().toReadableString();
+    for (Entry<String, String> e : this.oldNewMapping.entrySet()) {
+      s = s.replace(e.getKey(), e.getValue());
+    }
+    return s;
   }
 }

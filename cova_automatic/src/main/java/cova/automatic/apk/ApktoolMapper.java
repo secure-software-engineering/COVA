@@ -36,6 +36,7 @@ public class ApktoolMapper {
         mapping.put(spec.getId().id, spec.getName());
       }
     }
+
     return baseMapping;
   }
 }
