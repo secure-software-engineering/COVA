@@ -158,7 +158,6 @@ public class ConstraintZ3 implements IConstraint {
     } else {
 
       and = solver.solve(expr, otherZ3.expr, Operator.AND, simplify);
-      System.out.println(and);
       if (simplify) {
 
         andCache.put(p, and);
@@ -214,7 +213,6 @@ public class ConstraintZ3 implements IConstraint {
       or = orCache.get(p2);
     } else {
       or = solver.solve(expr, otherZ3.expr, Operator.OR, simplify);
-      System.out.println(or);
       if (simplify) {
 
         orCache.put(p, or);

@@ -379,10 +379,6 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
           IdManager.getInstance()
               .getClassnameToDynamicIdMapping()
               .get(callee.getDeclaringClass().toString());
-      System.out.println();
-      System.out.println(node);
-      System.out.println(callee);
-      System.out.println(callee.getDeclaringClass());
 
       Local parameter = callee.getActiveBody().getParameterLocal(1);
       IConstraint constraint = in.getConstraintOfStmt();

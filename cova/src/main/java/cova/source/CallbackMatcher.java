@@ -139,7 +139,6 @@ public class CallbackMatcher {
       }
 
       List<SourceInformation> foundInfos = new ArrayList<>();
-      System.out.println(classesToTest);
       for (SootClass testClass : classesToTest) {
         Set<Integer> layoutIds = IdManager.getInstance().getLayoutClasses().get(testClass);
 
