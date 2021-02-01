@@ -437,9 +437,7 @@ public class DefaultCallbackAnalyzer extends AbstractCallbackAnalyzer
         SootMethodRepresentationParser.v()
             .getMethodNameFromSubSignature(inv.getMethodRef().getSubSignature().getString());
     if (!methodName.equals("inflate")) return false;
-    System.err.println(inv);
     while (curClass != null) {
-      System.err.println(curClass);
       if (curClass.getName().equals("android.app.Activity")) return true;
       if (curClass.getName().equals("android.app.Fragment")) return true;
       if (curClass.getName().equals("android.support.v4.app.Fragment")) return true;
