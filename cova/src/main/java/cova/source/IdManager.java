@@ -5,22 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import soot.SootClass;
+import soot.util.HashMultiMap;
+import soot.util.MultiMap;
 
 public class IdManager {
   private static IdManager instance;
 
   private static final int START_VALUE = 20000;
 
-  private Map<Integer, List<SourceInformation>> sources = new HashMap<>();
+  private MultiMap<SootClass, Integer> layoutClasses = new HashMultiMap<>();
 
-  private Map<Integer, String> ids = new HashMap<>();
-  private Map<Integer, String> layouts = new HashMap<>();
+  private Map<Integer, List<SourceInformation>> xmlSources = new HashMap<>();
+
+  private Map<String, Integer> classnameToDynamicIdMapping = new HashMap<>();
 
   private Map<Integer, SourceInformation> mapping = new HashMap<>();
-
-  private Map<String, Integer> activityToIdMapping = new HashMap<>();
-
-  private Map<String, Integer> classnameToIntegerMapping = new HashMap<>();
 
   private boolean enabled = false;
 
@@ -75,24 +75,12 @@ public class IdManager {
     return mapping.get(tmpId);
   }
 
-  public Map<Integer, List<SourceInformation>> getSources() {
-    return sources;
+  public Map<Integer, List<SourceInformation>> getXmlSources() {
+    return xmlSources;
   }
 
-  public Map<Integer, String> getLayouts() {
-    return layouts;
-  }
-
-  public Map<Integer, String> getIds() {
-    return ids;
-  }
-
-  public Map<String, Integer> getActivityToIdMapping() {
-    return activityToIdMapping;
-  }
-
-  public Map<String, Integer> getClassnameToIntegerMapping() {
-    return classnameToIntegerMapping;
+  public Map<String, Integer> getClassnameToDynamicIdMapping() {
+    return classnameToDynamicIdMapping;
   }
 
   public boolean isEnabled() {
@@ -101,5 +89,13 @@ public class IdManager {
 
   public void enable() {
     enabled = true;
+  }
+
+  public MultiMap<SootClass, Integer> getLayoutClasses() {
+    return layoutClasses;
+  }
+
+  public void setLayoutClasses(MultiMap<SootClass, Integer> layoutClasses) {
+    this.layoutClasses = layoutClasses;
   }
 }

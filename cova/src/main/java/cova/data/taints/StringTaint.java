@@ -46,33 +46,30 @@ public class StringTaint extends AbstractTaint {
    * @param value the current value of this concrete taint
    */
   public StringTaint(
-      WrappedAccessPath accessPath, IConstraint constraint, StringMethod stringMethod) {
-    this(accessPath, constraint, null, null, stringMethod);
-  }
-
-  public StringTaint(
-      WrappedAccessPath accessPath,
-      IConstraint constraint,
-      SymbolicTaint source,
-      Unit stmt,
-      StringMethod stringMethod) {
-    this(accessPath, constraint, source, stmt, stringMethod, null, null);
-  }
-
-  public StringTaint(
       WrappedAccessPath accessPath,
       IConstraint constraint,
       SymbolicTaint source,
       Unit stmt,
       StringMethod stringMethod,
-      String symbolicName,
-      String constant) {
+      String constant,
+      String symbolicName) {
     super(accessPath, constraint);
     this.source = source;
     this.stmt = stmt;
     this.stringMethod = stringMethod;
-    this.symbolicName = symbolicName;
+
     this.constant = constant;
+    if (true) {
+      this.symbolicName = symbolicName;
+      if (symbolicName == null) {
+        throw new RuntimeException();
+      }
+      if (symbolicName.contains("im(")) {
+        throw new RuntimeException(symbolicName);
+      }
+    } else {
+      this.symbolicName = source.getSymbolicName();
+    }
   }
 
   public SymbolicTaint getSource() {
@@ -97,7 +94,9 @@ public class StringTaint extends AbstractTaint {
 
   @Override
   public AbstractTaint copy() {
-    return new StringTaint(accessPath, constraint, source, stmt, stringMethod);
+
+    return new StringTaint(
+        accessPath, constraint, source, stmt, stringMethod, constant, symbolicName);
   }
 
   @Override
@@ -122,11 +121,11 @@ public class StringTaint extends AbstractTaint {
     }
     StringTaint other = (StringTaint) obj;
 
-    if (source == null) {
-      if (other.source != null) {
+    if (symbolicName == null) {
+      if (other.symbolicName != null) {
         return false;
       }
-    } else if (!source.equals(other.source)) {
+    } else if (!symbolicName.equals(other.symbolicName)) {
       return false;
     }
     if (stmt == null) {
@@ -145,6 +144,8 @@ public class StringTaint extends AbstractTaint {
     sb.append(accessPath.toString());
     sb.append(", ");
     sb.append(constraint.toString());
+    sb.append(", ");
+    sb.append(symbolicName);
     if (source != null) {
       sb.append(", ");
       sb.append(source.getSymbolicName());
@@ -155,15 +156,15 @@ public class StringTaint extends AbstractTaint {
 
   @Override
   public AbstractTaint createNewTaintFromAccessPath(WrappedAccessPath a) {
-    return new StringTaint(a, constraint, stringMethod);
+    return new StringTaint(a, constraint, source, stmt, stringMethod, constant, symbolicName);
   }
 
   /**
-   * Return a concrete taint whose constraint is the disjunction of the constraints of t1 and t2.
-   * The access path and value of t1 and t2 must be same.
+   * Return a string taint whose constraint is the disjunction of the constraints of t1 and t2. The
+   * access path and value of t1 and t2 must be same.
    *
-   * @param t1 the first concrete taint
-   * @param t2 the second concrete taint
+   * @param t1 the first string taint
+   * @param t2 the second string taint
    * @return Return a concrete taint whose constraint is the disjunction of the constraints of t1
    *     and t2.
    */

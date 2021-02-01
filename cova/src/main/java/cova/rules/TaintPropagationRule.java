@@ -19,6 +19,7 @@ import cova.core.InterproceduralCFG;
 import cova.core.RuleManager;
 import cova.data.Abstraction;
 import cova.data.ConstraintZ3;
+import cova.data.IConstraint;
 import cova.data.WrappedAccessPath;
 import cova.data.WrappedTaintSet;
 import cova.data.taints.AbstractTaint;
@@ -312,10 +313,12 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
         Value rightOp = idStmt.getRightOp();
         if (rightOp instanceof ParameterRef) {
           ParameterRef parameter = (ParameterRef) rightOp;
-          Set<AbstractTaint> rightTaints = taints.get(parameter.getIndex());
-          Value taintVal = taintValues.get(parameter.getIndex());
+          if (parameter.getIndex() < taints.size()) {
+            Set<AbstractTaint> rightTaints = taints.get(parameter.getIndex());
+            Value taintVal = taintValues.get(parameter.getIndex());
 
-          createTaintsAndAliases(method, node, leftOp, taintVal, null, rightTaints, in);
+            createTaintsAndAliases(method, node, leftOp, taintVal, null, rightTaints, in);
+          }
         }
       }
     }
@@ -369,6 +372,22 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
           entry.add(t);
         }
       }
+    }
+    // TODO generalize this
+    if (node.toString().contains("onCheckedChanged")) {
+      int id =
+          IdManager.getInstance()
+              .getClassnameToDynamicIdMapping()
+              .get(callee.getDeclaringClass().toString());
+      System.out.println();
+      System.out.println(node);
+      System.out.println(callee);
+      System.out.println(callee.getDeclaringClass());
+
+      Local parameter = callee.getActiveBody().getParameterLocal(1);
+      IConstraint constraint = in.getConstraintOfStmt();
+      SourceTaint taint = new SourceTaint(new WrappedAccessPath(parameter), constraint, "I" + id);
+      entry.add(taint);
     }
 
     // o.foo(), for taint of the form o.*, create taint at the callee of the form this.*, where this
@@ -530,14 +549,22 @@ public class TaintPropagationRule implements IRule<SootMethod, Unit, Abstraction
       // Create mapping for listeners defined in inner classes
       Stmt stmt = (Stmt) node;
       InvokeExpr invokeExpr = stmt.getInvokeExpr();
-      VirtualInvokeExpr vInv = (VirtualInvokeExpr) invokeExpr;
-      Value v = invokeExpr.getArg(0);
-      Set<AbstractTaint> taintsOfElement =
-          in.taints().getTaintsStartWith(new WrappedAccessPath(vInv.getBase()));
-      AbstractTaint taintOfElement = taintsOfElement.iterator().next();
-      SourceTaint taint = (SourceTaint) taintOfElement;
-      Integer id = Integer.parseInt(taint.getSymbolicName().replace("I", ""));
-      IdManager.getInstance().getClassnameToIntegerMapping().put(v.getType().toString(), id);
+      if (invokeExpr instanceof VirtualInvokeExpr) {
+        VirtualInvokeExpr vInv = (VirtualInvokeExpr) invokeExpr;
+        Value v = invokeExpr.getArg(0);
+        Set<AbstractTaint> taintsOfElement =
+            in.taints().getTaintsStartWith(new WrappedAccessPath(vInv.getBase()));
+        if (!taintsOfElement.isEmpty()) {
+          AbstractTaint taintOfElement = taintsOfElement.iterator().next();
+          if (taintOfElement instanceof SourceTaint) {
+            SourceTaint taint = (SourceTaint) taintOfElement;
+            Integer id = Integer.parseInt(taint.getSymbolicName().replace("I", ""));
+            IdManager.getInstance()
+                .getClassnameToDynamicIdMapping()
+                .put(v.getType().toString(), id);
+          }
+        }
+      }
     }
     boolean taintCreated = false;
     SootMethod method = context.getMethod();

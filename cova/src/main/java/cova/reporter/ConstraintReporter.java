@@ -346,4 +346,8 @@ public class ConstraintReporter {
     }
     return s;
   }
+
+  public InterproceduralCFG getIcfg() {
+    return icfg;
+  }
 }

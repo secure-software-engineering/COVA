@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * The Class ConstraintZ3 represented by the Z3 boolean expression {@link BoolExpr}.
@@ -87,7 +88,7 @@ public class ConstraintZ3 implements IConstraint {
                         for (final String symbolicName : constraint.symbolicNames) {
                           final String sourceName =
                               SymbolicNameManager.getInstance().getSourceName(symbolicName);
-                          rep = rep.replace(symbolicName, sourceName);
+                          if (sourceName != null) rep = rep.replace(symbolicName, sourceName);
                         }
                       }
                       expressionCache.put(constraint, rep);
@@ -97,6 +98,9 @@ public class ConstraintZ3 implements IConstraint {
                 });
   }
 
+  private static Map<Pair<IConstraint, IConstraint>, BoolExpr> andCache = new HashMap<>();
+  private static Map<Pair<IConstraint, IConstraint>, BoolExpr> orCache = new HashMap<>();
+  private static final boolean CACHE_ENABLED = true;
   /**
    * Instantiates a new constraint.
    *
@@ -144,7 +148,22 @@ public class ConstraintZ3 implements IConstraint {
       solver.incCount();
     }
     long startTime = System.nanoTime();
-    final BoolExpr and = solver.solve(expr, otherZ3.expr, Operator.AND, simplify);
+    Pair<IConstraint, IConstraint> p = Pair.of(this, other);
+    Pair<IConstraint, IConstraint> p2 = Pair.of(other, this);
+    final BoolExpr and;
+    if (CACHE_ENABLED && simplify && andCache.containsKey(p)) {
+      and = andCache.get(p);
+    } else if (CACHE_ENABLED && simplify && andCache.containsKey(p2)) {
+      and = andCache.get(p2);
+    } else {
+
+      and = solver.solve(expr, otherZ3.expr, Operator.AND, simplify);
+      System.out.println(and);
+      if (simplify) {
+
+        andCache.put(p, and);
+      }
+    }
     long endTime = System.nanoTime();
     double duration = (endTime - startTime) / 1000000;
     solver.incUsedTime(duration);
@@ -186,7 +205,22 @@ public class ConstraintZ3 implements IConstraint {
       solver.incCount();
     }
     long startTime = System.nanoTime();
-    final BoolExpr or = solver.solve(expr, otherZ3.expr, Operator.OR, simplify);
+    Pair<IConstraint, IConstraint> p = Pair.of(this, other);
+    Pair<IConstraint, IConstraint> p2 = Pair.of(other, this);
+    final BoolExpr or;
+    if (CACHE_ENABLED && simplify && orCache.containsKey(p)) {
+      or = orCache.get(p);
+    } else if (CACHE_ENABLED && simplify && orCache.containsKey(p2)) {
+      or = orCache.get(p2);
+    } else {
+      or = solver.solve(expr, otherZ3.expr, Operator.OR, simplify);
+      System.out.println(or);
+      if (simplify) {
+
+        orCache.put(p, or);
+      }
+    }
+
     long endTime = System.nanoTime();
     double duration = (endTime - startTime) / 1000000;
     solver.incUsedTime(duration);

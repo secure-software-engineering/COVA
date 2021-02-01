@@ -35,8 +35,10 @@ import soot.jimple.ConditionExpr;
 import soot.jimple.Constant;
 import soot.jimple.EqExpr;
 import soot.jimple.GeExpr;
+import soot.jimple.GtExpr;
 import soot.jimple.IntConstant;
 import soot.jimple.LeExpr;
+import soot.jimple.LtExpr;
 import soot.jimple.NeExpr;
 
 /** A factory for creating constraint. */
@@ -538,35 +540,50 @@ public class ConstraintFactory {
       Operator operator;
       if (conditionExpr instanceof LeExpr) {
         operator = Operator.LE;
+      } else if (conditionExpr instanceof LtExpr) {
+        operator = Operator.LT;
       } else if (conditionExpr instanceof GeExpr) {
         operator = Operator.GE;
+      } else if (conditionExpr instanceof GtExpr) {
+        operator = Operator.GT;
+      } else if (conditionExpr instanceof NeExpr) {
+        operator = Operator.NE;
+      } else if (conditionExpr instanceof EqExpr) {
+        operator = Operator.EQ;
       } else {
-        throw new RuntimeException();
+        throw new RuntimeException("Wrong condition: " + conditionExpr.getClass().toString());
       }
 
-      if (stringTaint.getStringMethod() == StringMethod.LENGTH) {
-        Value constant = conditionExpr.getOp1();
-        Value val = conditionExpr.getOp2();
-        if (taintOnLeft) {
-          constant = conditionExpr.getOp2();
-          val = conditionExpr.getOp1();
-        }
-
-        String name = stringTaint.getSource().getSymbolicName();
-        String constantString = constant.toString();
-        newConstraint = createLengthConstraint(name, constantString, operator, isFallThroughEdge);
-        constraint = constraint.and(newConstraint, false);
-        return constraint;
-      } else {
-        throw new RuntimeException("Wrong string method: " + stringTaint.getStringMethod());
+      Value constant = conditionExpr.getOp1();
+      Value val = conditionExpr.getOp2();
+      if (taintOnLeft) {
+        constant = conditionExpr.getOp2();
+        val = conditionExpr.getOp1();
       }
+
+      String name = stringTaint.getSymbolicName();
+      String constantString = constant.toString();
+      newConstraint =
+          createIntCompareConstraint(
+              name, constantString, operator, isFallThroughEdge, stringTaint.getStringMethod());
+
+      constraint = constraint.and(newConstraint, false);
+      return constraint;
+
     } else if (type instanceof BooleanType) {
-
       newConstraint =
           createConstantInStringConstraint(
               stringTaint.getSymbolicName(),
               stringTaint.getConstant(),
               stringTaint.getStringMethod());
+      if (conditionExpr instanceof EqExpr) {
+        // normal case
+      } else if (conditionExpr instanceof NeExpr) {
+        // inverted case
+        newConstraint = newConstraint.negate(false);
+      } else {
+        throw new RuntimeException("Wrong condition: " + conditionExpr.getClass().toString());
+      }
       if (!isFallThroughEdge) {
         newConstraint = newConstraint.negate(false);
       }
@@ -717,11 +734,16 @@ public class ConstraintFactory {
     return new ConstraintZ3(contains, name, new WitnessPath());
   }
 
-  public static IConstraint createLengthConstraint(
-      String name, String constant, Operator operator, boolean isFallThroughEdge) {
+  public static IConstraint createIntCompareConstraint(
+      String name,
+      String constant,
+      Operator operator,
+      boolean isFallThroughEdge,
+      StringMethod method) {
 
     BoolExpr expr =
-        SMTSolverZ3.getInstance().makeCompareTerm(name, constant, operator, isFallThroughEdge);
+        SMTSolverZ3.getInstance()
+            .makeCompareTerm(name, constant, operator, isFallThroughEdge, method);
     return new ConstraintZ3(expr, name, new WitnessPath());
   }
 }

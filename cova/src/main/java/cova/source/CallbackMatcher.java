@@ -104,13 +104,14 @@ public class CallbackMatcher {
     if (!IdManager.getInstance().isEnabled()) {
       return null;
     }
-    String declaringClass = method.getDeclaringClass().toString();
-    Map<String, Integer> classnameToInteger =
-        IdManager.getInstance().getClassnameToIntegerMapping();
+    String declaringClassName = method.getDeclaringClass().toString();
+
+    Map<String, Integer> classnameToDynamicId =
+        IdManager.getInstance().getClassnameToDynamicIdMapping();
     SourceInformation newInfo;
-    if (classnameToInteger.containsKey(declaringClass)) {
+    if (classnameToDynamicId.containsKey(declaringClassName)) {
       // information from anonym class
-      Integer elementId = classnameToInteger.get(declaringClass);
+      Integer elementId = classnameToDynamicId.get(declaringClassName);
       SourceInformation source = IdManager.getInstance().get(elementId);
       newInfo =
           new SourceInformation(
@@ -119,17 +120,49 @@ public class CallbackMatcher {
     } else {
       // information from xml file
 
-      int activityId = SourceIdHelper.getActivityId(method.getDeclaringClass());
-      List<SourceInformation> infos = IdManager.getInstance().getSources().get(activityId);
-      List<SourceInformation> foundInfos = new ArrayList<>();
+      SootClass declaringClass = method.getDeclaringClass();
 
-      if (infos != null) {
-        for (SourceInformation info : infos) {
-          if (info.getMethodName().equals(method.getName())) {
-            foundInfos.add(info);
+      // Test declaring class and all inner classes
+      List<SootClass> classesToTest = new ArrayList<>();
+      // add declaring class
+      classesToTest.add(method.getDeclaringClass());
+      // add inner classes
+      for (SootClass testClass : IdManager.getInstance().getLayoutClasses().keySet()) {
+        SootClass currentClass = testClass;
+        while (currentClass.hasOuterClass()) {
+          currentClass = currentClass.getOuterClass();
+          if (currentClass.equals(declaringClass)) {
+            classesToTest.add(testClass);
+            break;
           }
         }
       }
+
+      List<SourceInformation> foundInfos = new ArrayList<>();
+      System.out.println(classesToTest);
+      for (SootClass testClass : classesToTest) {
+        Set<Integer> layoutIds = IdManager.getInstance().getLayoutClasses().get(testClass);
+
+        for (Integer tmpLayoutId : layoutIds) {
+          List<SourceInformation> infos = IdManager.getInstance().getXmlSources().get(tmpLayoutId);
+
+          if (infos != null) {
+            for (SourceInformation info : infos) {
+              if (info.getMethodName().equals(method.getName())) {
+                foundInfos.add(info);
+              }
+            }
+          }
+
+          if (!foundInfos.isEmpty()) {
+            break;
+          }
+        }
+        if (!foundInfos.isEmpty()) {
+          break;
+        }
+      }
+
       if (foundInfos.isEmpty()) {
         return null;
       }

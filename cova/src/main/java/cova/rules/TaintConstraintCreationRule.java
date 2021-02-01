@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import soot.Local;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
@@ -290,6 +291,23 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
         if (!constraint.isTrue()) {
           constraint.simplify();
           in.updateConstraint(constraint);
+        }
+      } else {
+        Integer foundKey = null;
+        for (int i = 0; i < switchStmt.getTargetCount(); i++) {
+          int lookup = switchStmt.getLookupValue(i);
+          Unit target = switchStmt.getTarget(i);
+          if (target.equals(node)) {
+            foundKey = lookup;
+          }
+        }
+        IConstraint constraint = ConstraintZ3.getFalse();
+        for (AbstractTaint taint : in.taints().getTaintsWithBase((Local) switchStmt.getKey())) {
+          EqExpr eqExpr = Jimple.v().newEqExpr(switchStmt.getKey(), IntConstant.v(foundKey));
+          IConstraint c =
+              ConstraintFactory.createConstraint(
+                  ruleManager.getConfig().recordPath(), taint, eqExpr, false, false);
+          constraint = constraint.or(c, false);
         }
       }
     }

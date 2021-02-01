@@ -6,10 +6,12 @@ import cova.data.Abstraction;
 import cova.data.IConstraint;
 import cova.data.WrappedAccessPath;
 import cova.data.taints.AbstractTaint;
+import cova.data.taints.ImpreciseTaint;
 import cova.data.taints.StringTaint;
 import cova.data.taints.SymbolicTaint;
 import cova.vasco.Context;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import soot.SootMethod;
 import soot.Unit;
@@ -17,6 +19,7 @@ import soot.Value;
 import soot.jimple.AssignStmt;
 import soot.jimple.Constant;
 import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.StaticInvokeExpr;
 
 public class StringTaintCreationRule {
   private final InterproceduralCFG icfg;
@@ -59,7 +62,11 @@ public class StringTaintCreationRule {
 
         if (methodName.equals("contains")
             || methodName.equals("startsWith")
-            || methodName.equals("endsWith")) {
+            || methodName.equals("endsWith")
+            || methodName.equals("equals")
+            || methodName.equals("contentEquals")
+            || methodName.equals("equalsIgnoreCase")
+            || methodName.equals("isEmpty")) {
           StringMethod method = null;
           if (methodName.equals("contains")) {
             method = StringMethod.CONTAINS;
@@ -67,32 +74,47 @@ public class StringTaintCreationRule {
             method = StringMethod.STARTSWITH;
           } else if (methodName.equals("endsWith")) {
             method = StringMethod.ENDSWITH;
+          } else if (methodName.equals("equals")
+              || methodName.equals("contentEquals")
+              || methodName.equals("equalsIgnoreCase")) {
+            method = StringMethod.EQUALS;
           }
-
-          Value value = invoke.getArg(0);
-          if (!(value instanceof Constant)) {
-            return false;
+          String strVal = "";
+          if (methodName.equals("isEmpty")) {
+            method = StringMethod.EQUALS;
+          } else {
+            Value value = invoke.getArg(0);
+            if (!(value instanceof Constant)) {
+              return false;
+            }
+            strVal = value.toString();
+            strVal = strVal.substring(1, strVal.length() - 1);
           }
-          String strVal = value.toString();
-          strVal = strVal.substring(1, strVal.length() - 1);
 
           for (AbstractTaint taint : involved) {
             if (taint instanceof SymbolicTaint) {
               // create concrete taint at equals function.
               SymbolicTaint sTaint = (SymbolicTaint) taint;
               String name = sTaint.getSymbolicName();
-
-              StringTaint imprecise =
+              if (sTaint instanceof ImpreciseTaint) {
+                List<String> sourceSymbolics = ((ImpreciseTaint) sTaint).getSourceSymbolics();
+                if (sourceSymbolics.size() == 1) {
+                  name = sourceSymbolics.get(0);
+                } else {
+                  throw new RuntimeException("Not implemented yet" + sourceSymbolics.toString());
+                }
+              }
+              StringTaint stringTaint =
                   new StringTaint(
                       new WrappedAccessPath(leftOp),
                       constraint,
                       (SymbolicTaint) taint,
                       node,
                       method,
-                      name,
-                      strVal);
+                      strVal,
+                      name);
 
-              newTaints.add(imprecise);
+              newTaints.add(stringTaint);
             }
           }
           in.taints().addAll(newTaints);
@@ -100,22 +122,73 @@ public class StringTaintCreationRule {
         } else if (methodName.equals("length")) {
           for (AbstractTaint taint : involved) {
             if (taint instanceof SymbolicTaint) {
-              StringTaint imprecise =
+              SymbolicTaint sTaint = (SymbolicTaint) taint;
+              String name = sTaint.getSymbolicName();
+              if (sTaint instanceof ImpreciseTaint) {
+                List<String> sourceSymbolics = ((ImpreciseTaint) sTaint).getSourceSymbolics();
+                if (sourceSymbolics.size() == 1) {
+                  name = sourceSymbolics.get(0);
+                } else {
+                  throw new RuntimeException("Not implemented yet" + sourceSymbolics.toString());
+                }
+              }
+              StringTaint stringTaint =
                   new StringTaint(
                       new WrappedAccessPath(leftOp),
                       constraint,
                       (SymbolicTaint) taint,
                       node,
-                      StringMethod.LENGTH);
+                      StringMethod.LENGTH,
+                      null,
+                      name);
 
-              newTaints.add(imprecise);
+              newTaints.add(stringTaint);
             }
           }
           in.taints().addAll(newTaints);
 
           return true;
         } else {
-          System.err.println("Method " + methodName + " not implemented yet");
+          System.err.println("Method String." + methodName + " not implemented yet");
+        }
+      }
+    } else if (rightOp instanceof StaticInvokeExpr) {
+      StaticInvokeExpr invoke = (StaticInvokeExpr) rightOp;
+      String methodName = invoke.getMethod().getName();
+      String declaringClass = invoke.getMethod().getDeclaringClass().toString();
+      if (declaringClass.equals("java.lang.Integer")) {
+        if (methodName.equals("parseInt")) {
+          Set<AbstractTaint> involved =
+              in.taints().getTaintsWithAccessPath(new WrappedAccessPath(invoke.getArg(0)));
+          for (AbstractTaint taint : involved) {
+            if (taint instanceof SymbolicTaint) {
+              SymbolicTaint sTaint = (SymbolicTaint) taint;
+              String name = sTaint.getSymbolicName();
+              if (sTaint instanceof ImpreciseTaint) {
+                List<String> sourceSymbolics = ((ImpreciseTaint) sTaint).getSourceSymbolics();
+                if (sourceSymbolics.size() == 1) {
+                  name = sourceSymbolics.get(0);
+                } else {
+                  throw new RuntimeException("Not implemented yet" + sourceSymbolics.toString());
+                }
+              }
+              StringTaint stringTaint =
+                  new StringTaint(
+                      new WrappedAccessPath(leftOp),
+                      constraint,
+                      (SymbolicTaint) taint,
+                      node,
+                      StringMethod.TO_INT,
+                      null,
+                      name);
+
+              newTaints.add(stringTaint);
+            }
+          }
+          in.taints().addAll(newTaints);
+          return true;
+        } else {
+          System.err.println("Method Integer." + methodName + " not implemented yet");
         }
       }
     }

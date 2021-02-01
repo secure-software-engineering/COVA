@@ -317,15 +317,32 @@ public class SMTSolverZ3 {
     }
   }
 
-  public BoolExpr makeCompareTerm(String name, String length, Operator operator, boolean negate) {
+  public BoolExpr makeCompareTerm(
+      String name, String length, Operator operator, boolean negate, StringMethod method) {
     SeqExpr str = (SeqExpr) ctx.mkConst(name, ctx.getStringSort());
-    IntExpr strLength = ctx.MkLength(str);
+
+    IntExpr strLength;
+    if (method == StringMethod.LENGTH) {
+      strLength = ctx.mkLength(str);
+    } else if (method == StringMethod.TO_INT) {
+      strLength = ctx.stringToInt(str);
+    } else {
+      throw new RuntimeException("Wrong string method: " + method);
+    }
     IntExpr maxLength = ctx.mkInt(length.toString());
     BoolExpr expr;
     if (operator == Operator.LE) {
       expr = ctx.mkLe(strLength, maxLength);
+    } else if (operator == Operator.LT) {
+      expr = ctx.mkLt(strLength, maxLength);
     } else if (operator == Operator.GE) {
       expr = ctx.mkGe(strLength, maxLength);
+    } else if (operator == Operator.GT) {
+      expr = ctx.mkGt(strLength, maxLength);
+    } else if (operator == Operator.NE) {
+      expr = ctx.mkNot(ctx.mkEq(strLength, maxLength));
+    } else if (operator == Operator.EQ) {
+      expr = ctx.mkEq(strLength, maxLength);
     } else {
       throw new RuntimeException(operator.toString());
     }
@@ -339,14 +356,16 @@ public class SMTSolverZ3 {
   public BoolExpr makeInStrTerm(String name, String constant, StringMethod method) {
     SeqExpr str = (SeqExpr) ctx.mkConst(name, ctx.getStringSort());
 
-    SeqExpr strExpr = ctx.MkString(constant);
+    SeqExpr strExpr = ctx.mkString(constant);
     BoolExpr contains;
     if (method == StringMethod.CONTAINS) {
-      contains = ctx.MkContains(str, strExpr);
+      contains = ctx.mkContains(str, strExpr);
     } else if (method == StringMethod.STARTSWITH) {
-      contains = ctx.MkPrefixOf(strExpr, str);
+      contains = ctx.mkPrefixOf(strExpr, str);
     } else if (method == StringMethod.ENDSWITH) {
-      contains = ctx.MkSuffixOf(strExpr, str);
+      contains = ctx.mkSuffixOf(strExpr, str);
+    } else if (method == StringMethod.EQUALS) {
+      contains = ctx.mkEq(strExpr, str);
     } else {
       throw new RuntimeException("Wrong StringMethod");
     }
@@ -482,13 +501,13 @@ public class SMTSolverZ3 {
     } else if (type instanceof RefType) {
       if (((RefType) type).getClassName().equals(String.class.getName())) { // z3 stringsort
         if (leftConstant && !left.equals("null")) {
-          leftExpr = ctx.MkString(left);
+          leftExpr = ctx.mkString(left);
         } else {
           leftExpr = ctx.mkConst(left, ctx.getStringSort());
         }
         right = StringUtils.remove(right, "\"");
         if (rightConstant && !right.equals("null")) {
-          rightExpr = ctx.MkString(right);
+          rightExpr = ctx.mkString(right);
         } else {
           rightExpr = ctx.mkConst(right, ctx.getStringSort());
         }

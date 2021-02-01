@@ -4,5 +4,7 @@ public enum StringMethod {
   CONTAINS,
   STARTSWITH,
   ENDSWITH,
-  LENGTH;
+  LENGTH,
+  EQUALS,
+  TO_INT;
 }

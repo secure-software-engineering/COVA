@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import soot.Local;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
@@ -76,14 +77,24 @@ public class FieldOrMethodMatcher {
         SootMethod m = invoke.getMethod();
         if ("android.view.View".equals(m.getReturnType().toString())) {
           if ("findViewById".equals(m.getName())) {
-            int activityId = SourceIdHelper.getActivityId(parent.getDeclaringClass());
-            int fieldId = Integer.parseInt(invoke.getArg(0).toString());
+            Set<Integer> activityIds =
+                IdManager.getInstance().getLayoutClasses().get(parent.getDeclaringClass());
+            if (!activityIds.isEmpty()) {
+              int activityId = activityIds.iterator().next();
+              Value argValue = invoke.getArg(0);
+              if (argValue instanceof Local) {
+                System.err.println("Argument of findViewById is a local in " + m.toString());
+                return null;
+              }
 
-            int resultingId = IdManager.getInstance().put(activityId, fieldId);
+              int fieldId = Integer.parseInt(argValue.toString());
 
-            Source source =
-                new DynamicSource(SourceType.I, "I" + resultingId, resultingId, m.getSignature());
-            return SymbolicNameManager.getInstance().createSymbolicName(unit, source);
+              int resultingId = IdManager.getInstance().put(activityId, fieldId);
+
+              Source source =
+                  new DynamicSource(SourceType.I, "I" + resultingId, resultingId, m.getSignature());
+              return SymbolicNameManager.getInstance().createSymbolicName(unit, source);
+            }
           }
         }
       }
