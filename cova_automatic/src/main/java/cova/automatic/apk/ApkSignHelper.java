@@ -37,7 +37,7 @@ public class ApkSignHelper {
 
     signer.sign(f, Files.newOutputStream(signed));
 
-    ProcessBuilder processBuilder = new ProcessBuilder();
+    ProcessBuilder processBuilder = new ProcessBuilder().inheritIO();
 
     processBuilder.command(
         zipalignBinary,

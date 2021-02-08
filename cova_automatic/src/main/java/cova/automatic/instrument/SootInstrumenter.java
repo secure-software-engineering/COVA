@@ -32,7 +32,7 @@ public class SootInstrumenter {
 
   public List<TargetStrings> instrument(Path apkFile, Path targetApk, Path jarPath)
       throws IOException {
-    List<TargetStrings> outputs = new ArrayList<>();
+    final List<TargetStrings> outputs = new ArrayList<>();
     Path resultingPath = Paths.get("sootOutput").resolve(apkFile.getFileName());
     Files.deleteIfExists(resultingPath);
 
@@ -59,7 +59,7 @@ public class SootInstrumenter {
                       final Body b, String phaseName, @SuppressWarnings("rawtypes") Map options) {
 
                     String signature = b.getMethod().getSignature();
-                    if (new InterproceduralCFG().isExcludedMethod(b.getMethod())) {
+                    if (InterproceduralCFG.isExcludedMethod(b.getMethod())) {
                       return;
                     }
                     if (b.getMethod().getDeclaringClass().toString().endsWith(".R")
@@ -67,6 +67,9 @@ public class SootInstrumenter {
                       return;
                     }
 
+                    if(b.getMethod().getDeclaringClass().isPhantomClass()) {
+                      return;
+                    }
                     final PatchingChain<Unit> units = b.getUnits();
 
                     // important to use snapshotIterator here
@@ -107,7 +110,8 @@ public class SootInstrumenter {
       "-android-jars",
       jarPath.toAbsolutePath().toString(),
       "-process-dir",
-      apkFile.toAbsolutePath().toString()
+      apkFile.toAbsolutePath().toString(),
+      "-allow-phantom-refs"
     };
     soot.Main.main(cmd);
     Files.move(resultingPath, targetApk);
