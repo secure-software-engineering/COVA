@@ -46,5 +46,12 @@
 			<version>5.7.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.10.9</version>
+		</dependency>
+
+
 	</dependencies>
 </project>
