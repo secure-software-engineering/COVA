@@ -14,6 +14,8 @@
  */
 package cova.data;
 
+import java.util.Map;
+
 /**
  * The Interface Constraint declare all operations a constraint class should support.
  *
@@ -79,4 +81,6 @@ public interface IConstraint {
 
   /** @return a witness path for this constraint. */
   public WitnessPath getPath();
+
+  public Map<String, Object> getValues();
 }

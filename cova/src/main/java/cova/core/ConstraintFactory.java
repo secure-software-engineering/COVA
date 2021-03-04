@@ -23,15 +23,22 @@ import cova.data.taints.AbstractTaint;
 import cova.data.taints.ConcreteTaint;
 import cova.data.taints.ImpreciseTaint;
 import cova.data.taints.SourceTaint;
+import cova.data.taints.StringTaint;
+import cova.rules.StringMethod;
 import java.util.ArrayList;
 import soot.BooleanType;
+import soot.IntType;
 import soot.Type;
 import soot.Value;
 import soot.jimple.ArithmeticConstant;
 import soot.jimple.ConditionExpr;
 import soot.jimple.Constant;
 import soot.jimple.EqExpr;
+import soot.jimple.GeExpr;
+import soot.jimple.GtExpr;
 import soot.jimple.IntConstant;
+import soot.jimple.LeExpr;
+import soot.jimple.LtExpr;
 import soot.jimple.NeExpr;
 
 /** A factory for creating constraint. */
@@ -520,6 +527,76 @@ public class ConstraintFactory {
     return constraint;
   }
 
+  private static IConstraint createConstraintFromStringTaint(
+      StringTaint stringTaint,
+      ConditionExpr conditionExpr,
+      boolean taintOnLeft,
+      boolean isFallThroughEdge) {
+
+    IConstraint constraint = stringTaint.getConstraint();
+    Type type = stringTaint.getAccessPath().getType();
+    IConstraint newConstraint;
+    if (type instanceof IntType) {
+      Operator operator;
+      if (conditionExpr instanceof LeExpr) {
+        operator = Operator.LE;
+      } else if (conditionExpr instanceof LtExpr) {
+        operator = Operator.LT;
+      } else if (conditionExpr instanceof GeExpr) {
+        operator = Operator.GE;
+      } else if (conditionExpr instanceof GtExpr) {
+        operator = Operator.GT;
+      } else if (conditionExpr instanceof NeExpr) {
+        operator = Operator.NE;
+      } else if (conditionExpr instanceof EqExpr) {
+        operator = Operator.EQ;
+      } else {
+        throw new RuntimeException("Wrong condition: " + conditionExpr.getClass().toString());
+      }
+
+      Value constant = conditionExpr.getOp1();
+      Value val = conditionExpr.getOp2();
+      if (taintOnLeft) {
+        constant = conditionExpr.getOp2();
+        val = conditionExpr.getOp1();
+      }
+
+      String name = stringTaint.getSymbolicName();
+      String constantString = constant.toString();
+      newConstraint =
+          createIntCompareConstraint(
+              name, constantString, operator, isFallThroughEdge, stringTaint.getStringMethod());
+
+      constraint = constraint.and(newConstraint, false);
+      return constraint;
+
+    } else if (type instanceof BooleanType) {
+      newConstraint =
+          createConstantInStringConstraint(
+              stringTaint.getSymbolicName(),
+              stringTaint.getConstant(),
+              stringTaint.getStringMethod());
+      if (conditionExpr instanceof EqExpr) {
+        // normal case
+      } else if (conditionExpr instanceof NeExpr) {
+        // inverted case
+        newConstraint = newConstraint.negate(false);
+      } else {
+        throw new RuntimeException("Wrong condition: " + conditionExpr.getClass().toString());
+      }
+      if (!isFallThroughEdge) {
+        newConstraint = newConstraint.negate(false);
+      }
+
+    } else {
+      throw new RuntimeException(type.toString());
+    }
+
+    constraint = constraint.and(newConstraint, false);
+
+    return constraint;
+  }
+
   /**
    * Creates a new constraint when two taints appear in the same condition expression.
    *
@@ -626,6 +703,12 @@ public class ConstraintFactory {
           createConstraintFromImpreciseTaint(
               (ImpreciseTaint) t, conditionExpr, taintOnLeft, isFallThroughEdge);
     }
+    if (t instanceof StringTaint) {
+      constraint =
+          createConstraintFromStringTaint(
+              (StringTaint) t, conditionExpr, taintOnLeft, isFallThroughEdge);
+    }
+
     if (recordPath) constraint.getPath().addAll(t.getExtraInfo());
     return constraint;
   }
@@ -639,5 +722,28 @@ public class ConstraintFactory {
   public static IConstraint createConstraint(String callbackName) {
     BoolExpr expr = SMTSolverZ3.getInstance().makeBoolTerm(callbackName, false);
     return new ConstraintZ3(expr, callbackName, new WitnessPath());
+  }
+
+  public static IConstraint createConstantInStringConstraint(
+      String name, String constant, StringMethod method) {
+    if (name == null || constant == null) {
+      throw new RuntimeException("Name or constant is null");
+    }
+    BoolExpr contains = SMTSolverZ3.getInstance().makeInStrTerm(name, constant, method);
+
+    return new ConstraintZ3(contains, name, new WitnessPath());
+  }
+
+  public static IConstraint createIntCompareConstraint(
+      String name,
+      String constant,
+      Operator operator,
+      boolean isFallThroughEdge,
+      StringMethod method) {
+
+    BoolExpr expr =
+        SMTSolverZ3.getInstance()
+            .makeCompareTerm(name, constant, operator, isFallThroughEdge, method);
+    return new ConstraintZ3(expr, name, new WitnessPath());
   }
 }

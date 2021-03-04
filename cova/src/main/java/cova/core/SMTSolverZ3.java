@@ -23,11 +23,15 @@ import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Context;
 import com.microsoft.z3.Expr;
 import com.microsoft.z3.Goal;
+import com.microsoft.z3.IntExpr;
+import com.microsoft.z3.Model;
+import com.microsoft.z3.SeqExpr;
 import com.microsoft.z3.Solver;
 import com.microsoft.z3.Sort;
 import com.microsoft.z3.Status;
 import com.microsoft.z3.Tactic;
 import cova.data.Operator;
+import cova.rules.StringMethod;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import org.apache.commons.lang3.StringUtils;
@@ -114,6 +118,14 @@ public class SMTSolverZ3 {
   public void reset() {
     count = 0;
     usedTime = 0;
+  }
+
+  public Model solveValues(BoolExpr expr) {
+    Solver solver = ctx.mkSolver();
+    solver.add(expr);
+    Status status = solver.check();
+    if (status == Status.SATISFIABLE) return solver.getModel();
+    return null;
   }
 
   /**
@@ -305,6 +317,61 @@ public class SMTSolverZ3 {
     }
   }
 
+  public BoolExpr makeCompareTerm(
+      String name, String length, Operator operator, boolean negate, StringMethod method) {
+    SeqExpr str = (SeqExpr) ctx.mkConst(name, ctx.getStringSort());
+
+    IntExpr strLength;
+    if (method == StringMethod.LENGTH) {
+      strLength = ctx.mkLength(str);
+    } else if (method == StringMethod.TO_INT) {
+      strLength = ctx.stringToInt(str);
+    } else {
+      throw new RuntimeException("Wrong string method: " + method);
+    }
+    IntExpr maxLength = ctx.mkInt(length.toString());
+    BoolExpr expr;
+    if (operator == Operator.LE) {
+      expr = ctx.mkLe(strLength, maxLength);
+    } else if (operator == Operator.LT) {
+      expr = ctx.mkLt(strLength, maxLength);
+    } else if (operator == Operator.GE) {
+      expr = ctx.mkGe(strLength, maxLength);
+    } else if (operator == Operator.GT) {
+      expr = ctx.mkGt(strLength, maxLength);
+    } else if (operator == Operator.NE) {
+      expr = ctx.mkNot(ctx.mkEq(strLength, maxLength));
+    } else if (operator == Operator.EQ) {
+      expr = ctx.mkEq(strLength, maxLength);
+    } else {
+      throw new RuntimeException(operator.toString());
+    }
+
+    if (negate) {
+      expr = ctx.mkNot(expr);
+    }
+    return expr;
+  }
+
+  public BoolExpr makeInStrTerm(String name, String constant, StringMethod method) {
+    SeqExpr str = (SeqExpr) ctx.mkConst(name, ctx.getStringSort());
+
+    SeqExpr strExpr = ctx.mkString(constant);
+    BoolExpr contains;
+    if (method == StringMethod.CONTAINS) {
+      contains = ctx.mkContains(str, strExpr);
+    } else if (method == StringMethod.STARTSWITH) {
+      contains = ctx.mkPrefixOf(strExpr, str);
+    } else if (method == StringMethod.ENDSWITH) {
+      contains = ctx.mkSuffixOf(strExpr, str);
+    } else if (method == StringMethod.EQUALS) {
+      contains = ctx.mkEq(strExpr, str);
+    } else {
+      throw new RuntimeException("Wrong StringMethod");
+    }
+    return contains;
+  }
+
   /**
    * Makes boolean term.
    *
@@ -434,13 +501,13 @@ public class SMTSolverZ3 {
     } else if (type instanceof RefType) {
       if (((RefType) type).getClassName().equals(String.class.getName())) { // z3 stringsort
         if (leftConstant && !left.equals("null")) {
-          leftExpr = ctx.MkString(left);
+          leftExpr = ctx.mkString(left);
         } else {
           leftExpr = ctx.mkConst(left, ctx.getStringSort());
         }
         right = StringUtils.remove(right, "\"");
         if (rightConstant && !right.equals("null")) {
-          rightExpr = ctx.MkString(right);
+          rightExpr = ctx.mkString(right);
         } else {
           rightExpr = ctx.mkConst(right, ctx.getStringSort());
         }

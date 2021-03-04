@@ -18,6 +18,7 @@ import com.google.common.io.Files;
 import cova.core.SceneTransformerFactory;
 import cova.reporter.ConstraintReporter;
 import cova.setup.config.Config;
+import cova.setup.infoflow.SetupApplication;
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
@@ -25,7 +26,6 @@ import org.xmlpull.v1.XmlPullParserException;
 import soot.PackManager;
 import soot.SceneTransformer;
 import soot.Transform;
-import soot.jimple.infoflow.android.SetupApplication;
 import soot.jimple.infoflow.android.callbacks.CallbackDefinition;
 
 /**

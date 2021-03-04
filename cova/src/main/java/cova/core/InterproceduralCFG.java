@@ -47,7 +47,9 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
     return delegateICFG;
   }
 
-  private String[] excluded = {"java.lang.*", "android.*", "java.io.Serializable"};
+  private static final String[] excluded = {
+    "java.lang.*", "android.*", "a.*", "androidx.*", "java.io.Serializable", "de.greenrobot.dao.*"
+  };
 
   /** Instantiates a new interprocedural CFG. */
   public InterproceduralCFG() {
@@ -221,7 +223,7 @@ public class InterproceduralCFG implements ProgramRepresentation<SootMethod, Uni
     return false;
   }
 
-  public boolean isExcludedMethod(SootMethod method) {
+  public static boolean isExcludedMethod(SootMethod method) {
     String name = method.getDeclaringClass().getName();
     for (String pkg : excluded) {
       if (name.equals(pkg)

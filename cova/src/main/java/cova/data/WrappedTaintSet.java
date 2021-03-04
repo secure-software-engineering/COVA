@@ -18,6 +18,7 @@ import cova.data.taints.AbstractTaint;
 import cova.data.taints.ConcreteTaint;
 import cova.data.taints.ImpreciseTaint;
 import cova.data.taints.SourceTaint;
+import cova.data.taints.StringTaint;
 import cova.data.taints.SymbolicTaint;
 import cova.data.taints.ZeroTaint;
 import java.util.Collection;
@@ -372,12 +373,16 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
       meeted.addAll(otherSet.taints);
       Set<ConcreteTaint> concreteTaints = new HashSet<ConcreteTaint>();
       Set<SymbolicTaint> symbolicTaints = new HashSet<SymbolicTaint>();
+      Set<StringTaint> stringTaints = new HashSet<StringTaint>();
       for (AbstractTaint taint : meeted.taints) {
         if (taint instanceof ConcreteTaint) {
           concreteTaints.add((ConcreteTaint) taint);
         }
         if (taint instanceof SymbolicTaint) {
           symbolicTaints.add((SymbolicTaint) taint);
+        }
+        if (taint instanceof StringTaint) {
+          stringTaints.add((StringTaint) taint);
         }
       }
       if (contains(ZeroTaint.getInstance())) {
@@ -416,6 +421,24 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
           }
         }
         for (SymbolicTaint taint : taintsMap.values()) {
+          ret.add(taint);
+        }
+      }
+      if (false && !stringTaints.isEmpty()) {
+        // symbolic taint is identified by the pair of access path and symbolic name
+        HashMap<Pair<WrappedAccessPath, String>, StringTaint> taintsMap = new HashMap<>();
+        for (StringTaint symbolicTaint : stringTaints) {
+          Pair<WrappedAccessPath, String> pair =
+              new Pair<>(symbolicTaint.getAccessPath(), symbolicTaint.getSymbolicName());
+          if (taintsMap.containsKey(pair)) {
+            StringTaint old = taintsMap.get(pair);
+            StringTaint updated = StringTaint.meetConstraint(old, symbolicTaint);
+            taintsMap.put(pair, updated);
+          } else {
+            taintsMap.put(pair, symbolicTaint);
+          }
+        }
+        for (StringTaint taint : taintsMap.values()) {
           ret.add(taint);
         }
       }

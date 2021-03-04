@@ -150,6 +150,15 @@ public class ConstraintReporter {
   }
 
   /**
+   * Gets the constraint map.
+   *
+   * @return the constraint map
+   */
+  public Map<Unit, IConstraint> getConstraintMap() {
+    return analysis.getConstraintMap();
+  }
+
+  /**
    * Gets the constraint map of given method.
    *
    * @return the constraint map of given method
@@ -336,5 +345,9 @@ public class ConstraintReporter {
       }
     }
     return s;
+  }
+
+  public InterproceduralCFG getIcfg() {
+    return icfg;
   }
 }

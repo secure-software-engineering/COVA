@@ -14,12 +14,19 @@
  */
 package cova.source;
 
+import cova.source.data.DynamicSource;
+import cova.source.data.Source;
+import cova.source.data.SourceType;
 import cova.source.data.SourceUICallback;
 import cova.source.parser.UICallbackParser;
 import cova.source.symbolic.SymbolicNameManager;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -93,6 +100,84 @@ public class CallbackMatcher {
     }
   }
 
+  private String searchDynamicCallback(SootMethod method, Unit unit) {
+    if (!IdManager.getInstance().isEnabled()) {
+      return null;
+    }
+    String declaringClassName = method.getDeclaringClass().toString();
+
+    Map<String, Integer> classnameToDynamicId =
+        IdManager.getInstance().getClassnameToDynamicIdMapping();
+    SourceInformation newInfo;
+    if (classnameToDynamicId.containsKey(declaringClassName)) {
+      // information from anonym class
+      Integer elementId = classnameToDynamicId.get(declaringClassName);
+      SourceInformation source = IdManager.getInstance().get(elementId);
+      newInfo =
+          new SourceInformation(
+              source.getLayoutId(), source.getId(), method.getName(), method.getName());
+
+    } else {
+      // information from xml file
+
+      SootClass declaringClass = method.getDeclaringClass();
+
+      // Test declaring class and all inner classes
+      List<SootClass> classesToTest = new ArrayList<>();
+      // add declaring class
+      classesToTest.add(method.getDeclaringClass());
+      // add inner classes
+      for (SootClass testClass : IdManager.getInstance().getLayoutClasses().keySet()) {
+        SootClass currentClass = testClass;
+        while (currentClass.hasOuterClass()) {
+          currentClass = currentClass.getOuterClass();
+          if (currentClass.equals(declaringClass)) {
+            classesToTest.add(testClass);
+            break;
+          }
+        }
+      }
+
+      List<SourceInformation> foundInfos = new ArrayList<>();
+      for (SootClass testClass : classesToTest) {
+        Set<Integer> layoutIds = IdManager.getInstance().getLayoutClasses().get(testClass);
+
+        for (Integer tmpLayoutId : layoutIds) {
+          List<SourceInformation> infos = IdManager.getInstance().getXmlSources().get(tmpLayoutId);
+
+          if (infos != null) {
+            for (SourceInformation info : infos) {
+              if (info.getMethodName().equals(method.getName())) {
+                foundInfos.add(info);
+              }
+            }
+          }
+
+          if (!foundInfos.isEmpty()) {
+            break;
+          }
+        }
+        if (!foundInfos.isEmpty()) {
+          break;
+        }
+      }
+
+      if (foundInfos.isEmpty()) {
+        return null;
+      }
+      SourceInformation min =
+          foundInfos.stream().min(Comparator.comparing(SourceInformation::getId)).get();
+      newInfo =
+          new SourceInformation(
+              min.getLayoutId(), min.getId(), min.getMethodName(), min.getTrigger());
+      newInfo.getAllInfos().addAll(foundInfos);
+    }
+
+    int newId = IdManager.getInstance().put(newInfo);
+    Source ui = new DynamicSource(SourceType.U, "U" + newId, newId, method.getSignature());
+    return SymbolicNameManager.getInstance().createSymbolicName(unit, ui);
+  }
+
   /**
    * Checks if an unit contains an UI callback. If an UI callback is found in the unit, return the
    * symbolic name of this callback. Otherwise, return null.
@@ -114,6 +199,10 @@ public class CallbackMatcher {
           Pattern pattern = callback.getMethodPattern();
           Matcher matcher = pattern.matcher(signature);
           if (matcher.find()) {
+            symbolicName = searchDynamicCallback(method, unit);
+            if (symbolicName != null) {
+              return symbolicName;
+            }
             symbolicName = SymbolicNameManager.getInstance().createSymbolicName(unit, callback);
             return symbolicName;
           }
@@ -139,6 +228,10 @@ public class CallbackMatcher {
             Pattern pattern = callback.getCallbackPattern();
             Matcher matcher = pattern.matcher(parentSignature);
             if (matcher.find()) {
+              symbolicName = searchDynamicCallback(method, unit);
+              if (symbolicName != null) {
+                return symbolicName;
+              }
               symbolicName = SymbolicNameManager.getInstance().createSymbolicName(unit, callback);
               return symbolicName;
             }

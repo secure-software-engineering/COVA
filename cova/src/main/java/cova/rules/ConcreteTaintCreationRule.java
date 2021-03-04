@@ -21,6 +21,7 @@ import cova.data.IConstraint;
 import cova.data.WrappedAccessPath;
 import cova.data.taints.AbstractTaint;
 import cova.data.taints.ConcreteTaint;
+import cova.data.taints.SourceTaint;
 import cova.data.taints.SymbolicTaint;
 import cova.vasco.Context;
 import java.util.Set;
@@ -107,9 +108,19 @@ public class ConcreteTaintCreationRule {
         // if argument is numeric or string constant, create at callee site concrete taint
         if (arg instanceof NumericConstant || arg instanceof StringConstant) {
           WrappedAccessPath calleeSite = new WrappedAccessPath(param);
-          ConcreteTaint taint = new ConcreteTaint(calleeSite, constraint, arg);
-          in.taints().add(taint);
-          createdConcreteTaint = true;
+          Set<AbstractTaint> involved = in.taints().getTaintsWithAccessPath(calleeSite);
+          // Do not create concrete taint if taint is only concrete in dummyMainClass
+          boolean hasSourceTaint = false;
+          for (AbstractTaint aTaint : involved) {
+            if (aTaint instanceof SourceTaint) {
+              hasSourceTaint = true;
+            }
+          }
+          if (!hasSourceTaint) {
+            ConcreteTaint taint = new ConcreteTaint(calleeSite, constraint, arg);
+            in.taints().add(taint);
+            createdConcreteTaint = true;
+          }
         }
       }
     }

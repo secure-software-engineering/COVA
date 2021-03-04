@@ -15,9 +15,11 @@
 package cova.source;
 
 import cova.core.SkipMethodOrClassRuleManager;
+import cova.source.data.DynamicSource;
 import cova.source.data.Source;
 import cova.source.data.SourceField;
 import cova.source.data.SourceMethod;
+import cova.source.data.SourceType;
 import cova.source.parser.SourceParser;
 import cova.source.symbolic.SymbolicNameManager;
 import java.io.File;
@@ -26,10 +28,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import soot.Local;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.AssignStmt;
+import soot.jimple.InvokeExpr;
 
 /**
  * This class is used to search configuration-related or input-related field or method in a given
@@ -62,6 +66,42 @@ public class FieldOrMethodMatcher {
     SkipMethodOrClassRuleManager.getInstance().setSkipMethods(getAllSourceMethods());
   }
 
+  private String searchDynamicFieldOrMethod(SootMethod parent, Unit unit) {
+    if (!IdManager.getInstance().isEnabled()) {
+      return null;
+    }
+    if (unit instanceof AssignStmt) {
+      AssignStmt assignStmt = (AssignStmt) unit;
+      if (assignStmt.containsInvokeExpr()) {
+        InvokeExpr invoke = assignStmt.getInvokeExpr();
+        SootMethod m = invoke.getMethod();
+        if ("android.view.View".equals(m.getReturnType().toString())) {
+          if ("findViewById".equals(m.getName())) {
+            Set<Integer> activityIds =
+                IdManager.getInstance().getLayoutClasses().get(parent.getDeclaringClass());
+            if (!activityIds.isEmpty()) {
+              int activityId = activityIds.iterator().next();
+              Value argValue = invoke.getArg(0);
+              if (argValue instanceof Local) {
+                System.err.println("Argument of findViewById is a local in " + m.toString());
+                return null;
+              }
+
+              int fieldId = Integer.parseInt(argValue.toString());
+
+              int resultingId = IdManager.getInstance().put(activityId, fieldId);
+
+              Source source =
+                  new DynamicSource(SourceType.I, "I" + resultingId, resultingId, m.getSignature());
+              return SymbolicNameManager.getInstance().createSymbolicName(unit, source);
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   /**
    * Check if an unit(a statement in soot) contains a source. If a source is found in the unit,
    * return the symbolic name of this source. Otherwise, return null.
@@ -73,6 +113,10 @@ public class FieldOrMethodMatcher {
    */
   public String searchFieldOrMethod(SootMethod parent, Unit unit) {
     String symbolicName = null;
+    symbolicName = searchDynamicFieldOrMethod(parent, unit);
+    if (symbolicName != null) {
+      return symbolicName;
+    }
     if (unit instanceof AssignStmt) {
       AssignStmt assignStmt = (AssignStmt) unit;
       Value rightOp = assignStmt.getRightOp();

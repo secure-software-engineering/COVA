@@ -19,6 +19,7 @@ import cova.rules.ConcreteTaintCreationRule;
 import cova.rules.IRule;
 import cova.rules.ImpreciseTaintCreationRule;
 import cova.rules.SourceTaintCreationRule;
+import cova.rules.StringTaintCreationRule;
 import cova.rules.TaintConstraintCreationRule;
 import cova.rules.TaintPropagationRule;
 import cova.rules.UIConstraintCreationRule;
@@ -47,6 +48,7 @@ public class RuleManager {
   private SourceTaintCreationRule sourceTaintCreationRule;
   private ImpreciseTaintCreationRule impreciseTaintCreationRule;
   private ConcreteTaintCreationRule concreteTaintCreationRule;
+  private StringTaintCreationRule stringTaintCreationRule;
 
   public SourceTaintCreationRule getSourceTaintCreationRule() {
     return sourceTaintCreationRule;
@@ -58,6 +60,10 @@ public class RuleManager {
 
   public ConcreteTaintCreationRule getConcreteTaintCreationRule() {
     return concreteTaintCreationRule;
+  }
+
+  public StringTaintCreationRule getStringTaintCreationRule() {
+    return stringTaintCreationRule;
   }
 
   private Aliasing aliasing;
@@ -108,6 +114,9 @@ public class RuleManager {
               config.isConcreteTaintAtReturnStmtOn(),
               config.isConcreteTaintAtCalleeOn(),
               this);
+    }
+    if (config.isStringTaintCreationRuleOn()) {
+      stringTaintCreationRule = new StringTaintCreationRule(this);
     }
     if (config.isUIConstraintCreationRuleOn()) {
       rules.add(new UIConstraintCreationRule(this));

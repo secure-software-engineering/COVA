@@ -25,11 +25,13 @@ import cova.data.WrappedAccessPath;
 import cova.data.WrappedTaintSet;
 import cova.data.taints.AbstractTaint;
 import cova.data.taints.ConcreteTaint;
+import cova.data.taints.StringTaint;
 import cova.vasco.Context;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import soot.Local;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
@@ -120,7 +122,7 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
                   context.getMethod().getDeclaringClass().getName(),
                   node.getJavaSourceStartLineNumber());
         constraint = constraint.or(c, false);
-        if (!(taint instanceof ConcreteTaint)) {
+        if (!(taint instanceof ConcreteTaint || taint instanceof StringTaint)) {
           allConcrete = false;
         }
       }
@@ -146,7 +148,7 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
                 true,
                 isFallThroughEdge);
         constraint = constraint.or(c, false);
-        if (!(taint instanceof ConcreteTaint)) {
+        if (!(taint instanceof ConcreteTaint || taint instanceof StringTaint)) {
           allConcrete = false;
         }
       }
@@ -289,6 +291,23 @@ public class TaintConstraintCreationRule implements IRule<SootMethod, Unit, Abst
         if (!constraint.isTrue()) {
           constraint.simplify();
           in.updateConstraint(constraint);
+        }
+      } else {
+        Integer foundKey = null;
+        for (int i = 0; i < switchStmt.getTargetCount(); i++) {
+          int lookup = switchStmt.getLookupValue(i);
+          Unit target = switchStmt.getTarget(i);
+          if (target.equals(node)) {
+            foundKey = lookup;
+          }
+        }
+        IConstraint constraint = ConstraintZ3.getFalse();
+        for (AbstractTaint taint : in.taints().getTaintsWithBase((Local) switchStmt.getKey())) {
+          EqExpr eqExpr = Jimple.v().newEqExpr(switchStmt.getKey(), IntConstant.v(foundKey));
+          IConstraint c =
+              ConstraintFactory.createConstraint(
+                  ruleManager.getConfig().recordPath(), taint, eqExpr, false, false);
+          constraint = constraint.or(c, false);
         }
       }
     }

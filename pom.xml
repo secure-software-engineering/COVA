@@ -10,6 +10,8 @@
 	<name>cova-root</name>
 	<url>http://maven.apache.org</url>
 	<modules>
+		<module>apktool</module>
+		<module>cova_automatic</module>
 		<module>cova</module>
 		<module>constraintBench</module>
 		<module>covaIDE</module>

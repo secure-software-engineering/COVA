@@ -185,7 +185,7 @@
 		<dependency>
 			<groupId>z3Prover</groupId>
 			<artifactId>z3</artifactId>
-			<version>4.5.0</version>
+			<version>4.8.9</version>
 		</dependency>
 		<dependency>
 			<groupId>de.tud.sse</groupId>
@@ -216,6 +216,11 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 	</dependencies>
 	<repositories>
