@@ -2,6 +2,7 @@ package cova.automatic.apk.aapt;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 public class AaptTreeParser {
 
@@ -16,7 +17,7 @@ public class AaptTreeParser {
     }
 
     public Section(String text, int depth, Section parent) {
-      this.text = text.strip();
+      this.text = text.trim();
       this.depth = depth;
       this.children = new ArrayList<Section>();
       this.parent = parent;
@@ -43,7 +44,7 @@ public class AaptTreeParser {
     Section root = null;
     Section prev = null;
     for (String line : lines) {
-      int depth = line.length() - line.stripLeading().length();
+      int depth = line.length() - StringUtils.stripStart(line," ").length();
       if (prev == null && depth == 0) {
         root = new Section(line, depth);
         prev = root;
