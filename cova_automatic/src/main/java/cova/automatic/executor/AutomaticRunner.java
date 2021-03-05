@@ -48,6 +48,9 @@ public class AutomaticRunner {
   private static Path platformDir;
   private static Path sourceCodeDir;
 
+  private static boolean stringTaintsEnabled = true;
+  private static boolean dynamicSourcesEnabled = true;
+
   public static void parseArgs(String[] args) throws ParseException {
     Options options = new Options();
     // standard options
@@ -66,7 +69,10 @@ public class AutomaticRunner {
         "output_html",
         true,
         "Print results in HTML files, this option should be followed by the java source code path of your application.");
-
+    options.addOption(
+        "STaint", "stringTaintCreation", true, "<arg> = true, if enables StringTaintCreationRule.");
+    options.addOption(
+        "DynamicSources", "dynamicSources", true, "<arg> = true, if enables dynamic sources.");
     CommandLineParser parser = new DefaultParser();
     CommandLine cmd = parser.parse(options, args);
     apkFile = Paths.get(cmd.getOptionValue("apk"));
@@ -74,6 +80,14 @@ public class AutomaticRunner {
     platformDir = Paths.get(cmd.getOptionValue("platform"));
     if (cmd.hasOption("output_html")) {
       sourceCodeDir = Paths.get(cmd.getOptionValue("output_html"));
+    }
+    if (cmd.hasOption("STaint")) {
+      boolean value = Boolean.parseBoolean(cmd.getOptionValue("STaint"));
+      stringTaintsEnabled = value;
+    }
+    if (cmd.hasOption("DynamicSources")) {
+      boolean value = Boolean.parseBoolean(cmd.getOptionValue("DynamicSources"));
+      dynamicSourcesEnabled = value;
     }
   }
 
@@ -154,12 +168,16 @@ public class AutomaticRunner {
 
     // Run cova
     Config config = new DefaultConfigForAndroid();
-    config.setStringTaintCreationRuleOn(true);
+    if (stringTaintsEnabled) {
+      config.setStringTaintCreationRuleOn(true);
+    }
     config.setConfigDir(configDir.toString());
     config.setWriteJimpleOutput(true);
 
     // Enable dynamic ids
-    IdManager.getInstance().enable();
+    if (dynamicSourcesEnabled) {
+      IdManager.getInstance().enable();
+    }
 
     String sourceCodeDirStr = null;
     if (sourceCodeDir != null) {

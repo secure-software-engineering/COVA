@@ -44,7 +44,7 @@ public class AaptTreeParser {
     Section root = null;
     Section prev = null;
     for (String line : lines) {
-      int depth = line.length() - StringUtils.stripStart(line," ").length();
+      int depth = line.length() - StringUtils.stripStart(line, " ").length();
       if (prev == null && depth == 0) {
         root = new Section(line, depth);
         prev = root;

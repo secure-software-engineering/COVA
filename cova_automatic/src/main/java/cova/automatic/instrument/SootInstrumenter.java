@@ -67,7 +67,7 @@ public class SootInstrumenter {
                       return;
                     }
 
-                    if(b.getMethod().getDeclaringClass().isPhantomClass()) {
+                    if (b.getMethod().getDeclaringClass().isPhantomClass()) {
                       return;
                     }
                     final PatchingChain<Unit> units = b.getUnits();

@@ -68,6 +68,8 @@ public class Main {
         true,
         "<arg> = true, if enables ConcreteTaintCreationRule.");
     options.addOption(
+        "STaint", "stringTaintCreation", true, "<arg> = true, if enables StringTaintCreationRule.");
+    options.addOption(
         "CTA",
         "concreteTaintAtAssignStmt",
         true,
@@ -96,7 +98,8 @@ public class Main {
         "all",
         false,
         "Enables all propagation rules. When this is enabled, options to turn on single rule will be ignored. This is the most precise configuration of the analysis.");
-
+    options.addOption(
+        "DynamicSources", "dynamicSources", true, "<arg> = true, if enables dynamic sources.");
     // options for output files
     options.addOption(
         "output_html",

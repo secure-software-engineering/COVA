@@ -23,7 +23,6 @@ public class ApkSignHelper {
     URL fileUrl = getClass().getResource("/demo.jks");
     File ksF = new File(fileUrl.getFile());
 
-
     Project project = new Project();
     project.init();
     SignJar sign = new SignJar();

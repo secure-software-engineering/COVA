@@ -91,6 +91,10 @@ public class IdManager {
     enabled = true;
   }
 
+  public void disable() {
+    enabled = false;
+  }
+
   public MultiMap<SootClass, Integer> getLayoutClasses() {
     return layoutClasses;
   }
