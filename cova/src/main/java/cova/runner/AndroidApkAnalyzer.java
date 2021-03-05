@@ -25,6 +25,7 @@ import cova.setup.RunCova;
 import cova.setup.RunFlowDroid;
 import cova.setup.config.Config;
 import cova.setup.config.DefaultConfigForAndroid;
+import cova.source.IdManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -206,6 +207,18 @@ public class AndroidApkAnalyzer {
       if (cmd.hasOption("CTaint")) {
         boolean value = Boolean.parseBoolean(cmd.getOptionValue("CTaint"));
         config.setConcreteTaintCreationRuleOn(value);
+      }
+      if (cmd.hasOption("STaint")) {
+        boolean value = Boolean.parseBoolean(cmd.getOptionValue("STaint"));
+        config.setStringTaintCreationRuleOn(value);
+      }
+      if (cmd.hasOption("DynamicSources")) {
+        boolean value = Boolean.parseBoolean(cmd.getOptionValue("DynamicSources"));
+        if (value) {
+          IdManager.getInstance().enable();
+        } else {
+          IdManager.getInstance().disable();
+        }
       }
       if (config.isConcreteTaintCreationRuleOn()) {
         boolean cta = true;
