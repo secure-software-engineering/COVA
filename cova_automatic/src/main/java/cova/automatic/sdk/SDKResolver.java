@@ -8,7 +8,9 @@ import java.nio.file.Paths;
 
 public class SDKResolver {
   public static Path resolve() throws IOException {
-    Path basePath = Paths.get("/opt/android-sdk/build-tools");
+    Path androidHome = Paths.get(System.getenv("ANDROID_HOME"));
+    Path basePath = androidHome.resolve("build-tools");
+    
     String max = "0";
     Path androidPath = null;
     try (DirectoryStream<Path> dirs = Files.newDirectoryStream(basePath)) {
