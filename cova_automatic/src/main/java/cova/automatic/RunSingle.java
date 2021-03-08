@@ -16,9 +16,14 @@ import java.security.cert.CertificateException;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlPullParserException;
 
 public class RunSingle {
+
+  private static final Logger logger = LoggerFactory.getLogger(RunAll.class);
+
   public static void main(String[] args)
       throws IOException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException,
           CertificateException, AndrolibException, DirectoryException, XmlPullParserException,
@@ -30,39 +35,38 @@ public class RunSingle {
     String mainActivity = baseResult.getMainActivity();
     for (int i = 0; i < information.size(); i++) {
       ConstraintInformation info = information.get(i);
-      System.out.println("[" + i + "]");
-      System.out.println(info.getClazz());
-      System.out.println(info.getJavaLineNumber() + ": " + info.getUnit());
-      System.out.println(info.getConstraint().toReadableString());
-      System.out.println(info.getConstraintMap());
-      System.out.println();
+      logger.info("[" + i + "]");
+      logger.info(info.getClazz().toString());
+      logger.info(info.getJavaLineNumber() + ": " + info.getUnit());
+      logger.info(info.getConstraint().toReadableString());
+      logger.info(info.getConstraintMap().toString());
     }
-    System.out.println("Choose between 0 and " + (information.size() - 1));
+    logger.info("Choose between 0 and " + (information.size() - 1));
 
     Scanner in = new Scanner(System.in);
     int selected = in.nextInt();
     in.close();
-    System.out.println("Selected: " + selected);
+    logger.info("Selected: " + selected);
     ConstraintInformation selectedInfo = information.get(selected);
 
     TestInput input = new TestInput(baseResult, selectedInfo);
-    System.out.println(selectedInfo.getOutput());
-    System.out.println(selectedInfo.getConstraintMap());
+    logger.info(selectedInfo.getOutput());
+    logger.info(selectedInfo.getConstraintMap().toString());
 
-    System.out.println("Main activity: " + mainActivity);
-    Appium appium = Appium.setUp(baseResult.getApkPath());
+    logger.info("Main activity: " + mainActivity);
+    Appium appium = Appium.setUp(baseResult.getAppiumURL(), baseResult.getApkPath());
 
     AutomaticRunner.testApp(input, appium, null);
 
     TestResult testResult = AutomaticRunner.testApp(input, appium, null);
 
     if (testResult.isReachedDestination()) {
-      System.out.println("Reached Target");
+      logger.info("Reached Target");
     } else {
       for (String log : testResult.getLogs()) {
-        System.out.println(log);
+        logger.info(log);
       }
-      System.out.println("Did not reach target");
+      logger.error("Did not reach target");
     }
   }
 }

@@ -22,11 +22,14 @@ import java.util.Map.Entry;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Appium {
 
   private AndroidDriver<MobileElement> driver;
   private List<String> logs = new ArrayList<>();
+  private final Logger logger = LoggerFactory.getLogger(getClass());
 
   private Appium(AndroidDriver<MobileElement> driver) {
     this.driver = driver;
@@ -41,14 +44,14 @@ public class Appium {
     driver.startLogcatBroadcast();
   }
 
-  public static Appium setUp(Path apkFile) throws MalformedURLException {
+  public static Appium setUp(String url, Path apkFile) throws MalformedURLException {
     DesiredCapabilities capabilities = new DesiredCapabilities();
     capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
     capabilities.setCapability(MobileCapabilityType.APP, apkFile.toAbsolutePath().toString());
     // capabilities.setCapability(MobileCapabilityType.FULL_RESET, true);
     // capabilities.setCapability(MobileCapabilityType.NO_RESET, false);
 
-    AndroidDriver<MobileElement> driver = getDriver(capabilities);
+    AndroidDriver<MobileElement> driver = getDriver(url, capabilities);
     driver.installApp(apkFile.toAbsolutePath().toString());
     // System.exit(0);
     try {
@@ -66,8 +69,7 @@ public class Appium {
       String selectedOutput,
       Map<Integer, String> mapping)
       throws IOException {
-    System.out.println();
-    System.out.println("Start testing run");
+    logger.info("Start testing run");
     // driver.closeApp();
     logs.clear();
     driver.launchApp();
@@ -88,7 +90,7 @@ public class Appium {
     result.setSelectedOutput(selectedOutput);
     // Go along defined path
     for (ConstraintInformation activityInfo : path) {
-      System.out.println("Send events to " + activityInfo.getClazz());
+      logger.info("Send events to " + activityInfo.getClazz());
       Map<String, Object> constraintMap = activityInfo.getConstraintMap();
       // String fullyQualified = driver.getCurrentPackage() + driver.currentActivity();
       // int activityId = activityToId.get(fullyQualified);
@@ -96,7 +98,7 @@ public class Appium {
 
       TestResultActivity resultActivity =
           new TestResultActivity(activityInfo.getClazz().toString(), constraintMap);
-      System.out.println(resultActivity.getConstraints());
+      logger.info(resultActivity.getConstraints().toString());
       result.getPath().add(resultActivity);
 
       // Collect actions
@@ -145,7 +147,7 @@ public class Appium {
           TestResultInput resultInput =
               new TestResultInput(TestResultInputType.VALUE, clazz, s, a.getId());
 
-          System.out.println("Send '" + s + "' to input " + ele.getId() + " (" + clazz + ")");
+          logger.info("Send '" + s + "' to input " + ele.getId() + " (" + clazz + ")");
           boolean inputOk = true;
           if (clazz.equals("android.widget.Spinner")) {
             if (s.equals("!0!") || s.equals("!1!")) {
@@ -257,14 +259,13 @@ public class Appium {
           resultActivity.getInputs().add(resultInput);
 
           ele.click();
-          System.out.println("Click on input " + ele.getId());
+          logger.info("Click on input " + ele.getId());
         } else {
           throw new RuntimeException(a.getActionType() + " not implemented yet");
         }
       }
-      System.out.println("Remaining constraints (not found in app):");
-      System.out.println(constraintMap);
-      System.out.println();
+      logger.info("Remaining constraints (not found in app):");
+      logger.info(constraintMap.toString());
       try {
         Thread.sleep(1000);
       } catch (InterruptedException e) {
@@ -294,11 +295,14 @@ public class Appium {
     return result;
   }
 
-  private static AndroidDriver<MobileElement> getDriver(Capabilities capabilities)
+  private static AndroidDriver<MobileElement> getDriver(String url, Capabilities capabilities)
       throws MalformedURLException {
+    if (url == null) {
+      url = "http://127.0.0.1:4723/wd/hub";
+    }
     while (true) {
       try {
-        return new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        return new AndroidDriver<>(new URL(url), capabilities);
       } catch (Exception e) {
         e.printStackTrace();
         try {

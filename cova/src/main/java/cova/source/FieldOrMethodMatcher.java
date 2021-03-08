@@ -28,6 +28,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import soot.Local;
 import soot.SootMethod;
 import soot.Unit;
@@ -52,6 +54,8 @@ public class FieldOrMethodMatcher {
 
   /** The sources read by the parser. */
   private Set<Source> sources;
+
+  private final Logger logger = LoggerFactory.getLogger(getClass());
 
   /**
    * Instantiates a new FieldOrMethodMatcher.
@@ -83,7 +87,7 @@ public class FieldOrMethodMatcher {
               int activityId = activityIds.iterator().next();
               Value argValue = invoke.getArg(0);
               if (argValue instanceof Local) {
-                System.err.println("Argument of findViewById is a local in " + m.toString());
+                logger.error("Argument of findViewById is a local in " + m.toString());
                 return null;
               }
 
