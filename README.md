@@ -20,19 +20,19 @@ COVA is implemented as a maven project. However, since some dependencies COVA us
 
 ## 1. Bind Z3 Library
 COVA uses Z3 for STM-Solving and you need at first to bind Z3 for running the tool or use a [docker image](/cova/config/Dockerfile.txt) (tested on Linux). 
-You can find Z3-4.5.0 in the local directory `$REPO_LOCATION/cova/localLibs/` or downloand it from [the GitHub repostiory of Z3](https://github.com/Z3Prover/z3).  
+You can find Z3-4.8.9 in the local directory `$REPO_LOCATION/cova/localLibs/` or downloand it from [the GitHub repostiory of Z3](https://github.com/Z3Prover/z3).  
 ### - Windows
 Currently, the repository only includes Z3 for Windows 64bit.
 There are two choices for you to bind z3:
 
 - **Userwide via OS**: 
-Add `$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-win/bin` to the system variable `PATH` of your operating system ([How do I set or change the PATH system variable?](https://www.java.com/en/download/help/path.xml)). You may need to restart your OS. 
+Add `$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-win/bin` to the system variable `PATH` of your operating system ([How do I set or change the PATH system variable?](https://www.java.com/en/download/help/path.xml)). You may need to restart your OS. 
 
 - **Projectwide in Eclipse**: 
 After importing COVA as maven project, you can specify the environment variable: 
 > Eclipse > Run > Run Configurations > Environment > New  
 Name: `PATH`  
-Value: `$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-win/bin`
+Value: `$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-win/bin`
 
 
 ### - Linux
@@ -43,12 +43,12 @@ Currently, the repository only includes Z3 for Ubuntu and Debian-8.5 64bit.
 Ubuntu based distributions:
 
 Execute the following command in yout command line: (you can set LD_LIBRARY_PATH otherwise only in an interactive shell since Ubuntu 9.04)
-    `REPO_LOCATION=$("pwd") && echo "$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-ubuntu/bin" | sudo tee /etc/ld.so.conf.d/cova.conf && sudo ldconfig`
+    `REPO_LOCATION=$("pwd") && echo "$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-ubuntu-16.04/bin" | sudo tee /etc/ld.so.conf.d/cova.conf && sudo ldconfig`
 
 Other:
 
 Add the **LD_LIBRARY_PATH** Variable to ~/.profile( or ~/.xprofile): cd into Repository:
-`REPO_LOCATION=$("pwd") && echo "export LD_LIBRARY_PATH=\"\$LD_LIBRARY_PATH:$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-ubuntu/bin\"" >> ~/.profile;`
+`REPO_LOCATION=$("pwd") && echo "export LD_LIBRARY_PATH=\"\$LD_LIBRARY_PATH:$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-ubuntu-16.04/bin\"" >> ~/.profile;`
 Load the edited file to your current environment (e.g. `source ~/.profile` or restart your user session). 
 
 
@@ -56,11 +56,11 @@ Load the edited file to your current environment (e.g. `source ~/.profile` or re
 After importing COVA as maven project, you can specify the environment variable (change $REPO_LOCATION according to the location of the repository):
 > Eclipse > Run > Run Configurations > Environment > New  
 Name: `LD_LIBRARY_PATH`  
-Value: `$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-ubuntu/bin` 
+Value: `$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-ubuntu-16.04/bin` 
 
 - **Projectwide in IntelliJ**
 Set [java.library.path] in the VM options input field in the Run/Debug Configurations dialog.
-`$REPO_LOCATION/cova/localLibs/z3-4.5.0-x64-ubuntu/bin`
+`$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-ubuntu-16.04/bin`
 
 ### - OSX
 You need to add Z3 to `DYLD_LIBRARY_PATH` (untested)
@@ -112,4 +112,17 @@ Run cova with the following options:
 
    The results are in HTML files located in ``$WORKING_DIRECTORY/covaOutput/htmlOutput``
    
+## 4. Run cova_automatic
+1. Install the following tools:
+   - Appium (http://appium.io/)
+   - Android SDK with build-tools (https://developer.android.com/studio/releases/build-tools) has to be installed and the ANDROID_HOME environemnt variable has to be set.
+2. Set up enviroment variables:
+   - `ANDROID_HOME`: Android SDK Location 
+   - `PATH` (Windows) or `LD_LIBRARY_PATH` (Linux): `$REPO_LOCATION/cova/localLibs/$Z3_FOLDER/bin`. See the section ''Bind Z3 Library'' above.
+3. start Appium with default configuration 
 
+4. run on an apk with the following command: 
+
+`java -jar cova_automatic-$VERSION.jar -apk $APKS_PATH -config $REPO_LOCATION/cova/config -platform $ANDROID_PLATFORMS`
+
+5. The results of automatic tests appear in `$user.home/cova_test_results`. On Linux this is `~/cova_test_results`, on Windows it is `C:\Users\%username%\cova_test_results`.

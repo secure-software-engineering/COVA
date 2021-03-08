@@ -19,3 +19,5 @@ constraintBench/javaApps/CovaJavaExample/
 cova/dependency-reduced-pom.xml
 
 .metadata/
+cova_automatic/dependency-reduced-pom.xml
+cova/localLibs/z3-4.8.9-x64-win/
