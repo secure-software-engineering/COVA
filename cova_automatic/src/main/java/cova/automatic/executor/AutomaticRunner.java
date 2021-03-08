@@ -50,6 +50,7 @@ public class AutomaticRunner {
   private static Path configDir;
   private static Path platformDir;
   private static Path sourceCodeDir;
+  private static String appiumUrl;
 
   private static boolean stringTaintsEnabled = true;
   private static boolean dynamicSourcesEnabled = true;
@@ -78,6 +79,7 @@ public class AutomaticRunner {
         "STaint", "stringTaintCreation", true, "<arg> = true, if enables StringTaintCreationRule.");
     options.addOption(
         "DynamicSources", "dynamicSources", true, "<arg> = true, if enables dynamic sources.");
+    options.addOption("AppiumURL", "appium", true, "The deviating URL of the appium server");
     CommandLineParser parser = new DefaultParser();
     CommandLine cmd = parser.parse(options, args);
     apkFile = Paths.get(cmd.getOptionValue("apk"));
@@ -93,6 +95,12 @@ public class AutomaticRunner {
     if (cmd.hasOption("DynamicSources")) {
       boolean value = Boolean.parseBoolean(cmd.getOptionValue("DynamicSources"));
       dynamicSourcesEnabled = value;
+    }
+    if (cmd.hasOption("AppiumURL")) {
+      appiumUrl = cmd.getOptionValue("AppiumURL");
+    } else {
+      // Default url
+      appiumUrl = "http://127.0.0.1:4723/wd/hub";
     }
   }
 
@@ -110,7 +118,7 @@ public class AutomaticRunner {
     Path signedApk = tmpDir.resolve(apkFile.getFileName() + "-signed.apk");
     Path alignedApk = tmpDir.resolve(apkFile.getFileName() + "-aligned.apk");
     return AutomaticRunner.doAnalysis(
-        apkFile, platformDir, jarPath, targetApk, signedApk, alignedApk, configDir);
+        apkFile, platformDir, jarPath, targetApk, signedApk, alignedApk, configDir, appiumUrl);
   }
 
   public static AnalysisResult doAnalysis(
@@ -120,7 +128,8 @@ public class AutomaticRunner {
       Path targetApk,
       Path signedApk,
       Path alignedApk,
-      Path configDir)
+      Path configDir,
+      String appiumURL)
       throws IOException, XmlPullParserException, UnrecoverableKeyException, KeyStoreException,
           NoSuchAlgorithmException, CertificateException, InterruptedException, AndrolibException,
           DirectoryException {
@@ -218,6 +227,7 @@ public class AutomaticRunner {
     result.setActivityTimeInMillis(activityTraverserEnd - activityTraverserStart);
     result.setPossibleTargets(possibleTargets);
     result.setMapping(mapping);
+    result.setAppiumURL(appiumURL);
     return result;
   }
 

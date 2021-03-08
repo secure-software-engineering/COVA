@@ -17,6 +17,7 @@ public class AnalysisResult {
 
   private List<TargetStrings> possibleTargets;
   private Map<Integer, String> mapping;
+  private String appiumURL;
 
   public AnalysisResult() {}
 
@@ -98,5 +99,13 @@ public class AnalysisResult {
 
   public void setMapping(Map<Integer, String> mapping) {
     this.mapping = mapping;
+  }
+
+  public String getAppiumURL() {
+    return appiumURL;
+  }
+
+  public void setAppiumURL(String appiumURL) {
+    this.appiumURL = appiumURL;
   }
 }

@@ -65,7 +65,7 @@ public class RunAll {
     try (PrintStream htmlPs = new PrintStream(htmlPath.toFile())) {
       htmlPs.println("<table>");
       htmlPs.println("<tr><th>Constraint</th><th>Target</th><th>Reached</th><th>Values</th></tr>");
-      Appium appium = Appium.setUp(baseResult.getApkPath());
+      Appium appium = Appium.setUp(baseResult.getAppiumURL(), baseResult.getApkPath());
       int i = 0;
       for (ConstraintInformation c : baseResult.getConstraints()) {
 

@@ -54,7 +54,7 @@ public class RunSingle {
     logger.info(selectedInfo.getConstraintMap().toString());
 
     logger.info("Main activity: " + mainActivity);
-    Appium appium = Appium.setUp(baseResult.getApkPath());
+    Appium appium = Appium.setUp(baseResult.getAppiumURL(), baseResult.getApkPath());
 
     AutomaticRunner.testApp(input, appium, null);
 

@@ -44,14 +44,14 @@ public class Appium {
     driver.startLogcatBroadcast();
   }
 
-  public static Appium setUp(Path apkFile) throws MalformedURLException {
+  public static Appium setUp(String url, Path apkFile) throws MalformedURLException {
     DesiredCapabilities capabilities = new DesiredCapabilities();
     capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
     capabilities.setCapability(MobileCapabilityType.APP, apkFile.toAbsolutePath().toString());
     // capabilities.setCapability(MobileCapabilityType.FULL_RESET, true);
     // capabilities.setCapability(MobileCapabilityType.NO_RESET, false);
 
-    AndroidDriver<MobileElement> driver = getDriver(capabilities);
+    AndroidDriver<MobileElement> driver = getDriver(url, capabilities);
     driver.installApp(apkFile.toAbsolutePath().toString());
     // System.exit(0);
     try {
@@ -295,11 +295,14 @@ public class Appium {
     return result;
   }
 
-  private static AndroidDriver<MobileElement> getDriver(Capabilities capabilities)
+  private static AndroidDriver<MobileElement> getDriver(String url, Capabilities capabilities)
       throws MalformedURLException {
+    if (url == null) {
+      url = "http://127.0.0.1:4723/wd/hub";
+    }
     while (true) {
       try {
-        return new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        return new AndroidDriver<>(new URL(url), capabilities);
       } catch (Exception e) {
         e.printStackTrace();
         try {
