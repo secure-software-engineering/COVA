@@ -13,6 +13,8 @@ import cova.vasco.Context;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
@@ -23,6 +25,7 @@ import soot.jimple.StaticInvokeExpr;
 
 public class StringTaintCreationRule {
   private final InterproceduralCFG icfg;
+  private final Logger logger = LoggerFactory.getLogger(getClass());
 
   public StringTaintCreationRule(RuleManager ruleManager) {
     icfg = ruleManager.getIcfg();
@@ -149,7 +152,7 @@ public class StringTaintCreationRule {
 
           return true;
         } else {
-          System.err.println("Method String." + methodName + " not implemented yet");
+          logger.error("Method String." + methodName + " not implemented yet");
         }
       }
     } else if (rightOp instanceof StaticInvokeExpr) {
@@ -188,7 +191,7 @@ public class StringTaintCreationRule {
           in.taints().addAll(newTaints);
           return true;
         } else {
-          System.err.println("Method Integer." + methodName + " not implemented yet");
+          logger.error("Method Integer." + methodName + " not implemented yet");
         }
       }
     }

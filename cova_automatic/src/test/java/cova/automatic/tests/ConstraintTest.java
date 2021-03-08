@@ -115,7 +115,6 @@ public class ConstraintTest {
     String search = "\"" + name + "\"";
     for (ConstraintInformation info : result.getConstraints()) {
       if (info.getUnit().toString().contains(search)) {
-        System.out.println(info.getUnit().toString());
         return info;
       }
     }

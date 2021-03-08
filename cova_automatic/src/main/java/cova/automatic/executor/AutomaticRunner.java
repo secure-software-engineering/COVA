@@ -2,6 +2,7 @@ package cova.automatic.executor;
 
 import brut.androlib.AndrolibException;
 import brut.directory.DirectoryException;
+import cova.automatic.RunAll;
 import cova.automatic.activities.ActivityTraverser;
 import cova.automatic.apk.ApkSignHelper;
 import cova.automatic.apk.ApktoolMapper;
@@ -34,6 +35,8 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlPullParserException;
 import soot.jimple.infoflow.android.axml.AXmlNode;
 import soot.jimple.infoflow.android.manifest.ProcessManifest;
@@ -50,6 +53,8 @@ public class AutomaticRunner {
 
   private static boolean stringTaintsEnabled = true;
   private static boolean dynamicSourcesEnabled = true;
+
+  private static final Logger logger = LoggerFactory.getLogger(RunAll.class);
 
   public static void parseArgs(String[] args) throws ParseException {
     Options options = new Options();
@@ -190,7 +195,7 @@ public class AutomaticRunner {
 
     long covaEnd = System.currentTimeMillis();
 
-    System.out.println("Traverse Acitivities");
+    logger.info("Traverse Acitivities");
 
     long activityTraverserStart = System.currentTimeMillis();
 
@@ -201,7 +206,7 @@ public class AutomaticRunner {
       cInfo.setPaths(paths);
     }
     long activityTraverserEnd = System.currentTimeMillis();
-    System.out.println("Finish traversing");
+    logger.info("Finish traversing");
 
     AnalysisResult result = new AnalysisResult();
     result.setMainActivity(mainActivity);
@@ -224,11 +229,11 @@ public class AutomaticRunner {
     // Get possible paths to target
     List<List<ConstraintInformation>> paths = input.getSelectedConstraint().getPaths();
     if (paths.isEmpty()) {
-      System.err.println("No path to constraint");
-      System.err.println(input.getSelectedConstraint().getMethod());
-      System.err.println(input.getSelectedConstraint().getOutput());
-      System.err.println(input.getSelectedConstraint().getConstraint());
-      System.err.println(input.getSelectedConstraint().getConstraintMap());
+      logger.error("No path to constraint");
+      logger.error(input.getSelectedConstraint().getMethod().toString());
+      logger.error(input.getSelectedConstraint().getOutput());
+      logger.error(input.getSelectedConstraint().getConstraint().toString());
+      logger.error(input.getSelectedConstraint().getConstraintMap().toString());
 
       return null;
     }

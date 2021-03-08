@@ -25,11 +25,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map.Entry;
 import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlPullParserException;
 
 public class RunAll {
 
   public static final String DATE_FORMAT = "yyyy-MM-dd_HH-mm-ss";
+  private static final Logger logger = LoggerFactory.getLogger(RunAll.class);
 
   public static void main(String[] args)
       throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException,
@@ -74,13 +77,13 @@ public class RunAll {
         Path jsonPath = runPath.resolve("information.json");
 
         TestInput input = new TestInput(baseResult, c);
-        System.out.println("[" + i + "]");
-        System.out.println(c.getOutput());
-        System.out.println(c.getConstraintMap());
+        logger.info("[" + i + "]");
+        logger.info(c.getOutput());
+        logger.info(c.getConstraintMap().toString());
 
         TestResult result = AutomaticRunner.testApp(input, appium, videoPath);
         if (result == null) {
-          System.out.println("path not found");
+          logger.error("path not found");
           i++;
           continue;
         }
@@ -100,9 +103,8 @@ public class RunAll {
         } catch (IOException e) {
           e.printStackTrace();
         }
-        System.out.print("Target reached: ");
-        System.out.println(result.isReachedDestination());
-        System.out.println();
+        logger.info("Target reached: ");
+        logger.info("" + result.isReachedDestination());
         htmlPs.println("<tr>");
         htmlPs.println("<td>");
         htmlPs.println(i);
@@ -127,7 +129,7 @@ public class RunAll {
       }
       htmlPs.println("</table>");
     }
-    System.out.println("Finished");
+    logger.info("Finished");
     System.exit(0);
   }
 }
