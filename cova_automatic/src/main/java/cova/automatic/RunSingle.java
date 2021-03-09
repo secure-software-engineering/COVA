@@ -68,5 +68,6 @@ public class RunSingle {
       }
       logger.error("Did not reach target");
     }
+    System.exit(0);
   }
 }
