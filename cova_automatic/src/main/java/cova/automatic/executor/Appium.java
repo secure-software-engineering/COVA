@@ -111,6 +111,9 @@ public class Appium {
         for (String elementPath : elementPaths.split(";")) {
           String[] pathParts = elementPath.split(":");
           if (pathParts.length == 1) {
+            if (pathParts[0].startsWith("onBackPressed_")) {
+              driver.pressKey(new KeyEvent(AndroidKey.BACK));
+            }
             continue;
           }
           // if (!pathParts[0].equals(layout)) {

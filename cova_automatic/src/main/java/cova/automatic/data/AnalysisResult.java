@@ -18,6 +18,7 @@ public class AnalysisResult {
   private List<TargetStrings> possibleTargets;
   private Map<Integer, String> mapping;
   private String appiumURL;
+  private TargetInformation targetInformation;
 
   public AnalysisResult() {}
 
@@ -27,6 +28,7 @@ public class AnalysisResult {
     this.constraints = result.getConstraints();
     this.apkPath = result.getApkPath();
     this.mapping = result.getMapping();
+    this.targetInformation = result.getTargetInformation();
   }
 
   public String getMainActivity() {
@@ -107,5 +109,13 @@ public class AnalysisResult {
 
   public void setAppiumURL(String appiumURL) {
     this.appiumURL = appiumURL;
+  }
+
+  public TargetInformation getTargetInformation() {
+    return targetInformation;
+  }
+
+  public void setTargetInformation(TargetInformation targetInformation) {
+    this.targetInformation = targetInformation;
   }
 }

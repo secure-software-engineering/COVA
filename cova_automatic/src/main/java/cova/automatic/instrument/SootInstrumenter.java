@@ -1,5 +1,7 @@
 package cova.automatic.instrument;
 
+import cova.automatic.data.Target;
+import cova.automatic.data.TargetInformation;
 import cova.automatic.executor.AutomaticRunner;
 import cova.core.InterproceduralCFG;
 import java.io.IOException;
@@ -30,7 +32,8 @@ import soot.options.Options;
 
 public class SootInstrumenter {
 
-  public List<TargetStrings> instrument(Path apkFile, Path targetApk, Path jarPath)
+  public List<TargetStrings> instrument(
+      Path apkFile, Path targetApk, Path jarPath, TargetInformation targetInformation)
       throws IOException {
     final List<TargetStrings> outputs = new ArrayList<>();
     Path resultingPath = Paths.get("sootOutput").resolve(apkFile.getFileName());
@@ -89,6 +92,20 @@ public class SootInstrumenter {
                       if (u instanceof InvokeStmt || u instanceof AssignStmt) {
 
                         String tmpStr = AutomaticRunner.PRE_STRING + ":" + signature + ":" + i;
+
+                        if (targetInformation != null) {
+                          for (Target t : targetInformation.getTargets()) {
+                            if (t.getMethod().equals(b.getMethod().getSignature())
+                                && t.getUnit().equals(u.toString())) {
+                              if (t.getLineNumber() == null
+                                  || t.getLineNumber() == -1
+                                  || t.getLineNumber() == lineNumber) {
+                                t.getTargetStrings().put(tmpStr, null);
+                              }
+                            }
+                          }
+                        }
+
                         addPrint(units, b, u, tmpStr);
 
                         outputs.add(

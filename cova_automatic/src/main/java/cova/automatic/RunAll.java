@@ -5,6 +5,7 @@ import brut.directory.DirectoryException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import cova.automatic.data.AnalysisResult;
+import cova.automatic.data.Target;
 import cova.automatic.data.TestInput;
 import cova.automatic.data.TestResult;
 import cova.automatic.data.gson.GsonAnalysisResult;
@@ -68,7 +69,17 @@ public class RunAll {
       Appium appium = Appium.setUp(baseResult.getAppiumURL(), baseResult.getApkPath());
       int i = 0;
       for (ConstraintInformation c : baseResult.getConstraints()) {
-
+        Target predefinedTarget = null;
+        if (baseResult.getTargetInformation() != null) {
+          for (Target t : baseResult.getTargetInformation().getTargets()) {
+            if (t.getTargetStrings().containsKey(c.getOutput())) {
+              predefinedTarget = t;
+            }
+          }
+          if (predefinedTarget == null) {
+            continue;
+          }
+        }
         Path runPath = targetDir.resolve("" + i);
         Files.createDirectories(runPath);
         Path videoPath = runPath.resolve("video.mp4");
@@ -86,6 +97,9 @@ public class RunAll {
           logger.error("path not found");
           i++;
           continue;
+        }
+        if (predefinedTarget != null) {
+          predefinedTarget.getTargetStrings().put(c.getOutput(), result.isReachedDestination());
         }
         if (result.isReachedDestination()) {
           Files.write(resultPath, "TARGET_REACHED".getBytes());
@@ -128,6 +142,12 @@ public class RunAll {
         i++;
       }
       htmlPs.println("</table>");
+    }
+    Path targetsFile = targetDir.resolve("targets.json");
+    try (FileWriter writer = new FileWriter(targetsFile.toFile())) {
+      gson.toJson(baseResult.getTargetInformation(), writer);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
     logger.info("Finished");
     System.exit(0);

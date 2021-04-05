@@ -2,12 +2,15 @@ package cova.automatic.executor;
 
 import brut.androlib.AndrolibException;
 import brut.directory.DirectoryException;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import cova.automatic.RunAll;
 import cova.automatic.activities.ActivityTraverser;
 import cova.automatic.apk.ApkSignHelper;
 import cova.automatic.apk.ApktoolMapper;
 import cova.automatic.apk.aapt.AaptHelper;
 import cova.automatic.data.AnalysisResult;
+import cova.automatic.data.TargetInformation;
 import cova.automatic.data.TestInput;
 import cova.automatic.data.TestResult;
 import cova.automatic.instrument.SootInstrumenter;
@@ -19,6 +22,8 @@ import cova.setup.config.Config;
 import cova.setup.config.DefaultConfigForAndroid;
 import cova.source.IdManager;
 import cova.source.SourceInformation;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,6 +50,7 @@ public class AutomaticRunner {
 
   public static final String PRE_STRING = "COVA_CONSTRAINT_INFORMATION";
   public static final String PRE_INFO_STRING = "COVA_CALL_INFORMATION";
+  public static final String PRE_TARGET_STRING = "COVA_DEFINED_TARGET";
 
   private static Path apkFile;
   private static Path configDir;
@@ -57,7 +63,9 @@ public class AutomaticRunner {
 
   private static final Logger logger = LoggerFactory.getLogger(RunAll.class);
 
-  public static void parseArgs(String[] args) throws ParseException {
+  private static TargetInformation targetInformation;
+
+  public static void parseArgs(String[] args) throws ParseException, FileNotFoundException {
     Options options = new Options();
     // standard options
     options.addOption("h", "help", false, "Print this message.");
@@ -80,6 +88,7 @@ public class AutomaticRunner {
     options.addOption(
         "DynamicSources", "dynamicSources", true, "<arg> = true, if enables dynamic sources.");
     options.addOption("AppiumURL", "appium", true, "The deviating URL of the appium server");
+    options.addOption("TargetPath", "targets", true, "The path of the file with targets");
     CommandLineParser parser = new DefaultParser();
     CommandLine cmd = parser.parse(options, args);
     apkFile = Paths.get(cmd.getOptionValue("apk"));
@@ -95,6 +104,12 @@ public class AutomaticRunner {
     if (cmd.hasOption("DynamicSources")) {
       boolean value = Boolean.parseBoolean(cmd.getOptionValue("DynamicSources"));
       dynamicSourcesEnabled = value;
+    }
+    if (cmd.hasOption("TargetPath")) {
+      String targetFile = cmd.getOptionValue("TargetPath");
+      Gson gson = new Gson();
+      JsonReader reader = new JsonReader(new FileReader(targetFile));
+      targetInformation = gson.fromJson(reader, TargetInformation.class); //
     }
     if (cmd.hasOption("AppiumURL")) {
       appiumUrl = cmd.getOptionValue("AppiumURL");
@@ -118,7 +133,15 @@ public class AutomaticRunner {
     Path signedApk = tmpDir.resolve(apkFile.getFileName() + "-signed.apk");
     Path alignedApk = tmpDir.resolve(apkFile.getFileName() + "-aligned.apk");
     return AutomaticRunner.doAnalysis(
-        apkFile, platformDir, jarPath, targetApk, signedApk, alignedApk, configDir, appiumUrl);
+        apkFile,
+        platformDir,
+        jarPath,
+        targetApk,
+        signedApk,
+        alignedApk,
+        configDir,
+        appiumUrl,
+        targetInformation);
   }
 
   public static AnalysisResult doAnalysis(
@@ -129,7 +152,8 @@ public class AutomaticRunner {
       Path signedApk,
       Path alignedApk,
       Path configDir,
-      String appiumURL)
+      String appiumURL,
+      TargetInformation targetInformation)
       throws IOException, XmlPullParserException, UnrecoverableKeyException, KeyStoreException,
           NoSuchAlgorithmException, CertificateException, InterruptedException, AndrolibException,
           DirectoryException {
@@ -138,7 +162,8 @@ public class AutomaticRunner {
     long instrumentStart = System.currentTimeMillis();
 
     // Instrument apk with logcat outputs
-    List<TargetStrings> possibleTargets = instrumenter.instrument(apkFile, targetApk, platformDir);
+    List<TargetStrings> possibleTargets =
+        instrumenter.instrument(apkFile, targetApk, platformDir, targetInformation);
 
     // sign instrumented apk
     apkSignHelper.sign(targetApk, signedApk, alignedApk);
@@ -156,7 +181,8 @@ public class AutomaticRunner {
     for (AXmlNode activity : manifest.getActivities()) {
       for (AXmlNode c : activity.getChildren()) {
         for (AXmlNode c2 : c.getChildren()) {
-          if ("android.intent.action.MAIN".equals(c2.getAttribute("name").getValue())) {
+          if (c2.getAttribute("name") != null
+              && "android.intent.action.MAIN".equals(c2.getAttribute("name").getValue())) {
             mainActivity = (String) activity.getAttribute("name").getValue();
           }
         }
@@ -228,6 +254,7 @@ public class AutomaticRunner {
     result.setPossibleTargets(possibleTargets);
     result.setMapping(mapping);
     result.setAppiumURL(appiumURL);
+    result.setTargetInformation(targetInformation);
     return result;
   }
 
