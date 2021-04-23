@@ -51,7 +51,7 @@ public class ConstraintTest {
 
     result =
         AutomaticRunner.doAnalysis(
-            apkFile, platformDir, jarPath, targetApk, signedApk, alignedApk, configDir, null);
+            apkFile, platformDir, jarPath, targetApk, signedApk, alignedApk, configDir, null, null);
     appium = Appium.setUp(null, alignedApk);
   }
 

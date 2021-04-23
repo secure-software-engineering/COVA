@@ -94,37 +94,41 @@ public class ConstraintInformation {
       String oldKey = key;
       tmpKey = tmpKey.replace("I", "");
       tmpKey = tmpKey.replace("U", "");
-      try {
-        int num = Integer.parseInt(tmpKey);
-        if (IdManager.getInstance().contains(num)) {
-          SourceInformation i = IdManager.getInstance().get(num);
-          if (i.getAllInfos().isEmpty()) {
-            i.getAllInfos().add(i);
-          }
-          String tmp = "";
-          for (SourceInformation info : i.getAllInfos()) {
-            int activityId = info.getLayoutId();
-            for (Pair<SootClass, Integer> e : IdManager.getInstance().getLayoutClasses()) {
-              if (e.getO2() == activityId) {
-                constraintSootClasses.add(e.getO1());
+      if (tmpKey.startsWith("onBackPressed_")) {
+
+      } else {
+        try {
+          int num = Integer.parseInt(tmpKey);
+          if (IdManager.getInstance().contains(num)) {
+            SourceInformation i = IdManager.getInstance().get(num);
+            if (i.getAllInfos().isEmpty()) {
+              i.getAllInfos().add(i);
+            }
+            String tmp = "";
+            for (SourceInformation info : i.getAllInfos()) {
+              int activityId = info.getLayoutId();
+              for (Pair<SootClass, Integer> e : IdManager.getInstance().getLayoutClasses()) {
+                if (e.getO2() == activityId) {
+                  constraintSootClasses.add(e.getO1());
+                }
+              }
+              int fieldId = info.getId();
+              if (mapping.containsKey(activityId) && mapping.containsKey(fieldId)) {
+                String activityName = mapping.get(activityId);
+                String fieldName = mapping.get(fieldId);
+                tmp += ";" + activityName + ":" + fieldName;
+                if (info.getTrigger() != null && !info.getTrigger().isEmpty()) {
+                  tmp += ":" + info.getTrigger();
+                }
               }
             }
-            int fieldId = info.getId();
-            if (mapping.containsKey(activityId) && mapping.containsKey(fieldId)) {
-              String activityName = mapping.get(activityId);
-              String fieldName = mapping.get(fieldId);
-              tmp += ";" + activityName + ":" + fieldName;
-              if (info.getTrigger() != null && !info.getTrigger().isEmpty()) {
-                tmp += ":" + info.getTrigger();
-              }
+            if (!tmp.isEmpty()) {
+              key = tmp.substring(1);
             }
           }
-          if (!tmp.isEmpty()) {
-            key = tmp.substring(1);
-          }
+        } catch (Exception e) {
+          e.printStackTrace();
         }
-      } catch (Exception e) {
-        e.printStackTrace();
       }
       newValues.put(key, value);
       if (!oldKey.equals(key)) {

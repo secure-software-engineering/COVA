@@ -160,7 +160,7 @@ public class StringTaintCreationRule {
       String methodName = invoke.getMethod().getName();
       String declaringClass = invoke.getMethod().getDeclaringClass().toString();
       if (declaringClass.equals("java.lang.Integer")) {
-        if (methodName.equals("parseInt")) {
+        if (methodName.equals("parseInt") || methodName.equals("valueOf")) {
           Set<AbstractTaint> involved =
               in.taints().getTaintsWithAccessPath(new WrappedAccessPath(invoke.getArg(0)));
           for (AbstractTaint taint : involved) {

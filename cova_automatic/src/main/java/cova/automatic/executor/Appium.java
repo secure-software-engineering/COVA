@@ -7,6 +7,8 @@ import cova.automatic.data.TestResultInputType;
 import cova.automatic.results.ConstraintInformation;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.remote.MobileCapabilityType;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -109,6 +111,9 @@ public class Appium {
         for (String elementPath : elementPaths.split(";")) {
           String[] pathParts = elementPath.split(":");
           if (pathParts.length == 1) {
+            if (pathParts[0].startsWith("onBackPressed_")) {
+              driver.pressKey(new KeyEvent(AndroidKey.BACK));
+            }
             continue;
           }
           // if (!pathParts[0].equals(layout)) {
@@ -166,8 +171,9 @@ public class Appium {
                     .click();
 
               } catch (Exception e) {
+                logger.info("Text not found in spinner (does not have to be a problem)");
                 inputOk = false;
-                e.printStackTrace();
+                driver.pressKey(new KeyEvent(AndroidKey.BACK));
               }
             }
 
