@@ -47,6 +47,8 @@ public class SootInstrumenter {
     // output as APK, too//-f J
     Options.v().set_output_format(Options.output_format_dex);
 
+    Options.v().set_process_multiple_dex(true);
+    
     // resolve the PrintStream and System soot-classes
     Scene.v().addBasicClass("java.io.PrintStream", SootClass.SIGNATURES);
     Scene.v().addBasicClass("java.lang.System", SootClass.SIGNATURES);

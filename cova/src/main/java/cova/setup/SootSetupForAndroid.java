@@ -34,6 +34,7 @@ public class SootSetupForAndroid {
         super.setSootOptions(options, config); // explicitly exclude packages for shorter runtime
         options.set_keep_line_number(true);
         options.set_print_tags_in_output(true);
+        options.set_process_multiple_dex(true);
       }
     };
   }
