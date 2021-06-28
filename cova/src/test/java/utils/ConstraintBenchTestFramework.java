@@ -54,6 +54,8 @@ public class ConstraintBenchTestFramework {
   protected String targetTestClassName = "";
   protected TreeMap<Integer, IConstraint> results;
 
+  protected Config config = new DefaultConfigForTestCase();
+
   private String userDir = System.getProperty("user.dir");
   private String covaRootDir = new File(userDir).getParent();
   private String benchdir =
@@ -91,7 +93,6 @@ public class ConstraintBenchTestFramework {
     try {
       results = new TreeMap<>();
       String className = this.getClass().getName();
-      Config config = new DefaultConfigForTestCase();
       SceneTransformerFactory transformerFactory = new SceneTransformerFactory(config);
       String[] names = className.split("\\.");
       ConstraintReporter reporter =
@@ -104,7 +105,7 @@ public class ConstraintBenchTestFramework {
               className, testMethodName.getMethodName(), reporter, covaRootDir);
       analyze(transformer);
       SootClass testClass = Scene.v().forceResolve(targetTestClassName, SootClass.BODIES);
-      results = reporter.getResultOfLines(testClass);
+      results = reporter.getResultOfLines(testClass, true);
       reporter.printResultOfLines(testClass);
     } catch (Exception e) {
       e.printStackTrace();

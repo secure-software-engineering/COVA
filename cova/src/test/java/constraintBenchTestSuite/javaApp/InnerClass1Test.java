@@ -38,7 +38,7 @@ public class InnerClass1Test extends ConstraintBenchTestFrameworkForJavaApp {
   @Ignore
   public void test() {
     SootClass cl = Scene.v().getSootClass("Outer");
-    TreeMap<Integer, IConstraint> results = reporter.getResultOfLines(cl);
+    TreeMap<Integer, IConstraint> results = reporter.getResultOfLines(cl, true);
     Assert.assertFalse(results.isEmpty());
     Assert.assertTrue(results.containsKey(23));
     BoolExpr expected = SMTSolverZ3.getInstance().makeBoolTerm(A, false); // A

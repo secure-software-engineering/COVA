@@ -307,6 +307,9 @@ public class ConstraintZ3 implements IConstraint {
         if (negate) {
           symbol = " != ";
         }
+      } else {
+        s += symbol;
+        symbol = ", ";
       }
       s += "(";
       final Expr[] children = expr.getArgs();
@@ -320,11 +323,14 @@ public class ConstraintZ3 implements IConstraint {
 
     } else {
       if (expr.getNumArgs() == 1) {
-        // Negation
         final Expr child = expr.getArgs()[0];
         final String symbol = expr.getFuncDecl().getName().toString();
         if (symbol.equals("not")) {
+          // Negation
           s += "!" + convertToInfixExpr(child, false);
+        } else {
+          // other operation like string operation
+          s += symbol + "(" + convertToInfixExpr(child, false) + ")";
         }
 
       } else {

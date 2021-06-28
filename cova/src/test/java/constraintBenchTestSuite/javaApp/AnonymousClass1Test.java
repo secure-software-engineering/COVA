@@ -38,7 +38,7 @@ public class AnonymousClass1Test extends ConstraintBenchTestFrameworkForJavaApp 
   @Ignore
   public void test() {
     SootClass cl = Scene.v().getSootClass("Main");
-    TreeMap<Integer, IConstraint> results = reporter.getResultOfLines(cl);
+    TreeMap<Integer, IConstraint> results = reporter.getResultOfLines(cl, true);
     Assert.assertFalse(results.isEmpty());
     Assert.assertTrue(results.containsKey(27));
     BoolExpr expected = SMTSolverZ3.getInstance().makeBoolTerm(A, false); // A

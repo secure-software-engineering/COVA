@@ -509,6 +509,11 @@ public class Config {
     } else {
       s += "CONFIG: StaticFieldPropagationRule is NOT enabled.\n";
     }
+    if (isStringTaintCreationRuleOn()) {
+      s += "CONFIG: StringTaintCreationRule is enabled.\n";
+    } else {
+      s += "CONFIG: StringTaintCreationRule is NOT enabled.\n";
+    }
     if (timeOutOn) {
       s += "CONFIG: Timeout in " + timeOutDuration / 60 + " mins.\n";
     }

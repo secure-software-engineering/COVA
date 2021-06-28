@@ -73,10 +73,12 @@ public class LineConstraints {
   /**
    * Gets the line number constraint map.
    *
+   * @param filterTrue if the result should filter all constraints that are TRUE.
    * @return the line number constraint map
    */
-  public TreeMap<Integer, IConstraint> getLineNumberConstraintMap() {
-    if (!filtered) {
+  public TreeMap<Integer, IConstraint> getLineNumberConstraintMap(boolean filterTrue) {
+    this.filtered = filterTrue;
+    if (filtered) {
       filterResult();
     }
     return javaLnConstraintMap;
@@ -88,7 +90,7 @@ public class LineConstraints {
    * @return true, if is empty
    */
   public boolean isEmpty() {
-    if (!filtered) {
+    if (filtered) {
       filterResult();
     }
     return javaLnConstraintMap.isEmpty();
@@ -105,7 +107,7 @@ public class LineConstraints {
 
   @Override
   public String toString() {
-    if (!filtered) {
+    if (filtered) {
       filterResult();
     }
     StringBuilder sb = new StringBuilder(cl.toString());
@@ -120,7 +122,7 @@ public class LineConstraints {
   }
 
   public String toReadableString() {
-    if (!filtered) {
+    if (filtered) {
       filterResult();
     }
     StringBuilder sb = new StringBuilder(cl.toString());
@@ -135,7 +137,7 @@ public class LineConstraints {
   }
 
   public int size() {
-    if (!filtered) {
+    if (filtered) {
       filterResult();
     }
     return javaLnConstraintMap.size();

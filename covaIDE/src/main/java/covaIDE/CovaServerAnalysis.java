@@ -137,7 +137,7 @@ public class CovaServerAnalysis implements ServerAnalysis {
         if (pkg.isPresent()) klassSignature = pkg.get().getName().toString() + "." + className;
         else klassSignature = className;
         SootClass klass = Scene.v().forceResolve(klassSignature, SootClass.BODIES);
-        TreeMap<Integer, IConstraint> results = reporter.getResultOfLines(klass);
+        TreeMap<Integer, IConstraint> results = reporter.getResultOfLines(klass, true);
         String serverUri = source.getURL().toString();
 
         for (Integer line : results.keySet()) {

@@ -106,7 +106,9 @@ public class HtmlReportPrinter {
    * @return the line results
    */
   private LineConstraints merge(LineConstraints lineResults1, LineConstraints lineResults2) {
-    lineResults1.getLineNumberConstraintMap().putAll(lineResults2.getLineNumberConstraintMap());
+    lineResults1
+        .getLineNumberConstraintMap(false)
+        .putAll(lineResults2.getLineNumberConstraintMap(false));
     return lineResults1;
   }
 
@@ -211,7 +213,7 @@ public class HtmlReportPrinter {
         (packName, subClasses) -> {
           Package pack = new Package(parent, packName);
           for (SootClass subClass : subClasses) {
-            pack.noOfConstraints += report.get(subClass).getLineNumberConstraintMap().size();
+            pack.noOfConstraints += report.get(subClass).getLineNumberConstraintMap(false).size();
           }
           parent.subpackages.add(pack);
           buildNavigationTree(pack, subClasses);
@@ -301,7 +303,7 @@ public class HtmlReportPrinter {
                                     iff(
                                         !report
                                             .get(sootClass)
-                                            .getLineNumberConstraintMap()
+                                            .getLineNumberConstraintMap(false)
                                             .isEmpty(),
                                         a("Go to first").withHref("#constr0")),
                                     createOutputContent(LineResults)))))
@@ -430,7 +432,7 @@ public class HtmlReportPrinter {
         new MyLi(
                 a(clazz.getShortName()
                         + ".java ("
-                        + report.get(clazz).getLineNumberConstraintMap().size()
+                        + report.get(clazz).getLineNumberConstraintMap(false).size()
                         + ")")
                     .withHref((isIndex ? "" : "../") + outputPaths.get(clazz)))
             .withData("jstree", "{\"type\":\"" + type + "\",\"selected\":" + isCurrent + "}"));
@@ -528,7 +530,7 @@ public class HtmlReportPrinter {
           isblockCommentLine = false;
         }
         tr.with(lineContainer);
-        IConstraint constr = LineResults.getLineNumberConstraintMap().get(lineNumber);
+        IConstraint constr = LineResults.getLineNumberConstraintMap(false).get(lineNumber);
         if (constr != null) {
           tr.with(td(attrs("#constr" + constraintNo++ + ".constraint"), constr.toReadableString()));
           tr.withClass("constraint");

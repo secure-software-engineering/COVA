@@ -130,11 +130,11 @@ public class ConstraintReporter {
    * @param sc the sc
    * @return the result of lines
    */
-  public TreeMap<Integer, IConstraint> getResultOfLines(SootClass sc) {
+  public TreeMap<Integer, IConstraint> getResultOfLines(SootClass sc, boolean filterTrue) {
     TreeMap<Integer, IConstraint> ret = new TreeMap<Integer, IConstraint>();
     for (SootClass klass : resultsOfClasses.keySet()) {
       if (klass.getName().equals(sc.getName()) || klass.getName().startsWith(sc.getName() + "$")) {
-        ret.putAll(resultsOfClasses.get(klass).getLineNumberConstraintMap());
+        ret.putAll(resultsOfClasses.get(klass).getLineNumberConstraintMap(filterTrue));
       }
     }
     return ret;
@@ -243,7 +243,7 @@ public class ConstraintReporter {
       int size = 0;
       for (LineConstraints result : resultsOfClasses.values()) {
         sb.append(result.toReadableString());
-        size = result.getLineNumberConstraintMap().size();
+        size = result.getLineNumberConstraintMap(false).size();
       }
       sb.append("#constraints: ");
       sb.append(size);
