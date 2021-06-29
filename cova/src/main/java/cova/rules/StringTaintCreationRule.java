@@ -1,6 +1,5 @@
 package cova.rules;
 
-import cova.core.InterproceduralCFG;
 import cova.core.RuleManager;
 import cova.data.Abstraction;
 import cova.data.IConstraint;
@@ -24,12 +23,9 @@ import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.StaticInvokeExpr;
 
 public class StringTaintCreationRule {
-  private final InterproceduralCFG icfg;
   private final Logger logger = LoggerFactory.getLogger(getClass());
 
-  public StringTaintCreationRule(RuleManager ruleManager) {
-    icfg = ruleManager.getIcfg();
-  }
+  public StringTaintCreationRule(RuleManager ruleManager) {}
 
   public boolean normalFlowFunction(
       Context<SootMethod, Unit, Abstraction> context, Unit node, Unit succ, Abstraction in) {
@@ -161,6 +157,9 @@ public class StringTaintCreationRule {
       String declaringClass = invoke.getMethod().getDeclaringClass().toString();
       if (declaringClass.equals("java.lang.Integer")) {
         if (methodName.equals("parseInt") || methodName.equals("valueOf")) {
+          if (invoke.getArg(0) instanceof Constant) {
+            return false;
+          }
           Set<AbstractTaint> involved =
               in.taints().getTaintsWithAccessPath(new WrappedAccessPath(invoke.getArg(0)));
           for (AbstractTaint taint : involved) {

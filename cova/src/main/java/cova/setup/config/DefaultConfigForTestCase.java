@@ -26,5 +26,6 @@ public class DefaultConfigForTestCase extends Config {
     setStaticFieldPropagationRuleOn(true);
     setWriteJimpleOutput(false);
     setWriteHtmlOutput(false);
+    setStringTaintCreationRuleOn(true);
   }
 }

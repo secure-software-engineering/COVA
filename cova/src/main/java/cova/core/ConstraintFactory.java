@@ -565,7 +565,11 @@ public class ConstraintFactory {
       String constantString = constant.toString();
       newConstraint =
           createIntCompareConstraint(
-              name, constantString, operator, isFallThroughEdge, stringTaint.getStringMethod());
+              name,
+              Integer.parseInt(constantString),
+              operator,
+              isFallThroughEdge,
+              stringTaint.getStringMethod());
 
       constraint = constraint.and(newConstraint, false);
       return constraint;
@@ -729,14 +733,15 @@ public class ConstraintFactory {
     if (name == null || constant == null) {
       throw new RuntimeException("Name or constant is null");
     }
-    BoolExpr contains = SMTSolverZ3.getInstance().makeInStrTerm(name, constant, method);
+    BoolExpr contains =
+        SMTSolverZ3.getInstance().makeStrTermWithOneVariable(name, constant, method);
 
     return new ConstraintZ3(contains, name, new WitnessPath());
   }
 
   public static IConstraint createIntCompareConstraint(
       String name,
-      String constant,
+      int constant,
       Operator operator,
       boolean isFallThroughEdge,
       StringMethod method) {

@@ -10,7 +10,6 @@ import utils.ConstraintBenchTestFramework;
 
 public class String1Test extends ConstraintBenchTestFramework {
   public String1Test() {
-    config.setStringTaintCreationRuleOn(true);
     targetTestClassName = "constraintBench.test.stringOperations.String1";
   }
 

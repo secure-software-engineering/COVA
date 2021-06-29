@@ -424,18 +424,18 @@ public class WrappedTaintSet implements Iterable<AbstractTaint> {
           ret.add(taint);
         }
       }
-      if (false && !stringTaints.isEmpty()) {
-        // symbolic taint is identified by the pair of access path and symbolic name
+      if (!stringTaints.isEmpty()) {
+        // merge string taints
         HashMap<Pair<WrappedAccessPath, String>, StringTaint> taintsMap = new HashMap<>();
-        for (StringTaint symbolicTaint : stringTaints) {
+        for (StringTaint stringTaint : stringTaints) {
           Pair<WrappedAccessPath, String> pair =
-              new Pair<>(symbolicTaint.getAccessPath(), symbolicTaint.getSymbolicName());
+              new Pair<>(stringTaint.getAccessPath(), stringTaint.getSymbolicName());
           if (taintsMap.containsKey(pair)) {
             StringTaint old = taintsMap.get(pair);
-            StringTaint updated = StringTaint.meetConstraint(old, symbolicTaint);
+            StringTaint updated = StringTaint.meetConstraint(old, stringTaint);
             taintsMap.put(pair, updated);
           } else {
-            taintsMap.put(pair, symbolicTaint);
+            taintsMap.put(pair, stringTaint);
           }
         }
         for (StringTaint taint : taintsMap.values()) {

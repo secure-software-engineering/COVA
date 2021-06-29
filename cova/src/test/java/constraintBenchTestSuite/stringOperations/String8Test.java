@@ -12,7 +12,6 @@ import utils.ConstraintBenchTestFramework;
 
 public class String8Test extends ConstraintBenchTestFramework {
   public String8Test() {
-    config.setStringTaintCreationRuleOn(true);
     targetTestClassName = "constraintBench.test.stringOperations.String8";
   }
 

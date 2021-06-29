@@ -318,18 +318,17 @@ public class SMTSolverZ3 {
   }
 
   public BoolExpr makeCompareTerm(
-      String name, String length, Operator operator, boolean negate, StringMethod method) {
+      String name, int length, Operator operator, boolean negate, StringMethod method) {
     SeqExpr str = (SeqExpr) ctx.mkConst(name, ctx.getStringSort());
-
     IntExpr strLength;
     if (method == StringMethod.LENGTH) {
       strLength = ctx.mkLength(str);
     } else if (method == StringMethod.TO_INT) {
       strLength = ctx.stringToInt(str);
     } else {
-      throw new RuntimeException("Wrong string method: " + method);
+      throw new RuntimeException("Unsupported String Method: " + method);
     }
-    IntExpr maxLength = ctx.mkInt(length.toString());
+    IntExpr maxLength = ctx.mkInt(length);
     BoolExpr expr;
     if (operator == Operator.LE) {
       expr = ctx.mkLe(strLength, maxLength);
@@ -353,7 +352,7 @@ public class SMTSolverZ3 {
     return expr;
   }
 
-  public BoolExpr makeInStrTerm(String name, String constant, StringMethod method) {
+  public BoolExpr makeStrTermWithOneVariable(String name, String constant, StringMethod method) {
     SeqExpr str = (SeqExpr) ctx.mkConst(name, ctx.getStringSort());
 
     SeqExpr strExpr = ctx.mkString(constant);
@@ -367,7 +366,25 @@ public class SMTSolverZ3 {
     } else if (method == StringMethod.EQUALS) {
       contains = ctx.mkEq(strExpr, str);
     } else {
-      throw new RuntimeException("Wrong StringMethod");
+      throw new RuntimeException("Unsupported String Method:" + method);
+    }
+    return contains;
+  }
+
+  public BoolExpr makeVarStrTermWithTwoVaraibles(String name1, String name2, StringMethod method) {
+    SeqExpr str1 = (SeqExpr) ctx.mkConst(name1, ctx.getStringSort());
+    SeqExpr str2 = (SeqExpr) ctx.mkConst(name2, ctx.getStringSort());
+    BoolExpr contains;
+    if (method == StringMethod.CONTAINS) {
+      contains = ctx.mkContains(str1, str2);
+    } else if (method == StringMethod.STARTSWITH) {
+      contains = ctx.mkPrefixOf(str2, str1);
+    } else if (method == StringMethod.ENDSWITH) {
+      contains = ctx.mkSuffixOf(str2, str1);
+    } else if (method == StringMethod.EQUALS) {
+      contains = ctx.mkEq(str2, str1);
+    } else {
+      throw new RuntimeException("Unsupported String Method:" + method);
     }
     return contains;
   }

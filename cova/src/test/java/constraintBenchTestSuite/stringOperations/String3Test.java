@@ -11,7 +11,6 @@ import utils.ConstraintBenchTestFramework;
 
 public class String3Test extends ConstraintBenchTestFramework {
   public String3Test() {
-    config.setStringTaintCreationRuleOn(true);
     targetTestClassName = "constraintBench.test.stringOperations.String3";
   }
 
