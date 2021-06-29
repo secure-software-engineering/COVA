@@ -126,3 +126,7 @@ Run cova with the following options:
 `java -jar cova_automatic-$VERSION.jar -apk $APKS_PATH -config $REPO_LOCATION/cova/config -platform $ANDROID_PLATFORMS`
 
 5. The results of automatic tests appear in `$user.home/cova_test_results`. On Linux this is `~/cova_test_results`, on Windows it is `C:\Users\%username%\cova_test_results`.
+
+## Code Style
+The submodule cova follows Google's code styleguide. We use fmt-maven-plugin to format the code.  
+Execute this before making your pull request `mvn com.coveo:fmt-maven-plugin:format`
