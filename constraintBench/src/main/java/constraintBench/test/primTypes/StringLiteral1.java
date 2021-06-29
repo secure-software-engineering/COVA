@@ -13,7 +13,7 @@ public class StringLiteral1 {
     String s2 = s1;
     s1 = "abc";
     if (s2.contains("a")) {
-      System.out.println();// FA
+      System.out.println();// str.contains(FA, "a")
     }
   }
 

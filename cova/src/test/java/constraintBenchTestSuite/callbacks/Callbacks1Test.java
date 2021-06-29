@@ -18,6 +18,7 @@ import com.microsoft.z3.BoolExpr;
 import cova.core.SMTSolverZ3;
 import cova.data.ConstraintZ3;
 import cova.data.Operator;
+import cova.rules.StringMethod;
 import org.junit.Assert;
 import org.junit.Test;
 import soot.IntType;
@@ -39,7 +40,8 @@ public class Callbacks1Test extends ConstraintBenchTestFrameworkForAndroidApp {
                 41,
                 "de.upb.swt.callbacks1.MainActivity");
     BoolExpr onClick = SMTSolverZ3.getInstance().makeBoolTerm("U8_0", false);
-    BoolExpr model = SMTSolverZ3.getInstance().makeBoolTerm("im(C13)_0", false);
+    BoolExpr model =
+        SMTSolverZ3.getInstance().makeStrTermWithOneVariable("C13", "HTC", StringMethod.EQUALS);
     BoolExpr sdk =
         SMTSolverZ3.getInstance()
             .makeNonTerminalExpr("C24", false, "15", true, IntType.v(), Operator.GE);

@@ -10,8 +10,8 @@ public class ImpreciseMultiple1 {
 
   public void test() {
     if (!Configuration.fieldA.startsWith("FA") && !Configuration.fieldA.startsWith("FB")) {
-      return; // !im(FA)_0 ^ !im(FA)_1
+      return; // (!str.prefixof("FA", FA) ^ !str.prefixof("FB", FA))
     }
-    System.out.println();// im(FA)_0 v im(FA)_1
+    System.out.println();// str.prefixof("FA", FA) v str.prefixof("FB", FA)
   }
 }

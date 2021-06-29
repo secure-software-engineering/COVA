@@ -18,6 +18,7 @@ import com.microsoft.z3.BoolExpr;
 import cova.core.SMTSolverZ3;
 import cova.data.ConstraintZ3;
 import cova.data.Operator;
+import cova.rules.StringMethod;
 import org.junit.Assert;
 import org.junit.Test;
 import soot.RefType;
@@ -32,10 +33,6 @@ public class ImpreciseSingle3Test extends ConstraintBenchTestFramework {
 
   @Test
   public void test() {
-    StringBuilder sb = new StringBuilder("im(");
-    sb.append(FA);
-    sb.append(")_0");
-    String imFA = sb.toString();
     // FA = null
     BoolExpr expected1 =
         SMTSolverZ3.getInstance()
@@ -46,20 +43,21 @@ public class ImpreciseSingle3Test extends ConstraintBenchTestFramework {
     BoolExpr actual = ((ConstraintZ3) results.get(13)).getExpr();
     boolean equivalent = SMTSolverZ3.getInstance().prove(negation1, actual);
     Assert.assertTrue(equivalent);
-    // im(FA)_0
-    BoolExpr termFA = SMTSolverZ3.getInstance().makeBoolTerm(imFA, false);
-    BoolExpr negatedFA = SMTSolverZ3.getInstance().makeBoolTerm(imFA, true);
-    // !(FA=null) ^ im(FA)_0
+    // str.prefixof("test", FA))
+    BoolExpr termFA =
+        SMTSolverZ3.getInstance().makeStrTermWithOneVariable(FA, "test", StringMethod.STARTSWITH);
+    BoolExpr negatedFA = SMTSolverZ3.getInstance().negate(termFA, false);
+    // !(FA=null) ^ str.prefixof("test", FA))
     BoolExpr expected2 = SMTSolverZ3.getInstance().solve(negation1, termFA, Operator.AND, false);
     actual = ((ConstraintZ3) results.get(14)).getExpr();
     equivalent = SMTSolverZ3.getInstance().prove(expected2, actual);
     Assert.assertTrue(equivalent);
-    // !(FA=null) ^ !im(FA)_0
+    // !(FA=null) ^ !str.prefixof("test", FA))
     BoolExpr expected3 = SMTSolverZ3.getInstance().solve(negation1, negatedFA, Operator.AND, false);
     actual = ((ConstraintZ3) results.get(16)).getExpr();
     equivalent = SMTSolverZ3.getInstance().prove(expected3, actual);
     Assert.assertTrue(equivalent);
-    // (FA=null) V im(FA)_0
+    // (FA=null) V str.prefixof("test", FA))
     BoolExpr expected4 = SMTSolverZ3.getInstance().solve(expected1, termFA, Operator.OR, false);
     actual = ((ConstraintZ3) results.get(19)).getExpr();
     equivalent = SMTSolverZ3.getInstance().prove(expected4, actual);

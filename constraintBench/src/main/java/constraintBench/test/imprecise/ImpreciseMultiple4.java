@@ -15,7 +15,7 @@ public class ImpreciseMultiple4 {
       int b = Configuration.fieldB.length();// D > 8
       int c = a + b;// D > 8
       if (c > 0) {// D > 8
-        System.out.println(); // D>8 ^ !im(FA+FB)_0
+        System.out.println(); // D>8 ^ (str.len(a) + str.len(b) > 0)
       }
     }
   }

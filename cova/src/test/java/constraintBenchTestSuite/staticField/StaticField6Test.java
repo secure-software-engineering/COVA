@@ -15,7 +15,7 @@
 package constraintBenchTestSuite.staticField;
 
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Test;
 import utils.ConstraintBenchTestFramework;
 
 /** */
@@ -25,8 +25,9 @@ public class StaticField6Test extends ConstraintBenchTestFramework {
     targetTestClassName = "constraintBench.test.staticField.StaticField6";
   }
 
-  @Ignore
+  @Test
   public void test() {
+    if (!failImpreciseTests) return;
     Assert.assertTrue(results.containsKey(21));
   }
 }

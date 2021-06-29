@@ -19,7 +19,7 @@ import cova.core.SMTSolverZ3;
 import cova.data.ConstraintZ3;
 import cova.data.Operator;
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Test;
 import soot.IntType;
 import utils.ConstraintBenchTestFramework;
 
@@ -30,8 +30,9 @@ public class Array1Test extends ConstraintBenchTestFramework {
     targetTestClassName = "constraintBench.test.array.Array1";
   }
 
-  @Ignore
+  @Test
   public void test() {
+    if (!failImpreciseTests) return;
     BoolExpr termD =
         SMTSolverZ3.getInstance()
             .makeNonTerminalExpr(D, false, "0", true, IntType.v(), Operator.LE);

@@ -15,7 +15,8 @@
 package constraintBenchTestSuite.reflection;
 
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Test;
+import utils.ConstraintBenchTestFramework;
 import utils.ConstraintBenchTestFrameworkForAndroidApp;
 
 public class ReflectionTest extends ConstraintBenchTestFrameworkForAndroidApp {
@@ -24,8 +25,9 @@ public class ReflectionTest extends ConstraintBenchTestFrameworkForAndroidApp {
     targetTestAppName = "ReflectionTest";
   }
 
-  @Ignore
+  @Test
   public void test() {
+    if (!ConstraintBenchTestFramework.failImpreciseTests) return;
     Assert.assertTrue(results.size() > 0);
   }
 }

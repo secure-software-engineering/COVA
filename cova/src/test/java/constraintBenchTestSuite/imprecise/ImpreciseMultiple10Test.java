@@ -46,5 +46,6 @@ public class ImpreciseMultiple10Test extends ConstraintBenchTestFramework {
     actual = ((ConstraintZ3) results.get(19)).getExpr();
     equivalent = SMTSolverZ3.getInstance().prove(expected2, actual);
     Assert.assertTrue(equivalent);
+    Assert.assertFalse(failImpreciseTests);
   }
 }

@@ -18,6 +18,7 @@ import com.microsoft.z3.BoolExpr;
 import cova.core.SMTSolverZ3;
 import cova.data.ConstraintZ3;
 import cova.data.Operator;
+import cova.rules.StringMethod;
 import org.junit.Assert;
 import org.junit.Test;
 import soot.IntType;
@@ -44,17 +45,11 @@ public class ImpreciseMultiple6Test extends ConstraintBenchTestFramework {
     equivalent = SMTSolverZ3.getInstance().prove(expected1, actual);
     Assert.assertTrue(equivalent);
 
-    // (D > 8) ^ (im(FA)_0 v im(FB)_0)
-    StringBuilder sb = new StringBuilder("im(");
-    sb.append(FA);
-    sb.append(")_0");
-    String imFA = sb.toString();
-    sb = new StringBuilder("im(");
-    sb.append(FB);
-    sb.append(")_0");
-    String imFB = sb.toString();
-    BoolExpr termFA = SMTSolverZ3.getInstance().makeBoolTerm(imFA, false);
-    BoolExpr termFB = SMTSolverZ3.getInstance().makeBoolTerm(imFB, false);
+    // (D > 8) ^  (str.prefixof("http:",FA) v str.prefixof("http:",FB))
+    BoolExpr termFA =
+        SMTSolverZ3.getInstance().makeStrTermWithOneVariable(FA, "http:", StringMethod.STARTSWITH);
+    BoolExpr termFB =
+        SMTSolverZ3.getInstance().makeStrTermWithOneVariable(FB, "http:", StringMethod.STARTSWITH);
     BoolExpr orTerm = SMTSolverZ3.getInstance().solve(termFA, termFB, Operator.OR, false);
     BoolExpr expected2 = SMTSolverZ3.getInstance().solve(expected1, orTerm, Operator.AND, false);
     actual = ((ConstraintZ3) results.get(16)).getExpr();

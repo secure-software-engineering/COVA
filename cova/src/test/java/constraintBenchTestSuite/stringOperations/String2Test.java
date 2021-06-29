@@ -15,6 +15,7 @@ public class String2Test extends ConstraintBenchTestFramework {
 
   @Test
   public void test() {
+    if (!failImpreciseTests) return;
     // FA = FB
     BoolExpr expected =
         SMTSolverZ3.getInstance().makeVarStrTermWithTwoVaraibles(FA, FB, StringMethod.EQUALS);

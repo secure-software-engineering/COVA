@@ -17,6 +17,7 @@ package constraintBenchTestSuite.imprecise;
 import com.microsoft.z3.BoolExpr;
 import cova.core.SMTSolverZ3;
 import cova.data.ConstraintZ3;
+import cova.rules.StringMethod;
 import org.junit.Assert;
 import org.junit.Test;
 import utils.ConstraintBenchTestFramework;
@@ -30,12 +31,9 @@ public class ImpreciseSingle1Test extends ConstraintBenchTestFramework {
 
   @Test
   public void test() {
-    StringBuilder sb = new StringBuilder("im(");
-    sb.append(FA);
-    sb.append(")_0");
-    String imFA = sb.toString();
-    // im(FA)_0
-    BoolExpr expected = SMTSolverZ3.getInstance().makeBoolTerm(imFA, false);
+    // str.prefixof("FA", FA)
+    BoolExpr expected =
+        SMTSolverZ3.getInstance().makeStrTermWithOneVariable(FA, "FA", StringMethod.STARTSWITH);
     BoolExpr actual = ((ConstraintZ3) results.get(13)).getExpr();
     boolean equivalent = SMTSolverZ3.getInstance().prove(expected, actual);
     Assert.assertTrue(equivalent);

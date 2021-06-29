@@ -18,6 +18,7 @@ import com.microsoft.z3.BoolExpr;
 import cova.core.SMTSolverZ3;
 import cova.data.ConstraintZ3;
 import cova.data.Operator;
+import cova.rules.StringMethod;
 import org.junit.Assert;
 import org.junit.Test;
 import soot.IntType;
@@ -38,7 +39,8 @@ public class SingleIfBranchTest extends ConstraintBenchTestFrameworkForAndroidAp
                 "de.upb.swt.singleifbranch1.MainActivity",
                 27,
                 "de.upb.swt.singleifbranch1.MainActivity");
-    BoolExpr model = SMTSolverZ3.getInstance().makeBoolTerm("im(C13)_0", false);
+    BoolExpr model =
+        SMTSolverZ3.getInstance().makeStrTermWithOneVariable("C13", "HTC", StringMethod.EQUALS);
     BoolExpr sdk =
         SMTSolverZ3.getInstance()
             .makeNonTerminalExpr("C24", false, "15", true, IntType.v(), Operator.GE);

@@ -13,10 +13,10 @@ public class ImpreciseMultiple11 {
     boolean a = fa.startsWith("a");
     String fc = Configuration.fieldC;
     if (Configuration.fieldB.startsWith("b")) {
-      a = fc.equals("c");// im(FB)_0
+      a = fc.equals("c");// str.prefixof("b", FB)
     }
     if (a) {
-      System.out.println();// (im(FB)_0 ^ im(FC)_0) v (!im(FB)_0 ^ im(FA)_0)
+      System.out.println();// (str.prefixof("a", FA) v (str.prefixof("b", FB) ^ ("c" = FC)))
     }
   }
 }

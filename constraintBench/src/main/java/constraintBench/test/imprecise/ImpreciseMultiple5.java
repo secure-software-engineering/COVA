@@ -13,7 +13,7 @@ public class ImpreciseMultiple5 {
     if (d > 8) {
       boolean b = Configuration.fieldA.startsWith("http:");// D > 8
       if (b) {// D > 8
-        System.out.println();// D > 8 ^ im(FA)
+        System.out.println();// D > 8 ^ str.prefixof("http:", FA)
       }
     }
   }

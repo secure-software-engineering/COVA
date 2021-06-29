@@ -24,8 +24,8 @@ public class DefaultConfigForTestCase extends Config {
     setImprecisePropagationRuleOn(true);
     setConcreteTaintCreationRuleOn(true, true, true, true);
     setStaticFieldPropagationRuleOn(true);
+    setStringTaintCreationRuleOn(true);
     setWriteJimpleOutput(false);
     setWriteHtmlOutput(false);
-    setStringTaintCreationRuleOn(true);
   }
 }

@@ -16,8 +16,8 @@ public class InterSingle7 {
 
   private void callee(String in) {
     for (int i = 0; i < 10; i++) {
-      if (in.endsWith("FA")) {
-        System.out.println();// im(FA)
+      if (in.endsWith("fa")) {
+        System.out.println();// str.suffixof(str.toLowerCase(FA), "fa")
       }
       System.out.println();
     }

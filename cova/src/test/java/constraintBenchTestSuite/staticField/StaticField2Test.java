@@ -31,6 +31,7 @@ public class StaticField2Test extends ConstraintBenchTestFramework {
 
   @Test
   public void test() {
+    if (!failImpreciseTests) return;
     BoolExpr termA = SMTSolverZ3.getInstance().makeBoolTerm(A, false);
     BoolExpr termB = SMTSolverZ3.getInstance().makeBoolTerm(B, false);
     BoolExpr negatedB = SMTSolverZ3.getInstance().negate(termB, false);

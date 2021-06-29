@@ -32,6 +32,7 @@ public class ImpreciseMultiple4Test extends ConstraintBenchTestFramework {
 
   @Test
   public void test() {
+    if (!failImpreciseTests) return;
     // D > 8
     BoolExpr expected1 =
         SMTSolverZ3.getInstance()
@@ -64,5 +65,6 @@ public class ImpreciseMultiple4Test extends ConstraintBenchTestFramework {
     actual = ((ConstraintZ3) results.get(18)).getExpr();
     equivalent = SMTSolverZ3.getInstance().prove(expected2, actual);
     Assert.assertTrue(equivalent);
+    Assert.assertFalse(failImpreciseTests);
   }
 }

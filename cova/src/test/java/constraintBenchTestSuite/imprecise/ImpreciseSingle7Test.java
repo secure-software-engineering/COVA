@@ -17,6 +17,7 @@ package constraintBenchTestSuite.imprecise;
 import com.microsoft.z3.BoolExpr;
 import cova.core.SMTSolverZ3;
 import cova.data.ConstraintZ3;
+import cova.rules.StringMethod;
 import org.junit.Assert;
 import org.junit.Test;
 import utils.ConstraintBenchTestFramework;
@@ -30,8 +31,9 @@ public class ImpreciseSingle7Test extends ConstraintBenchTestFramework {
 
   @Test
   public void test() {
-    // im(FA)
-    BoolExpr expected = SMTSolverZ3.getInstance().makeBoolTerm("im(" + FA + ")_1", false);
+    //  str.contains(FA, "a")
+    BoolExpr expected =
+        SMTSolverZ3.getInstance().makeStrTermWithOneVariable(FA, "a", StringMethod.CONTAINS);
     BoolExpr actual = ((ConstraintZ3) results.get(17)).getExpr();
     boolean equivalent = SMTSolverZ3.getInstance().prove(expected, actual);
     Assert.assertTrue(equivalent);

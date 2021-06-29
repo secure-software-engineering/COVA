@@ -55,6 +55,7 @@ public class ConstraintBenchTestFramework {
   protected TreeMap<Integer, IConstraint> results;
 
   protected Config config = new DefaultConfigForTestCase();
+  public static boolean failImpreciseTests = false;
 
   private String userDir = System.getProperty("user.dir");
   private String covaRootDir = new File(userDir).getParent();

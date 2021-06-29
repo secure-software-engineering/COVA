@@ -30,14 +30,17 @@ public class InterSingle7Test extends ConstraintBenchTestFramework {
 
   @Test
   public void test() {
+    if (!failImpreciseTests) return;
     StringBuilder sb = new StringBuilder("im(");
     sb.append(FA);
     sb.append(")_1");
     String imFA = sb.toString();
     // im(FA)
+    // str.suffixof(str.toLowerCase(FA), "fa")
     BoolExpr expected = SMTSolverZ3.getInstance().makeBoolTerm(imFA, false);
     BoolExpr actual = ((ConstraintZ3) results.get(20)).getExpr();
     boolean equivalent = SMTSolverZ3.getInstance().prove(expected, actual);
     Assert.assertTrue(equivalent);
+    Assert.assertFalse(failImpreciseTests);
   }
 }

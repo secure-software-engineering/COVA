@@ -21,10 +21,11 @@ import cova.data.ConstraintZ3;
 import cova.data.IConstraint;
 import java.util.TreeMap;
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import soot.Scene;
 import soot.SootClass;
+import utils.ConstraintBenchTestFramework;
 import utils.ConstraintBenchTestFrameworkForJavaApp;
 
 @Category(BenchmarkTestSuite.class)
@@ -35,8 +36,9 @@ public class LocalClass1Test extends ConstraintBenchTestFrameworkForJavaApp {
     entryPoint = "Outer";
   }
 
-  @Ignore
+  @Test
   public void test() {
+    if (!ConstraintBenchTestFramework.failImpreciseTests) return;
     SootClass cl = Scene.v().getSootClass("Outer");
     TreeMap<Integer, IConstraint> results = reporter.getResultOfLines(cl, true);
     Assert.assertFalse(results.isEmpty());

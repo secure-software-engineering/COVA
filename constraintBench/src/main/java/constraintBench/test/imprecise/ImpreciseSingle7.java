@@ -14,7 +14,7 @@ public class ImpreciseSingle7 {
     String c = b;
     b = a.substring(0, 2);
     if (b.contains("a")) {
-      System.out.println();// im(FA)
+      System.out.println();// str.contains(FA, "a")
     }
     if (c.contains("a")) {
       System.out.println();// no constraint

@@ -43,5 +43,6 @@ public class ImpreciseSingle2Test extends ConstraintBenchTestFramework {
     BoolExpr actual = ((ConstraintZ3) results.get(16)).getExpr();
     boolean equivalent = SMTSolverZ3.getInstance().prove(expected, actual);
     Assert.assertTrue(equivalent);
+    Assert.assertFalse(failImpreciseTests);
   }
 }
