@@ -19,9 +19,17 @@ There is a generated [JavaDoc](https://secure-software-engineering.github.io/COV
 COVA is implemented as a maven project. However, since some dependencies COVA uses do not have public maven repositories, to build COVA you need to follow the steps below:
 
 ## 1. Bind Z3 Library
-COVA uses Z3 for STM-Solving and you need at first to bind Z3 for running the tool or use a [docker image](/cova/config/Dockerfile.txt) (tested on Linux). 
+COVA uses Z3 for STM-Solving so at first you need to bind the Z3 library on your machine to run COVA or use a [docker container](/cova/config/Dockerfile)
 You can find Z3-4.8.9 in the local directory `$REPO_LOCATION/cova/localLibs/` or downloand it from [the GitHub repostiory of Z3](https://github.com/Z3Prover/z3).  
-### - Windows
+
+### Docker container
+1. `docker build -t cova:test ./cova/config/` to build the [docker image](/cova/config/Dockerfile).
+2. `docker run -it -v $(pwd):/mnt cova:test /bin/bash` to mount the container and create the container shell.
+3. `git clone https://github.com/secure-software-engineering/COVA.git && cd COVA` to clone the repo into the docker container.
+4. `./cova/localLibs/install_local_libs.sh` to install the required libraries.
+5. `mvn install` to build the project.
+
+### Windows
 Currently, the repository only includes Z3 for Windows 64bit.
 There are two choices for you to bind z3:
 
@@ -35,34 +43,34 @@ Name: `PATH`
 Value: `$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-win/bin`
 
 
-### - Linux
+### Linux
 Currently, the repository only includes Z3 for Ubuntu and Debian-8.5 64bit.
 
-- **via OS**:  
+**via OS**:  
 
 Ubuntu based distributions:
 
 Execute the following command in yout command line: (you can set LD_LIBRARY_PATH otherwise only in an interactive shell since Ubuntu 9.04)
     `REPO_LOCATION=$("pwd") && echo "$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-ubuntu-16.04/bin" | sudo tee /etc/ld.so.conf.d/cova.conf && sudo ldconfig`
 
-Other:
+Other distributions:
 
 Add the **LD_LIBRARY_PATH** Variable to ~/.profile( or ~/.xprofile): cd into Repository:
 `REPO_LOCATION=$("pwd") && echo "export LD_LIBRARY_PATH=\"\$LD_LIBRARY_PATH:$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-ubuntu-16.04/bin\"" >> ~/.profile;`
 Load the edited file to your current environment (e.g. `source ~/.profile` or restart your user session). 
 
 
-- **Projectwide in Eclipse for Ubuntu64**:  
+**Projectwide in Eclipse for Ubuntu64**:  
 After importing COVA as maven project, you can specify the environment variable (change $REPO_LOCATION according to the location of the repository):
 > Eclipse > Run > Run Configurations > Environment > New  
 Name: `LD_LIBRARY_PATH`  
 Value: `$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-ubuntu-16.04/bin` 
 
-- **Projectwide in IntelliJ**
+**Projectwide in IntelliJ**
 Set [java.library.path] in the VM options input field in the Run/Debug Configurations dialog.
 `$REPO_LOCATION/cova/localLibs/z3-4.8.9-x64-ubuntu-16.04/bin`
 
-### - OSX
+### OSX
 You need to add Z3 to `DYLD_LIBRARY_PATH` (untested)
 
 ## 2.1 Build The Tool With Maven
