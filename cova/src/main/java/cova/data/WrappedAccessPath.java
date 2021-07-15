@@ -417,6 +417,7 @@ public class WrappedAccessPath {
       }
       ret =  new WrappedAccessPath(param, newFields);
     }
+    ret.isApproximated = isApproximated;
     ret.cutOff();
     return ret; 
   }
