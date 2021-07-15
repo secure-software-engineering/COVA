@@ -11,6 +11,8 @@ public class Property extends SuperProperty{
   private int y;
 
   private boolean on;
+  public Property f;
+  public Property g;
 
   public Property() {
     v = 1;

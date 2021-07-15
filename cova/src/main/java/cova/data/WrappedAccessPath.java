@@ -45,6 +45,11 @@ public class WrappedAccessPath {
   /** The zero access path. */
   private static WrappedAccessPath zeroAccessPath;
 
+  /** The max length of access path. */
+  private static int maxLength = 5;
+
+  private boolean isApproximated = false;
+
   private static Local ret = new JimpleLocal("RET", NullType.v());
   /**
    * Instantiates a new access path with given base and fields. The value of fields can be null. The
@@ -60,6 +65,7 @@ public class WrappedAccessPath {
     } else {
       this.fields = fields;
     }
+    cutOff();
   }
 
   /**
@@ -75,6 +81,7 @@ public class WrappedAccessPath {
     } else {
       this.fields = fields;
     }
+    cutOff();
   }
 
   /**
@@ -101,6 +108,15 @@ public class WrappedAccessPath {
       fields = sfields;
     } else {
       throw new RuntimeException("Unsupported reference by creating new Acesspath");
+    }
+  }
+
+  private void cutOff() {
+    // cut off the access path when it exceeds maxLength.
+    while (this.getDepth() > maxLength) {
+      int i = fields.size();
+      this.getFields().remove(i - 1);
+      this.isApproximated = true;
     }
   }
 
@@ -188,6 +204,7 @@ public class WrappedAccessPath {
     int result = 1;
     result = prime * result + ((base == null) ? 0 : base.hashCode());
     result = prime * result + ((fields == null) ? 0 : fields.hashCode());
+    result = prime * result + (isApproximated ? 0 : 1);
     return result;
   }
 
@@ -203,6 +220,7 @@ public class WrappedAccessPath {
       return false;
     }
     final WrappedAccessPath other = (WrappedAccessPath) obj;
+    if (isApproximated != other.isApproximated) return false;
     if (base == null) {
       if (other.base != null) {
         return false;
@@ -252,6 +270,9 @@ public class WrappedAccessPath {
           sb.append(".");
           sb.append(fields.get(i).getName());
         }
+      }
+      if (isApproximated) {
+        sb.append(".*");
       }
       return sb.toString();
     }
@@ -374,8 +395,9 @@ public class WrappedAccessPath {
    * @see rules.GeneralPropagationRule
    */
   public WrappedAccessPath copyFields(Local param) {
+    WrappedAccessPath ret = null;
     if (param.getType().equals(getBaseType())) {
-      return new WrappedAccessPath(param, fields);
+      ret = new WrappedAccessPath(param, fields);
     } else {
       final ArrayList<SootField> newFields = new ArrayList<SootField>();
       if (fields != null) {
@@ -392,8 +414,11 @@ public class WrappedAccessPath {
           newFields.add(field);
         }
       }
-      return new WrappedAccessPath(param, newFields);
+      ret = new WrappedAccessPath(param, newFields);
     }
+    ret.isApproximated = isApproximated;
+    ret.cutOff();
+    return ret;
   }
 
   /**
@@ -405,27 +430,45 @@ public class WrappedAccessPath {
    */
   public static WrappedAccessPath convert(AccessPath accessPath) {
     final Val val = accessPath.getBase();
+    WrappedAccessPath ret = null;
     if (val.isStatic()) {
       // convert static field
       final StaticFieldVal staticField = (StaticFieldVal) val;
       final SootField field = staticField.field();
       final ArrayList<SootField> newFields = new ArrayList<SootField>();
-      newFields.add(field);
-      return new WrappedAccessPath(null, newFields);
+      int times = 1;
+      if (accessPath.isOverApproximated()) {
+        times = maxLength;
+      }
+      while (times > 0) {
+        newFields.add(field);
+        times--;
+      }
+      ret = new WrappedAccessPath(null, newFields);
     } else {
       // convert local or instance field
       final Local base = (Local) val.value();
       final Collection<Field> fields = accessPath.getFields();
       if (!fields.isEmpty()) {
         final ArrayList<SootField> newFields = new ArrayList<SootField>();
+        Field lastField = null;
         for (final Field field : fields) {
           newFields.add(field.getSootField());
+          lastField = field;
         }
-        return new WrappedAccessPath(base, newFields);
+        ret = new WrappedAccessPath(base, newFields);
+        if (accessPath.isOverApproximated() && ret.getDepth() < maxLength) {
+          int times = maxLength - ret.getDepth();
+          while (times > 0) {
+            newFields.add(lastField.getSootField());
+            times--;
+          }
+        }
       } else {
-        return new WrappedAccessPath(base);
+        ret = new WrappedAccessPath(base);
       }
     }
+    return ret;
   }
 
   /**
