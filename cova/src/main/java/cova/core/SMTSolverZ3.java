@@ -352,23 +352,41 @@ public class SMTSolverZ3 {
     return expr;
   }
 
+  public BoolExpr makeStrTerm(String constant1, String constant2, StringMethod method) {
+    SeqExpr strExpr1 = ctx.mkString(constant1);
+    SeqExpr strExpr2 = ctx.mkString(constant2);
+    BoolExpr term;
+    if (method == StringMethod.CONTAINS) {
+      term = ctx.mkContains(strExpr1, strExpr2);
+    } else if (method == StringMethod.STARTSWITH) {
+      term = ctx.mkPrefixOf(strExpr1, strExpr2);
+    } else if (method == StringMethod.ENDSWITH) {
+      term = ctx.mkSuffixOf(strExpr1, strExpr2);
+    } else if (method == StringMethod.EQUALS) {
+      term = ctx.mkEq(strExpr1, strExpr2);
+    } else {
+      throw new RuntimeException("Unsupported String Method:" + method);
+    }
+    return term;
+  }
+
   public BoolExpr makeStrTermWithOneVariable(String name, String constant, StringMethod method) {
     SeqExpr str = (SeqExpr) ctx.mkConst(name, ctx.getStringSort());
 
     SeqExpr strExpr = ctx.mkString(constant);
-    BoolExpr contains;
+    BoolExpr term;
     if (method == StringMethod.CONTAINS) {
-      contains = ctx.mkContains(str, strExpr);
+      term = ctx.mkContains(str, strExpr);
     } else if (method == StringMethod.STARTSWITH) {
-      contains = ctx.mkPrefixOf(strExpr, str);
+      term = ctx.mkPrefixOf(strExpr, str);
     } else if (method == StringMethod.ENDSWITH) {
-      contains = ctx.mkSuffixOf(strExpr, str);
+      term = ctx.mkSuffixOf(strExpr, str);
     } else if (method == StringMethod.EQUALS) {
-      contains = ctx.mkEq(strExpr, str);
+      term = ctx.mkEq(strExpr, str);
     } else {
       throw new RuntimeException("Unsupported String Method:" + method);
     }
-    return contains;
+    return term;
   }
 
   public BoolExpr makeVarStrTermWithTwoVaraibles(String name1, String name2, StringMethod method) {

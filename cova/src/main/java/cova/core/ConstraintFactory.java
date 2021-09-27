@@ -40,6 +40,7 @@ import soot.jimple.IntConstant;
 import soot.jimple.LeExpr;
 import soot.jimple.LtExpr;
 import soot.jimple.NeExpr;
+import soot.jimple.StringConstant;
 
 /** A factory for creating constraint. */
 public class ConstraintFactory {
@@ -377,8 +378,7 @@ public class ConstraintFactory {
       } else {
         constraint = ConstraintZ3.getFalse();
       }
-    }
-    if (!(cval instanceof ArithmeticConstant) && val instanceof ArithmeticConstant) {
+    } else if (!(cval instanceof ArithmeticConstant) && val instanceof ArithmeticConstant) {
       if (concrete.hasSource()) {
         Operator op = Operator.EQ;
         String name = concrete.getSource().getSymbolicName();
@@ -400,6 +400,37 @@ public class ConstraintFactory {
           newConstraint = newConstraint.negate(false);
         }
         constraint = constraint.and(newConstraint, false);
+      }
+    } else {
+      if (cval instanceof StringConstant && val instanceof StringConstant) {
+        String symbol = conditionExpr.getSymbol();
+        BoolExpr expr = null;
+        if (symbol.indexOf("==") > -1) {
+          expr =
+              SMTSolverZ3.getInstance()
+                  .makeStrTerm(
+                      ((StringConstant) cval).value,
+                      ((StringConstant) val).value,
+                      StringMethod.EQUALS);
+          expr.simplify();
+        } else if (symbol.indexOf("!=") > -1) {
+          expr =
+              SMTSolverZ3.getInstance()
+                  .makeStrTerm(
+                      ((StringConstant) cval).value,
+                      ((StringConstant) val).value,
+                      StringMethod.EQUALS);
+          expr = SMTSolverZ3.getInstance().negate(expr, true);
+        }
+        if (expr != null) {
+          IConstraint newConstraint =
+              new ConstraintZ3(
+                  expr, new ArrayList<String>(), WitnessPath.copy(constraint.getPath()));
+          if (isFallThroughEdge) {
+            newConstraint = newConstraint.negate(false);
+          }
+          constraint = constraint.and(newConstraint, false);
+        }
       }
     }
     return constraint;

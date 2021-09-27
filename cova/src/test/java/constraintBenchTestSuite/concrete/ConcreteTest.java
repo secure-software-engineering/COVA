@@ -12,15 +12,13 @@
  * <p>You should have received a copy of the GNU Lesser General Public License along with this
  * program. If not, see <http://www.gnu.org/licenses/>.
  */
-package constraintBenchTestSuite.androidApp;
+package constraintBenchTestSuite.concrete;
 
 import com.microsoft.z3.BoolExpr;
 import cova.core.SMTSolverZ3;
 import cova.data.ConstraintZ3;
-import cova.data.Operator;
 import org.junit.Assert;
 import org.junit.Test;
-import soot.IntType;
 import utils.ConstraintBenchTestFrameworkForAndroidApp;
 
 public class ConcreteTest extends ConstraintBenchTestFrameworkForAndroidApp {
